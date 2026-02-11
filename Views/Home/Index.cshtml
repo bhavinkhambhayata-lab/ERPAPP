@@ -1,0 +1,18 @@
+﻿@{
+    Layout = "_Layout";
+    ViewData["Title"] = "Home Page";
+}
+
+@if (ViewBag.NoPermission == true)
+{
+    <div class="alert alert-danger text-center mt-4">
+        <h5>No permission for menu</h5>
+    </div>
+}
+else
+{
+    <div class="text-center">
+        <h1 class="display-4">Welcome</h1>
+        <p>ERP APP.</p>
+    </div>
+}

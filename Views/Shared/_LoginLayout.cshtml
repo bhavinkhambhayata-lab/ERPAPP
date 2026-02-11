@@ -1,0 +1,94 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>Login - ERP APP</title>
+
+    <!-- Favicons -->
+    <link href="~/assets/img/favicon.png" rel="icon" />
+    <link href="~/assets/img/apple-touch-icon.png" rel="apple-touch-icon" />
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.gstatic.com" rel="preconnect">
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700|Nunito:300,400,600,700|Poppins:300,400,500,600,700" rel="stylesheet">
+
+    <!-- Vendor CSS -->
+    <link href="~/assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="~/assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet" />
+    <link href="~/assets/vendor/boxicons/css/boxicons.min.css" rel="stylesheet" />
+
+    <!-- Template CSS -->
+    <link href="~/assets/css/style.css" rel="stylesheet" />
+</head>
+
+<body>
+
+    @RenderBody()
+
+
+    <!-- ===== Toast (Optional but Ready) ===== -->
+    <div class="toast-container position-fixed top-0 end-0 p-3">
+        <div id="appToast" class="toast border-0" role="alert">
+            <div class="d-flex">
+                <div class="toast-body" id="toastMessage"></div>
+                <button type="button" class="btn-close me-2 m-auto" data-bs-dismiss="toast"></button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Vendor JS -->
+    <script src="~/assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Template JS -->
+    <script src="~/assets/js/main.js"></script>
+
+    <script>
+        function showToast(message, type = 'info', delay = 3000) {
+
+            const toastEl = document.getElementById('appToast');
+            const toastBody = document.getElementById('toastMessage');
+
+            // reset classes
+            toastEl.className = "toast border-0";
+
+            // map types
+            switch (type) {
+                case "success":
+                    toastEl.classList.add("text-bg-success");
+                    break;
+                case "error":
+                case "danger":
+                    toastEl.classList.add("text-bg-danger");
+                    break;
+                case "warning":
+                    toastEl.classList.add("text-bg-warning");
+                    break;
+                case "info":
+                default:
+                    toastEl.classList.add("text-bg-info");
+                    break;
+            }
+
+            toastBody.innerText = message;
+
+            const toast = new bootstrap.Toast(toastEl, { delay: delay });
+            toast.show();
+        }
+    </script>
+
+    @if (TempData["ToastMessage"] != null)
+    {
+        <script>
+            showToast(
+                '@TempData["ToastMessage"]',
+                '@(TempData["ToastType"] ?? "info")'
+            );
+        </script>
+    }
+
+
+    @RenderSection("Scripts", required: false)
+</body>
+</html>

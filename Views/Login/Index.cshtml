@@ -1,0 +1,77 @@
+﻿@model LoginViewModel
+@{
+    Layout = "_LoginLayout";
+}
+
+<main>
+    <div class="container">
+
+        <section class="section register min-vh-100 d-flex flex-column align-items-center justify-content-center py-4">
+            <div class="container">
+                <div class="row justify-content-center">
+                    <div class="col-lg-4 col-md-6 d-flex flex-column align-items-center justify-content-center">
+
+                        <div class="d-flex justify-content-center py-4">
+                            <a href="#" class="logo d-flex align-items-center w-auto">
+                                <img src="~/assets/img/logo.png" alt="">
+                                <span class="d-none d-lg-block">ERP APP</span>
+                            </a>
+                        </div>
+
+                        <div class="card mb-3">
+                            <div class="card-body">
+
+                                <div class="pt-4 pb-2">
+                                    <h5 class="card-title text-center pb-0 fs-4">
+                                        Login to Your Account
+                                    </h5>
+                                    <p class="text-center small">
+                                        Enter your username & password
+                                    </p>
+                                </div>
+
+                                <form asp-action="Login" asp-controller="Login" method="post" class="row g-3">
+                                    @Html.AntiForgeryToken()
+
+                                    <div class="col-12">
+                                        <label asp-for="UserName" class="form-label"></label>
+                                        <input asp-for="UserName" class="form-control" />
+                                        <span asp-validation-for="UserName" class="text-danger"></span>
+                                    </div>
+
+                                    <div class="col-12">
+                                        <label asp-for="Password" class="form-label"></label>
+                                        <input asp-for="Password" type="password" class="form-control" />
+                                        <span asp-validation-for="Password" class="text-danger"></span>
+                                    </div>
+
+                                    <div class="col-12">
+                                        <div class="form-check">
+                                            <input asp-for="RememberMe" class="form-check-input" />
+                                            <label asp-for="RememberMe" class="form-check-label">
+                                                Remember me
+                                            </label>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-12">
+                                        <button class="btn btn-primary w-100" type="submit">
+                                            Login
+                                        </button>
+                                    </div>
+                                </form>
+
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </div>
+</main>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
