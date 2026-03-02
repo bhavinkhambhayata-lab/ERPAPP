@@ -44,14 +44,14 @@ namespace ERPAPP.Repository
 
             DataSet ds = _db.GetDataSet("GetCustomerAddDropDownData");
 
-            // 0 Brand
+            // 0 Division
             foreach (DataRow row in ds.Tables[0].Rows)
             {
-                dropDown.Brands.Add(new BrandModel
+                dropDown.Divisions.Add(new DivisionModel
                 {
-                    RowID = Convert.ToInt32(row["RowID"]),
-                    Code = row["Brand"].ToString(),
-                    Name = row["Brand"].ToString()
+                    //RowID = Convert.ToInt32(row["RowID"]),
+                    Code = row["RowID"].ToString(),
+                    Name = row["Division"].ToString()
                 });
             }
 

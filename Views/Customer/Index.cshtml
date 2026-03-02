@@ -74,6 +74,11 @@
         padding: 6px 22px;
     }
 
+    .required-star {
+        color: red;
+        font-size: 13px;
+    }
+
 </style>
 
 <form id="customerForm" method="post">
@@ -119,12 +124,12 @@
                             <div class="row align-items-center">
                                 <label class="col-12 col-sm-4 col-form-label">Division</label>
                                 <div class="col-12 col-sm-8">
-                                    <select asp-for="Brand"
-                                            asp-items="@(new SelectList(Model.CustomerDropDownModel.Brands, "RowID", "Name"))"
+                                    <select asp-for="Division"
+                                            asp-items="@(new SelectList(Model.CustomerDropDownModel.Divisions, "Code", "Name"))"
                                             class="form-select">
                                         <option value="">--Select--</option>
                                     </select>
-                                    <span asp-validation-for="Brand" class="text-danger"></span>
+                                    <span asp-validation-for="Division" class="text-danger"></span>
                                 </div>
                             </div>
                         </div>
@@ -133,7 +138,7 @@
 
                     <!-- Name -->
                     <div class="row align-items-center mt-2">
-                        <label class="col-12 col-sm-2 col-form-label">Name</label>
+                        <label class="col-12 col-sm-2 col-form-label">Name<span class="required-star">*</span></label>
                         <div class="col-12 col-sm-10 position-relative">
                             <input asp-for="Name" class="form-control" autocomplete="off" />
                             <span asp-validation-for="Name" class="text-danger"></span>
@@ -149,7 +154,7 @@
 
                     <!-- Address -->
                     <div class="row align-items-center mt-2">
-                        <label class="col-12 col-sm-2 col-form-label">Address</label>
+                        <label class="col-12 col-sm-2 col-form-label">Address<span class="required-star">*</span></label>
                         <div class="col-12 col-sm-10">
                             <input asp-for="Address" class="form-control" />
                             <span asp-validation-for="Address" class="text-danger"></span>
@@ -170,7 +175,7 @@
 
                         <div class="col-12 col-md-6">
                             <div class="row align-items-center">
-                                <label class="col-12 col-sm-4 col-form-label">Country</label>
+                                <label class="col-12 col-sm-4 col-form-label">Country<span class="required-star">*</span></label>
                                 <div class="col-12 col-sm-8">
                                     <select asp-for="CountryCode"
                                             asp-items="@(new SelectList(Model.CustomerDropDownModel.Countries, "Code", "Name"))"
@@ -202,7 +207,7 @@
 
                         <div class="col-12 col-md-6">
                             <div class="row align-items-center">
-                                <label class="col-12 col-sm-4 col-form-label">City</label>
+                                <label class="col-12 col-sm-4 col-form-label">City<span class="required-star">*</span></label>
                                 <div class="col-12 col-sm-8">
                                     <select asp-for="CityCode"
                                             asp-items="@(new SelectList(Model.CustomerDropDownModel.Cities, "Code", "Name"))"
@@ -216,7 +221,7 @@
 
                         <div class="col-12 col-md-6">
                             <div class="row align-items-center">
-                                <label class="col-12 col-sm-4 col-form-label">Post Code</label>
+                                <label class="col-12 col-sm-4 col-form-label">Post Code<span class="required-star">*</span></label>
                                 <div class="col-12 col-sm-8">
                                     <select asp-for="PostCode"
                                             asp-items="@(new SelectList(Model.CustomerDropDownModel.PostCode, "Code", "Name"))"
@@ -237,18 +242,22 @@
 
                         <div class="col-12 col-md-6">
                             <div class="row align-items-center">
-                                <label class="col-12 col-sm-4 col-form-label">Region</label>
+                                <label class="col-12 col-sm-4 col-form-label">Region<span class="required-star">*</span></label>
                                 <div class="col-12 col-sm-8">
-                                    <input type="text" id="Region" class="form-control" disabled />
+                                   @*  <input type="text" id="Region" class="form-control" disabled /> *@
+                                    <input asp-for="Region" class="form-control" disabled />
+                                    <span asp-validation-for="Region" class="text-danger"></span>
                                 </div>
                             </div>
                         </div>
 
                         <div class="col-12 col-md-6">
                             <div class="row align-items-center">
-                                <label class="col-12 col-sm-4 col-form-label">Zone</label>
+                                <label class="col-12 col-sm-4 col-form-label">Zone<span class="required-star">*</span></label>
                                 <div class="col-12 col-sm-8">
-                                    <input type="text" id="Zone" class="form-control" disabled />
+                                    @* <input type="text" id="Zone" class="form-control" disabled /> *@
+                                    <input asp-for="Zone" class="form-control" disabled />
+                                    <span asp-validation-for="Zone" class="text-danger"></span>
                                 </div>
                             </div>
                         </div>
@@ -260,7 +269,7 @@
 
                         <div class="col-12 col-md-6">
                             <div class="row align-items-center">
-                                <label class="col-12 col-sm-4 col-form-label">Contact Person</label>
+                                <label class="col-12 col-sm-4 col-form-label">Contact Person<span class="required-star">*</span></label>
                                 <div class="col-12 col-sm-8">
                                     <input asp-for="ContactPerson" class="form-control" />
                                     <span asp-validation-for="ContactPerson" class="text-danger"></span>
@@ -270,7 +279,7 @@
 
                         <div class="col-12 col-md-6">
                             <div class="row align-items-center">
-                                <label class="col-12 col-sm-4 col-form-label">Mobile No</label>
+                                <label class="col-12 col-sm-4 col-form-label">Mobile No<span class="required-star">*</span></label>
                                 <div class="col-12 col-sm-8">
                                     <input asp-for="MobileNo" class="form-control" />
                                     <span asp-validation-for="MobileNo" class="text-danger"></span>
@@ -295,7 +304,7 @@
 
                         <div class="col-12 col-md-6">
                             <div class="row align-items-center">
-                                <label class="col-12 col-sm-4 col-form-label">Email</label>
+                                <label class="col-12 col-sm-4 col-form-label">Email<span class="required-star">*</span></label>
                                 <div class="col-12 col-sm-8">
                                     <input asp-for="Email" class="form-control" />
                                     <span asp-validation-for="Email" class="text-danger"></span>
@@ -310,7 +319,7 @@
 
                         <div class="col-12 col-md-6">
                             <div class="row align-items-center">
-                                <label class="col-12 col-sm-4 col-form-label">E_INV Phone</label>
+                                <label class="col-12 col-sm-4 col-form-label">E_INV Phone<span class="required-star">*</span></label>
                                 <div class="col-12 col-sm-8">
                                     <input asp-for="EInvPhoneNo" class="form-control" />
                                     <span asp-validation-for="EInvPhoneNo" class="text-danger"></span>
@@ -320,7 +329,7 @@
 
                         <div class="col-12 col-md-6">
                             <div class="row align-items-center">
-                                <label class="col-12 col-sm-4 col-form-label">E_INV Email</label>
+                                <label class="col-12 col-sm-4 col-form-label">E_INV Email<span class="required-star">*</span></label>
                                 <div class="col-12 col-sm-8">
                                     <input asp-for="EInvEmail" class="form-control" />
                                     <span asp-validation-for="EInvEmail" class="text-danger"></span>
@@ -602,97 +611,6 @@
             <!-- ================= RIGHT SIDE ================= -->
             <div class="col-lg-6">
 
-                <!-- ================= NOD/NOC ================= -->
-
-                <fieldset>
-                    <legend class="fw-bold">NOD / NOC</legend>
-
-                    <!-- NOD/NOC Creation + Access Code -->
-                    <div class="row align-items-center mt-2">
-                        <div class="col-12 col-md-6">
-                            <div class="row align-items-center">
-                                <label class="col-12 col-sm-4 col-form-label">NOD/NOC Creation</label>
-                                <div class="col-12 col-sm-8">
-                                    <select asp-for="IsNodNocCreation" class="form-select">
-                                        <option value="">-- Select --</option>
-                                        <option value="true">Yes</option>
-                                        <option value="false">No</option>
-                                    </select>
-                                    <span asp-validation-for="IsNodNocCreation" class="text-danger"></span>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="col-12 col-md-6">
-                            <div class="row align-items-center">
-                                <label class="col-12 col-sm-4 col-form-label">Access Code</label>
-                                <div class="col-12 col-sm-8">
-                                    <select asp-for="NODAccessCode"
-                                            asp-items="@(new SelectList(Model.CustomerDropDownModel.AccessCodes, "Code", "Name"))"
-                                            class="form-select">
-                                        <option value="">--Select--</option>
-                                    </select>
-                                    <span asp-validation-for="NODAccessCode" class="text-danger"></span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- NOD/NOC (Full Width) -->
-                    <div class="row align-items-center mt-2">
-                        <label class="col-12 col-sm-2 col-form-label">NOD/NOC</label>
-                        <div class="col-12 col-sm-10">
-                            <select asp-for="NODNOC"
-                                    asp-items="@(new SelectList(Model.CustomerDropDownModel.NODNOCs, "Code", "Name"))"
-                                    class="form-select">
-                                <option value="">--Select--</option>
-                            </select>
-                            <span asp-validation-for="NODNOC" class="text-danger"></span>
-                        </div>
-                    </div>
-
-                    <!-- Concessional Code (Full Width) -->
-                    <div class="row align-items-center mt-2">
-                        <label class="col-12 col-sm-2 col-form-label">Concessional Code</label>
-                        <div class="col-12 col-sm-10">
-                            <select asp-for="ConcessionalCode"
-                                    asp-items="@(new SelectList(Model.CustomerDropDownModel.ConcessionalCodes, "Code", "Name"))"
-                                    class="form-select">
-                                <option value="">--Select--</option>
-                            </select>
-                            <span asp-validation-for="ConcessionalCode" class="text-danger"></span>
-                        </div>
-                    </div>
-
-                    <!-- Threshold Overlook + Surcharge Overlook -->
-                    <div class="row align-items-center mt-2">
-                        <div class="col-12 col-md-6">
-                            <div class="row align-items-center">
-                                <label class="col-12 col-sm-4 col-form-label">Threshold Overlook</label>
-                                <div class="col-12 col-sm-8 d-flex align-items-center">
-                                    <div class="form-check m-0">
-                                        <input asp-for="ThresholdOverlook" class="form-check-input" />
-
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="col-12 col-md-6">
-                            <div class="row align-items-center">
-                                <label class="col-12 col-sm-4 col-form-label">Surcharge Overlook</label>
-                                <div class="col-12 col-sm-8 d-flex align-items-center">
-                                    <div class="form-check m-0">
-                                        <input asp-for="SurchargeOverlook" class="form-check-input" />
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                </fieldset>
-
-
                 <!-- ================= BUSINESS ================= -->
                 <fieldset>
                     <legend class="fw-bold">Business Details</legend>
@@ -964,6 +882,96 @@
                                 <div class="col-12 col-sm-8">
                                     <input asp-for="MSMEUAMNo" class="form-control" />
                                     <span asp-validation-for="MSMEUAMNo" class="text-danger"></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </fieldset>
+
+                <!-- ================= NOD/NOC ================= -->
+
+                <fieldset>
+                    <legend class="fw-bold">NOD / NOC</legend>
+
+                    <!-- NOD/NOC Creation + Access Code -->
+                    <div class="row align-items-center mt-2">
+                        <div class="col-12 col-md-6">
+                            <div class="row align-items-center">
+                                <label class="col-12 col-sm-4 col-form-label">NOD/NOC Creation</label>
+                                <div class="col-12 col-sm-8">
+                                    <select asp-for="IsNodNocCreation" class="form-select">
+                                        <option value="">-- Select --</option>
+                                        <option value="true">Yes</option>
+                                        <option value="false">No</option>
+                                    </select>
+                                    <span asp-validation-for="IsNodNocCreation" class="text-danger"></span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-12 col-md-6">
+                            <div class="row align-items-center">
+                                <label class="col-12 col-sm-4 col-form-label">Access Code</label>
+                                <div class="col-12 col-sm-8">
+                                    <select asp-for="NODAccessCode"
+                                            asp-items="@(new SelectList(Model.CustomerDropDownModel.AccessCodes, "Code", "Name"))"
+                                            class="form-select">
+                                        <option value="">--Select--</option>
+                                    </select>
+                                    <span asp-validation-for="NODAccessCode" class="text-danger"></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- NOD/NOC (Full Width) -->
+                    <div class="row align-items-center mt-2">
+                        <label class="col-12 col-sm-2 col-form-label">NOD/NOC</label>
+                        <div class="col-12 col-sm-10">
+                            <select asp-for="NODNOC"
+                                    asp-items="@(new SelectList(Model.CustomerDropDownModel.NODNOCs, "Code", "Name"))"
+                                    class="form-select">
+                                <option value="">--Select--</option>
+                            </select>
+                            <span asp-validation-for="NODNOC" class="text-danger"></span>
+                        </div>
+                    </div>
+
+                    <!-- Concessional Code (Full Width) -->
+                    <div class="row align-items-center mt-2">
+                        <label class="col-12 col-sm-2 col-form-label">Concessional Code</label>
+                        <div class="col-12 col-sm-10">
+                            <select asp-for="ConcessionalCode"
+                                    asp-items="@(new SelectList(Model.CustomerDropDownModel.ConcessionalCodes, "Code", "Name"))"
+                                    class="form-select">
+                                <option value="">--Select--</option>
+                            </select>
+                            <span asp-validation-for="ConcessionalCode" class="text-danger"></span>
+                        </div>
+                    </div>
+
+                    <!-- Threshold Overlook + Surcharge Overlook -->
+                    <div class="row align-items-center mt-2">
+                        <div class="col-12 col-md-6">
+                            <div class="row align-items-center">
+                                <label class="col-12 col-sm-4 col-form-label">Threshold Overlook</label>
+                                <div class="col-12 col-sm-8 d-flex align-items-center">
+                                    <div class="form-check m-0">
+                                        <input asp-for="ThresholdOverlook" class="form-check-input" />
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-12 col-md-6">
+                            <div class="row align-items-center">
+                                <label class="col-12 col-sm-4 col-form-label">Surcharge Overlook</label>
+                                <div class="col-12 col-sm-8 d-flex align-items-center">
+                                    <div class="form-check m-0">
+                                        <input asp-for="SurchargeOverlook" class="form-check-input" />
+                                    </div>
                                 </div>
                             </div>
                         </div>

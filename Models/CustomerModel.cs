@@ -16,11 +16,16 @@ namespace ERPAPP.Models
         [Required(ErrorMessage = "Name is required")]
         public string Name { get; set; }
 
+        [Required(ErrorMessage = "Address is required")]
         public string Address { get; set; }
+
+        [Required(ErrorMessage = "Address2 is required")]
         public string Address2 { get; set; }
 
         [Required(ErrorMessage = "City is required")]
         public string CityCode { get; set; }
+
+        [Required(ErrorMessage = "Post Code is required")]
         public string PostCode { get; set; }
 
         [Required(ErrorMessage = "State is required")]
@@ -29,17 +34,22 @@ namespace ERPAPP.Models
         [Required(ErrorMessage = "Country is required")]
         public string CountryCode { get; set; }
 
+        [Required(ErrorMessage = "Region is required")]
         public string Region { get; set; }
+
+        [Required(ErrorMessage = "Zone is required")]
         public string Zone { get; set; }
 
+        [Required(ErrorMessage = "Contact Pereson is required")]
         public string ContactPerson { get; set; }
 
+        [Required(ErrorMessage = "Mobile No is required")]
         [RegularExpression(@"^[6-9][0-9]{9}$",ErrorMessage = "Invalid mobile number")]
         public string MobileNo { get; set; }
 
-        [RegularExpression(@"^[0-9]{6,15}$",ErrorMessage = "Invalid phone number")]
         public string PhoneNo { get; set; }
 
+        [Required(ErrorMessage = "Email is required")]
         [EmailAddress(ErrorMessage = "Invalid email address")]
         public string Email { get; set; }
 
@@ -98,8 +108,8 @@ namespace ERPAPP.Models
         public DateTime? DealerAppointmentDate { get; set; }
 
         // ===== Business =====
-        [Required(ErrorMessage = "Brand is required")]
-        public int Brand { get; set; }
+        [Required(ErrorMessage = "Division is required")]
+        public int Division { get; set; }
 
         [Required(ErrorMessage = "Customer Type is required")]
         public int CustomerType { get; set; }
@@ -162,9 +172,9 @@ namespace ERPAPP.Models
         public string Name { get; set; }
     }
 
-    public class BrandModel : BaseDropDown
+    public class DivisionModel : BaseDropDown
     {
-        public int RowID { get; set; }
+        //public int RowID { get; set; }
     }
 
     public class CityModel : BaseDropDown { }
@@ -231,7 +241,7 @@ namespace ERPAPP.Models
 
     public class CustomerDropDownModel
     {
-        public List<BrandModel> Brands { get; set; } = new();
+        public List<DivisionModel> Divisions { get; set; } = new();
         public List<CityModel> Cities { get; set; } = new();
         public List<CountryModel> Countries { get; set; } = new();
 
