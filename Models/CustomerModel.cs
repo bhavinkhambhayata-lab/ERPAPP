@@ -11,6 +11,8 @@ namespace ERPAPP.Models
     {
         // ===== General =====
         public int PortalRowId { get; set; }
+
+        public string MasterCode { get; set; }
         public int DisplayNo { get; set; }
 
         [Required(ErrorMessage = "Name is required")]

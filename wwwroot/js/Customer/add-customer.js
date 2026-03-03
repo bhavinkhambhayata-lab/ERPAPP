@@ -300,3 +300,51 @@
     });
 
 });
+
+
+
+function addBrandRow() {
+
+    var table = document.getElementById("brandTable")
+        .getElementsByTagName('tbody')[0];
+
+    var rowCount = table.rows.length;
+    var row = table.insertRow(rowCount);
+
+    row.innerHTML = `
+            <td><input name="CustomerList[${rowCount}].CustomerNo" class="form-control form-control-sm" /></td>
+            <td><input name="CustomerList[${rowCount}].BrandCode" class="form-control form-control-sm" /></td>
+            <td><input name="CustomerList[${rowCount}].CustomerCategoryCode" class="form-control form-control-sm" /></td>
+            <td><input name="CustomerList[${rowCount}].TradeSecurityAmount" type="number" class="form-control form-control-sm text-end" /></td>
+            <td><input name="CustomerList[${rowCount}].CustomerDiscountGroup" class="form-control form-control-sm" /></td>
+            <td><input name="CustomerList[${rowCount}].DealerClassification" class="form-control form-control-sm" /></td>
+            <td><input name="CustomerList[${rowCount}].Allocation" class="form-control form-control-sm" /></td>
+            <td><input name="CustomerList[${rowCount}].SalesPersonCode" class="form-control form-control-sm" /></td>
+            <td><input name="CustomerList[${rowCount}].HOSalesPerson" class="form-control form-control-sm" /></td>
+            <td class="text-center">
+                <button type="button" class="btn btn-danger btn-sm" onclick="removeRow(this)">
+                    ✕
+                </button>
+            </td>
+        `;
+}
+
+function removeRow(button) {
+    var row = button.closest("tr");
+    row.remove();
+    reIndexRows();
+}
+
+function reIndexRows() {
+    var rows = document.querySelectorAll("#brandTable tbody tr");
+
+    rows.forEach(function (row, index) {
+        row.querySelectorAll("input").forEach(function (input) {
+            var name = input.getAttribute("name");
+            if (name) {
+                input.setAttribute("name",
+                    name.replace(/\[\d+\]/, "[" + index + "]"));
+            }
+        });
+    });
+}

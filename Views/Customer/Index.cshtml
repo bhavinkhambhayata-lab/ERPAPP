@@ -79,67 +79,66 @@
         font-size: 13px;
     }
 
+    #brandTable thead th {
+        text-align: center;
+        vertical-align: middle;
+    }
+
 </style>
 
 <form id="customerForm" method="post">
-    <div class="topbar">Customer Details</div>
+    <div class="topbar d-flex justify-content-between align-items-center">
+        <div class="fw-bold">
+            Customer Details
+        </div>
+
+        <div class="fw-bold">
+            Row Unique ID : <span class="fw-semibold">@Model.DisplayNo</span>
+        </div>
+    </div>
 
     <div class="container-fluid mt-3">
-        <div class="row">
+        <!-- ================= General ================= -->
+        <fieldset>
+            <legend class="fw-bold">General Details</legend>
+            <div class="row">
 
-            <!-- ================= LEFT SIDE ================= -->
-            <div class="col-lg-6">
-
-                <!-- ================= GENERAL ================= -->
-
-                <fieldset>
-                    <legend class="fw-bold">General Details</legend>
-
-                    <!-- Portal Customer No -->
-                    <div class="row align-items-center">
-                        <div class="col-12 col-md-6">
-                            <div class="row align-items-center">
-                                <label class="col-12 col-sm-4 col-form-label">Portal Customer No</label>
-                                <div class="col-12 col-sm-8">
-                                    <input asp-for="PortalRowId" class="form-control" />
-                                </div>
-                            </div>
+                <div class="col-4 mt-2">
+                    <div class="row">
+                        <label class="col-12 col-sm-4 col-form-label">Portal Customer No</label>
+                        <div class="col-12 col-sm-8">
+                            <input asp-for="PortalRowId" class="form-control" />
                         </div>
-                        <div class="col-12 col-md-6"></div>
                     </div>
-
-                    <!-- No + Brand -->
-                    <div class="row align-items-center">
-
-                        <div class="col-12 col-md-6">
-                            <div class="row align-items-center">
-                                <label class="col-12 col-sm-4 col-form-label">No</label>
-                                <div class="col-12 col-sm-8">
-                                    <input asp-for="DisplayNo" disabled class="form-control" />
-                                </div>
-                            </div>
+                </div>
+                <div class="col-4 mt-2">
+                    <div class="row">
+                        <label class="col-12 col-sm-4 col-form-label">Master Code</label>
+                        <div class="col-12 col-sm-8">
+                            <input asp-for="MasterCode" disabled class="form-control" />
                         </div>
-
-                        <div class="col-12 col-md-6">
-                            <div class="row align-items-center">
-                                <label class="col-12 col-sm-4 col-form-label">Division</label>
-                                <div class="col-12 col-sm-8">
-                                    <select asp-for="Division"
-                                            asp-items="@(new SelectList(Model.CustomerDropDownModel.Divisions, "Code", "Name"))"
-                                            class="form-select">
-                                        <option value="">--Select--</option>
-                                    </select>
-                                    <span asp-validation-for="Division" class="text-danger"></span>
-                                </div>
-                            </div>
-                        </div>
-
                     </div>
+                </div>
+                <div class="col-4 mt-2">
+                    <div class="row">
+                        <label class="col-12 col-sm-4 col-form-label">Division</label>
+                        <div class="col-12 col-sm-8">
+                            <select asp-for="Division"
+                                    asp-items="@(new SelectList(Model.CustomerDropDownModel.Divisions, "Code", "Name"))"
+                                    class="form-select">
+                                <option value="">--Select--</option>
+                            </select>
+                            <span asp-validation-for="Division" class="text-danger"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
 
-                    <!-- Name -->
-                    <div class="row align-items-center mt-2">
-                        <label class="col-12 col-sm-2 col-form-label">Name<span class="required-star">*</span></label>
-                        <div class="col-12 col-sm-10 position-relative">
+            <div class="row">
+                <div class="col-4 mt-2">
+                    <div class="row mt-2">
+                        <label class="col-12 col-sm-4 col-form-label">Name<span class="required-star">*</span></label>
+                        <div class="col-12 col-sm-8 position-relative">
                             <input asp-for="Name" class="form-control" autocomplete="off" />
                             <span asp-validation-for="Name" class="text-danger"></span>
                             <div id="customerSearchResult"
@@ -147,397 +146,247 @@
                                  style="z-index:800;max-height:250px;overflow-y:auto;">
                             </div>
                         </div>
-                       @*  <div class="col-12 col-sm-2">
-                            <input class="form-control" type="text" id="CustomerCode" name="CustomerCode" disabled>
-                        </div> *@
                     </div>
-
-                    <!-- Address -->
-                    <div class="row align-items-center mt-2">
-                        <label class="col-12 col-sm-2 col-form-label">Address<span class="required-star">*</span></label>
-                        <div class="col-12 col-sm-10">
+                </div>
+                <div class="col-4 mt-2">
+                    <div class="row mt-2">
+                        <label class="col-12 col-sm-4 col-form-label">Address<span class="required-star">*</span></label>
+                        <div class="col-12 col-sm-8">
                             <input asp-for="Address" class="form-control" />
                             <span asp-validation-for="Address" class="text-danger"></span>
                         </div>
                     </div>
-
-                    <!-- Address 2 -->
-                    <div class="row align-items-center mt-2">
-                        <label class="col-12 col-sm-2 col-form-label">Address 2</label>
-                        <div class="col-12 col-sm-10">
+                </div>
+                <div class="col-4 mt-2">
+                    <div class="row mt-2">
+                        <label class="col-12 col-sm-4 col-form-label">Address 2</label>
+                        <div class="col-12 col-sm-8">
                             <input asp-for="Address2" class="form-control" />
                             <span asp-validation-for="Address2" class="text-danger"></span>
                         </div>
                     </div>
+                </div>
+            </div>
 
-                    <!-- State + Country -->
-                    <div class="row align-items-center mt-2">
-
-                        <div class="col-12 col-md-6">
-                            <div class="row align-items-center">
-                                <label class="col-12 col-sm-4 col-form-label">Country<span class="required-star">*</span></label>
-                                <div class="col-12 col-sm-8">
-                                    <select asp-for="CountryCode"
-                                            asp-items="@(new SelectList(Model.CustomerDropDownModel.Countries, "Code", "Name"))"
-                                            class="form-select">
-                                        <option value="">--Select--</option>
-                                    </select>
-                                    <span asp-validation-for="CountryCode" class="text-danger"></span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-12 col-md-6">
-                            <div class="row align-items-center">
-                                <label class="col-12 col-sm-4 col-form-label">State</label>
-                                <div class="col-12 col-sm-8">
-                                    <select asp-for="StateCode"
-                                            asp-items="@(new SelectList(Model.CustomerDropDownModel.States, "Code", "Name"))"
-                                            class="form-select">
-                                        <option value="">--Select--</option>
-                                    </select>
-                                    <span asp-validation-for="StateCode" class="text-danger"></span>
-                                </div>
-                            </div>
-                        </div>
-
-                    </div>
-
-                    <!-- City + Post Code -->
-                    <div class="row align-items-center mt-2">
-
-                        <div class="col-12 col-md-6">
-                            <div class="row align-items-center">
-                                <label class="col-12 col-sm-4 col-form-label">City<span class="required-star">*</span></label>
-                                <div class="col-12 col-sm-8">
-                                    <select asp-for="CityCode"
-                                            asp-items="@(new SelectList(Model.CustomerDropDownModel.Cities, "Code", "Name"))"
-                                            class="form-select">
-                                        <option value="">--Select--</option>
-                                    </select>
-                                    <span asp-validation-for="CityCode" class="text-danger"></span>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="col-12 col-md-6">
-                            <div class="row align-items-center">
-                                <label class="col-12 col-sm-4 col-form-label">Post Code<span class="required-star">*</span></label>
-                                <div class="col-12 col-sm-8">
-                                    <select asp-for="PostCode"
-                                            asp-items="@(new SelectList(Model.CustomerDropDownModel.PostCode, "Code", "Name"))"
-                                            class="form-select">
-                                        <option value="">--Select--</option>
-                                    </select>
-                                    <span asp-validation-for="PostCode" class="text-danger"></span>
-                                </div>
-                            </div>
-                        </div>
-
-                    </div>
-
-                    
-
-                    <!-- Region + Zone -->
-                    <div class="row align-items-center mt-2">
-
-                        <div class="col-12 col-md-6">
-                            <div class="row align-items-center">
-                                <label class="col-12 col-sm-4 col-form-label">Region<span class="required-star">*</span></label>
-                                <div class="col-12 col-sm-8">
-                                   @*  <input type="text" id="Region" class="form-control" disabled /> *@
-                                    <input asp-for="Region" class="form-control" disabled />
-                                    <span asp-validation-for="Region" class="text-danger"></span>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="col-12 col-md-6">
-                            <div class="row align-items-center">
-                                <label class="col-12 col-sm-4 col-form-label">Zone<span class="required-star">*</span></label>
-                                <div class="col-12 col-sm-8">
-                                    @* <input type="text" id="Zone" class="form-control" disabled /> *@
-                                    <input asp-for="Zone" class="form-control" disabled />
-                                    <span asp-validation-for="Zone" class="text-danger"></span>
-                                </div>
-                            </div>
-                        </div>
-
-                    </div>
-
-                    <!-- Contact Person + Mobile -->
-                    <div class="row align-items-center mt-2">
-
-                        <div class="col-12 col-md-6">
-                            <div class="row align-items-center">
-                                <label class="col-12 col-sm-4 col-form-label">Contact Person<span class="required-star">*</span></label>
-                                <div class="col-12 col-sm-8">
-                                    <input asp-for="ContactPerson" class="form-control" />
-                                    <span asp-validation-for="ContactPerson" class="text-danger"></span>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="col-12 col-md-6">
-                            <div class="row align-items-center">
-                                <label class="col-12 col-sm-4 col-form-label">Mobile No<span class="required-star">*</span></label>
-                                <div class="col-12 col-sm-8">
-                                    <input asp-for="MobileNo" class="form-control" />
-                                    <span asp-validation-for="MobileNo" class="text-danger"></span>
-                                </div>
-                            </div>
-                        </div>
-
-                    </div>
-
-                    <!-- Phone + Email -->
-                    <div class="row align-items-center mt-2">
-
-                        <div class="col-12 col-md-6">
-                            <div class="row align-items-center">
-                                <label class="col-12 col-sm-4 col-form-label">Phone No</label>
-                                <div class="col-12 col-sm-8">
-                                    <input asp-for="PhoneNo" class="form-control" />
-                                    <span asp-validation-for="PhoneNo" class="text-danger"></span>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="col-12 col-md-6">
-                            <div class="row align-items-center">
-                                <label class="col-12 col-sm-4 col-form-label">Email<span class="required-star">*</span></label>
-                                <div class="col-12 col-sm-8">
-                                    <input asp-for="Email" class="form-control" />
-                                    <span asp-validation-for="Email" class="text-danger"></span>
-                                </div>
-                            </div>
-                        </div>
-
-                    </div>
-
-                    <!-- E_INV Phone + E_INV Email -->
-                    <div class="row align-items-center mt-2">
-
-                        <div class="col-12 col-md-6">
-                            <div class="row align-items-center">
-                                <label class="col-12 col-sm-4 col-form-label">E_INV Phone<span class="required-star">*</span></label>
-                                <div class="col-12 col-sm-8">
-                                    <input asp-for="EInvPhoneNo" class="form-control" />
-                                    <span asp-validation-for="EInvPhoneNo" class="text-danger"></span>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="col-12 col-md-6">
-                            <div class="row align-items-center">
-                                <label class="col-12 col-sm-4 col-form-label">E_INV Email<span class="required-star">*</span></label>
-                                <div class="col-12 col-sm-8">
-                                    <input asp-for="EInvEmail" class="form-control" />
-                                    <span asp-validation-for="EInvEmail" class="text-danger"></span>
-                                </div>
-                            </div>
-                        </div>
-
-                    </div>
-
-                    <!-- Website + Fax -->
-                    <div class="row align-items-center mt-2">
-
-                        <div class="col-12 col-md-6">
-                            <div class="row align-items-center">
-                                <label class="col-12 col-sm-4 col-form-label">Website</label>
-                                <div class="col-12 col-sm-8">
-                                    <input asp-for="Website" class="form-control" />
-                                    <span asp-validation-for="Website" class="text-danger"></span>
-                                </div>
-                            </div>
-                        </div>
-
-                        @* <div class="col-12 col-md-6">
-                            <div class="row align-items-center">
-                                <label class="col-12 col-sm-4 col-form-label">Fax</label>
-                                <div class="col-12 col-sm-8">
-                                    <input asp-for="FaxNo" class="form-control" />
-                                    <span asp-validation-for="FaxNo" class="text-danger"></span>
-                                </div>
-                            </div>
-                        </div> *@
-
-                    </div>
-
-                </fieldset>
-
-                <!-- ================= TAX & BANK ================= -->
-                <fieldset>
-                    <legend class="fw-bold">Tax, Bank & Commission</legend>
-
-                    <!-- GST Reg Type + GST Cust Type -->
-                    <div class="row align-items-center mt-2">
-                        <div class="col-12 col-md-6">
-                            <div class="row align-items-center">
-                                <label class="col-12 col-sm-4 col-form-label">GST Reg Type</label>
-                                <div class="col-12 col-sm-8">
-                                    <select asp-for="GSTRegistrationType"
-                                            asp-items="@(new SelectList(Model.CustomerDropDownModel.GSTRegistrationTypes, "Code", "Name"))"
-                                            class="form-select">
-                                        <option value="">-- Select --</option>
-                                    </select>
-
-                                    <span asp-validation-for="GSTRegistrationType" class="text-danger"></span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-12 col-md-6">
-                            <div class="row align-items-center">
-                                <label class="col-12 col-sm-4 col-form-label">GST Cust Type</label>
-                                <div class="col-12 col-sm-8">
-                                    <select asp-for="GSTCustomerType"
-                                            asp-items="@(new SelectList(Model.CustomerDropDownModel.GSTCustomerTypes, "Code", "Name"))"
-                                            class="form-select">
-                                        <option value="">-- Select --</option>
-                                    </select>
-
-                                    <span asp-validation-for="GSTCustomerType" class="text-danger"></span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- GST Reg No + ARN No -->
-                    <div class="row align-items-center mt-2">
-                        <div class="col-12 col-md-6">
-                            <div class="row align-items-center">
-                                <label class="col-12 col-sm-4 col-form-label">GST Reg No</label>
-                                <div class="col-12 col-sm-8">
-                                    <input asp-for="GSTRegistrationNo" class="form-control" />
-                                    <span asp-validation-for="GSTRegistrationNo" class="text-danger"></span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-12 col-md-6">
-                            <div class="row align-items-center">
-                                <label class="col-12 col-sm-4 col-form-label">ARN No</label>
-                                <div class="col-12 col-sm-8">
-                                    <input asp-for="ARNNo" class="form-control" />
-                                    <span asp-validation-for="ARNNo" class="text-danger"></span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- PAN No + Bank Name -->
-                    <div class="row align-items-center mt-2">
-                        <div class="col-12 col-md-6">
-                            <div class="row align-items-center">
-                                <label class="col-12 col-sm-4 col-form-label">PAN No</label>
-                                <div class="col-12 col-sm-8">
-                                    <input asp-for="PANNo" class="form-control" />
-                                    <span asp-validation-for="PANNo" class="text-danger"></span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-12 col-md-6">
-                            <div class="row align-items-center">
-                                <label class="col-12 col-sm-4 col-form-label">Bank Name</label>
-                                <div class="col-12 col-sm-8">
-                                    <input asp-for="BankName" class="form-control" />
-                                    <span asp-validation-for="BankName" class="text-danger"></span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Bank Account No + Branch Name -->
-                    <div class="row align-items-center mt-2">
-                        <div class="col-12 col-md-6">
-                            <div class="row align-items-center">
-                                <label class="col-12 col-sm-4 col-form-label">Bank Account No</label>
-                                <div class="col-12 col-sm-8">
-                                    <input asp-for="BankAccountNo" class="form-control" />
-                                    <span asp-validation-for="BankAccountNo" class="text-danger"></span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-12 col-md-6">
-                            <div class="row align-items-center">
-                                <label class="col-12 col-sm-4 col-form-label">Branch Name</label>
-                                <div class="col-12 col-sm-8">
-                                    <input asp-for="BranchName" class="form-control" />
-                                    <span asp-validation-for="BranchName" class="text-danger"></span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- IFSC Code + Commission Type -->
-                    <div class="row align-items-center mt-2">
-                        <div class="col-12 col-md-6">
-                            <div class="row align-items-center">
-                                <label class="col-12 col-sm-4 col-form-label">IFSC Code</label>
-                                <div class="col-12 col-sm-8">
-                                    <input asp-for="IFSCCode" class="form-control" />
-                                    <span asp-validation-for="IFSCCode" class="text-danger"></span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-12 col-md-6">
-                            <div class="row align-items-center">
-                                <label class="col-12 col-sm-4 col-form-label">Commission Type</label>
-                                <div class="col-12 col-sm-8">
-                                    <select asp-for="CommissionType"
-                                            asp-items="@(new SelectList(Model.CustomerDropDownModel.CommissionTypes, "Code", "Name"))"
-                                            class="form-select">
-                                        <option value="">-- Select --</option>
-                                    </select>
-
-                                    <span asp-validation-for="CommissionType" class="text-danger"></span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Commission Value + Currency -->
-                    <div class="row align-items-center mt-2">
-                        <div class="col-12 col-md-6">
-                            <div class="row align-items-center">
-                                <label class="col-12 col-sm-4 col-form-label">Commission % / Rs</label>
-                                <div class="col-12 col-sm-8">
-                                    <input asp-for="CommissionValue" type="number" step="0.01" class="form-control" />
-                                    <span asp-validation-for="CommissionValue" class="text-danger"></span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-12 col-md-6">
-                            <div class="row align-items-center">
-                                <label class="col-12 col-sm-4 col-form-label">Currency</label>
-                                <div class="col-12 col-sm-8">
-                                    <select asp-for="CurrencyCode"
-                                            asp-items="@(new SelectList(Model.CustomerDropDownModel.Currencies, "Code", "Name"))"
-                                            class="form-select">
-                                        <option value="">--Select--</option>
-                                    </select>
-                                    <span asp-validation-for="CurrencyCode" class="text-danger"></span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Vendor (Full Width) -->
-                    <div class="row align-items-center mt-2">
-                        <label class="col-12 col-sm-2 col-form-label">Vendor</label>
-                        <div class="col-12 col-sm-10">
-                            <select asp-for="VendorCode"
-                                    asp-items="@(new SelectList(Model.CustomerDropDownModel.Vendors, "Code", "Name"))"
+            <div class="row">
+                <div class="col-4 mt-2">
+                    <div class="row">
+                        <label class="col-12 col-sm-4 col-form-label">Country<span class="required-star">*</span></label>
+                        <div class="col-12 col-sm-8">
+                            <select asp-for="CountryCode"
+                                    asp-items="@(new SelectList(Model.CustomerDropDownModel.Countries, "Code", "Name"))"
                                     class="form-select">
                                 <option value="">--Select--</option>
                             </select>
-                            <span asp-validation-for="VendorCode" class="text-danger"></span>
+                            <span asp-validation-for="CountryCode" class="text-danger"></span>
                         </div>
                     </div>
+                </div>
+                <div class="col-4 mt-2">
+                    <div class="row">
+                        <label class="col-12 col-sm-4 col-form-label">State</label>
+                        <div class="col-12 col-sm-8">
+                            <select asp-for="StateCode"
+                                    asp-items="@(new SelectList(Model.CustomerDropDownModel.States, "Code", "Name"))"
+                                    class="form-select">
+                                <option value="">--Select--</option>
+                            </select>
+                            <span asp-validation-for="StateCode" class="text-danger"></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-4 mt-2">
+                    <div class="row">
+                        <label class="col-12 col-sm-4 col-form-label">City<span class="required-star">*</span></label>
+                        <div class="col-12 col-sm-8">
+                            <select asp-for="CityCode"
+                                    asp-items="@(new SelectList(Model.CustomerDropDownModel.Cities, "Code", "Name"))"
+                                    class="form-select">
+                                <option value="">--Select--</option>
+                            </select>
+                            <span asp-validation-for="CityCode" class="text-danger"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
 
-                    <!-- Parent Customer (Full Width) -->
-                    <div class="row align-items-center mt-2">
-                        <label class="col-12 col-sm-2 col-form-label">Parent Customer</label>
-                        <div class="col-12 col-sm-10">
+            <div class="row">
+                <div class="col-4 mt-2">
+                    <div class="row">
+                        <label class="col-12 col-sm-4 col-form-label">Post Code<span class="required-star">*</span></label>
+                        <div class="col-12 col-sm-8">
+                            <select asp-for="PostCode"
+                                    asp-items="@(new SelectList(Model.CustomerDropDownModel.PostCode, "Code", "Name"))"
+                                    class="form-select">
+                                <option value="">--Select--</option>
+                            </select>
+                            <span asp-validation-for="PostCode" class="text-danger"></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-4 mt-2">
+                    <div class="row">
+                        <label class="col-12 col-sm-4 col-form-label">Region<span class="required-star">*</span></label>
+                        <div class="col-12 col-sm-8">
+                            @*  <input type="text" id="Region" class="form-control" disabled /> *@
+                            <input asp-for="Region" class="form-control" disabled />
+                            <span asp-validation-for="Region" class="text-danger"></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-4 mt-2">
+                    <div class="row">
+                        <label class="col-12 col-sm-4 col-form-label">Zone<span class="required-star">*</span></label>
+                        <div class="col-12 col-sm-8">
+                            @* <input type="text" id="Zone" class="form-control" disabled /> *@
+                            <input asp-for="Zone" class="form-control" disabled />
+                            <span asp-validation-for="Zone" class="text-danger"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="row">
+                <div class="col-4 mt-2">
+                    <div class="row">
+                        <label class="col-12 col-sm-4 col-form-label">Credit Limit</label>
+                        <div class="col-12 col-sm-8">
+                            <input asp-for="CreditLimit" type="number" step="0.01" class="form-control" />
+                            <span asp-validation-for="CreditLimit" class="text-danger"></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-4 mt-2">
+                    <div class="row">
+                        <label class="col-12 col-sm-4 col-form-label">Price List</label>
+                        <div class="col-12 col-sm-8">
+                            <select asp-for="PriceListCode"
+                                    asp-items="@(new SelectList(Model.CustomerDropDownModel.PriceLists, "Code", "Name"))"
+                                    class="form-select">
+                                <option value="">--Select--</option>
+                            </select>
+                            <span asp-validation-for="PriceListCode" class="text-danger"></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-4">
+                </div>
+            </div>
+        </fieldset>
+
+        <!-- ================= Contact ================= -->
+        <fieldset>
+            <legend class="fw-bold">Contact</legend>
+
+            <div class="row">
+                <div class="col-4 mt-2">
+                    <div class="row">
+                        <label class="col-12 col-sm-4 col-form-label">Email<span class="required-star">*</span></label>
+                        <div class="col-12 col-sm-8">
+                            <input asp-for="Email" class="form-control" />
+                            <span asp-validation-for="Email" class="text-danger"></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-4 mt-2">
+                    <div class="row">
+                        <label class="col-12 col-sm-4 col-form-label">Mobile No<span class="required-star">*</span></label>
+                        <div class="col-12 col-sm-8">
+                            <input asp-for="MobileNo" class="form-control" />
+                            <span asp-validation-for="MobileNo" class="text-danger"></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-4 mt-2">
+                    <div class="row">
+                        <label class="col-12 col-sm-4 col-form-label">Phone No</label>
+                        <div class="col-12 col-sm-8">
+                            <input asp-for="PhoneNo" class="form-control" />
+                            <span asp-validation-for="PhoneNo" class="text-danger"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-4 mt-2">
+                    <div class="row">
+                        <label class="col-12 col-sm-4 col-form-label">Website</label>
+                        <div class="col-12 col-sm-8">
+                            <input asp-for="Website" class="form-control" />
+                            <span asp-validation-for="Website" class="text-danger"></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-4 mt-2">
+                    <div class="row">
+                        <label class="col-12 col-sm-4 col-form-label">Contact Person<span class="required-star">*</span></label>
+                        <div class="col-12 col-sm-8">
+                            <input asp-for="ContactPerson" class="form-control" />
+                            <span asp-validation-for="ContactPerson" class="text-danger"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </fieldset>
+
+        <!-- ================= Brand With Details ================= -->
+        <fieldset class="mt-3">
+            <legend class="fw-bold d-flex justify-content-between align-items-center">
+                Brand With Details
+
+                <button type="button" class="btn btn-primary btn-sm" onclick="addBrandRow()">
+                    +
+                </button>
+            </legend>
+
+            <div class="table-responsive">
+                <table class="table table-bordered table-sm mb-0 text-center" id="brandTable">
+                    <thead class="table-light text-nowrap">
+                        <tr>
+                            <th>Customer No</th>
+                            <th>Dimension</th>
+                            <th>Customer Category Code</th>
+                            <th>Trade Security Amount</th>
+                            <th>Customer Discount Group</th>
+                            <th>Dealer Classification</th>
+                            <th>Allocation</th>
+                            <th>Sales Person Code</th>
+                            <th>HO Sales Person</th>
+                            <th style="width:60px;">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    </tbody>
+                </table>
+            </div>
+        </fieldset>
+
+        <!-- ================= Marketing ================= -->
+        <fieldset>
+            <legend class="fw-bold">Marketing</legend>
+
+            <div class="row">
+                <div class="col-4 mt-2">
+                    <div class="row">
+                        <label class="col-12 col-sm-4 col-form-label">Customer Type</label>
+                        <div class="col-12 col-sm-8">
+                            <select asp-for="CustomerType"
+                                    asp-items="@(new SelectList(Model.CustomerDropDownModel.CustomerTypes, "Code", "Name"))"
+                                    class="form-select">
+                                <option value="">-- Select Customer Type --</option>
+                            </select>
+
+                            <span asp-validation-for="CustomerType" class="text-danger"></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-4 mt-2">
+                    <div class="row">
+                        <label class="col-12 col-sm-4 col-form-label">Parent Customer</label>
+                        <div class="col-12 col-sm-8">
                             <select asp-for="ParentCustomerCode"
                                     asp-items="@(new SelectList(Model.CustomerDropDownModel.ParentCustomers, "Code", "Name"))"
                                     class="form-select">
@@ -546,389 +395,353 @@
                             <span asp-validation-for="ParentCustomerCode" class="text-danger"></span>
                         </div>
                     </div>
-
-                    <!-- Dealer Appt Date + Dealer Classification -->
-                    <div class="row align-items-center mt-2">
-                        <div class="col-12 col-md-6">
-                            <div class="row align-items-center">
-                                <label class="col-12 col-sm-4 col-form-label">Dealer Appt Date</label>
-                                <div class="col-12 col-sm-8">
-                                    <input asp-for="DealerAppointmentDate" type="date" class="form-control" />
-                                    <span asp-validation-for="DealerAppointmentDate" class="text-danger"></span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-12 col-md-6">
-                            <div class="row align-items-center">
-                                <label class="col-12 col-sm-4 col-form-label">Dealer Classification</label>
-                                <div class="col-12 col-sm-8">
-                                    <select asp-for="DealerClassification"
-                                            asp-items="@(new SelectList(Model.CustomerDropDownModel.DealerClassifications, "Code", "Name"))"
-                                            class="form-select">
-                                        <option value="">-- Select --</option>
-                                    </select>
-
-                                    <span asp-validation-for="DealerClassification" class="text-danger"></span>
-                                </div>
-                            </div>
+                </div>
+                <div class="col-4 mt-2">
+                    <div class="row">
+                        <label class="col-12 col-sm-4 col-form-label">Vendor</label>
+                        <div class="col-12 col-sm-8">
+                            <select asp-for="VendorCode"
+                                    asp-items="@(new SelectList(Model.CustomerDropDownModel.Vendors, "Code", "Name"))"
+                                    class="form-select">
+                                <option value="">--Select--</option>
+                            </select>
+                            <span asp-validation-for="VendorCode" class="text-danger"></span>
                         </div>
                     </div>
+                </div>
+            </div>
 
-                    <!-- Customer Category + HO Sales -->
-                    <div class="row align-items-center mt-2">
-                        <div class="col-12 col-md-6">
-                            <div class="row align-items-center">
-                                <label class="col-12 col-sm-4 col-form-label">Customer Category</label>
-                                <div class="col-12 col-sm-8">
-                                    <select asp-for="CustomerCategoryCode"
-                                            asp-items="@(new SelectList(Model.CustomerDropDownModel.CustomerCategories, "Code", "Name"))"
-                                            class="form-select">
-                                        <option value="">--Select--</option>
-                                    </select>
-                                    <span asp-validation-for="CustomerCategoryCode" class="text-danger"></span>
-                                </div>
-                            </div>
+            <div class="row">
+                <div class="col-4 mt-2">
+
+                    <div class="row">
+                        <label class="col-12 col-sm-4 col-form-label">Commission Type</label>
+                        <div class="col-12 col-sm-8">
+                            <select asp-for="CommissionType"
+                                    asp-items="@(new SelectList(Model.CustomerDropDownModel.CommissionTypes, "Code", "Name"))"
+                                    class="form-select">
+                                <option value="">-- Select --</option>
+                            </select>
+
+                            <span asp-validation-for="CommissionType" class="text-danger"></span>
                         </div>
-                        <div class="col-12 col-md-6">
-                            <div class="row align-items-center">
-                                <label class="col-12 col-sm-4 col-form-label">HO Sales</label>
-                                <div class="col-12 col-sm-8">
-                                    <select asp-for="HOSalesCode"
-                                            asp-items="@(new SelectList(Model.CustomerDropDownModel.HOSalesPersons, "Code", "Name"))"
-                                            class="form-select">
-                                        <option value="">--Select--</option>
-                                    </select>
-                                    <span asp-validation-for="HOSalesCode" class="text-danger"></span>
-                                </div>
-                            </div>
-                        </div>
+
                     </div>
+                </div>
+                <div class="col-4 mt-2">
 
-                </fieldset>
+                    <div class="row">
+                        <label class="col-12 col-sm-4 col-form-label">Bank Name</label>
+                        <div class="col-12 col-sm-8">
+                            <input asp-for="BankName" class="form-control" />
+                            <span asp-validation-for="BankName" class="text-danger"></span>
+                        </div>
+
+                    </div>
+                </div>
+                <div class="col-4 mt-2">
+
+                    <div class="row">
+                        <label class="col-12 col-sm-4 col-form-label">Branch Name</label>
+                        <div class="col-12 col-sm-8">
+                            <input asp-for="BranchName" class="form-control" />
+                            <span asp-validation-for="BranchName" class="text-danger"></span>
+                        </div>
+
+                    </div>
+                </div>
+
+
 
             </div>
 
-            <!-- ================= RIGHT SIDE ================= -->
-            <div class="col-lg-6">
-
-                <!-- ================= BUSINESS ================= -->
-                <fieldset>
-                    <legend class="fw-bold">Business Details</legend>
-
-                    <!-- Customer Type + Credit Limit -->
-                    <div class="row align-items-center mt-2">
-                        <div class="col-12 col-md-6">
-                            <div class="row align-items-center">
-                                <label class="col-12 col-sm-4 col-form-label">Customer Type</label>
-                                <div class="col-12 col-sm-8">
-                                    <select asp-for="CustomerType"
-                                            asp-items="@(new SelectList(Model.CustomerDropDownModel.CustomerTypes, "Code", "Name"))"
-                                            class="form-select">
-                                        <option value="">-- Select Customer Type --</option>
-                                    </select>
-
-                                    <span asp-validation-for="CustomerType" class="text-danger"></span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-12 col-md-6">
-                            <div class="row align-items-center">
-                                <label class="col-12 col-sm-4 col-form-label">Credit Limit</label>
-                                <div class="col-12 col-sm-8">
-                                    <input asp-for="CreditLimit" type="number" step="0.01" class="form-control" />
-                                    <span asp-validation-for="CreditLimit" class="text-danger"></span>
-                                </div>
-                            </div>
+            <div class="row">
+                <div class="col-4 mt-2">
+                    <div class="row">
+                        <label class="col-12 col-sm-4 col-form-label">Bank Account No</label>
+                        <div class="col-12 col-sm-8">
+                            <input asp-for="BankAccountNo" class="form-control" />
+                            <span asp-validation-for="BankAccountNo" class="text-danger"></span>
                         </div>
                     </div>
-
-                    <!-- Payment Terms + Payment Method -->
-                    <div class="row align-items-center mt-2">
-                        <div class="col-12 col-md-6">
-                            <div class="row align-items-center">
-                                <label class="col-12 col-sm-4 col-form-label">Payment Terms</label>
-                                <div class="col-12 col-sm-8">
-                                    <select asp-for="PaymentTermsCode"
-                                            asp-items="@(new SelectList(Model.CustomerDropDownModel.PaymentTerms, "Code", "Name"))"
-                                            class="form-select">
-                                        <option value="">--Select--</option>
-                                    </select>
-                                    <span asp-validation-for="PaymentTermsCode" class="text-danger"></span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-12 col-md-6">
-                            <div class="row align-items-center">
-                                <label class="col-12 col-sm-4 col-form-label">Payment Method</label>
-                                <div class="col-12 col-sm-8">
-                                    <select asp-for="PaymentMethodCode"
-                                            asp-items="@(new SelectList(Model.CustomerDropDownModel.PaymentMethods, "Code", "Name"))"
-                                            class="form-select">
-                                        <option value="">--Select--</option>
-                                    </select>
-                                    <span asp-validation-for="PaymentMethodCode" class="text-danger"></span>
-                                </div>
-                            </div>
+                </div>
+                <div class="col-4 mt-2">
+                    <div class="row">
+                        <label class="col-12 col-sm-4 col-form-label">IFSC Code</label>
+                        <div class="col-12 col-sm-8">
+                            <input asp-for="IFSCCode" class="form-control" />
+                            <span asp-validation-for="IFSCCode" class="text-danger"></span>
                         </div>
                     </div>
+                </div>
 
-                    <!-- Salesperson + Allocation -->
-                    <div class="row align-items-center mt-2">
-                        <div class="col-12 col-md-6">
-                            <div class="row align-items-center">
-                                <label class="col-12 col-sm-4 col-form-label">Salesperson</label>
-                                <div class="col-12 col-sm-8">
-                                    <select asp-for="SalespersonCode"
-                                            asp-items="@(new SelectList(Model.CustomerDropDownModel.SalesPersons, "Code", "Name"))"
-                                            class="form-select">
-                                        <option value="">--Select--</option>
-                                    </select>
-                                    <span asp-validation-for="SalespersonCode" class="text-danger"></span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-12 col-md-6">
-                            <div class="row align-items-center">
-                                <label class="col-12 col-sm-4 col-form-label">Allocation</label>
-                                <div class="col-12 col-sm-8">
-                                    <input asp-for="Allocation" class="form-control" />
-                                </div>
-                            </div>
+            </div>
+        </fieldset>
+
+        <!-- ================= Invoicing ================= -->
+        <fieldset>
+            <legend class="fw-bold">Invoicing</legend>
+
+            <div class="row">
+                <div class="col-4 mt-2">
+                    <div class="row">
+                        <label class="col-12 col-sm-4 col-form-label">Location</label>
+                        <div class="col-12 col-sm-8">
+                            <select asp-for="LocationCode"
+                                    asp-items="@(new SelectList(Model.CustomerDropDownModel.Locations, "Code", "Name"))"
+                                    class="form-select">
+                                <option value="">--Select--</option>
+                            </select>
+
+                            <span asp-validation-for="LocationCode" class="text-danger"></span>
                         </div>
                     </div>
-
-                    <!-- Structure + Business Category -->
-                    <div class="row align-items-center mt-2">
-                        <div class="col-12 col-md-6">
-                            <div class="row align-items-center">
-                                <label class="col-12 col-sm-4 col-form-label">Structure</label>
-                                <div class="col-12 col-sm-8">
-                                    <select asp-for="Structure"
-                                            asp-items="@(new SelectList(Model.CustomerDropDownModel.Structures, "Code", "Name"))"
-                                            class="form-select">
-                                        <option value="">--Select--</option>
-                                    </select>
-                                    <span asp-validation-for="Structure" class="text-danger"></span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-12 col-md-6">
-                            <div class="row align-items-center">
-                                <label class="col-12 col-sm-4 col-form-label">Business Category</label>
-                                <div class="col-12 col-sm-8">
-                                    <select asp-for="BusinessCategory"
-                                            asp-items="@(new SelectList(Model.CustomerDropDownModel.BusinessCategories, "Code", "Name"))"
-                                            class="form-select">
-                                        <option value="">-- Select --</option>
-                                    </select>
-
-                                    <span asp-validation-for="BusinessCategory" class="text-danger"></span>
-                                </div>
-                            </div>
+                </div>
+                <div class="col-4 mt-2">
+                    <div class="row">
+                        <label class="col-12 col-sm-4 col-form-label">Gen Bus Posting Group</label>
+                        <div class="col-12 col-sm-8">
+                            <select asp-for="GenBusPostingGroup"
+                                    asp-items="@(new SelectList(Model.CustomerDropDownModel.GenBusPostingGroups, "Code", "Name"))"
+                                    class="form-select">
+                                <option value="">--Select--</option>
+                            </select>
+                            <span asp-validation-for="GenBusPostingGroup" class="text-danger"></span>
                         </div>
                     </div>
-
-                    <!-- Location + Price List -->
-                    <div class="row align-items-center mt-2">
-                        <div class="col-12 col-md-6">
-                            <div class="row align-items-center">
-                                <label class="col-12 col-sm-4 col-form-label">Location</label>
-                                <div class="col-12 col-sm-8">
-                                    <select asp-for="LocationCode"
-                                            asp-items="@(new SelectList(Model.CustomerDropDownModel.Locations, "Code", "Name"))"
-                                            class="form-select">
-                                        <option value="">--Select--</option>
-                                    </select>
-
-                                    <span asp-validation-for="LocationCode" class="text-danger"></span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-12 col-md-6">
-                            <div class="row align-items-center">
-                                <label class="col-12 col-sm-4 col-form-label">Price List</label>
-                                <div class="col-12 col-sm-8">
-                                    <select asp-for="PriceListCode"
-                                            asp-items="@(new SelectList(Model.CustomerDropDownModel.PriceLists, "Code", "Name"))"
-                                            class="form-select">
-                                        <option value="">--Select--</option>
-                                    </select>
-                                    <span asp-validation-for="PriceListCode" class="text-danger"></span>
-                                </div>
-                            </div>
+                </div>
+                <div class="col-4 mt-2">
+                    <div class="row">
+                        <label class="col-12 col-sm-4 col-form-label">Customer Posting Group</label>
+                        <div class="col-12 col-sm-8">
+                            <select asp-for="CustomerPostingGroup"
+                                    asp-items="@(new SelectList(Model.CustomerDropDownModel.CustomerPostingGroups, "Code", "Name"))"
+                                    class="form-select">
+                                <option value="">--Select--</option>
+                            </select>
+                            <span asp-validation-for="CustomerPostingGroup" class="text-danger"></span>
                         </div>
                     </div>
+                </div>
+            </div>
 
-                    <!-- Customer Price Group + MRP Group -->
-                    <div class="row align-items-center mt-2">
-                        <div class="col-12 col-md-6">
-                            <div class="row align-items-center">
-                                <label class="col-12 col-sm-4 col-form-label">Customer Price Group</label>
-                                <div class="col-12 col-sm-8">
-                                    <select asp-for="CustomerPriceGroup"
-                                            asp-items="@(new SelectList(Model.CustomerDropDownModel.CustomerPriceGroups, "Code", "Name"))"
-                                            class="form-select">
-                                        <option value="">--Select--</option>
-                                    </select>
-                                    <span asp-validation-for="CustomerPriceGroup" class="text-danger"></span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-12 col-md-6">
-                            <div class="row align-items-center">
-                                <label class="col-12 col-sm-4 col-form-label">MRP Group</label>
-                                <div class="col-12 col-sm-8">
-                                    <select asp-for="MRPGroup"
-                                            asp-items="@(new SelectList(Model.CustomerDropDownModel.MRPGroups, "Code", "Name"))"
-                                            class="form-select">
-                                        <option value="">--Select--</option>
-                                    </select>
-                                    <span asp-validation-for="MRPGroup" class="text-danger"></span>
-                                </div>
-                            </div>
+            <div class="row">
+                <div class="col-4 mt-2">
+                    <div class="row">
+                        <label class="col-12 col-sm-4 col-form-label">Currency</label>
+                        <div class="col-12 col-sm-8">
+                            <select asp-for="CurrencyCode"
+                                    asp-items="@(new SelectList(Model.CustomerDropDownModel.Currencies, "Code", "Name"))"
+                                    class="form-select">
+                                <option value="">--Select--</option>
+                            </select>
+                            <span asp-validation-for="CurrencyCode" class="text-danger"></span>
                         </div>
                     </div>
-
-                    <!-- Customer Posting Group + Gen Bus Posting Group -->
-                    <div class="row align-items-center mt-2">
-                        <div class="col-12 col-md-6">
-                            <div class="row align-items-center">
-                                <label class="col-12 col-sm-4 col-form-label">Customer Posting Group</label>
-                                <div class="col-12 col-sm-8">
-                                    <select asp-for="CustomerPostingGroup"
-                                            asp-items="@(new SelectList(Model.CustomerDropDownModel.CustomerPostingGroups, "Code", "Name"))"
-                                            class="form-select">
-                                        <option value="">--Select--</option>
-                                    </select>
-                                    <span asp-validation-for="CustomerPostingGroup" class="text-danger"></span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-12 col-md-6">
-                            <div class="row align-items-center">
-                                <label class="col-12 col-sm-4 col-form-label">Gen Bus Posting Group</label>
-                                <div class="col-12 col-sm-8">
-                                    <select asp-for="GenBusPostingGroup"
-                                            asp-items="@(new SelectList(Model.CustomerDropDownModel.GenBusPostingGroups, "Code", "Name"))"
-                                            class="form-select">
-                                        <option value="">--Select--</option>
-                                    </select>
-                                    <span asp-validation-for="GenBusPostingGroup" class="text-danger"></span>
-                                </div>
-                            </div>
+                </div>
+                <div class="col-4 mt-2">
+                    <div class="row">
+                        <label class="col-12 col-sm-4 col-form-label">E_INV Phone<span class="required-star">*</span></label>
+                        <div class="col-12 col-sm-8">
+                            <input asp-for="EInvPhoneNo" class="form-control" />
+                            <span asp-validation-for="EInvPhoneNo" class="text-danger"></span>
                         </div>
                     </div>
-
-                    <!-- Excise Bus Posting Group + Application Method -->
-                    <div class="row align-items-center mt-2">
-                        <div class="col-12 col-md-6">
-                            <div class="row align-items-center">
-                                <label class="col-12 col-sm-4 col-form-label">Excise Bus Posting Group</label>
-                                <div class="col-12 col-sm-8">
-                                    <select asp-for="ExciseBusPostingGroup"
-                                            asp-items="@(new SelectList(Model.CustomerDropDownModel.ExciseBusPostingGroups, "Code", "Name"))"
-                                            class="form-select">
-                                        <option value="">--Select--</option>
-                                    </select>
-                                    <span asp-validation-for="ExciseBusPostingGroup" class="text-danger"></span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-12 col-md-6">
-                            <div class="row align-items-center">
-                                <label class="col-12 col-sm-4 col-form-label">Application Method</label>
-                                <div class="col-12 col-sm-8">
-                                    <select asp-for="ApplicationMethod"
-                                            asp-items="@(new SelectList(Model.CustomerDropDownModel.ApplicationMethods, "Code", "Name"))"
-                                            class="form-select">
-                                        <option value="">-- Select --</option>
-                                    </select>
-
-                                    <span asp-validation-for="ApplicationMethod" class="text-danger"></span>
-                                </div>
-                            </div>
+                </div>
+                <div class="col-4 mt-2">
+                    <div class="row">
+                        <label class="col-12 col-sm-4 col-form-label">E_INV Email<span class="required-star">*</span></label>
+                        <div class="col-12 col-sm-8">
+                            <input asp-for="EInvEmail" class="form-control" />
+                            <span asp-validation-for="EInvEmail" class="text-danger"></span>
                         </div>
                     </div>
+                </div>
+            </div>
+        </fieldset>
 
-                    <!-- Tax Liable + Dimension -->
-                    <div class="row align-items-center mt-2">
-                        <div class="col-12 col-md-6">
-                            <div class="row align-items-center">
-                                <label class="col-12 col-sm-4 col-form-label">Tax Liable</label>
-                                <div class="col-12 col-sm-8">
-                                    <select asp-for="TaxLiable" class="form-select">
-                                        <option value="true">YES</option>
-                                        <option value="false">NO</option>
-                                    </select>
-                                    <span asp-validation-for="TaxLiable" class="text-danger"></span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-12 col-md-6">
-                            <div class="row align-items-center">
-                                <label class="col-12 col-sm-4 col-form-label">Dimension</label>
-                                <div class="col-12 col-sm-8">
-                                    <input asp-for="Dimension" class="form-control" />
-                                </div>
-                            </div>
+        <!-- ================= Payments ================= -->
+        <fieldset>
+            <legend class="fw-bold">Payments</legend>
+            <div class="row">
+                <div class="col-4 mt-2">
+                    <div class="row">
+                        <label class="col-12 col-sm-4 col-form-label">Application Method</label>
+                        <div class="col-12 col-sm-8">
+                            <select asp-for="ApplicationMethod"
+                                    asp-items="@(new SelectList(Model.CustomerDropDownModel.ApplicationMethods, "Code", "Name"))"
+                                    class="form-select">
+                                <option value="">-- Select --</option>
+                            </select>
+
+                            <span asp-validation-for="ApplicationMethod" class="text-danger"></span>
                         </div>
                     </div>
-
-                    <!-- MSME UAM No (Single Left) -->
-                    <div class="row align-items-center mt-2">
-                        <div class="col-12 col-md-6">
-                            <div class="row align-items-center">
-                                <label class="col-12 col-sm-4 col-form-label">MSME UAM No</label>
-                                <div class="col-12 col-sm-8">
-                                    <input asp-for="MSMEUAMNo" class="form-control" />
-                                    <span asp-validation-for="MSMEUAMNo" class="text-danger"></span>
-                                </div>
-                            </div>
+                </div>
+                <div class="col-4 mt-2">
+                    <div class="row">
+                        <label class="col-12 col-sm-4 col-form-label">Payment Method</label>
+                        <div class="col-12 col-sm-8">
+                            <select asp-for="PaymentMethodCode"
+                                    asp-items="@(new SelectList(Model.CustomerDropDownModel.PaymentMethods, "Code", "Name"))"
+                                    class="form-select">
+                                <option value="">--Select--</option>
+                            </select>
+                            <span asp-validation-for="PaymentMethodCode" class="text-danger"></span>
                         </div>
                     </div>
-
-                </fieldset>
-
-                <!-- ================= NOD/NOC ================= -->
-
-                <fieldset>
-                    <legend class="fw-bold">NOD / NOC</legend>
-
-                    <!-- NOD/NOC Creation + Access Code -->
-                    <div class="row align-items-center mt-2">
-                        <div class="col-12 col-md-6">
-                            <div class="row align-items-center">
-                                <label class="col-12 col-sm-4 col-form-label">NOD/NOC Creation</label>
-                                <div class="col-12 col-sm-8">
-                                    <select asp-for="IsNodNocCreation" class="form-select">
-                                        <option value="">-- Select --</option>
-                                        <option value="true">Yes</option>
-                                        <option value="false">No</option>
-                                    </select>
-                                    <span asp-validation-for="IsNodNocCreation" class="text-danger"></span>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="col-12 col-md-6">
-                            <div class="row align-items-center">
-                                <label class="col-12 col-sm-4 col-form-label">Access Code</label>
-                                <div class="col-12 col-sm-8">
-                                    <select asp-for="NODAccessCode"
-                                            asp-items="@(new SelectList(Model.CustomerDropDownModel.AccessCodes, "Code", "Name"))"
-                                            class="form-select">
-                                        <option value="">--Select--</option>
-                                    </select>
-                                    <span asp-validation-for="NODAccessCode" class="text-danger"></span>
-                                </div>
-                            </div>
+                </div>
+                <div class="col-4 mt-2">
+                    <div class="row">
+                        <label class="col-12 col-sm-4 col-form-label">Payment Terms</label>
+                        <div class="col-12 col-sm-8">
+                            <select asp-for="PaymentTermsCode"
+                                    asp-items="@(new SelectList(Model.CustomerDropDownModel.PaymentTerms, "Code", "Name"))"
+                                    class="form-select">
+                                <option value="">--Select--</option>
+                            </select>
+                            <span asp-validation-for="PaymentTermsCode" class="text-danger"></span>
                         </div>
                     </div>
+                </div>
+            </div>
+        </fieldset>
 
-                    <!-- NOD/NOC (Full Width) -->
-                    <div class="row align-items-center mt-2">
-                        <label class="col-12 col-sm-2 col-form-label">NOD/NOC</label>
-                        <div class="col-12 col-sm-10">
+        <!-- ================= TAX & BANK ================= -->
+        <fieldset>
+            <legend class="fw-bold">Tax, Bank & Commission</legend>
+
+            <div class="row">
+                <div class="col-4 mt-2">
+                    <div class="row">
+                        <label class="col-12 col-sm-4 col-form-label">GST Reg Type</label>
+                        <div class="col-12 col-sm-8">
+                            <select asp-for="GSTRegistrationType"
+                                    asp-items="@(new SelectList(Model.CustomerDropDownModel.GSTRegistrationTypes, "Code", "Name"))"
+                                    class="form-select">
+                                <option value="">-- Select --</option>
+                            </select>
+
+                            <span asp-validation-for="GSTRegistrationType" class="text-danger"></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-4 mt-2">
+                    <div class="row">
+                        <label class="col-12 col-sm-4 col-form-label">GST Cust Type</label>
+                        <div class="col-12 col-sm-8">
+                            <select asp-for="GSTCustomerType"
+                                    asp-items="@(new SelectList(Model.CustomerDropDownModel.GSTCustomerTypes, "Code", "Name"))"
+                                    class="form-select">
+                                <option value="">-- Select --</option>
+                            </select>
+
+                            <span asp-validation-for="GSTCustomerType" class="text-danger"></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-4 mt-2">
+
+                    <div class="row">
+                        <label class="col-12 col-sm-4 col-form-label">GST Reg No</label>
+                        <div class="col-12 col-sm-8">
+                            <input asp-for="GSTRegistrationNo" class="form-control" />
+                            <span asp-validation-for="GSTRegistrationNo" class="text-danger"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="row">
+                <div class="col-4 mt-2">
+                    <div class="row">
+                        <label class="col-12 col-sm-4 col-form-label">Business Category</label>
+                        <div class="col-12 col-sm-8">
+                            <select asp-for="BusinessCategory"
+                                    asp-items="@(new SelectList(Model.CustomerDropDownModel.BusinessCategories, "Code", "Name"))"
+                                    class="form-select">
+                                <option value="">-- Select --</option>
+                            </select>
+
+                            <span asp-validation-for="BusinessCategory" class="text-danger"></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-4 mt-2">
+                    <div class="row">
+                        <label class="col-12 col-sm-4 col-form-label">ARN No</label>
+                        <div class="col-12 col-sm-8">
+                            <input asp-for="ARNNo" class="form-control" />
+                            <span asp-validation-for="ARNNo" class="text-danger"></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-4 mt-2">
+                    <div class="row">
+                        <label class="col-12 col-sm-4 col-form-label">PAN No</label>
+                        <div class="col-12 col-sm-8">
+                            <input asp-for="PANNo" class="form-control" />
+                            <span asp-validation-for="PANNo" class="text-danger"></span>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="row">
+                <div class="col-4 mt-2">
+                    <div class="row align-items-center">
+                        <label class="col-12 col-sm-4 col-form-label">MSME UAM No</label>
+                        <div class="col-12 col-sm-8">
+                            <input asp-for="MSMEUAMNo" class="form-control" />
+                            <span asp-validation-for="MSMEUAMNo" class="text-danger"></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-4">
+                </div>
+                <div class="col-4">
+                </div>
+            </div>
+
+        </fieldset>
+
+        <!-- ================= NOD / NOC ================= -->
+        <fieldset>
+            <legend class="fw-bold">NOD / NOC</legend>
+
+            <div class="row">
+                <div class="col-4 mt-2">
+                    <div class="row">
+                        <label class="col-12 col-sm-4 col-form-label">NOD/NOC Creation</label>
+                        <div class="col-12 col-sm-8">
+                            <select asp-for="IsNodNocCreation" class="form-select">
+                                <option value="">-- Select --</option>
+                                <option value="true">Yes</option>
+                                <option value="false">No</option>
+                            </select>
+                            <span asp-validation-for="IsNodNocCreation" class="text-danger"></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-4 mt-2">
+                    <div class="row">
+                        <label class="col-12 col-sm-4 col-form-label">Access Code</label>
+                        <div class="col-12 col-sm-8">
+                            <select asp-for="NODAccessCode"
+                                    asp-items="@(new SelectList(Model.CustomerDropDownModel.AccessCodes, "Code", "Name"))"
+                                    class="form-select">
+                                <option value="">--Select--</option>
+                            </select>
+                            <span asp-validation-for="NODAccessCode" class="text-danger"></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-4 mt-2">
+                    <div class="row">
+                        <label class="col-12 col-sm-4 col-form-label">NOD/NOC</label>
+                        <div class="col-12 col-sm-8">
                             <select asp-for="NODNOC"
                                     asp-items="@(new SelectList(Model.CustomerDropDownModel.NODNOCs, "Code", "Name"))"
                                     class="form-select">
@@ -937,11 +750,14 @@
                             <span asp-validation-for="NODNOC" class="text-danger"></span>
                         </div>
                     </div>
+                </div>
+            </div>
 
-                    <!-- Concessional Code (Full Width) -->
-                    <div class="row align-items-center mt-2">
-                        <label class="col-12 col-sm-2 col-form-label">Concessional Code</label>
-                        <div class="col-12 col-sm-10">
+            <div class="row">
+                <div class="col-4 mt-2">
+                    <div class="row">
+                        <label class="col-12 col-sm-4 col-form-label">Concessional Code</label>
+                        <div class="col-12 col-sm-8">
                             <select asp-for="ConcessionalCode"
                                     asp-items="@(new SelectList(Model.CustomerDropDownModel.ConcessionalCodes, "Code", "Name"))"
                                     class="form-select">
@@ -950,42 +766,34 @@
                             <span asp-validation-for="ConcessionalCode" class="text-danger"></span>
                         </div>
                     </div>
+                </div>
+                <div class="col-4 mt-2">
+                    <div class="row">
+                        <label class="col-12 col-sm-4 col-form-label">Threshold Overlook</label>
+                        <div class="col-12 col-sm-8 d-flex align-items-center">
+                            <div class="form-check m-0">
+                                <input asp-for="ThresholdOverlook" class="form-check-input" />
 
-                    <!-- Threshold Overlook + Surcharge Overlook -->
-                    <div class="row align-items-center mt-2">
-                        <div class="col-12 col-md-6">
-                            <div class="row align-items-center">
-                                <label class="col-12 col-sm-4 col-form-label">Threshold Overlook</label>
-                                <div class="col-12 col-sm-8 d-flex align-items-center">
-                                    <div class="form-check m-0">
-                                        <input asp-for="ThresholdOverlook" class="form-check-input" />
-
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="col-12 col-md-6">
-                            <div class="row align-items-center">
-                                <label class="col-12 col-sm-4 col-form-label">Surcharge Overlook</label>
-                                <div class="col-12 col-sm-8 d-flex align-items-center">
-                                    <div class="form-check m-0">
-                                        <input asp-for="SurchargeOverlook" class="form-check-input" />
-                                    </div>
-                                </div>
                             </div>
                         </div>
                     </div>
-
-                </fieldset>
-
-                <div class="action-buttons">
-                    <button type="button" class="btn btn-primary" id="btnSaveCustomerMaster">Save</button>
-                    <button type="reset" class="btn btn-secondary">Refresh</button>
                 </div>
-
+                <div class="col-4 mt-2">
+                    <div class="row">
+                        <label class="col-12 col-sm-4 col-form-label">Surcharge Overlook</label>
+                        <div class="col-12 col-sm-8 d-flex align-items-center">
+                            <div class="form-check m-0">
+                                <input asp-for="SurchargeOverlook" class="form-check-input" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
+        </fieldset>
 
+        <div class="action-buttons">
+            <button type="button" class="btn btn-primary" id="btnSaveCustomerMaster">Save</button>
+            <button type="reset" class="btn btn-secondary">Refresh</button>
         </div>
     </div>
 </form>
