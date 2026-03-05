@@ -56,20 +56,36 @@ namespace ERPAPP.Controllers
             });
         }
 
+        #region Address  - Search City -> Get City Detail -> Search Postcode -> Get Postcode Detail
+
+
         [HttpGet]
-        public JsonResult GetCustomerAddress(string type, string countryCode, string state, string city, string code)
+        public JsonResult GetCityList(string city)
         {
-            var result = _customerRepository.GetCustomerAddress(type, countryCode, state, city, code);
+            var result = _customerRepository.GetCustomerCityList(city);
+            return Json(result);
+        }
+
+        public JsonResult GetCityDetail(string city)
+        {
+            var result = _customerRepository.GetCityDetail(city);
             return Json(result);
         }
 
         [HttpGet]
-        public JsonResult GetPostCodeDetail(string postCode)
+        public JsonResult GetPostCodeList(string city)
         {
-            var result = _customerRepository.GetPostCodeDetail(postCode);
+            var result = _customerRepository.GetPostCodeList(city);
             return Json(result);
         }
 
+        public JsonResult GetPostCodeDetail(string postcode)
+        {
+            var result = _customerRepository.GetPostCodeDetail(postcode);
+            return Json(result);
+        }
+
+        #endregion
 
         [HttpPost]
         public async Task<IActionResult> SaveCustomerMaster(CustomerModel model)

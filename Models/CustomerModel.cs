@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Microsoft.Extensions.Primitives;
+using System.ComponentModel.DataAnnotations;
 
 namespace ERPAPP.Models
 {
@@ -30,8 +31,7 @@ namespace ERPAPP.Models
         [Required(ErrorMessage = "Post Code is required")]
         public string PostCode { get; set; }
 
-        [Required(ErrorMessage = "State is required")]
-        public string StateCode { get; set; }
+        public string? StateCode { get; set; }
 
         [Required(ErrorMessage = "Country is required")]
         public string CountryCode { get; set; }
@@ -97,11 +97,14 @@ namespace ERPAPP.Models
         public string IFSCCode { get; set; }
 
         // ===== Commission =====
+        [Required(ErrorMessage = "Commission Vendor No is required")]
+        public int CommissionVendorNo { get; set; }
+
+        [Required(ErrorMessage = "Commission No is required")]
+        public int Commission { get; set; }
+
         [Required(ErrorMessage = "Commission Type is required")]
         public int CommissionType { get; set; }
-
-        [Required(ErrorMessage = "Commission Value is required")]
-        public double CommissionValue { get; set; }
 
         public string CurrencyCode { get; set; }
         public string VendorCode { get; set; }
@@ -166,6 +169,11 @@ namespace ERPAPP.Models
 
         public bool ThresholdOverlook { get; set; }
         public bool SurchargeOverlook { get; set; }
+
+        public string PromoCode { get; set; }
+        public string ChargesGroup { get; set; }
+
+        public string BillToCustomer { get; set; }
     }
 
     public class BaseDropDown
@@ -339,15 +347,26 @@ namespace ERPAPP.Models
     {
         public string Code { get; set; }
         public string Name { get; set; }
-        public string DataType { get; set; }  // Important
     }
 
-    public class AddressDetailModel
+    public class AddressCityDetailModel
     {
+        public string CountryCode { get; set; }
+        public string StateCode { get; set; }
         public string City { get; set; }
+    }
+
+    public class AddressPostCodeDetailModel
+    {
         public string PostCode { get; set; }
         public string Region { get; set; }
         public string Zone { get; set; }
+    }
+
+    public class AddressPostCodeModel
+    {
+        public string Code { get; set; }
+        public string Name { get; set; }
     }
 
     public class ModifyPermissionResult

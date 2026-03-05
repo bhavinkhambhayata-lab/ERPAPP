@@ -102,161 +102,110 @@
 
     });
 
-    // COUNTRY CHANGE
-    $('#CountryCode').change(function () {
+    //Empty city clears related fields
+    $("#CityName").on("input", function () {
 
-        var countryCode = $(this).val();
+        if ($(this).val().trim() === "") {
 
-        // 🔥 FULL RESET
-        $('#StateCode').empty().append('<option value="">Select State</option>');
-        $('#CityCode').empty().append('<option value="">Select City</option>');
-        $('#PostCode').empty().append('<option value="">Select Post Code</option>');
-        $('#Region').val('');
-        $('#Zone').val('');
+            $("#CountryCode").val('');
+            $("#StateCode").val('');
+            $("#PostCode").empty().append('<option value="">--Select--</option>');
+            $("#Region").val('');
+            $("#Zone").val('');
 
-        if (countryCode === "") return;
+        }
 
-        $.ajax({
-            url: '/Customer/GetCustomerAddress',
-            type: 'GET',
-            data: {
-                type: 'STATE',
-                countryCode: countryCode
-            },
-            success: function (response) {
-
-                if (!response || response.length === 0) return;
-
-                if (response[0].dataType === "STATE") {
-
-                    $.each(response, function (i, item) {
-                        $('#StateCode').append(
-                            $('<option>', {
-                                value: item.code,
-                                text: item.name
-                            })
-                        );
-                    });
-
-                } else {
-
-                    $('#StateCode').prop('disabled', true);
-
-                    // Fallback → Direct City
-                    $.each(response, function (i, item) {
-                        $('#CityCode').append(
-                            $('<option>', {
-                                value: item.code,
-                                text: item.name
-                            }).attr('data-state', item.state)
-                        );
-                    });
-                }
-            }
-        });
     });
 
+    // CITY AUTOCOMPLETE
+    $("#CityName").autocomplete({
 
-    // STATE CHANGE
-    $('#StateCode').change(function () {
+        source: function (request, response) {
 
-        var stateCode = $(this).val();
-        var countryCode = $('#CountryCode').val();
+            $.get("/Customer/GetCityList",
+                { city: request.term },
+                function (data) {
 
-        // 🔥 RESET BELOW LEVELS
-        $('#CityCode').empty().append('<option value="">Select City</option>');
-        $('#PostCode').empty().append('<option value="">Select Post Code</option>');
-        $('#Region').val('');
-        $('#Zone').val('');
+                    response($.map(data, function (item) {
+                        return {
+                            label: item.name,
+                            value: item.name
+                        };
+                    }));
 
-        if (stateCode === "") return;
-
-        $.ajax({
-            url: '/Customer/GetCustomerAddress',
-            type: 'GET',
-            data: {
-                type: 'CITY',
-                countryCode: countryCode,
-                state: stateCode
-            },
-            success: function (response) {
-
-                if (!response) return;
-
-                $.each(response, function (i, item) {
-                    $('#CityCode').append(
-                        $('<option>', {
-                            value: item.code,
-                            text: item.name
-                        })
-                    );
                 });
 
-            }
-        });
-    });
+        },
 
+        minLength: 2,
 
-    // CITY CHANGE
-    $('#CityCode').change(function () {
+        select: function (event, ui) {
 
-        var city = $(this).val();
+            $("#CityName").val(ui.item.value);
 
-        // 🔥 RESET BELOW LEVELS
-        $('#PostCode').empty().append('<option value="">Select Post Code</option>');
-        $('#Region').val('');
-        $('#Zone').val('');
+            // 🔥 CLEAR OLD DATA
+            $("#CountryCode").val('');
+            $("#StateCode").val('');
+            $("#PostCode").empty().append('<option value="">--Select--</option>');
+            $("#Region").val('');
+            $("#Zone").val('');
 
-        if (city === "") return;
+            // CITY DETAIL
+            $.get("/Customer/GetCityDetail",
+                { city: ui.item.value },
+                function (data) {
 
-        $.ajax({
-            url: '/Customer/GetCustomerAddress',
-            type: 'GET',
-            data: {
-                type: 'CODE',
-                city: city
-            },
-            success: function (response) {
+                    if (data) {
+                        $("#CountryCode").val(data.countryCode || '');
+                        $("#StateCode").val(data.stateCode || '');
+                    }
 
-                if (!response) return;
-
-                $.each(response, function (i, item) {
-                    $('#PostCode').append(
-                        $('<option>', {
-                            value: item.code,
-                            text: item.name
-                        })
-                    );
                 });
 
-            }
-        });
+            // POSTCODE LIST
+            $.get("/Customer/GetPostCodeList",
+                { city: ui.item.value },
+                function (data) {
+
+                    $("#PostCode").empty().append('<option value="">--Select--</option>');
+
+                    $.each(data, function (i, item) {
+
+                        $("#PostCode").append(
+                            '<option value="' + item.code + '">' + item.name + '</option>'
+                        );
+
+                    });
+
+                });
+
+            return false;
+        }
+
     });
 
+    // POSTCODE CHANGE
+    $("#PostCode").change(function () {
 
-    // POST CODE CHANGE
-    $('#PostCode').change(function () {
+        var postcode = $(this).val();
 
-        var postCode = $(this).val();
+        // 🔥 CLEAR REGION & ZONE
+        $("#Region").val('');
+        $("#Zone").val('');
 
-        // 🔥 RESET DETAIL FIELDS
-        $('#Region').val('');
-        $('#Zone').val('');
+        if (!postcode) return;
 
-        if (postCode === "") return;
+        $.get("/Customer/GetPostCodeDetail",
+            { postcode: postcode },
+            function (data) {
 
-        $.ajax({
-            url: '/Customer/GetPostCodeDetail',
-            type: 'GET',
-            data: { postCode: postCode },
-            success: function (response) {
-
-                if (response) {
-                    $('#Region').val(response.region || '');
-                    $('#Zone').val(response.zone || '');
+                if (data) {
+                    $("#Region").val(data.region || '');
+                    $("#Zone").val(data.zone || '');
                 }
-            }
-        });
+
+            });
+
     });
 
     $('#btnSaveCustomerMaster').click(function () {
@@ -321,6 +270,8 @@ function addBrandRow() {
             <td><input name="CustomerList[${rowCount}].Allocation" class="form-control form-control-sm" /></td>
             <td><input name="CustomerList[${rowCount}].SalesPersonCode" class="form-control form-control-sm" /></td>
             <td><input name="CustomerList[${rowCount}].HOSalesPerson" class="form-control form-control-sm" /></td>
+             <td><input name="CustomerList[${rowCount}].DLRAppointmentDate" class="form-control form-control-sm" /></td>
+            <td><input name="CustomerList[${rowCount}].DLRTerminationDate" class="form-control form-control-sm" /></td>
             <td class="text-center">
                 <button type="button" class="btn btn-danger btn-sm" onclick="removeRow(this)">
                     ✕

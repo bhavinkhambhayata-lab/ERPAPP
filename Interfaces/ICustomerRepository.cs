@@ -9,13 +9,11 @@ namespace ERPAPP.Interfaces
         Task<List<CustomerSearchModel>> SearchCustomer(string searchText);
         Task<CustomerMasterModel> GetCustomerMaster(string customerName);
         Task<bool> CheckCustomerInMasterAndBrand(string masterCode, int brandId);
-
-        List<AddressDropdownModel> GetCustomerAddress(string type, string countryCode, string state, string city, string code);
-
-        AddressDetailModel GetPostCodeDetail(string postCode);
-
+        List<AddressDropdownModel> GetCustomerCityList(string city);
+        AddressCityDetailModel GetCityDetail(string city);
+        List<AddressPostCodeModel> GetPostCodeList(string city);
+        AddressPostCodeDetailModel GetPostCodeDetail(string code);
         Task<bool> CheckStateGSTMatch(string stateCode, string gstRegistrationNo);
-
         Task<ModifyPermissionResult> CheckModifyPermission(int userRowId, int entryRowId);
     }
 }

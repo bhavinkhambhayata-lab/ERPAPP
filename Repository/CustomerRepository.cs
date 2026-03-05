@@ -320,15 +320,12 @@ namespace ERPAPP.Repository
             return model;
         }
 
-        public List<AddressDropdownModel> GetCustomerAddress(string type, string countryCode, string state, string city, string code)
+        public List<AddressDropdownModel> GetCustomerCityList(string city)
         {
             SqlParameter[] parameters = new SqlParameter[]
             {
-            new SqlParameter("@Type", (object?)type ?? DBNull.Value),
-            new SqlParameter("@CountryCode", (object?)countryCode ?? DBNull.Value),
-            new SqlParameter("@State", (object?)state ?? DBNull.Value),
-            new SqlParameter("@City", (object?)city ?? DBNull.Value),
-            new SqlParameter("@Code", (object?)code ?? DBNull.Value)
+                new SqlParameter("@Type", "City"),
+                new SqlParameter("@City", (object?)city ?? DBNull.Value)
             };
 
             DataTable dt = _db.GetDataTable("GetCustomer_Address", parameters);
@@ -339,11 +336,8 @@ namespace ERPAPP.Repository
             {
                 list.Add(new AddressDropdownModel
                 {
-                    Code = row["Code"]?.ToString(),
-                    Name = row["Name"]?.ToString(),
-                    DataType = dt.Columns.Contains("DataType")
-                                ? row["DataType"]?.ToString()
-                                : null
+                    Code = row["Code"].ToString(),
+                    Name = row["Name"].ToString()
                 });
             }
 
@@ -436,31 +430,6 @@ namespace ERPAPP.Repository
             return newNo;
         }
 
-        public AddressDetailModel GetPostCodeDetail(string postCode)
-        {
-            SqlParameter[] parameters = new SqlParameter[]
-    {
-        new SqlParameter("@Type", "DETAIL"),
-        new SqlParameter("@Code", postCode)
-    };
-
-            DataTable dt = _db.GetDataTable("GetCustomer_Address", parameters);
-
-            if (dt.Rows.Count > 0)
-            {
-                var row = dt.Rows[0];
-
-                return new AddressDetailModel
-                {
-                    City = row["City"]?.ToString(),
-                    PostCode = row["PostCode"]?.ToString(),
-                    Region = row["Region"]?.ToString(),
-                    Zone = row["Zone"]?.ToString()
-                };
-            }
-
-            return null;
-        }
 
         public async Task<List<CustomerSearchModel>> SearchCustomer(string searchText)
         {
@@ -525,5 +494,101 @@ namespace ERPAPP.Repository
 
             return new ModifyPermissionResult();
         }
+
+        #region Address -> Country, State, City, PostCode
+        public List<AddressDropdownModel> GetCityList(string city)
+        {
+            SqlParameter[] parameters =
+            {
+                new SqlParameter("@Type","CitySearch"),
+                new SqlParameter("@City",(object?)city ?? DBNull.Value)
+            };
+
+            DataTable dt = _db.GetDataTable("GetCustomer_Address", parameters);
+
+            List<AddressDropdownModel> list = new();
+
+            foreach (DataRow row in dt.Rows)
+            {
+                list.Add(new AddressDropdownModel
+                {
+                    Code = row["Code"].ToString(),
+                    Name = row["Name"].ToString()
+                });
+            }
+
+            return list;
+        }
+        public AddressCityDetailModel GetCityDetail(string city)
+        {
+            SqlParameter[] parameters =
+            {
+                    new SqlParameter("@Type","CityDetails"),
+                    new SqlParameter("@City",(object?)city ?? DBNull.Value)
+            };
+
+            DataTable dt = _db.GetDataTable("GetCustomer_Address", parameters);
+
+            AddressCityDetailModel model = new();
+
+            if (dt.Rows.Count > 0)
+            {
+                DataRow row = dt.Rows[0];
+
+                model.CountryCode = row["CountryCode"].ToString();
+                model.StateCode = row["StateCode"].ToString();
+                model.City = row["City"].ToString();
+            }
+
+            return model;
+        }
+        public List<AddressPostCodeModel> GetPostCodeList(string city)
+        {
+            SqlParameter[] parameters =
+            {
+                new SqlParameter("@Type","PostCode"),
+                new SqlParameter("@City",(object?)city ?? DBNull.Value)
+            };
+
+            DataTable dt = _db.GetDataTable("GetCustomer_Address", parameters);
+
+            List<AddressPostCodeModel> list = new();
+
+            foreach (DataRow row in dt.Rows)
+            {
+                list.Add(new AddressPostCodeModel
+                {
+                    Code = row["Code"].ToString(),
+                    Name = row["Name"].ToString()
+                });
+            }
+
+            return list;
+        }
+        public AddressPostCodeDetailModel GetPostCodeDetail(string code)
+        {
+            SqlParameter[] parameters =
+            {
+                new SqlParameter("@Type","PostCodeDetails"),
+                new SqlParameter("@Code",(object?)code ?? DBNull.Value)
+            };
+
+            DataTable dt = _db.GetDataTable("GetCustomer_Address", parameters);
+
+            AddressPostCodeDetailModel model = new AddressPostCodeDetailModel();
+
+            if (dt.Rows.Count > 0)
+            {
+                DataRow row = dt.Rows[0];
+
+                model.PostCode = row["PostCode"]?.ToString();
+                model.Region = row["Region"]?.ToString();
+                model.Zone = row["Zone"]?.ToString();
+            }
+
+            return model;
+        }
+        #endregion
+      
     }
 }
