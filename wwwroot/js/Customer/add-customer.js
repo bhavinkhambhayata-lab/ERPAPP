@@ -32,6 +32,27 @@
 
     });
 
+    $(document).on("focus", ".dlr-datepicker", function () {
+
+        if (!$(this).hasClass("hasDatepicker")) {
+
+            $(this).datepicker({
+                dateFormat: "dd/mm/y",
+                changeMonth: true,
+                changeYear: true,
+
+                onSelect: function (dateText) {
+                    debugger
+                    $(this).val(dateText);
+                }
+
+            });
+
+        }
+
+    });
+
+
     $(document).on("click", "#customerSearchResult a", function (e) {
 
         e.preventDefault();
@@ -62,7 +83,7 @@
                 $("#Address").val(data.address);
                 $("#Address2").val(data.address2);
 
-                $("#City").val(data.city);
+                $("#CityCode").val(data.city);
                 $("#PostCode").val(data.postcode);
                 $("#StateCode").val(data.stateCode);
                 $("#CountryCode").val(data.countryCode);
@@ -103,7 +124,7 @@
     });
 
     //Empty city clears related fields
-    $("#CityName").on("input", function () {
+    $("#CityCode").on("input", function () {
 
         if ($(this).val().trim() === "") {
 
@@ -118,7 +139,7 @@
     });
 
     // CITY AUTOCOMPLETE
-    $("#CityName").autocomplete({
+    $("#CityCode").autocomplete({
 
         source: function (request, response) {
 
@@ -137,11 +158,11 @@
 
         },
 
-        minLength: 2,
+        minLength: 1,
 
         select: function (event, ui) {
 
-            $("#CityName").val(ui.item.value);
+            
 
             // 🔥 CLEAR OLD DATA
             $("#CountryCode").val('');
@@ -154,8 +175,9 @@
             $.get("/Customer/GetCityDetail",
                 { city: ui.item.value },
                 function (data) {
-
+                    console.log(data)
                     if (data) {
+                        $("#CityCode").val(data.city);
                         $("#CountryCode").val(data.countryCode || '');
                         $("#StateCode").val(data.stateCode || '');
                     }
@@ -212,40 +234,141 @@
 
         var form = $('#customerForm');
 
-        if (!form.valid()) {
+        if (!form.valid()) return;
+
+        if (!validateBrandTable()) return;
+
+        // Brand row check
+        if ($('#brandTable tbody tr').length == 0) {
+
+            showToast("Please add at least one Brand.", "danger", 4000);
+
             return;
         }
+
+        var formData = new FormData(form[0]);
+
+        // disabled fields
+        formData.append("DisplayNo", $('#DisplayNo').text());
+        formData.append("MasterCode", $('#MasterCode').val());
+        formData.append("StateCode", $('#StateCode').val());
+        formData.append("Region", $('#Region').val());
+        formData.append("Zone", $('#Zone').val());
+        formData.append("BillToCustomer", $('#BillToCustomer').val());
+
+        // ===== Brand List =====
+        $('#brandTable tbody tr').each(function (index) {
+
+            formData.append(`CustomerBrandAddList[${index}].CustomerNo`,
+                $(this).find('[name*="CustomerNo"]').val());
+
+            formData.append(`CustomerBrandAddList[${index}].BrandCode`,
+                $(this).find('[name*="BrandCode"]').val());
+
+            formData.append(`CustomerBrandAddList[${index}].CustomerCategoryCode`,
+                $(this).find('[name*="CustomerCategoryCode"]').val());
+
+            formData.append(`CustomerBrandAddList[${index}].TradeSecurityAmount`,
+                $(this).find('[name*="TradeSecurityAmount"]').val());
+
+            formData.append(`CustomerBrandAddList[${index}].CustomerDiscountGroup`,
+                $(this).find('[name*="CustomerDiscountGroup"]').val());
+
+            formData.append(`CustomerBrandAddList[${index}].DealerClassification`,
+                $(this).find('[name*="DealerClassification"]').val());
+
+            formData.append(`CustomerBrandAddList[${index}].SalesPersonCode`,
+                $(this).find('[name*="SalesPersonCode"]').val());
+
+            formData.append(`CustomerBrandAddList[${index}].Allocation`,
+                $(this).find('[name*="Allocation"]').val());
+
+            formData.append(`CustomerBrandAddList[${index}].HOSalesPerson`,
+                $(this).find('[name*="HOSalesPerson"]').val());
+
+            formData.append(`CustomerBrandAddList[${index}].DLRAppointmentDate`,
+                $(this).find('[name*="DLRAppointmentDate"]').val());
+
+            formData.append(`CustomerBrandAddList[${index}].DLRTerminationDate`,
+                $(this).find('[name*="DLRTerminationDate"]').val());
+
+        });
 
         $.ajax({
             url: '/Customer/SaveCustomerMaster',
             type: 'POST',
-            data: form.serialize(),
+            data: formData,
+            processData: false,
+            contentType: false,
+
             success: function (response) {
 
                 if (response.success) {
 
                     alert(response.message);
 
-                    // Optional reset form
-                    form[0].reset();
+                    $('#customerForm')[0].reset();
 
-                    // Or redirect
-                    // window.location.href = '/Customer/CustomerList';
+                    $('.text-danger').text('');
+
                 }
                 else {
 
+                    $('.text-danger').text('');
+
                     if (response.errors) {
-                        showServerErrors(response.errors);
-                    }
-                    else {
+
+                        $.each(response.errors, function (key, messages) {
+
+                            var errorSpan = $('[data-valmsg-for="' + key + '"]');
+
+                            if (errorSpan.length) {
+
+                                errorSpan.text(messages[0]);
+
+                            }
+
+                        });
+
+                    } else {
+
                         alert(response.message);
+
                     }
+
                 }
-            },
-            error: function () {
-                alert("Server error occurred.");
+
             }
         });
+
+    });
+
+    $('#Division').change(function () {
+
+        var divisionCode = $(this).val();
+
+        // Brand Table Clear
+        $('#brandTable tbody').empty();
+
+        $.ajax({
+            url: '/Customer/GetLocationListByDivisionCode',
+            type: 'GET',
+            data: { DivisionCode: divisionCode },
+            success: function (data) {
+
+                var locationDropdown = $('#LocationCode');
+                locationDropdown.empty();
+
+                locationDropdown.append('<option value="">-- Select --</option>');
+
+                $.each(data, function (i, item) {
+                    locationDropdown.append(
+                        '<option value="' + item.code + '">' + item.name + '</option>'
+                    );
+                });
+            }
+        });
+
     });
 
 });
@@ -254,30 +377,157 @@
 
 function addBrandRow() {
 
-    var table = document.getElementById("brandTable")
-        .getElementsByTagName('tbody')[0];
+   
+
+    var divisionId = $("#Division").val();
+
+    // Division selected check
+    if (!divisionId) {
+        
+        showToast("Please select Division first.", "danger", 4000);
+        return;
+    }
+
+    $.ajax({
+        url: '/Customer/GetBrandRowDropdown',
+        type: 'GET',
+        data: { divisionRowId: divisionId },
+        success: function (data) {
+
+            createBrandRow(data);
+
+        }
+    });
+}
+
+function createBrandRow(data) {
+
+    var table = document.getElementById("brandTable").getElementsByTagName('tbody')[0];
 
     var rowCount = table.rows.length;
     var row = table.insertRow(rowCount);
 
+    var brandOptions = '<option value="">Select</option>';
+    var categoryOptions = '<option value="">--Select--</option>';
+    var discountOptions = '<option value="">--Select--</option>';
+    var salesPersonOptions = '<option value="">--Select--</option>';
+    var hoSalesPersonOptions = '<option value="">--Select--</option>';
+
+    // Brand
+    data.dimensionList.forEach(function (item) {
+        brandOptions += `<option value="${item.code}">${item.name}</option>`;
+    });
+
+    // Customer Category
+    data.customerCategoryList.forEach(function (item) {
+        categoryOptions += `<option value="${item.code}">${item.name}</option>`;
+    });
+
+    // Discount Group
+    data.discountGroupList.forEach(function (item) {
+        discountOptions += `<option value="${item.code}">${item.name}</option>`;
+    });
+
+    // Sales Person (Allocation attach)
+    data.salesPersonList.forEach(function (item) {
+        salesPersonOptions += `<option value="${item.code}" data-allocation="${item.allocation}">
+                                ${item.name}
+                               </option>`;
+    });
+
+    // HO Sales Person
+    data.hoSalesPersonList.forEach(function (item) {
+        hoSalesPersonOptions += `<option value="${item.code}">${item.name}</option>`;
+    });
+
     row.innerHTML = `
-            <td><input name="CustomerList[${rowCount}].CustomerNo" class="form-control form-control-sm" /></td>
-            <td><input name="CustomerList[${rowCount}].BrandCode" class="form-control form-control-sm" /></td>
-            <td><input name="CustomerList[${rowCount}].CustomerCategoryCode" class="form-control form-control-sm" /></td>
-            <td><input name="CustomerList[${rowCount}].TradeSecurityAmount" type="number" class="form-control form-control-sm text-end" /></td>
-            <td><input name="CustomerList[${rowCount}].CustomerDiscountGroup" class="form-control form-control-sm" /></td>
-            <td><input name="CustomerList[${rowCount}].DealerClassification" class="form-control form-control-sm" /></td>
-            <td><input name="CustomerList[${rowCount}].Allocation" class="form-control form-control-sm" /></td>
-            <td><input name="CustomerList[${rowCount}].SalesPersonCode" class="form-control form-control-sm" /></td>
-            <td><input name="CustomerList[${rowCount}].HOSalesPerson" class="form-control form-control-sm" /></td>
-             <td><input name="CustomerList[${rowCount}].DLRAppointmentDate" class="form-control form-control-sm" /></td>
-            <td><input name="CustomerList[${rowCount}].DLRTerminationDate" class="form-control form-control-sm" /></td>
-            <td class="text-center">
-                <button type="button" class="btn btn-danger btn-sm" onclick="removeRow(this)">
-                    ✕
-                </button>
-            </td>
-        `;
+<td>
+    <input name="CustomerList[${rowCount}].CustomerNo"
+           class="form-control form-control-sm"/>
+</td>
+
+<td>
+    <select name="CustomerList[${rowCount}].BrandCode"
+            class="form-control form-control-sm brand">
+        ${brandOptions}
+    </select>
+</td>
+
+<td>
+    <select name="CustomerList[${rowCount}].CustomerCategoryCode"
+            class="form-control form-control-sm category">
+        ${categoryOptions}
+    </select>
+</td>
+
+<td>
+    <input name="CustomerList[${rowCount}].TradeSecurityAmount"
+           type="number"
+           class="form-control form-control-sm text-end" value="0"/>
+</td>
+
+<td>
+    <select name="CustomerList[${rowCount}].CustomerDiscountGroup"
+            class="form-control form-control-sm discount">
+        ${discountOptions}
+    </select>
+</td>
+
+<td>
+    <input name="CustomerList[${rowCount}].DealerClassification"
+           class="form-control form-control-sm"/>
+</td>
+
+<td>
+    <select name="CustomerList[${rowCount}].SalesPersonCode"
+            class="form-control form-control-sm sales"
+            onchange="setAllocation(this)">
+        ${salesPersonOptions}
+    </select>
+</td>
+
+<td>
+    <input name="CustomerList[${rowCount}].Allocation"
+           class="form-control form-control-sm allocation"
+           readonly/>
+</td>
+
+<td>
+    <select name="CustomerList[${rowCount}].HOSalesPerson"
+            class="form-control form-control-sm ho">
+        ${hoSalesPersonOptions}
+    </select>
+</td>
+
+<td>
+    <input type="text"
+           name="CustomerList[${rowCount}].DLRAppointmentDate"
+           class="form-control form-control-sm dlr-datepicker"/>
+</td>
+
+<td>
+    <input type="text"
+           name="CustomerList[${rowCount}].DLRTerminationDate"
+           class="form-control form-control-sm dlr-datepicker"/>
+</td>
+
+<td class="text-center">
+    <button type="button" class="btn btn-danger btn-sm" onclick="removeRow(this)">
+        ✕
+    </button>
+</td>
+`;
+}
+
+function setAllocation(element) {
+
+    var allocation = element.options[element.selectedIndex].getAttribute("data-allocation");
+
+    var row = element.closest("tr");
+    var allocationInput = row.querySelector(".allocation");
+
+    allocationInput.value = allocation || "";
+
 }
 
 function removeRow(button) {
@@ -298,4 +548,42 @@ function reIndexRows() {
             }
         });
     });
+}
+
+function validateBrandTable() {
+
+    var isValid = true;
+
+    $('#brandTable tbody tr').each(function () {
+
+        $(this).find('select').removeClass('is-invalid');
+
+        if ($(this).find('.brand').val() == "") {
+            $(this).find('.brand').addClass('is-invalid');
+            isValid = false;
+        }
+
+        if ($(this).find('.category').val() == "") {
+            $(this).find('.category').addClass('is-invalid');
+            isValid = false;
+        }
+
+        if ($(this).find('.discount').val() == "") {
+            $(this).find('.discount').addClass('is-invalid');
+            isValid = false;
+        }
+
+        if ($(this).find('.sales').val() == "") {
+            $(this).find('.sales').addClass('is-invalid');
+            isValid = false;
+        }
+
+        if ($(this).find('.ho').val() == "") {
+            $(this).find('.ho').addClass('is-invalid');
+            isValid = false;
+        }
+
+    });
+
+    return isValid;
 }

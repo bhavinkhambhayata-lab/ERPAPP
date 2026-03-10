@@ -90,6 +90,8 @@ namespace ERPAPP.Controllers
         [HttpPost]
         public async Task<IActionResult> SaveCustomerMaster(CustomerModel model)
         {
+            model.LoginRowId = HttpContext.Session.GetInt32("UserRowId").ToString();
+
             // =========================
             // BASIC REQUIRED VALIDATION
             // =========================
@@ -112,46 +114,32 @@ namespace ERPAPP.Controllers
             if (string.IsNullOrWhiteSpace(model.Zone))
                 ModelState.AddModelError("Zone", "Zone is required.");
 
-            if (string.IsNullOrWhiteSpace(model.PaymentTermsCode))
-                ModelState.AddModelError("PaymentTermsCode", "Payment Term is required.");
+            //if (string.IsNullOrWhiteSpace(model.PaymentTermsCode))
+            //    ModelState.AddModelError("PaymentTermsCode", "Payment Term is required.");
 
-            if (string.IsNullOrWhiteSpace(model.SalespersonCode))
-                ModelState.AddModelError("SalespersonCode", "Salesperson Name is required.");
+            //if (string.IsNullOrWhiteSpace(model.SalespersonCode))
+            //    ModelState.AddModelError("SalespersonCode", "Salesperson Name is required.");
 
-            if (string.IsNullOrWhiteSpace(model.GenBusPostingGroup))
-                ModelState.AddModelError("GenBusPostingGroup", "Gen. Bus. Posting Group Should Not Be Blank");
+            //if (string.IsNullOrWhiteSpace(model.GenBusPostingGroup))
+            //    ModelState.AddModelError("GenBusPostingGroup", "Gen. Bus. Posting Group Should Not Be Blank");
 
-            if (string.IsNullOrWhiteSpace(model.LocationCode))
-                ModelState.AddModelError("LocationCode", "Location is required.");
+            //if (string.IsNullOrWhiteSpace(model.LocationCode))
+            //    ModelState.AddModelError("LocationCode", "Location is required.");
 
-            if (string.IsNullOrWhiteSpace(model.ExciseBusPostingGroup))
-                ModelState.AddModelError("ExciseBusPostingGroup", "Excise Bus Posting Group is required.");
+            //if (string.IsNullOrWhiteSpace(model.ExciseBusPostingGroup))
+            //    ModelState.AddModelError("ExciseBusPostingGroup", "Excise Bus Posting Group is required.");
 
-            if (string.IsNullOrWhiteSpace(model.CustomerPostingGroup))
-                ModelState.AddModelError("CustomerPostingGroup", "Customer Posting Group is required.");
+            //if (string.IsNullOrWhiteSpace(model.CustomerPostingGroup))
+            //    ModelState.AddModelError("CustomerPostingGroup", "Customer Posting Group is required.");
 
-            if (model.ApplicationMethod == null)
-                ModelState.AddModelError("ApplicationMethod", "Application Method is required.");
+            //if (model.ApplicationMethod == null)
+            //    ModelState.AddModelError("ApplicationMethod", "Application Method is required.");
 
-            if (model.TaxLiable == null)
-                ModelState.AddModelError("TaxLiable", "TaxLiable is required.");
+            //if (model.TaxLiable == null)
+            //    ModelState.AddModelError("TaxLiable", "TaxLiable is required.");
 
-            if (model.GSTCustomerType == null)
-                ModelState.AddModelError("GSTCustomerType", "GST Cust. Type Should Not Be Blank");
-
-            // =========================
-            // COUNTRY BASED VALIDATION
-            // =========================
-
-            if (!string.IsNullOrWhiteSpace(model.CountryCode) &&
-                model.CountryCode != "IN")
-            {
-                if (string.IsNullOrWhiteSpace(model.EInvEmail))
-                    ModelState.AddModelError("EInvEmail", "E-Invoice Email is required.");
-
-                if (string.IsNullOrWhiteSpace(model.EInvPhoneNo))
-                    ModelState.AddModelError("EInvPhoneNo", "E-Invoice Phone Number is required.");
-            }
+            //if (model.GSTCustomerType == null)
+            //    ModelState.AddModelError("GSTCustomerType", "GST Cust. Type Should Not Be Blank");
 
             // =========================
             // GST TYPE BASED VALIDATION
@@ -166,14 +154,14 @@ namespace ERPAPP.Controllers
             }
 
             // Registered specific rule
-            if (model.GSTCustomerType == 1)
-            {
-                if (string.IsNullOrWhiteSpace(model.EInvEmail))
-                    ModelState.AddModelError("EInvEmail", "E-Invoice Email is required.");
+            //if (model.GSTCustomerType == 1)
+            //{
+            //    if (string.IsNullOrWhiteSpace(model.EInvEmail))
+            //        ModelState.AddModelError("EInvEmail", "E-Invoice Email is required.");
 
-                if (string.IsNullOrWhiteSpace(model.EInvPhoneNo))
-                    ModelState.AddModelError("EInvPhoneNo", "E-Invoice Phone Number is required.");
-            }
+            //    if (string.IsNullOrWhiteSpace(model.EInvPhoneNo))
+            //        ModelState.AddModelError("EInvPhoneNo", "E-Invoice Phone Number is required.");
+            //}
 
             // =========================
             // PAN VALIDATION
@@ -278,6 +266,8 @@ namespace ERPAPP.Controllers
 
             try
             {
+                var insertResult = await _customerRepository.InsertCustomer(model);
+
                 return Json(new
                 {
                     success = true,
@@ -292,6 +282,21 @@ namespace ERPAPP.Controllers
                     message = "Something went wrong while saving."
                 });
             }
+        }
+
+
+        [HttpGet]
+        public async Task<IActionResult> GetBrandRowDropdown(int divisionRowId)
+        {
+            CustomerBrandWiseModel model = await _customerRepository.GetCustomerBrandWiseDropdown(divisionRowId);
+
+            return Json(model);
+        }
+
+        public JsonResult GetLocationListByDivisionCode(int DivisionCode)
+        {
+            var locationList = _customerRepository.GetLocationListByDivisionCode(DivisionCode);
+            return Json(locationList);
         }
     }
 }

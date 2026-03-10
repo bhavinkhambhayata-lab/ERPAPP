@@ -15,5 +15,11 @@ namespace ERPAPP.Interfaces
         AddressPostCodeDetailModel GetPostCodeDetail(string code);
         Task<bool> CheckStateGSTMatch(string stateCode, string gstRegistrationNo);
         Task<ModifyPermissionResult> CheckModifyPermission(int userRowId, int entryRowId);
+
+        Task<CustomerBrandWiseModel> GetCustomerBrandWiseDropdown(int divisionRowId);
+
+        Task<bool> InsertCustomer(CustomerModel model);
+
+        List<LocationModel> GetLocationListByDivisionCode(int divisionCode);
     }
 }

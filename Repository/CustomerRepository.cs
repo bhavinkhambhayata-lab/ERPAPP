@@ -49,7 +49,6 @@ namespace ERPAPP.Repository
             {
                 dropDown.Divisions.Add(new DivisionModel
                 {
-                    //RowID = Convert.ToInt32(row["RowID"]),
                     Code = row["RowID"].ToString(),
                     Name = row["Division"].ToString()
                 });
@@ -65,7 +64,7 @@ namespace ERPAPP.Repository
                 });
             }
 
-            // 2 SalesPerson Name
+            // 2 SalesPerson
             foreach (DataRow row in ds.Tables[2].Rows)
             {
                 dropDown.SalesPersons.Add(new SalesPersonModel
@@ -165,18 +164,8 @@ namespace ERPAPP.Repository
                 });
             }
 
-            // 12 Excise Business Posting Group
+            // 12 Customer Posting Group
             foreach (DataRow row in ds.Tables[12].Rows)
-            {
-                dropDown.ExciseBusPostingGroups.Add(new ExciseBusPostingGroupModel
-                {
-                    Code = row["Code"].ToString(),
-                    Name = row["Name"].ToString()
-                });
-            }
-
-            // 13 Customer Posting Group
-            foreach (DataRow row in ds.Tables[13].Rows)
             {
                 dropDown.CustomerPostingGroups.Add(new CustomerPostingGroupModel
                 {
@@ -185,18 +174,8 @@ namespace ERPAPP.Repository
                 });
             }
 
-            // 14 Structure
-            foreach (DataRow row in ds.Tables[14].Rows)
-            {
-                dropDown.Structures.Add(new StructureModel
-                {
-                    Code = row["Code"].ToString(),
-                    Name = row["Name"].ToString()
-                });
-            }
-
-            // 15 Currency
-            foreach (DataRow row in ds.Tables[15].Rows)
+            // 13 Currency
+            foreach (DataRow row in ds.Tables[13].Rows)
             {
                 dropDown.Currencies.Add(new CurrencyModel
                 {
@@ -205,8 +184,8 @@ namespace ERPAPP.Repository
                 });
             }
 
-            // 16 Parent Customer
-            foreach (DataRow row in ds.Tables[16].Rows)
+            // 14 Parent Customer
+            foreach (DataRow row in ds.Tables[14].Rows)
             {
                 dropDown.ParentCustomers.Add(new ParentCustomerModel
                 {
@@ -215,8 +194,8 @@ namespace ERPAPP.Repository
                 });
             }
 
-            // 17 Access Code
-            foreach (DataRow row in ds.Tables[17].Rows)
+            // 15 Access Code
+            foreach (DataRow row in ds.Tables[15].Rows)
             {
                 dropDown.AccessCodes.Add(new AccessCodeModel
                 {
@@ -225,8 +204,8 @@ namespace ERPAPP.Repository
                 });
             }
 
-            // 18 NOD/NOC
-            foreach (DataRow row in ds.Tables[18].Rows)
+            // 16 NOD/NOC
+            foreach (DataRow row in ds.Tables[16].Rows)
             {
                 dropDown.NODNOCs.Add(new NODNOCModel
                 {
@@ -235,10 +214,30 @@ namespace ERPAPP.Repository
                 });
             }
 
-            // 19 Concessional Code
-            foreach (DataRow row in ds.Tables[19].Rows)
+            // 17 Concessional Code
+            foreach (DataRow row in ds.Tables[17].Rows)
             {
                 dropDown.ConcessionalCodes.Add(new ConcessionalCodeModel
+                {
+                    Code = row["Code"].ToString(),
+                    Name = row["Name"].ToString()
+                });
+            }
+
+            // 18 Promo Code
+            foreach (DataRow row in ds.Tables[18].Rows)
+            {
+                dropDown.PromoCodes.Add(new PromoCodeModel
+                {
+                    Code = row["Code"].ToString(),
+                    Name = row["Name"].ToString()
+                });
+            }
+
+            // 19 Charges Group
+            foreach (DataRow row in ds.Tables[19].Rows)
+            {
+                dropDown.ChargesGroups.Add(new ChargesGroupModel
                 {
                     Code = row["Code"].ToString(),
                     Name = row["Name"].ToString()
@@ -314,7 +313,6 @@ namespace ERPAPP.Repository
             model.CustomerDropDownModel = dropDown;
 
             var displayNo = await GetCustomerTransferNewNo();
-
             model.DisplayNo = displayNo > 0 ? displayNo : 0;
 
             return model;
@@ -588,7 +586,178 @@ namespace ERPAPP.Repository
 
             return model;
         }
+
+        public async Task<CustomerBrandWiseModel> GetCustomerBrandWiseDropdown(int divisionRowId)
+        {
+            CustomerBrandWiseModel model = new CustomerBrandWiseModel();
+
+            SqlParameter[] param =
+                    {
+                new SqlParameter("@DivisionRowId", divisionRowId)
+            };
+
+            DataSet ds = _db.GetDataSet("GetCustomerBrandWithDetailsDropDown", param);
+
+            // 1 Dimension / Brand
+            foreach (DataRow row in ds.Tables[0].Rows)
+            {
+                model.DimensionList.Add(new DimesionModel
+                {
+                    Code = row["Code"].ToString(),
+                    Name = row["Name"].ToString()
+                });
+            }
+
+            // 2 Customer Category
+            foreach (DataRow row in ds.Tables[1].Rows)
+            {
+                model.CustomerCategoryList.Add(new CustomerCategoryModel
+                {
+                    Code = row["Code"].ToString(),
+                    Name = row["Name"].ToString()
+                });
+            }
+
+            // 3 Discount Group
+            foreach (DataRow row in ds.Tables[2].Rows)
+            {
+                model.DiscountGroupList.Add(new CustomerDiscountGroupModel
+                {
+                    Code = row["Code"].ToString(),
+                    Name = row["Name"].ToString()
+                });
+            }
+
+            // 4 Sales Person
+            foreach (DataRow row in ds.Tables[3].Rows)
+            {
+                model.SalesPersonList.Add(new SalesPersonModel
+                {
+                    Code = row["Code"].ToString(),
+                    Name = row["Name"].ToString(),
+                    Allocation = row["Allocation"]?.ToString()
+                });
+            }
+
+            // 5 HO Sales Person
+            foreach (DataRow row in ds.Tables[4].Rows)
+            {
+                model.HOSalesPersonList.Add(new HOSalesPersonModel
+                {
+                    Code = row["Code"].ToString(),
+                    Name = row["Name"].ToString()
+                });
+            }
+
+            return model;
+        }
+
+        public async Task<bool> InsertCustomer(CustomerModel model)
+        {
+            bool result = false;
+
+            if (model.CustomerBrandAddList != null && model.CustomerBrandAddList.Count > 0)
+            {
+                foreach (var brand in model.CustomerBrandAddList)
+                {
+                    SqlParameter[] param =
+                    {
+                new SqlParameter("@DisplayNo", model.DisplayNo == 0 ? 0 : model.DisplayNo),
+
+                new SqlParameter("@Name", model.Name ?? ""),
+                new SqlParameter("@MobileNo", model.MobileNo ?? ""),
+
+                new SqlParameter("@Address", model.Address ?? ""),
+                new SqlParameter("@Address2", model.Address2 ?? ""),
+                new SqlParameter("@City", model.CityCode ?? ""),
+                new SqlParameter("@PostCode", model.PostCode ?? ""),
+                new SqlParameter("@StateCode", model.StateCode ?? ""),
+                new SqlParameter("@CountryCode", model.CountryCode ?? ""),
+                new SqlParameter("@Region", model.Region ?? ""),
+                new SqlParameter("@Zone", model.Zone ?? ""),
+
+                new SqlParameter("@ContactPerson", model.ContactPerson ?? ""),
+                new SqlParameter("@PhoneNo", model.PhoneNo ?? ""),
+                new SqlParameter("@Email", model.Email ?? ""),
+                new SqlParameter("@Website", model.Website ?? ""),
+
+                new SqlParameter("@PANNo", model.PANNo ?? ""),
+                new SqlParameter("@ParentCustomerCode", model.ParentCustomerCode ?? ""),
+
+                new SqlParameter("@DealerAppointmentDate", brand.DLRAppointmentDate ?? (object)DBNull.Value),
+                new SqlParameter("@DealerClassification", Convert.ToInt32(brand.DealerClassification)),
+
+                new SqlParameter("@CustomerCategoryCode", brand.CustomerCategoryCode ?? ""),
+                new SqlParameter("@CreditLimit", model.CreditLimit <= 0 ? 0 : model.CreditLimit),
+
+                new SqlParameter("@PaymentTermsCode", model.PaymentTermsCode ?? ""),
+                new SqlParameter("@SalespersonCode", brand.SalesPersonCode ?? ""),
+                new SqlParameter("@HOSalesPersonCode", brand.HOSalesPerson ?? ""),
+
+                new SqlParameter("@CustomerPostingGroup", model.CustomerPostingGroup ?? ""),
+                new SqlParameter("@GenBusPostingGroup", model.GenBusPostingGroup ?? ""),
+                new SqlParameter("@ExciseBusPostingGroup", model.ExciseBusPostingGroup ?? ""),
+
+                new SqlParameter("@ApplicationMethod", Convert.ToInt32(model.ApplicationMethod)),
+                new SqlParameter("@TaxLiable", model.TaxLiable),
+
+                new SqlParameter("@LocationCode", model.LocationCode ?? ""),
+                new SqlParameter("@Dimension", brand.BrandCode ?? ""),
+
+                new SqlParameter("@Allocation", brand.Allocation ?? ""),
+                new SqlParameter("@MasterCode", model.MasterCode ?? ""),
+
+                new SqlParameter("@GSTRegistrationNo", model.GSTRegistrationNo ?? ""),
+                new SqlParameter("@GSTRegistrationType", Convert.ToInt32(model.GSTRegistrationType)),
+                new SqlParameter("@GSTCustomerType", Convert.ToInt32(model.GSTCustomerType)),
+
+                new SqlParameter("@PriceListCode", model.PriceListCode ?? ""),
+
+                new SqlParameter("@PortalRowId", Convert.ToInt32(model.PortalRowId)),
+
+                new SqlParameter("@ARNNo", model.ARNNo ?? ""),
+                new SqlParameter("@BusinessCategory", Convert.ToInt32(model.BusinessCategory)),
+                new SqlParameter("@MSMEUAMNo", model.MSMEUAMNo ?? ""),
+
+                new SqlParameter("@EInvPhoneNo", model.EInvPhoneNo ?? ""),
+                new SqlParameter("@EInvEmail", model.EInvEmail ?? ""),
+
+                new SqlParameter("@LoginRowId", Convert.ToInt32(model.LoginRowId))
+            };
+
+                    int rows = _db.ExecuteNonQuery("Customer_InsertData", param);
+
+                    if (rows > 0)
+                        result = true;
+                }
+            }
+
+            return result;
+        }
+
+        public List<LocationModel> GetLocationListByDivisionCode(int divisionCode)
+        {
+            List<LocationModel> list = new List<LocationModel>();
+
+                    SqlParameter[] param =
+                    {
+                new SqlParameter("@DivisionCode", divisionCode)
+            };
+
+            DataTable dt = _db.GetDataTable("GetLocationListByDivisionCode", param);
+
+            foreach (DataRow row in dt.Rows)
+            {
+                list.Add(new LocationModel
+                {
+                    Code = row["Code"].ToString(),
+                    Name = row["Name"].ToString()
+                });
+            }
+
+            return list;
+        }
         #endregion
-      
+
     }
 }

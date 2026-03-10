@@ -13,7 +13,10 @@ namespace ERPAPP.Models
         // ===== General =====
         public int PortalRowId { get; set; }
 
-        public string MasterCode { get; set; }
+        [Required(ErrorMessage = "Division is required")]
+        public int? Division { get; set; }
+
+        public string? MasterCode { get; set; }
         public int DisplayNo { get; set; }
 
         [Required(ErrorMessage = "Name is required")]
@@ -46,16 +49,16 @@ namespace ERPAPP.Models
         public string ContactPerson { get; set; }
 
         [Required(ErrorMessage = "Mobile No is required")]
-        [RegularExpression(@"^[6-9][0-9]{9}$",ErrorMessage = "Invalid mobile number")]
+        [RegularExpression(@"^[6-9][0-9]{9}$", ErrorMessage = "Invalid mobile number")]
         public string MobileNo { get; set; }
 
-        public string PhoneNo { get; set; }
+        public string? PhoneNo { get; set; }
 
         [Required(ErrorMessage = "Email is required")]
         [EmailAddress(ErrorMessage = "Invalid email address")]
         public string Email { get; set; }
 
-        public string Website { get; set; }
+        public string? Website { get; set; }
         //public string FaxNo { get; set; }
 
         // ===== E-Invoice =====
@@ -68,118 +71,110 @@ namespace ERPAPP.Models
         public string EInvEmail { get; set; }
 
         // ===== Tax & Bank =====
-        [Required(ErrorMessage = "GST Registration Type is required")]
-        public int GSTRegistrationType { get; set; }
+        public int? GSTRegistrationType { get; set; }
 
-        [Required(ErrorMessage = "GST Customer Type is required")]
-        public int GSTCustomerType { get; set; }
+        public int? GSTCustomerType { get; set; }
 
-        [Required(ErrorMessage = "GSTIN is required")]
         [RegularExpression(@"^[0-9]{2}[A-Z]{5}[0-9]{4}[A-Z]{1}[1-9A-Z]{1}Z[0-9A-Z]{1}$", ErrorMessage = "Invalid GSTIN format")]
-        public string GSTRegistrationNo { get; set; }
+        public string? GSTRegistrationNo { get; set; }
 
         [RegularExpression(@"^[A-Z]{2}[0-9]{13}$", ErrorMessage = "Invalid ARN format")]
-        public string ARNNo { get; set; }
+        public string? ARNNo { get; set; }
 
         // VB checkPANValid fully covered here
-        [Required(ErrorMessage = "PAN is required")]
         [RegularExpression(@"^[A-Z]{5}[0-9]{4}[A-Z]{1}$", ErrorMessage = "Invalid PAN format")]
-        public string PANNo { get; set; }
+        public string? PANNo { get; set; }
 
-        public string BankName { get; set; }
+        public string? BankName { get; set; }
 
         [RegularExpression(@"^[0-9]{9,18}$", ErrorMessage = "Invalid bank account number")]
-        public string BankAccountNo { get; set; }
+        public string? BankAccountNo { get; set; }
 
-        public string BranchName { get; set; }
+        public string? BranchName { get; set; }
 
         [RegularExpression(@"^[A-Z]{4}0[A-Z0-9]{6}$", ErrorMessage = "Invalid IFSC code")]
-        public string IFSCCode { get; set; }
+        public string? IFSCCode { get; set; }
 
         // ===== Commission =====
-        [Required(ErrorMessage = "Commission Vendor No is required")]
-        public int CommissionVendorNo { get; set; }
+        public int? CommissionVendorNo { get; set; }
 
-        [Required(ErrorMessage = "Commission No is required")]
-        public int Commission { get; set; }
+        public int? Commission { get; set; }
 
-        [Required(ErrorMessage = "Commission Type is required")]
-        public int CommissionType { get; set; }
+        public int? CommissionType { get; set; }
 
-        public string CurrencyCode { get; set; }
-        public string VendorCode { get; set; }
+        public string? CurrencyCode { get; set; }
+        public string? VendorCode { get; set; }
 
-        public string ParentCustomerCode { get; set; }
+        public string? ParentCustomerCode { get; set; }
         public DateTime? DealerAppointmentDate { get; set; }
 
         // ===== Business =====
-        [Required(ErrorMessage = "Division is required")]
-        public int Division { get; set; }
 
-        [Required(ErrorMessage = "Customer Type is required")]
-        public int CustomerType { get; set; }
+
+        public int? CustomerType { get; set; }
 
         [Required(ErrorMessage = "Dealer Classification is required")]
         public int DealerClassification { get; set; }
 
-        public string CustomerCategoryCode { get; set; }
+        public string? CustomerCategoryCode { get; set; }
 
         [Required(ErrorMessage = "Credit Limit is required")]
         public decimal CreditLimit { get; set; }
 
-        public string PaymentTermsCode { get; set; }
-        public string PaymentMethodCode { get; set; }
-        public string SalespersonCode { get; set; }
-        public string HOSalesCode { get; set; }
+        public string? PaymentTermsCode { get; set; }
+        public string? PaymentMethodCode { get; set; }
+        public string? SalespersonCode { get; set; }
+        public string? HOSalesCode { get; set; }
 
-        public string Allocation { get; set; }
-        public string Structure { get; set; }
+        public string? Allocation { get; set; }
 
-        [Required(ErrorMessage = "Business Category is required")]
-        public int BusinessCategory { get; set; }
+        //[Required(ErrorMessage = "Business Category is required")]
+        public int? BusinessCategory { get; set; }
 
-        public string LocationCode { get; set; }
+        public string? LocationCode { get; set; }
 
-        [Required(ErrorMessage = "Price List Code is required")]
-        public string PriceListCode { get; set; }
+        //[Required(ErrorMessage = "Price List Code is required")]
+        public string? PriceListCode { get; set; }
 
-        public string CustomerPriceGroup { get; set; }
-        public string MRPGroup { get; set; }
-        public string CustomerPostingGroup { get; set; }
-        public string GenBusPostingGroup { get; set; }
-        public string ExciseBusPostingGroup { get; set; }
+        public string? CustomerPriceGroup { get; set; }
+        public string? MRPGroup { get; set; }
+        public string? CustomerPostingGroup { get; set; }
+        public string? GenBusPostingGroup { get; set; }
+        public string? ExciseBusPostingGroup { get; set; }
 
-        [Required(ErrorMessage = "Application Method is required")]
-        public int ApplicationMethod { get; set; }
+        public int? ApplicationMethod { get; set; }
 
         public bool TaxLiable { get; set; }
-        public string Dimension { get; set; }
+        public string? Dimension { get; set; }
 
-        [Required(ErrorMessage = "MSME UAM No is required")]
-        public string MSMEUAMNo { get; set; }
+        public string? MSMEUAMNo { get; set; }
 
         // ===== NOD / NOC =====
         public bool IsNodNocCreation { get; set; }
 
-        [Required(ErrorMessage = "NOD Access Code is required")]
-        public string NODAccessCode { get; set; }
+        public string? NODAccessCode { get; set; }
 
-        public string NODNOC { get; set; }
-        public string ConcessionalCode { get; set; }
+        public string? NODNOC { get; set; }
+        public string? ConcessionalCode { get; set; }
 
         public bool ThresholdOverlook { get; set; }
         public bool SurchargeOverlook { get; set; }
 
-        public string PromoCode { get; set; }
-        public string ChargesGroup { get; set; }
+        public string? PromoCode { get; set; }
+        public string? ChargesGroup { get; set; }
 
-        public string BillToCustomer { get; set; }
+        public string? BillToCustomer { get; set; }
+
+
+        public string? LoginRowId { get; set; }
+
+        public List<CustomerBrandWiseAddModel> CustomerBrandAddList { get; set; } = new();
     }
 
     public class BaseDropDown
     {
-        public string Code { get; set; }
-        public string Name { get; set; }
+        public string Code { get; set; } = string.Empty;
+        public string Name { get; set; } = string.Empty;
     }
 
     public class DivisionModel : BaseDropDown
@@ -199,7 +194,12 @@ namespace ERPAPP.Models
 
     public class ZoneModel : BaseDropDown { }
 
-    public class SalesPersonModel : BaseDropDown { }
+    public class SalesPersonModel : BaseDropDown
+    {
+        public string? Allocation { get; set; }
+    }
+
+    public class HOSalesPersonModel : BaseDropDown { }
 
     public class CustomerCategoryModel : BaseDropDown { }
 
@@ -249,6 +249,10 @@ namespace ERPAPP.Models
 
     public class GSTRegistrationTypeModel : BaseDropDown { }
 
+    public class PromoCodeModel : BaseDropDown { }
+
+    public class ChargesGroupModel : BaseDropDown { }
+
     public class CustomerDropDownModel
     {
         public List<DivisionModel> Divisions { get; set; } = new();
@@ -286,6 +290,8 @@ namespace ERPAPP.Models
         public List<CommissionTypeModel> CommissionTypes { get; set; } = new();
         public List<GSTCustomerTypeModel> GSTCustomerTypes { get; set; } = new();
         public List<GSTRegistrationTypeModel> GSTRegistrationTypes { get; set; } = new();
+        public List<PromoCodeModel> PromoCodes { get; set; } = new();
+        public List<ChargesGroupModel> ChargesGroups { get; set; } = new();
     }
 
 
@@ -334,7 +340,7 @@ namespace ERPAPP.Models
         public string BranchName { get; set; }
         public string IFSCode { get; set; }
 
-        public string GSTRegistrationNo { get; set; }
+        public string? GSTRegistrationNo { get; set; }
         public int? GSTRegistrationType { get; set; }
         public int? GSTCustomerType { get; set; }
 
@@ -373,5 +379,49 @@ namespace ERPAPP.Models
     {
         public bool HasPermission { get; set; }
         public bool IsSentForApproval { get; set; }
+    }
+
+
+    public class DimesionModel : BaseDropDown { }
+
+    public class CustomerDiscountGroupModel : BaseDropDown { }
+
+
+    public class CustomerBrandWiseModel
+    {
+        public List<DimesionModel> DimensionList { get; set; } = new();
+
+        public List<CustomerCategoryModel> CustomerCategoryList { get; set; } = new();
+
+        public List<CustomerDiscountGroupModel> DiscountGroupList { get; set; } = new();
+
+        public List<SalesPersonModel> SalesPersonList { get; set; } = new();
+
+        public List<HOSalesPersonModel> HOSalesPersonList { get; set; } = new();
+    }
+
+    public class CustomerBrandWiseAddModel
+    {
+        public string? CustomerNo { get; set; }
+
+        public string BrandCode { get; set; }
+
+        public string CustomerCategoryCode { get; set; }
+
+        public decimal? TradeSecurityAmount { get; set; }
+
+        public string CustomerDiscountGroup { get; set; }
+
+        public string? DealerClassification { get; set; }
+
+        public string SalesPersonCode { get; set; }
+
+        public string? Allocation { get; set; }
+
+        public string HOSalesPerson { get; set; }
+
+        public DateTime? DLRAppointmentDate { get; set; }
+
+        public DateTime? DLRTerminationDate { get; set; }
     }
 }

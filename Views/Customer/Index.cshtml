@@ -86,6 +86,10 @@
         vertical-align: middle;
     }
 
+    .brand-error-field {
+        border: 2px solid red !important;
+    }
+
 </style>
 
 <form id="customerForm" method="post">
@@ -95,7 +99,7 @@
         </div>
 
         <div class="fw-bold">
-            Row Unique ID : <span class="fw-semibold">@Model.DisplayNo</span>
+            Row Unique ID : <span class="fw-semibold" id="DisplayNo">@Model.DisplayNo</span>
         </div>
     </div>
 
@@ -119,7 +123,7 @@
 
                     <!-- Division -->
                     <div class="row mt-2">
-                        <label class="col-12 col-sm-4 col-form-label">Division</label>
+                        <label class="col-12 col-sm-4 col-form-label">Division<span class="required-star">*</span></label>
                         <div class="col-12 col-sm-8">
                             <select asp-for="Division"
                                     asp-items="@(new SelectList(Model.CustomerDropDownModel.Divisions, "Code", "Name"))"
@@ -167,7 +171,7 @@
 
                     <!-- Address 2 -->
                     <div class="row mt-2">
-                        <label class="col-12 col-sm-4 col-form-label">Address 2</label>
+                        <label class="col-12 col-sm-4 col-form-label">Address 2<span class="required-star">*</span></label>
                         <div class="col-12 col-sm-8">
                             <input asp-for="Address2" class="form-control" />
                             <span asp-validation-for="Address2" class="text-danger"></span>
@@ -187,12 +191,11 @@
                         </label>
                         <div class="col-12 col-sm-8">
                             <input type="text"
-                                   id="CityName"
+                                   asp-for="CityCode"
                                    class="form-control" />
 
                             <input type="hidden"
-                                   asp-for="CityCode"
-                                   id="CityCode" />
+                                   asp-for="CityCode" />
 
                             <span asp-validation-for="CityCode" class="text-danger"></span>
                         </div>
@@ -320,9 +323,11 @@
                         </label>
 
                         <div class="col-12 col-sm-8">
-                            <input asp-for="PromoCode"
-                                   type="text"
-                                   class="form-control" />
+                            <select asp-for="PromoCode"
+                                    asp-items="@(new SelectList(Model.CustomerDropDownModel.PromoCodes, "Code", "Name"))"
+                                    class="form-select">
+                                <option value="">--Select--</option>
+                            </select>
 
                             <span asp-validation-for="PromoCode" class="text-danger"></span>
                         </div>
@@ -335,9 +340,11 @@
                         </label>
 
                         <div class="col-12 col-sm-8">
-                            <input asp-for="ChargesGroup"
-                                   type="text"
-                                   class="form-control" />
+                            <select asp-for="ChargesGroup"
+                                    asp-items="@(new SelectList(Model.CustomerDropDownModel.ChargesGroups, "Code", "Name"))"
+                                    class="form-select">
+                                <option value="">--Select--</option>
+                            </select>
 
                             <span asp-validation-for="ChargesGroup" class="text-danger"></span>
                         </div>
@@ -432,14 +439,14 @@
                     <thead class="table-light text-nowrap">
                         <tr>
                             <th>Customer No</th>
-                            <th>Dimension</th>
-                            <th>Customer Category Code</th>
+                            <th>Dimension<span class="required-star">*</span></th>
+                            <th>Customer Category Code<span class="required-star">*</span></th>
                             <th>Trade Security Amount</th>
-                            <th>Customer Discount Group</th>
+                            <th>Customer Discount Group<span class="required-star">*</span></th>
                             <th>Dealer Classification</th>
+                            <th>Sales Person Code<span class="required-star">*</span></th>
                             <th>Allocation</th>
-                            <th>Sales Person Code</th>
-                            <th>HO Sales Person</th>
+                            <th>HO Sales Person<span class="required-star">*</span></th>
                             <th>DLR Appointment Date</th>
                             <th>DLR Termination Date</th>
                             <th style="width:60px;">Action</th>
@@ -467,7 +474,7 @@
                             <select asp-for="CustomerType"
                                     asp-items="@(new SelectList(Model.CustomerDropDownModel.CustomerTypes, "Code", "Name"))"
                                     class="form-select">
-                                <option value="">-- Select Customer Type --</option>
+                                <option value="">-- Select --</option>
                             </select>
                             <span asp-validation-for="CustomerType" class="text-danger"></span>
                         </div>
