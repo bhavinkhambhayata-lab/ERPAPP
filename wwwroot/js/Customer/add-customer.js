@@ -371,10 +371,32 @@
 
     });
 
+    $(document).on("change", "#brandTable tbody .brand", function () {
+
+        var selectedValue = $(this).val();
+        var selectedText = $(this).find("option:selected").text();
+        var isDuplicate = false;
+
+        $('#brandTable tbody .brand').not(this).each(function () {
+
+            if ($(this).val() === selectedValue && selectedValue !== "") {
+                isDuplicate = true;
+            }
+
+        });
+
+        if (isDuplicate) {
+
+            showToast("'"+selectedText + "' dimension is already added. Please select a different dimension.", "danger", 4000);
+
+            $(this).val(""); // reset dropdown
+        }
+
+    });
 });
 
 
-
+var maxBrandCount = 0;
 function addBrandRow() {
 
    
@@ -393,6 +415,16 @@ function addBrandRow() {
         type: 'GET',
         data: { divisionRowId: divisionId },
         success: function (data) {
+
+            // 🔥 Dimension count store
+            maxBrandCount = data.dimensionList.length;
+
+            var currentRows = $('#brandTable tbody tr').length;
+
+            if (currentRows >= maxBrandCount) {
+                showToast("You cannot add more brands for this division.", "danger", 4000);
+                return;
+            }
 
             createBrandRow(data);
 
