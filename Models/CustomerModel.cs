@@ -16,6 +16,8 @@ namespace ERPAPP.Models
         [Required(ErrorMessage = "Division is required")]
         public int? Division { get; set; }
 
+        public string? DivisionCode { get; set; }
+
         public string? MasterCode { get; set; }
         public int DisplayNo { get; set; }
 
@@ -398,6 +400,8 @@ namespace ERPAPP.Models
         public List<SalesPersonModel> SalesPersonList { get; set; } = new();
 
         public List<HOSalesPersonModel> HOSalesPersonList { get; set; } = new();
+
+        public List<DealerClassificationModel> DealerClassficationList { get; set; } = new();
     }
 
     public class CustomerBrandWiseAddModel

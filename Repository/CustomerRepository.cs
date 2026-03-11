@@ -702,7 +702,7 @@ namespace ERPAPP.Repository
                 new SqlParameter("@TaxLiable", model.TaxLiable),
 
                 new SqlParameter("@LocationCode", model.LocationCode ?? ""),
-                new SqlParameter("@Dimension", brand.BrandCode ?? ""),
+                new SqlParameter("@Dimension", model.DivisionCode ?? ""),
 
                 new SqlParameter("@Allocation", brand.Allocation ?? ""),
                 new SqlParameter("@MasterCode", model.MasterCode ?? ""),

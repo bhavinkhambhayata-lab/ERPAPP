@@ -255,6 +255,7 @@
         formData.append("Region", $('#Region').val());
         formData.append("Zone", $('#Zone').val());
         formData.append("BillToCustomer", $('#BillToCustomer').val());
+        formData.append("DivisionCode", $('#Division option:selected').text());
 
         // ===== Brand List =====
         $('#brandTable tbody tr').each(function (index) {
@@ -444,6 +445,7 @@ function createBrandRow(data) {
     var discountOptions = '<option value="">--Select--</option>';
     var salesPersonOptions = '<option value="">--Select--</option>';
     var hoSalesPersonOptions = '<option value="">--Select--</option>';
+    var dealerClassificationOptions = '<option value="">--Select--</option>';
 
     // Brand
     data.dimensionList.forEach(function (item) {
@@ -470,6 +472,11 @@ function createBrandRow(data) {
     // HO Sales Person
     data.hoSalesPersonList.forEach(function (item) {
         hoSalesPersonOptions += `<option value="${item.code}">${item.name}</option>`;
+    });
+
+    //Dealar Classification 
+    data.dealerClassficationList.forEach(function (item) {
+        dealerClassificationOptions += `<option value="${item.code}">${item.name}</option>`;
     });
 
     row.innerHTML = `
@@ -506,8 +513,11 @@ function createBrandRow(data) {
 </td>
 
 <td>
-    <input name="CustomerList[${rowCount}].DealerClassification"
-           class="form-control form-control-sm"/>
+
+ <select name="CustomerList[${rowCount}].DealerClassification"
+            class="form-control form-control-sm dealerClassfication">
+        ${dealerClassificationOptions}
+    </select>
 </td>
 
 <td>

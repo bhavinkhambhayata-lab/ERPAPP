@@ -373,6 +373,16 @@
                         </div>
                     </div>
 
+                     <div class="row mt-2">
+                        <label class="col-12 col-sm-4 col-form-label">
+                            Mobile No<span class="required-star">*</span>
+                        </label>
+                        <div class="col-12 col-sm-8">
+                            <input asp-for="MobileNo" class="form-control" />
+                            <span asp-validation-for="MobileNo" class="text-danger"></span>
+                        </div>
+                    </div>
+
                     <div class="row mt-2">
                         <label class="col-12 col-sm-4 col-form-label">
                             Email<span class="required-star">*</span>
@@ -386,16 +396,7 @@
 
                 <!-- Column 2 -->
                 <div class="col-4 ">
-                    <div class="row mt-2">
-                        <label class="col-12 col-sm-4 col-form-label">
-                            Mobile No<span class="required-star">*</span>
-                        </label>
-                        <div class="col-12 col-sm-8">
-                            <input asp-for="MobileNo" class="form-control" />
-                            <span asp-validation-for="MobileNo" class="text-danger"></span>
-                        </div>
-                    </div>
-
+                    
                     <div class="row mt-2">
                         <label class="col-12 col-sm-4 col-form-label">
                             Phone No
@@ -405,10 +406,7 @@
                             <span asp-validation-for="PhoneNo" class="text-danger"></span>
                         </div>
                     </div>
-                </div>
 
-                <!-- Column 3 -->
-                <div class="col-4 ">
                     <div class="row mt-2">
                         <label class="col-12 col-sm-4 col-form-label">
                             Website / Home Page
@@ -419,6 +417,8 @@
                         </div>
                     </div>
                 </div>
+
+               
 
             </div>
 
@@ -506,14 +506,7 @@
                         </div>
                     </div>
 
-                    <!-- Commision Vendor No -->
-                    <div class="row mt-2">
-                        <label class="col-12 col-sm-4 col-form-label">Commision Vendor No</label>
-                        <div class="col-12 col-sm-8">
-                            <input asp-for="CommissionVendorNo" class="form-control" />
-                            <span asp-validation-for="CommissionVendorNo" class="text-danger"></span>
-                        </div>
-                    </div>
+                    
 
                 </div>
 
@@ -521,7 +514,14 @@
                 <!-- Column 2 -->
                 <div class="col-4 ">
 
-                   
+                   <!-- Commision Vendor No -->
+                    <div class="row mt-2">
+                        <label class="col-12 col-sm-4 col-form-label">Commision Vendor No</label>
+                        <div class="col-12 col-sm-8">
+                            <input asp-for="CommissionVendorNo" class="form-control" />
+                            <span asp-validation-for="CommissionVendorNo" class="text-danger"></span>
+                        </div>
+                    </div>
 
                     
 
@@ -547,7 +547,16 @@
                         </div>
                     </div>
 
-                    <!-- Bank Name -->
+                   
+                   
+
+                </div>
+
+
+                <!-- Column 3 -->
+                <div class="col-4">
+
+                     <!-- Bank Name -->
                     <div class="row mt-2">
                         <label class="col-12 col-sm-4 col-form-label">Bank Name</label>
                         <div class="col-12 col-sm-8">
@@ -564,13 +573,6 @@
                             <span asp-validation-for="BranchName" class="text-danger"></span>
                         </div>
                     </div>
-                   
-
-                </div>
-
-
-                <!-- Column 3 -->
-                <div class="col-4">
 
                     <!-- Bank Account No -->
                     <div class="row mt-2">
@@ -652,7 +654,30 @@
                         </div>
                     </div>
 
+                   
+
+                   
+
                     <div class="row mt-2">
+                        <label class="col-12 col-sm-4 col-form-label">E_INV Email<span class="required-star">*</span></label>
+                        <div class="col-12 col-sm-8">
+                            <input asp-for="EInvEmail" class="form-control" />
+                            <span asp-validation-for="EInvEmail" class="text-danger"></span>
+                        </div>
+                    </div>
+
+                     <div class="row mt-2">
+                        <label class="col-12 col-sm-4 col-form-label">E_INV Phone<span class="required-star">*</span></label>
+                        <div class="col-12 col-sm-8">
+                            <input asp-for="EInvPhoneNo" class="form-control" />
+                            <span asp-validation-for="EInvPhoneNo" class="text-danger"></span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Column 3 -->
+                <div class="col-4">
+                     <div class="row mt-2">
                         <label class="col-12 col-sm-4 col-form-label">Currency</label>
                         <div class="col-12 col-sm-8">
                             <select asp-for="CurrencyCode"
@@ -664,26 +689,7 @@
                         </div>
                     </div>
 
-                    <div class="row mt-2">
-                        <label class="col-12 col-sm-4 col-form-label">E_INV Email<span class="required-star">*</span></label>
-                        <div class="col-12 col-sm-8">
-                            <input asp-for="EInvEmail" class="form-control" />
-                            <span asp-validation-for="EInvEmail" class="text-danger"></span>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Column 3 -->
-                <div class="col-4">
                     
-
-                    <div class="row mt-2">
-                        <label class="col-12 col-sm-4 col-form-label">E_INV Phone<span class="required-star">*</span></label>
-                        <div class="col-12 col-sm-8">
-                            <input asp-for="EInvPhoneNo" class="form-control" />
-                            <span asp-validation-for="EInvPhoneNo" class="text-danger"></span>
-                        </div>
-                    </div>
                 </div>
 
             </div>

@@ -290,6 +290,14 @@ namespace ERPAPP.Controllers
         {
             CustomerBrandWiseModel model = await _customerRepository.GetCustomerBrandWiseDropdown(divisionRowId);
 
+            model.DealerClassficationList = Enum.GetValues(typeof(DealerClassification))
+                .Cast<DealerClassification>()
+                .Select(e => new DealerClassificationModel
+                {
+                    Code = ((int)e).ToString(),
+                    Name = e.ToString()
+                }).ToList();
+
             return Json(model);
         }
 
