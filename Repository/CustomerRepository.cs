@@ -662,67 +662,117 @@ namespace ERPAPP.Repository
                 {
                     SqlParameter[] param =
                     {
-                new SqlParameter("@DisplayNo", model.DisplayNo == 0 ? 0 : model.DisplayNo),
 
-                new SqlParameter("@Name", model.Name ?? ""),
-                new SqlParameter("@MobileNo", model.MobileNo ?? ""),
+                                // ================= SYSTEM =================
 
-                new SqlParameter("@Address", model.Address ?? ""),
-                new SqlParameter("@Address2", model.Address2 ?? ""),
-                new SqlParameter("@City", model.CityCode ?? ""),
-                new SqlParameter("@PostCode", model.PostCode ?? ""),
-                new SqlParameter("@StateCode", model.StateCode ?? ""),
-                new SqlParameter("@CountryCode", model.CountryCode ?? ""),
-                new SqlParameter("@Region", model.Region ?? ""),
-                new SqlParameter("@Zone", model.Zone ?? ""),
+                                new SqlParameter("@LoginRowId", Convert.ToInt32(model.LoginRowId)),
+                                new SqlParameter("@PortalRowId", model.PortalRowId),
+                                new SqlParameter("@DisplayNo", model.DisplayNo == 0 ? 0 : model.DisplayNo),
 
-                new SqlParameter("@ContactPerson", model.ContactPerson ?? ""),
-                new SqlParameter("@PhoneNo", model.PhoneNo ?? ""),
-                new SqlParameter("@Email", model.Email ?? ""),
-                new SqlParameter("@Website", model.Website ?? ""),
 
-                new SqlParameter("@PANNo", model.PANNo ?? ""),
-                new SqlParameter("@ParentCustomerCode", model.ParentCustomerCode ?? ""),
+                                // ================= GENERAL DETAILS =================
 
-                new SqlParameter("@DealerAppointmentDate", brand.DLRAppointmentDate ?? (object)DBNull.Value),
-                new SqlParameter("@DealerClassification", Convert.ToInt32(brand.DealerClassification)),
+                                new SqlParameter("@Division", model.Division ?? (object)DBNull.Value),
+                                new SqlParameter("@MasterCode", model.MasterCode ?? ""),
 
-                new SqlParameter("@CustomerCategoryCode", brand.CustomerCategoryCode ?? ""),
-                new SqlParameter("@CreditLimit", model.CreditLimit <= 0 ? 0 : model.CreditLimit),
+                                new SqlParameter("@Name", model.Name ?? ""),
+                                new SqlParameter("@Address", model.Address ?? ""),
+                                new SqlParameter("@Address2", model.Address2 ?? ""),
+                                new SqlParameter("@City", model.CityCode ?? ""),
+                                new SqlParameter("@PostCode", model.PostCode ?? ""),
+                                new SqlParameter("@StateCode", model.StateCode ?? ""),
+                                new SqlParameter("@CountryCode", model.CountryCode ?? ""),
+                                new SqlParameter("@Region", model.Region ?? ""),
+                                new SqlParameter("@Zone", model.Zone ?? ""),
 
-                new SqlParameter("@PaymentTermsCode", model.PaymentTermsCode ?? ""),
-                new SqlParameter("@SalespersonCode", brand.SalesPersonCode ?? ""),
-                new SqlParameter("@HOSalesPersonCode", brand.HOSalesPerson ?? ""),
+                                new SqlParameter("@CreditLimit", model.CreditLimit <= 0 ? 0 : model.CreditLimit),
+                                new SqlParameter("@PriceListCode", model.PriceListCode ?? ""),
+                                new SqlParameter("@PromoCode", model.PromoCode ?? ""),
+                                new SqlParameter("@ChargesGroup", model.ChargesGroup ?? ""),
 
-                new SqlParameter("@CustomerPostingGroup", model.CustomerPostingGroup ?? ""),
-                new SqlParameter("@GenBusPostingGroup", model.GenBusPostingGroup ?? ""),
-                new SqlParameter("@ExciseBusPostingGroup", model.ExciseBusPostingGroup ?? ""),
 
-                new SqlParameter("@ApplicationMethod", Convert.ToInt32(model.ApplicationMethod)),
-                new SqlParameter("@TaxLiable", model.TaxLiable),
+                                // ================= CONTACT =================
 
-                new SqlParameter("@LocationCode", model.LocationCode ?? ""),
-                new SqlParameter("@Dimension", model.DivisionCode ?? ""),
+                                new SqlParameter("@ContactPerson", model.ContactPerson ?? ""),
+                                new SqlParameter("@MobileNo", model.MobileNo ?? ""),
+                                new SqlParameter("@PhoneNo", model.PhoneNo ?? ""),
+                                new SqlParameter("@Email", model.Email ?? ""),
+                                new SqlParameter("@Website", model.Website ?? ""),
 
-                new SqlParameter("@Allocation", brand.Allocation ?? ""),
-                new SqlParameter("@MasterCode", model.MasterCode ?? ""),
 
-                new SqlParameter("@GSTRegistrationNo", model.GSTRegistrationNo ?? ""),
-                new SqlParameter("@GSTRegistrationType", Convert.ToInt32(model.GSTRegistrationType)),
-                new SqlParameter("@GSTCustomerType", Convert.ToInt32(model.GSTCustomerType)),
+                                // ================= MARKETING =================
 
-                new SqlParameter("@PriceListCode", model.PriceListCode ?? ""),
+                                new SqlParameter("@CustomerType", model.CustomerType ?? 0),
+                                new SqlParameter("@ParentCustomerCode", model.ParentCustomerCode ?? ""),
+                                new SqlParameter("@VendorCode", model.VendorCode ?? ""),
 
-                new SqlParameter("@PortalRowId", Convert.ToInt32(model.PortalRowId)),
+                                new SqlParameter("@CommissionVendorNo", model.CommissionVendorNo ?? 0),
+                                new SqlParameter("@CommissionType", model.CommissionType ?? 0),
+                                new SqlParameter("@Commission", model.Commission ?? 0),
 
-                new SqlParameter("@ARNNo", model.ARNNo ?? ""),
-                new SqlParameter("@BusinessCategory", Convert.ToInt32(model.BusinessCategory)),
-                new SqlParameter("@MSMEUAMNo", model.MSMEUAMNo ?? ""),
+                                new SqlParameter("@BankName", model.BankName ?? ""),
+                                new SqlParameter("@BranchName", model.BranchName ?? ""),
+                                new SqlParameter("@BankAccountNo", model.BankAccountNo ?? ""),
+                                new SqlParameter("@IFSCCode", model.IFSCCode ?? ""),
 
-                new SqlParameter("@EInvPhoneNo", model.EInvPhoneNo ?? ""),
-                new SqlParameter("@EInvEmail", model.EInvEmail ?? ""),
 
-                new SqlParameter("@LoginRowId", Convert.ToInt32(model.LoginRowId))
+                                // ================= INVOICING =================
+
+                                new SqlParameter("@BillToCustomer", model.BillToCustomer ?? ""),
+                                new SqlParameter("@LocationCode", model.LocationCode ?? ""),
+
+                                new SqlParameter("@CustomerPostingGroup", model.CustomerPostingGroup ?? ""),
+                                new SqlParameter("@GenBusPostingGroup", model.GenBusPostingGroup ?? ""),
+
+                                new SqlParameter("@EInvPhoneNo", model.EInvPhoneNo ?? ""),
+                                new SqlParameter("@EInvEmail", model.EInvEmail ?? ""),
+
+                                new SqlParameter("@CurrencyCode", model.CurrencyCode ?? ""),
+
+
+                                // ================= PAYMENTS =================
+
+                                new SqlParameter("@ApplicationMethod", model.ApplicationMethod ?? 0),
+                                new SqlParameter("@PaymentTermsCode", model.PaymentTermsCode ?? ""),
+                                new SqlParameter("@PaymentMethodCode", model.PaymentMethodCode ?? ""),
+
+
+                                // ================= TAX =================
+
+                                new SqlParameter("@PANNo", model.PANNo ?? ""),
+
+                                new SqlParameter("@GSTRegistrationType", model.GSTRegistrationType ?? 0),
+                                new SqlParameter("@GSTRegistrationNo", model.GSTRegistrationNo ?? ""),
+
+                                new SqlParameter("@GSTCustomerType", model.GSTCustomerType ?? 0),
+                                new SqlParameter("@ARNNo", model.ARNNo ?? ""),
+
+                                new SqlParameter("@BusinessCategory", model.BusinessCategory ?? 0),
+                                new SqlParameter("@MSMEUAMNo", model.MSMEUAMNo ?? ""),
+
+
+                                // ================= NOD / NOC =================
+
+                                new SqlParameter("@IsNodNocCreation", model.IsNodNocCreation),
+                                new SqlParameter("@NODAccessCode", model.NODAccessCode ?? ""),
+                                new SqlParameter("@NODNOC", model.NODNOC ?? ""),
+                                new SqlParameter("@ConcessionalCode", model.ConcessionalCode ?? ""),
+                                new SqlParameter("@ThresholdOverlook", model.ThresholdOverlook),
+                                new SqlParameter("@SurchargeOverlook", model.SurchargeOverlook),
+
+
+                                // ================= EXTRA =================
+
+                                new SqlParameter("@Dimension", model.DivisionCode ?? ""),
+                                new SqlParameter("@Allocation", brand.Allocation ?? ""),
+
+                                new SqlParameter("@SalespersonCode", brand.SalesPersonCode ?? ""),
+                                new SqlParameter("@HOSalesPersonCode", brand.HOSalesPerson ?? ""),
+
+                                new SqlParameter("@DealerAppointmentDate", brand.DLRAppointmentDate ?? (object)DBNull.Value),
+                                new SqlParameter("@DealerClassification", Convert.ToInt32(brand.DealerClassification)),
+                                new SqlParameter("@CustomerCategoryCode", brand.CustomerCategoryCode ?? ""),
+
             };
 
                     int rows = _db.ExecuteNonQuery("Customer_InsertData", param);
