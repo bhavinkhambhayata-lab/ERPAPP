@@ -789,8 +789,8 @@ namespace ERPAPP.Repository
         {
             List<LocationModel> list = new List<LocationModel>();
 
-                    SqlParameter[] param =
-                    {
+            SqlParameter[] param =
+            {
                 new SqlParameter("@DivisionCode", divisionCode)
             };
 
@@ -806,6 +806,47 @@ namespace ERPAPP.Repository
             }
 
             return list;
+        }
+
+        public async Task<GetCustomerDataWithPortalRowIdModel> GetCustomerDataWithPortalRowId(int portalRowId)
+        {
+            try
+            {
+                SqlParameter[] param =
+                {
+                new SqlParameter("@CustRowId", portalRowId)
+            };
+
+                DataTable dt = _db.GetDataTable("GetCustomerDataWithPortalRowId", param);
+
+                GetCustomerDataWithPortalRowIdModel model = new GetCustomerDataWithPortalRowIdModel();
+
+                if (dt != null && dt.Rows.Count > 0)
+                {
+                    DataRow row = dt.Rows[0];
+
+                    model.Name = row["Name"]?.ToString();
+                    model.Address = row["Address"]?.ToString();
+                    model.Address2 = row["Address2"]?.ToString();
+                    model.CityCode = row["CityCode"]?.ToString();
+                    model.PostCode = row["PostCode"]?.ToString();
+                    model.StateCode = row["StateCode"]?.ToString();
+                    model.CountryCode = row["CountryCode"]?.ToString();
+                    model.Region = row["Region"]?.ToString();
+                    model.Zone = row["Zone"]?.ToString();
+
+                    model.ContactPerson = row["ContactPerson"]?.ToString();
+                    model.MobileNo = row["MobileNo"]?.ToString();
+                    model.Email = row["Email"]?.ToString();
+                }
+
+                return model;
+            }
+            catch(Exception ex)
+            {
+                
+                return new GetCustomerDataWithPortalRowIdModel();
+            }
         }
         #endregion
 

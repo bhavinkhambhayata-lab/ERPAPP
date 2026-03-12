@@ -409,4 +409,56 @@ namespace ERPAPP.Models
 
         public DateTime? DLRTerminationDate { get; set; }
     }
+
+
+    public class GetCustomerDataWithPortalRowIdModel
+    {
+        public int PortalRowId { get; set; }
+
+        public string? MasterCode { get; set; }
+
+        public string? Name { get; set; }
+
+        public string? Address { get; set; }
+
+        public string? Address2 { get; set; }
+
+        public string? CityCode { get; set; }
+
+        public string? PostCode { get; set; }
+
+        public string? StateCode { get; set; }
+
+        public string? CountryCode { get; set; }
+
+        public string? Region { get; set; }
+
+        public string? Zone { get; set; }
+
+        public string? ContactPerson { get; set; }
+
+        public string? MobileNo { get; set; }
+
+        public string? PhoneNo { get; set; }
+
+        public string? Email { get; set; }
+
+        public string? Website { get; set; }
+
+        public int? CustomerType { get; set; }
+
+        public string? CustomerCategoryCode { get; set; }
+
+        public string? SalespersonCode { get; set; }
+
+        public string? PANNo { get; set; }
+
+        public string? GSTRegistrationNo { get; set; }
+
+        public int? GSTRegistrationType { get; set; }
+
+        public string? ARNNo { get; set; }
+
+        public string? Allocation { get; set; }
+    }
 }

@@ -21,5 +21,7 @@ namespace ERPAPP.Interfaces
         Task<bool> InsertCustomer(CustomerModel model);
 
         List<LocationModel> GetLocationListByDivisionCode(int divisionCode);
+
+        Task<GetCustomerDataWithPortalRowIdModel> GetCustomerDataWithPortalRowId(int portalRowId);
     }
 }

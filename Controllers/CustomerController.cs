@@ -306,5 +306,31 @@ namespace ERPAPP.Controllers
             var locationList = _customerRepository.GetLocationListByDivisionCode(DivisionCode);
             return Json(locationList);
         }
+
+        [HttpGet]
+        public async Task<IActionResult> GetCustomerDataWithPortalRowId(int portalRowId)
+        {
+            if (portalRowId <= 0)
+            {
+                return Json(new { success = false, message = "Invalid Portal Row Id." });
+            }
+
+            var data = await _customerRepository.GetCustomerDataWithPortalRowId(portalRowId);
+
+            if (data == null || string.IsNullOrEmpty(data.Name))
+            {
+                return Json(new
+                {
+                    success = false,
+                    message = "Customer not found in Portal."
+                });
+            }
+
+            return Json(new
+            {
+                success = true,
+                result = data
+            });
+        }
     }
 }

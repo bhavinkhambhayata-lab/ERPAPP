@@ -42,7 +42,7 @@
                 changeYear: true,
 
                 onSelect: function (dateText) {
-                    debugger
+                    
                     $(this).val(dateText);
                 }
 
@@ -394,6 +394,47 @@
         }
 
     });
+
+    $("#PortalRowId").on("keyup", function (e) {
+
+        var value = $(this).val();
+        var pattern = /^(ZZ\d+|\d+)$/i;
+
+        if (value === "") {
+            $("#PortalRowIdError").text("");
+
+            // Clear all fields
+            $("#Name").val("");
+            $("#Address").val("");
+            $("#Address2").val("");
+            $("#CityCode").val("");
+            $("#PostCode").val("");
+            $("#StateCode").val("");
+            $("#CountryCode").val("");
+            $("#Region").val("");
+            $("#Zone").val("");
+
+            $("#ContactPerson").val("");
+            $("#MobileNo").val("");
+            $("#Email").val("");
+            return;
+        }
+
+        if (!pattern.test(value)) {
+            $("#PortalRowIdError").text("Enter ZZ with digits or only digits.");
+        } else {
+            $("#PortalRowIdError").text("");
+        }
+
+        // Enter press
+        if (e.key === "Enter") {
+
+            if (pattern.test(value)) {
+                GetCustomerDataWithPortalRowId(value);   // function call
+            }
+
+        }
+    });
 });
 
 
@@ -628,4 +669,50 @@ function validateBrandTable() {
     });
 
     return isValid;
+}
+
+function GetCustomerDataWithPortalRowId(value) {
+
+    
+    var portalRowId = value.replace(/^zz/i, '');
+
+    if (!portalRowId) {
+        $("#PortalRowIdError").text("Please enter Portal Row Id");
+        return;
+    }
+
+    $("#PortalRowIdError").text("");
+
+    $.ajax({
+        url: '/Customer/GetCustomerDataWithPortalRowId',
+        type: 'GET',
+        data: { portalRowId: portalRowId },
+        success: function (res) {
+            
+            if (!res.success) {
+                $("#PortalRowIdError").text(res.message);
+                return;
+            }
+
+            var data = res.result;
+
+            $("#Name").val(data.name);
+            $("#Address").val(data.address);
+            $("#Address2").val(data.address2);
+            $("#CityCode").val(data.cityCode);
+            $("#PostCode").val(data.postCode);
+            $("#StateCode").val(data.stateCode);
+            $("#CountryCode").val(data.countryCode);
+            $("#Region").val(data.region);
+            $("#Zone").val(data.zone);
+
+            $("#ContactPerson").val(data.contactPerson);
+            $("#MobileNo").val(data.mobileNo);
+            $("#Email").val(data.email);
+        },
+        error: function () {
+            
+        }
+    });
+
 }
