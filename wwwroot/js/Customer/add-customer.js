@@ -32,6 +32,18 @@
 
     });
 
+    $("#MasterCode").on("keyup", function (e) {
+
+        var masterCode = $(this).val().trim();
+
+        if (masterCode === "") return;
+
+        // Enter press
+        if (e.key === "Enter") {
+            GetCustomerDataWithMasterCode(masterCode);
+        }
+    });
+
     $(document).on("focus", ".dlr-datepicker", function () {
 
         if (!$(this).hasClass("hasDatepicker")) {
@@ -700,6 +712,9 @@ function GetCustomerDataWithPortalRowId(value) {
             $("#Address").val(data.address);
             $("#Address2").val(data.address2);
             $("#CityCode").val(data.cityCode);
+
+            loadCustomerAddressData(data.cityCode);
+
             $("#PostCode").val(data.postCode);
             $("#StateCode").val(data.stateCode);
             $("#CountryCode").val(data.countryCode);
@@ -712,6 +727,110 @@ function GetCustomerDataWithPortalRowId(value) {
         },
         error: function () {
             
+        }
+    });
+
+}
+
+
+function loadCustomerAddressData(city) {
+    // 🔥 CLEAR OLD DATA
+    $("#CountryCode").val('');
+    $("#StateCode").val('');
+    $("#PostCode").empty().append('<option value="">--Select--</option>');
+    $("#Region").val('');
+    $("#Zone").val('');
+
+    // CITY DETAIL
+    $.get("/Customer/GetCityDetail",
+        { city: city },
+        function (data) {
+            
+            if (data) {
+                $("#CityCode").val(data.city);
+                $("#CountryCode").val(data.countryCode || '');
+                $("#StateCode").val(data.stateCode || '');
+            }
+
+        });
+
+    // POSTCODE LIST
+    $.get("/Customer/GetPostCodeList",
+        { city: city },
+        function (data) {
+
+            $("#PostCode").empty().append('<option value="">--Select--</option>');
+
+            $.each(data, function (i, item) {
+
+                $("#PostCode").append(
+                    '<option value="' + item.code + '">' + item.name + '</option>'
+                );
+
+            });
+
+        });
+}
+
+function GetCustomerDataWithMasterCode(masterCode) {
+
+    $.ajax({
+        url: '/Customer/GetCustomerDataWithMasterCode',
+        type: 'GET',
+        data: { masterCode: masterCode },
+
+        success: function (res) {
+
+            if (!res.success) {
+                showToast(res.message, "warning", 4000);
+                return;
+            }
+
+            var data = res.result;
+
+            $("#Name").val(data.name);
+            $("#Address").val(data.address);
+            $("#Address2").val(data.address2);
+
+            $("#CityCode").val(data.city);
+            $("#PostCode").val(data.postcode);
+
+            $("#StateCode").val(data.stateCode);
+            $("#CountryCode").val(data.countryCode);
+            $("#Region").val(data.region);
+            $("#Zone").val(data.zone);
+
+            $("#ContactPerson").val(data.contactPerson);
+            $("#MobileNo").val(data.mobileNo);
+            $("#PhoneNo").val(data.phoneNo);
+            $("#FaxNo").val(data.faxNo);
+
+            $("#Email").val(data.eMail);
+            $("#EInvEmail").val(data.e_Inv_E_Mail);
+            $("#EInvPhoneNo").val(data.e_Inv_PhoneNo);
+
+            $("#Website").val(data.website_Homepage);
+
+            $("#PANNo").val(data.panno);
+
+            $("#BankName").val(data.bankName);
+            $("#BankAccountNo").val(data.bankAccountNo);
+            $("#BranchName").val(data.branchName);
+            $("#IFSCCode").val(data.ifsCode);
+
+            $("#GSTRegistrationNo").val(data.gstRegistrationNo);
+            $("#GSTRegistrationType").val(data.gstRegistrationType);
+            $("#GSTCustomerType").val(data.gstCustomerType);
+
+            $("#CustomerType").val(data.customerType);
+
+            $("#Allocation").val(data.allocation);
+        },
+
+        error: function () {
+
+            showToast("Error loading customer data.", "danger", 4000);
+
         }
     });
 

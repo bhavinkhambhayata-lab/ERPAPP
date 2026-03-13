@@ -332,5 +332,26 @@ namespace ERPAPP.Controllers
                 result = data
             });
         }
+
+        [HttpGet]
+        public async Task<IActionResult> GetCustomerDataWithMasterCode(string masterCode)
+        {
+            var data = await _customerRepository.GetCustomerMaster(masterCode);
+
+            if (data == null || string.IsNullOrEmpty(data.Name))
+            {
+                return Json(new
+                {
+                    success = false,
+                    message = "Customer not found."
+                });
+            }
+
+            return Json(new
+            {
+                success = true,
+                result = data
+            });
+        }
     }
 }

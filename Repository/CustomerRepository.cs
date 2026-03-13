@@ -344,74 +344,79 @@ namespace ERPAPP.Repository
 
         public async Task<CustomerMasterModel> GetCustomerMaster(string customerNo)
         {
-            CustomerMasterModel model = new CustomerMasterModel();
-
-            var parameters = new[]
-    {
-        new SqlParameter("@No_", customerNo)
-    };
-
-            DataTable dt = _db.GetDataTable($"Customer_GetMasterData", parameters);
-
-            if (dt != null && dt.Rows.Count > 0)
+            try
             {
-                DataRow row = dt.Rows[0];
+                CustomerMasterModel model = new CustomerMasterModel();
 
-                model = new CustomerMasterModel
+                var parameters = new[]
                 {
-                    No = row["NO_"]?.ToString(),
-                    Name = row["Name"]?.ToString(),
-                    Address = row["Address"]?.ToString(),
-                    Address2 = row["Address2"]?.ToString(),
+            new SqlParameter("@MasterCode", customerNo)
+        };
 
-                    City = row["City"]?.ToString(),
-                    Postcode = row["Postcode"]?.ToString(),
-                    StateCode = row["StateCode"]?.ToString(),
-                    CountryCode = row["CountryCode"]?.ToString(),
-                    Region = row["Region"]?.ToString(),
-                    Zone = row["Zone"]?.ToString(),
+                DataTable dt = _db.GetDataTable("Customer_GetMasterDataWithMasterCode", parameters);
 
-                    ContactPerson = row["ContactPerson"]?.ToString(),
-                    MobileNo = row["MobileNo"]?.ToString(),
-                    PhoneNo = row["PhoneNo"]?.ToString(),
-                    FaxNo = row["FaxNo"]?.ToString(),
-                    EMail = row["EMail"]?.ToString(),
-                    E_Inv_E_Mail = row["E_Inv_E-Mail"]?.ToString(),
-                    E_Inv_PhoneNo = row["E_Inv_Phone No_"]?.ToString(),
+                if (dt != null && dt.Rows.Count > 0)
+                {
+                    DataRow row = dt.Rows[0];
 
-                    Website_Homepage = row["Website_Homepage"]?.ToString(),
-                    LSTNo = row["LSTNo"]?.ToString(),
-                    CSTNo = row["CSTNo"]?.ToString(),
-                    PANNO = row["PANNO"]?.ToString(),
+                    model = new CustomerMasterModel
+                    {
+                        No = row["No"]?.ToString(),
+                        Name = row["Name"]?.ToString(),
+                        Address = row["Address"]?.ToString(),
+                        Address2 = row["Address2"]?.ToString(),
 
-                    BankName = row["Bank Name"]?.ToString(),
-                    BankAccountNo = row["Bank Account No_"]?.ToString(),
-                    BranchName = row["Branch Name"]?.ToString(),
-                    IFSCode = row["IFS Code"]?.ToString(),
+                        City = row["City"]?.ToString(),
+                        Postcode = row["Postcode"]?.ToString(),
+                        StateCode = row["StateCode"]?.ToString(),
+                        CountryCode = row["CountryCode"]?.ToString(),
+                        Region = row["Region"]?.ToString(),
+                        Zone = row["Zone"]?.ToString(),
 
-                    GSTRegistrationNo = row["GST Registration No_"]?.ToString(),
-                    Allocation = row["Allocation"]?.ToString()
-                };
+                        ContactPerson = row["ContactPerson"]?.ToString(),
+                        MobileNo = row["MobileNo"]?.ToString(),
+                        PhoneNo = row["PhoneNo"]?.ToString(),
+                        FaxNo = row["FaxNo"]?.ToString(),
+                        EMail = row["EMail"]?.ToString(),
+                        E_Inv_E_Mail = row["E_Inv_E_Mail"]?.ToString(),
+                        E_Inv_PhoneNo = row["E_Inv_PhoneNo"]?.ToString(),
 
-                // Nullable Date Handling
-                if (row["LSTTINDate"] != DBNull.Value)
-                    model.LSTTINDate = Convert.ToDateTime(row["LSTTINDate"]);
+                        Website_Homepage = row["WebsiteHomepage"]?.ToString(),
+                        LSTNo = row["LSTNo"]?.ToString(),
+                        CSTNo = row["CSTNo"]?.ToString(),
+                        PANNO = row["PANNO"]?.ToString(),
 
-                if (row["CSTTINDate"] != DBNull.Value)
-                    model.CSTTINDate = Convert.ToDateTime(row["CSTTINDate"]);
+                        BankName = row["BankName"]?.ToString(),
+                        BankAccountNo = row["BankAccountNo"]?.ToString(),
+                        BranchName = row["BranchName"]?.ToString(),
+                        IFSCode = row["IFSCode"]?.ToString(),
 
-                // Integer Handling
-                if (!string.IsNullOrEmpty(row["GST Registration Type"]?.ToString()))
-                    model.GSTRegistrationType = Convert.ToInt32(row["GST Registration Type"]);
+                        GSTRegistrationNo = row["GSTRegistrationNo"]?.ToString(),
+                        Allocation = row["Allocation"]?.ToString()
+                    };
 
-                if (!string.IsNullOrEmpty(row["GST Customer Type"]?.ToString()))
-                    model.GSTCustomerType = Convert.ToInt32(row["GST Customer Type"]);
+                    if (row["LSTTINDate"] != DBNull.Value)
+                        model.LSTTINDate = Convert.ToDateTime(row["LSTTINDate"]);
 
-                if (!string.IsNullOrEmpty(row["Customer Type"]?.ToString()))
-                    model.CustomerType = Convert.ToInt32(row["Customer Type"]);
+                    if (row["CSTTINDate"] != DBNull.Value)
+                        model.CSTTINDate = Convert.ToDateTime(row["CSTTINDate"]);
+
+                    if (row["GSTRegistrationType"] != DBNull.Value)
+                        model.GSTRegistrationType = Convert.ToInt32(row["GSTRegistrationType"]);
+
+                    if (row["GSTCustomerType"] != DBNull.Value)
+                        model.GSTCustomerType = Convert.ToInt32(row["GSTCustomerType"]);
+
+                    if (row["CustomerType"] != DBNull.Value)
+                        model.CustomerType = Convert.ToInt32(row["CustomerType"]);
+                }
+
+                return model;
             }
-
-            return model;
+            catch (Exception)
+            {
+                return new CustomerMasterModel();
+            }
         }
 
         public async Task<int> GetCustomerTransferNewNo()
@@ -814,8 +819,8 @@ namespace ERPAPP.Repository
             {
                 SqlParameter[] param =
                 {
-                new SqlParameter("@CustRowId", portalRowId)
-            };
+                    new SqlParameter("@CustRowId", portalRowId)
+                };
 
                 DataTable dt = _db.GetDataTable("GetCustomerDataWithPortalRowId", param);
 
