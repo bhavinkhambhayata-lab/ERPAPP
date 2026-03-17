@@ -368,7 +368,7 @@ namespace ERPAPP.Repository
 
                         City = row["City"]?.ToString(),
                         Postcode = row["Postcode"]?.ToString(),
-                        StateCode = row["StateCode"]?.ToString(),
+                        //StateCode = row["StateCode"]?.ToString(),
                         CountryCode = row["CountryCode"]?.ToString(),
                         Region = row["Region"]?.ToString(),
                         Zone = row["Zone"]?.ToString(),
@@ -382,30 +382,30 @@ namespace ERPAPP.Repository
                         E_Inv_PhoneNo = row["E_Inv_PhoneNo"]?.ToString(),
 
                         Website_Homepage = row["WebsiteHomepage"]?.ToString(),
-                        LSTNo = row["LSTNo"]?.ToString(),
-                        CSTNo = row["CSTNo"]?.ToString(),
-                        PANNO = row["PANNO"]?.ToString(),
+                        //LSTNo = row["LSTNo"]?.ToString(),
+                        //CSTNo = row["CSTNo"]?.ToString(),
+                        //PANNO = row["PANNO"]?.ToString(),
 
                         BankName = row["BankName"]?.ToString(),
                         BankAccountNo = row["BankAccountNo"]?.ToString(),
                         BranchName = row["BranchName"]?.ToString(),
                         IFSCode = row["IFSCode"]?.ToString(),
 
-                        GSTRegistrationNo = row["GSTRegistrationNo"]?.ToString(),
+                        //GSTRegistrationNo = row["GSTRegistrationNo"]?.ToString(),
                         Allocation = row["Allocation"]?.ToString()
                     };
 
-                    if (row["LSTTINDate"] != DBNull.Value)
-                        model.LSTTINDate = Convert.ToDateTime(row["LSTTINDate"]);
+                    //if (row["LSTTINDate"] != DBNull.Value)
+                    //    model.LSTTINDate = Convert.ToDateTime(row["LSTTINDate"]);
 
-                    if (row["CSTTINDate"] != DBNull.Value)
-                        model.CSTTINDate = Convert.ToDateTime(row["CSTTINDate"]);
+                    //if (row["CSTTINDate"] != DBNull.Value)
+                    //    model.CSTTINDate = Convert.ToDateTime(row["CSTTINDate"]);
 
-                    if (row["GSTRegistrationType"] != DBNull.Value)
-                        model.GSTRegistrationType = Convert.ToInt32(row["GSTRegistrationType"]);
+                    //if (row["GSTRegistrationType"] != DBNull.Value)
+                    //    model.GSTRegistrationType = Convert.ToInt32(row["GSTRegistrationType"]);
 
-                    if (row["GSTCustomerType"] != DBNull.Value)
-                        model.GSTCustomerType = Convert.ToInt32(row["GSTCustomerType"]);
+                    //if (row["GSTCustomerType"] != DBNull.Value)
+                    //    model.GSTCustomerType = Convert.ToInt32(row["GSTCustomerType"]);
 
                     if (row["CustomerType"] != DBNull.Value)
                         model.CustomerType = Convert.ToInt32(row["CustomerType"]);
@@ -661,134 +661,360 @@ namespace ERPAPP.Repository
         {
             bool result = false;
 
+            // Create DataTable for Brand List
+            DataTable dtBrand = new DataTable();
+
+            dtBrand.Columns.Add("BrandCode");
+            dtBrand.Columns.Add("CustomerCategoryCode");
+            dtBrand.Columns.Add("TradeSecurityAmount", typeof(decimal));
+            dtBrand.Columns.Add("CustomerDiscountGroup");
+            dtBrand.Columns.Add("DealerClassification");
+            dtBrand.Columns.Add("SalesPersonCode");
+            dtBrand.Columns.Add("Allocation");
+            dtBrand.Columns.Add("HOSalesPerson");
+            dtBrand.Columns.Add("DLRAppointmentDate", typeof(DateTime));
+            dtBrand.Columns.Add("DLRTerminationDate", typeof(DateTime));
+
             if (model.CustomerBrandAddList != null && model.CustomerBrandAddList.Count > 0)
             {
                 foreach (var brand in model.CustomerBrandAddList)
                 {
-                    SqlParameter[] param =
-                    {
-
-                                // ================= SYSTEM =================
-
-                                new SqlParameter("@LoginRowId", Convert.ToInt32(model.LoginRowId)),
-                                new SqlParameter("@PortalRowId", model.PortalRowId),
-                                new SqlParameter("@DisplayNo", model.DisplayNo == 0 ? 0 : model.DisplayNo),
-
-
-                                // ================= GENERAL DETAILS =================
-
-                                new SqlParameter("@Division", model.Division ?? (object)DBNull.Value),
-                                new SqlParameter("@MasterCode", model.MasterCode ?? ""),
-
-                                new SqlParameter("@Name", model.Name ?? ""),
-                                new SqlParameter("@Address", model.Address ?? ""),
-                                new SqlParameter("@Address2", model.Address2 ?? ""),
-                                new SqlParameter("@City", model.CityCode ?? ""),
-                                new SqlParameter("@PostCode", model.PostCode ?? ""),
-                                new SqlParameter("@StateCode", model.StateCode ?? ""),
-                                new SqlParameter("@CountryCode", model.CountryCode ?? ""),
-                                new SqlParameter("@Region", model.Region ?? ""),
-                                new SqlParameter("@Zone", model.Zone ?? ""),
-
-                                new SqlParameter("@CreditLimit", model.CreditLimit <= 0 ? 0 : model.CreditLimit),
-                                new SqlParameter("@PriceListCode", model.PriceListCode ?? ""),
-                                new SqlParameter("@PromoCode", model.PromoCode ?? ""),
-                                new SqlParameter("@ChargesGroup", model.ChargesGroup ?? ""),
-
-
-                                // ================= CONTACT =================
-
-                                new SqlParameter("@ContactPerson", model.ContactPerson ?? ""),
-                                new SqlParameter("@MobileNo", model.MobileNo ?? ""),
-                                new SqlParameter("@PhoneNo", model.PhoneNo ?? ""),
-                                new SqlParameter("@Email", model.Email ?? ""),
-                                new SqlParameter("@Website", model.Website ?? ""),
-
-
-                                // ================= MARKETING =================
-
-                                new SqlParameter("@CustomerType", model.CustomerType ?? 0),
-                                new SqlParameter("@ParentCustomerCode", model.ParentCustomerCode ?? ""),
-                                new SqlParameter("@VendorCode", model.VendorCode ?? ""),
-
-                                new SqlParameter("@CommissionVendorNo", model.CommissionVendorNo ?? 0),
-                                new SqlParameter("@CommissionType", model.CommissionType ?? 0),
-                                new SqlParameter("@Commission", model.Commission ?? 0),
-
-                                new SqlParameter("@BankName", model.BankName ?? ""),
-                                new SqlParameter("@BranchName", model.BranchName ?? ""),
-                                new SqlParameter("@BankAccountNo", model.BankAccountNo ?? ""),
-                                new SqlParameter("@IFSCCode", model.IFSCCode ?? ""),
-
-
-                                // ================= INVOICING =================
-
-                                new SqlParameter("@BillToCustomer", model.BillToCustomer ?? ""),
-                                new SqlParameter("@LocationCode", model.LocationCode ?? ""),
-
-                                new SqlParameter("@CustomerPostingGroup", model.CustomerPostingGroup ?? ""),
-                                new SqlParameter("@GenBusPostingGroup", model.GenBusPostingGroup ?? ""),
-
-                                new SqlParameter("@EInvPhoneNo", model.EInvPhoneNo ?? ""),
-                                new SqlParameter("@EInvEmail", model.EInvEmail ?? ""),
-
-                                new SqlParameter("@CurrencyCode", model.CurrencyCode ?? ""),
-
-
-                                // ================= PAYMENTS =================
-
-                                new SqlParameter("@ApplicationMethod", model.ApplicationMethod ?? 0),
-                                new SqlParameter("@PaymentTermsCode", model.PaymentTermsCode ?? ""),
-                                new SqlParameter("@PaymentMethodCode", model.PaymentMethodCode ?? ""),
-
-
-                                // ================= TAX =================
-
-                                new SqlParameter("@PANNo", model.PANNo ?? ""),
-
-                                new SqlParameter("@GSTRegistrationType", model.GSTRegistrationType ?? 0),
-                                new SqlParameter("@GSTRegistrationNo", model.GSTRegistrationNo ?? ""),
-
-                                new SqlParameter("@GSTCustomerType", model.GSTCustomerType ?? 0),
-                                new SqlParameter("@ARNNo", model.ARNNo ?? ""),
-
-                                new SqlParameter("@BusinessCategory", model.BusinessCategory ?? 0),
-                                new SqlParameter("@MSMEUAMNo", model.MSMEUAMNo ?? ""),
-
-
-                                // ================= NOD / NOC =================
-
-                                new SqlParameter("@IsNodNocCreation", model.IsNodNocCreation),
-                                new SqlParameter("@NODAccessCode", model.NODAccessCode ?? ""),
-                                new SqlParameter("@NODNOC", model.NODNOC ?? ""),
-                                new SqlParameter("@ConcessionalCode", model.ConcessionalCode ?? ""),
-                                new SqlParameter("@ThresholdOverlook", model.ThresholdOverlook),
-                                new SqlParameter("@SurchargeOverlook", model.SurchargeOverlook),
-
-
-                                // ================= EXTRA =================
-
-                                new SqlParameter("@Dimension", model.DivisionCode ?? ""),
-                                new SqlParameter("@Allocation", brand.Allocation ?? ""),
-
-                                new SqlParameter("@SalespersonCode", brand.SalesPersonCode ?? ""),
-                                new SqlParameter("@HOSalesPersonCode", brand.HOSalesPerson ?? ""),
-
-                                new SqlParameter("@DealerAppointmentDate", brand.DLRAppointmentDate ?? (object)DBNull.Value),
-                                new SqlParameter("@DealerClassification", Convert.ToInt32(brand.DealerClassification)),
-                                new SqlParameter("@CustomerCategoryCode", brand.CustomerCategoryCode ?? ""),
-
-            };
-
-                    int rows = _db.ExecuteNonQuery("Customer_InsertData", param);
-
-                    if (rows > 0)
-                        result = true;
+                    dtBrand.Rows.Add(
+                        brand.BrandCode ?? "",
+                        brand.CustomerCategoryCode ?? "",
+                        brand.TradeSecurityAmount ?? (object)DBNull.Value,
+                        brand.CustomerDiscountGroup ?? "",
+                        brand.DealerClassification ?? "",
+                        brand.SalesPersonCode ?? "",
+                        brand.Allocation ?? "",
+                        brand.HOSalesPerson ?? "",
+                        brand.DLRAppointmentDate ?? new DateTime(1753, 1, 1),
+                        brand.DLRTerminationDate ?? new DateTime(1753, 1, 1)
+                    );
                 }
             }
 
+            SqlParameter[] param =
+            {
+                        // ================= SYSTEM =================
+
+                        new SqlParameter("@LoginRowId", Convert.ToInt32(model.LoginRowId)),
+                        new SqlParameter("@PortalRowId", model.PortalRowId),
+                        new SqlParameter("@DisplayNo", model.DisplayNo == 0 ? 0 : model.DisplayNo),
+
+                        // ================= GENERAL =================
+
+                        new SqlParameter("@Division", model.Division ?? (object)DBNull.Value),
+                        new SqlParameter("@DivisionStr", model.DivisionCode ?? (object)DBNull.Value),
+                        new SqlParameter("@MasterCode", model.MasterCode ?? ""),
+                        new SqlParameter("@Name", model.Name ?? ""),
+                        new SqlParameter("@Address", model.Address ?? ""),
+                        new SqlParameter("@Address2", model.Address2 ?? ""),
+                        new SqlParameter("@City", model.CityCode ?? ""),
+                        new SqlParameter("@PostCode", model.PostCode ?? ""),
+                        new SqlParameter("@StateCode", model.StateCode ?? ""),
+                        new SqlParameter("@CountryCode", model.CountryCode ?? ""),
+                        new SqlParameter("@Region", model.Region ?? ""),
+                        new SqlParameter("@Zone", model.Zone ?? ""),
+
+                        new SqlParameter("@CreditLimit", model.CreditLimit <= 0 ? 0 : model.CreditLimit),
+                        new SqlParameter("@PriceListCode", model.PriceListCode ?? ""),
+                        new SqlParameter("@PromoCode", model.PromoCode ?? ""),
+                        new SqlParameter("@ChargesGroup", model.ChargesGroup ?? ""),
+
+                        // ================= CONTACT =================
+
+                        new SqlParameter("@ContactPerson", model.ContactPerson ?? ""),
+                        new SqlParameter("@MobileNo", model.MobileNo ?? ""),
+                        new SqlParameter("@PhoneNo", model.PhoneNo ?? ""),
+                        new SqlParameter("@Email", model.Email ?? ""),
+                        new SqlParameter("@Website", model.Website ?? ""),
+
+                        // ================= MARKETING =================
+
+                        new SqlParameter("@CustomerType", model.CustomerType ?? 0),
+                        new SqlParameter("@ParentCustomerCode", model.ParentCustomerCode ?? ""),
+                        new SqlParameter("@VendorCode", model.VendorCode ?? ""),
+
+                        new SqlParameter("@CommissionVendorNo", model.CommissionVendorNo ?? 0),
+                        new SqlParameter("@CommissionType", model.CommissionType ?? 0),
+                        new SqlParameter("@Commission", model.Commission ?? 0),
+
+                        new SqlParameter("@BankName", model.BankName ?? ""),
+                        new SqlParameter("@BranchName", model.BranchName ?? ""),
+                        new SqlParameter("@BankAccountNo", model.BankAccountNo ?? ""),
+                        new SqlParameter("@IFSCCode", model.IFSCCode ?? ""),
+
+                        // ================= INVOICING =================
+
+                        new SqlParameter("@BillToCustomer", model.BillToCustomer ?? ""),
+                        new SqlParameter("@LocationCode", model.LocationCode ?? ""),
+                        new SqlParameter("@CustomerPostingGroup", model.CustomerPostingGroup ?? ""),
+                        new SqlParameter("@GenBusPostingGroup", model.GenBusPostingGroup ?? ""),
+                        new SqlParameter("@EInvPhoneNo", model.EInvPhoneNo ?? ""),
+                        new SqlParameter("@EInvEmail", model.EInvEmail ?? ""),
+                        new SqlParameter("@CurrencyCode", model.CurrencyCode ?? ""),
+
+                        // ================= PAYMENTS =================
+
+                        new SqlParameter("@ApplicationMethod", model.ApplicationMethod ?? 0),
+                        new SqlParameter("@PaymentTermsCode", model.PaymentTermsCode ?? ""),
+                        new SqlParameter("@PaymentMethodCode", model.PaymentMethodCode ?? ""),
+
+                        // ================= TAX =================
+
+                        new SqlParameter("@PANNo", model.PANNo ?? ""),
+                        new SqlParameter("@GSTRegistrationType", model.GSTRegistrationType ?? 0),
+                        new SqlParameter("@GSTRegistrationNo", model.GSTRegistrationNo ?? ""),
+                        new SqlParameter("@GSTCustomerType", model.GSTCustomerType ?? 0),
+                        new SqlParameter("@ARNNo", model.ARNNo ?? ""),
+                        new SqlParameter("@BusinessCategory", model.BusinessCategory ?? 0),
+                        new SqlParameter("@MSMEUAMNo", model.MSMEUAMNo ?? ""),
+
+                        // ================= NOD / NOC =================
+
+                        new SqlParameter("@IsNodNocCreation", model.IsNodNocCreation),
+                        new SqlParameter("@NODAccessCode", model.NODAccessCode ?? ""),
+                        new SqlParameter("@NODNOC", model.NODNOC ?? ""),
+                        new SqlParameter("@ConcessionalCode", model.ConcessionalCode ?? ""),
+                        new SqlParameter("@ThresholdOverlook", model.ThresholdOverlook),
+                        new SqlParameter("@SurchargeOverlook", model.SurchargeOverlook),
+
+                        // ⭐ TABLE VALUED PARAMETER
+                        new SqlParameter
+                        {
+                            ParameterName = "@CustomerBrands",
+                            SqlDbType = SqlDbType.Structured,
+                            TypeName = "dbo.CustomerBrandType",
+                            Value = dtBrand
+                        }
+    };
+
+            var customerNoObj = _db.ExecuteScalar("Customer_InsertDataWithTranferMasterAndCompnayData", param);
+
+            string customerNo = customerNoObj?.ToString();
+
+            if (!string.IsNullOrEmpty(customerNo))
+                result = true;
+
             return result;
         }
+
+
+        #region comment code insert data in customer and customer brand wise table separately, now merged in single SP with transaction
+        //public async Task<bool> InsertCustomer(CustomerModel model)
+        //{
+        //    bool result = false;
+
+        //    //Add Customer Entry Data Tables
+        //    if (model.CustomerBrandAddList != null && model.CustomerBrandAddList.Count > 0)
+        //    {
+        //        foreach (var brand in model.CustomerBrandAddList)
+        //        {
+        //            SqlParameter[] param =
+        //            {
+
+        //                        // ================= SYSTEM =================
+
+        //                        new SqlParameter("@LoginRowId", Convert.ToInt32(model.LoginRowId)),
+        //                        new SqlParameter("@PortalRowId", model.PortalRowId),
+        //                        new SqlParameter("@DisplayNo", model.DisplayNo == 0 ? 0 : model.DisplayNo),
+
+
+        //                        // ================= GENERAL DETAILS =================
+
+        //                        new SqlParameter("@Division", model.Division ?? (object)DBNull.Value),
+        //                        new SqlParameter("@MasterCode", model.MasterCode ?? ""),
+
+        //                        new SqlParameter("@Name", model.Name ?? ""),
+        //                        new SqlParameter("@Address", model.Address ?? ""),
+        //                        new SqlParameter("@Address2", model.Address2 ?? ""),
+        //                        new SqlParameter("@City", model.CityCode ?? ""),
+        //                        new SqlParameter("@PostCode", model.PostCode ?? ""),
+        //                        new SqlParameter("@StateCode", model.StateCode ?? ""),
+        //                        new SqlParameter("@CountryCode", model.CountryCode ?? ""),
+        //                        new SqlParameter("@Region", model.Region ?? ""),
+        //                        new SqlParameter("@Zone", model.Zone ?? ""),
+
+        //                        new SqlParameter("@CreditLimit", model.CreditLimit <= 0 ? 0 : model.CreditLimit),
+        //                        new SqlParameter("@PriceListCode", model.PriceListCode ?? ""),
+        //                        new SqlParameter("@PromoCode", model.PromoCode ?? ""),
+        //                        new SqlParameter("@ChargesGroup", model.ChargesGroup ?? ""),
+
+
+        //                        // ================= CONTACT =================
+
+        //                        new SqlParameter("@ContactPerson", model.ContactPerson ?? ""),
+        //                        new SqlParameter("@MobileNo", model.MobileNo ?? ""),
+        //                        new SqlParameter("@PhoneNo", model.PhoneNo ?? ""),
+        //                        new SqlParameter("@Email", model.Email ?? ""),
+        //                        new SqlParameter("@Website", model.Website ?? ""),
+
+
+        //                        // ================= MARKETING =================
+
+        //                        new SqlParameter("@CustomerType", model.CustomerType ?? 0),
+        //                        new SqlParameter("@ParentCustomerCode", model.ParentCustomerCode ?? ""),
+        //                        new SqlParameter("@VendorCode", model.VendorCode ?? ""),
+
+        //                        new SqlParameter("@CommissionVendorNo", model.CommissionVendorNo ?? 0),
+        //                        new SqlParameter("@CommissionType", model.CommissionType ?? 0),
+        //                        new SqlParameter("@Commission", model.Commission ?? 0),
+
+        //                        new SqlParameter("@BankName", model.BankName ?? ""),
+        //                        new SqlParameter("@BranchName", model.BranchName ?? ""),
+        //                        new SqlParameter("@BankAccountNo", model.BankAccountNo ?? ""),
+        //                        new SqlParameter("@IFSCCode", model.IFSCCode ?? ""),
+
+
+        //                        // ================= INVOICING =================
+
+        //                        new SqlParameter("@BillToCustomer", model.BillToCustomer ?? ""),
+        //                        new SqlParameter("@LocationCode", model.LocationCode ?? ""),
+
+        //                        new SqlParameter("@CustomerPostingGroup", model.CustomerPostingGroup ?? ""),
+        //                        new SqlParameter("@GenBusPostingGroup", model.GenBusPostingGroup ?? ""),
+
+        //                        new SqlParameter("@EInvPhoneNo", model.EInvPhoneNo ?? ""),
+        //                        new SqlParameter("@EInvEmail", model.EInvEmail ?? ""),
+
+        //                        new SqlParameter("@CurrencyCode", model.CurrencyCode ?? ""),
+
+
+        //                        // ================= PAYMENTS =================
+
+        //                        new SqlParameter("@ApplicationMethod", model.ApplicationMethod ?? 0),
+        //                        new SqlParameter("@PaymentTermsCode", model.PaymentTermsCode ?? ""),
+        //                        new SqlParameter("@PaymentMethodCode", model.PaymentMethodCode ?? ""),
+
+
+        //                        // ================= TAX =================
+
+        //                        new SqlParameter("@PANNo", model.PANNo ?? ""),
+
+        //                        new SqlParameter("@GSTRegistrationType", model.GSTRegistrationType ?? 0),
+        //                        new SqlParameter("@GSTRegistrationNo", model.GSTRegistrationNo ?? ""),
+
+        //                        new SqlParameter("@GSTCustomerType", model.GSTCustomerType ?? 0),
+        //                        new SqlParameter("@ARNNo", model.ARNNo ?? ""),
+
+        //                        new SqlParameter("@BusinessCategory", model.BusinessCategory ?? 0),
+        //                        new SqlParameter("@MSMEUAMNo", model.MSMEUAMNo ?? ""),
+
+
+        //                        // ================= NOD / NOC =================
+
+        //                        new SqlParameter("@IsNodNocCreation", model.IsNodNocCreation),
+        //                        new SqlParameter("@NODAccessCode", model.NODAccessCode ?? ""),
+        //                        new SqlParameter("@NODNOC", model.NODNOC ?? ""),
+        //                        new SqlParameter("@ConcessionalCode", model.ConcessionalCode ?? ""),
+        //                        new SqlParameter("@ThresholdOverlook", model.ThresholdOverlook),
+        //                        new SqlParameter("@SurchargeOverlook", model.SurchargeOverlook),
+
+
+        //                        // ================= EXTRA =================
+
+        //                        new SqlParameter("@Dimension", model.DivisionCode ?? ""),
+        //                        new SqlParameter("@Allocation", brand.Allocation ?? ""),
+
+        //                        new SqlParameter("@SalespersonCode", brand.SalesPersonCode ?? ""),
+        //                        new SqlParameter("@HOSalesPersonCode", brand.HOSalesPerson ?? ""),
+
+        //                        new SqlParameter("@DealerAppointmentDate", brand.DLRAppointmentDate ?? (object)DBNull.Value),
+        //                        new SqlParameter("@DealerClassification", Convert.ToInt32(brand.DealerClassification)),
+        //                        new SqlParameter("@CustomerCategoryCode", brand.CustomerCategoryCode ?? ""),
+
+        //    };
+
+        //            int rows = _db.ExecuteNonQuery("Customer_InsertData", param);
+
+        //            if (rows > 0)
+        //                result = true;
+        //        }
+        //    }
+
+
+        //    //Master Data Entry Data Tables
+        //    SqlParameter[] masterDataCustomer =
+        //         {
+        //            new SqlParameter("@DisplayNo", model.DisplayNo == 0 ? 0 : model.DisplayNo),
+        //            new SqlParameter("@MasterCode", model.MasterCode ?? ""),
+
+        //            new SqlParameter("@Name", model.Name ?? ""),
+        //            new SqlParameter("@Address", model.Address ?? ""),
+        //            new SqlParameter("@Address2", model.Address2 ?? ""),
+        //            new SqlParameter("@CityCode", model.CityCode ?? ""),
+        //            new SqlParameter("@PostCode", model.PostCode ?? ""),
+        //            new SqlParameter("@StateCode", model.StateCode ?? ""),
+        //            new SqlParameter("@CountryCode", model.CountryCode ?? ""),
+        //            new SqlParameter("@Region", model.Region ?? ""),
+        //            new SqlParameter("@Zone", model.Zone ?? ""),
+
+        //            new SqlParameter("@CreditLimit", model.CreditLimit <= 0 ? 0 : model.CreditLimit),
+
+        //            new SqlParameter("@ContactPerson", model.ContactPerson ?? ""),
+        //            new SqlParameter("@MobileNo", model.MobileNo ?? ""),
+        //            new SqlParameter("@PhoneNo", model.PhoneNo ?? ""),
+        //            new SqlParameter("@Email", model.Email ?? ""),
+        //            new SqlParameter("@Website", model.Website ?? ""),
+
+        //            new SqlParameter("@CustomerType", model.CustomerType ?? 0),
+        //            new SqlParameter("@ParentCustomerCode", model.ParentCustomerCode ?? ""),
+        //            new SqlParameter("@VendorCode", model.VendorCode ?? ""),
+
+        //            new SqlParameter("@CommissionVendorNo", model.CommissionVendorNo ?? 0),
+        //            new SqlParameter("@CommissionType", model.CommissionType ?? 0),
+        //            new SqlParameter("@Commission", model.Commission ?? 0),
+
+        //            new SqlParameter("@BankName", model.BankName ?? ""),
+        //            new SqlParameter("@BranchName", model.BranchName ?? ""),
+        //            new SqlParameter("@BankAccountNo", model.BankAccountNo ?? ""),
+        //            new SqlParameter("@IFSCCode", model.IFSCCode ?? ""),
+
+        //            new SqlParameter("@BillToCustomer", model.BillToCustomer ?? ""),
+        //            new SqlParameter("@LocationCode", model.LocationCode ?? ""),
+
+        //            new SqlParameter("@CustomerPostingGroup", model.CustomerPostingGroup ?? ""),
+        //            new SqlParameter("@GenBusPostingGroup", model.GenBusPostingGroup ?? ""),
+
+        //            new SqlParameter("@EInvPhoneNo", model.EInvPhoneNo ?? ""),
+        //            new SqlParameter("@EInvEmail", model.EInvEmail ?? ""),
+
+        //            new SqlParameter("@CurrencyCode", model.CurrencyCode ?? ""),
+
+        //            new SqlParameter("@ApplicationMethod", model.ApplicationMethod ?? 0),
+        //            new SqlParameter("@PaymentTermsCode", model.PaymentTermsCode ?? ""),
+        //            new SqlParameter("@PaymentMethodCode", model.PaymentMethodCode ?? ""),
+
+        //            new SqlParameter("@PANNo", model.PANNo ?? ""),
+
+        //            new SqlParameter("@GSTRegistrationType", model.GSTRegistrationType ?? 0),
+        //            new SqlParameter("@GSTRegistrationNo", model.GSTRegistrationNo ?? ""),
+        //            new SqlParameter("@GSTCustomerType", model.GSTCustomerType ?? 0),
+        //            new SqlParameter("@ARNNo", model.ARNNo ?? ""),
+
+        //            new SqlParameter("@BusinessCategory", model.BusinessCategory ?? 0),
+        //            new SqlParameter("@MSMEUAMNo", model.MSMEUAMNo ?? ""),
+
+        //            new SqlParameter("@ChargesGroup", model.ChargesGroup ?? ""),
+        //            new SqlParameter("@PromoCode", model.PromoCode ?? "")
+        //        };
+
+        //    var customerNoObj = _db.ExecuteScalar("Customer_InsertDataWithTranferMasterData", masterDataCustomer);
+
+        //    string customerNo = customerNoObj?.ToString();
+
+        //    if (!string.IsNullOrEmpty(customerNo))
+        //    {
+        //        result = true;
+        //    }
+
+        //    return result;
+        //}
+        #endregion
+
+
+
 
         public List<LocationModel> GetLocationListByDivisionCode(int divisionCode)
         {
@@ -847,9 +1073,9 @@ namespace ERPAPP.Repository
 
                 return model;
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
-                
+
                 return new GetCustomerDataWithPortalRowIdModel();
             }
         }
