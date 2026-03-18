@@ -54,7 +54,7 @@
                 changeYear: true,
 
                 onSelect: function (dateText) {
-                    
+
                     $(this).val(dateText);
                 }
 
@@ -70,7 +70,7 @@
         e.preventDefault();
 
         var customerNo = $(this).data("no");
-        var brandId = $("#Brand").val();
+        //var brandId = $("#Brand").val();
 
         $("#Name").val($(this).text());
         $("#CustomerNo").val(customerNo);
@@ -80,7 +80,7 @@
         $.ajax({
             url: "/Customer/GetCustomerMaster",
             type: "GET",
-            data: { customerNo: customerNo, brandId: brandId },
+            data: { customerNo: customerNo },
             success: function (response) {
 
                 if (!response.success) {
@@ -174,7 +174,7 @@
 
         select: function (event, ui) {
 
-            
+
 
             // 🔥 CLEAR OLD DATA
             $("#CountryCode").val('');
@@ -400,7 +400,7 @@
 
         if (isDuplicate) {
 
-            showToast("'"+selectedText + "' dimension is already added. Please select a different dimension.", "danger", 4000);
+            showToast("'" + selectedText + "' dimension is already added. Please select a different dimension.", "danger", 4000);
 
             $(this).val(""); // reset dropdown
         }
@@ -453,13 +453,13 @@
 var maxBrandCount = 0;
 function addBrandRow() {
 
-   
+
 
     var divisionId = $("#Division").val();
 
     // Division selected check
     if (!divisionId) {
-        
+
         showToast("Please select Division first.", "danger", 4000);
         return;
     }
@@ -685,7 +685,7 @@ function validateBrandTable() {
 
 function GetCustomerDataWithPortalRowId(value) {
 
-    
+
     var portalRowId = value.replace(/^zz/i, '');
 
     if (!portalRowId) {
@@ -700,13 +700,16 @@ function GetCustomerDataWithPortalRowId(value) {
         type: 'GET',
         data: { portalRowId: portalRowId },
         success: function (res) {
-            
+
             if (!res.success) {
                 $("#PortalRowIdError").text(res.message);
                 return;
             }
 
             var data = res.result;
+
+            $("#PortalRowId").val(data.portalRowId);
+            $("#MasterCode").val(data.masterCode);
 
             $("#Name").val(data.name);
             $("#Address").val(data.address);
@@ -718,15 +721,33 @@ function GetCustomerDataWithPortalRowId(value) {
             $("#PostCode").val(data.postCode);
             $("#StateCode").val(data.stateCode);
             $("#CountryCode").val(data.countryCode);
+
             $("#Region").val(data.region);
             $("#Zone").val(data.zone);
 
             $("#ContactPerson").val(data.contactPerson);
             $("#MobileNo").val(data.mobileNo);
+            $("#PhoneNo").val(data.phoneNo);
+
             $("#Email").val(data.email);
+            $("#Website").val(data.website);
+
+            $("#CustomerType").val(data.customerType);
+            $("#BusinessCategory").val(data.businessCategory);
+
+            $("#SalespersonCode").val(data.salespersonCode);
+
+            $("#PANNo").val(data.panNo);
+
+            $("#GSTRegistrationNo").val(data.gstRegistrationNo);
+            $("#GSTRegistrationType").val(data.gstRegistrationType);
+
+            $("#ARNNo").val(data.arnNo);
+
+            $("#ChargesGroup").val(data.chargesGroup);
         },
         error: function () {
-            
+
         }
     });
 
@@ -745,7 +766,7 @@ function loadCustomerAddressData(city) {
     $.get("/Customer/GetCityDetail",
         { city: city },
         function (data) {
-            
+
             if (data) {
                 $("#CityCode").val(data.city);
                 $("#CountryCode").val(data.countryCode || '');

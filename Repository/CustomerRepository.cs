@@ -1056,6 +1056,9 @@ namespace ERPAPP.Repository
                 {
                     DataRow row = dt.Rows[0];
 
+                    model.PortalRowId = row["PortalRowId"] != DBNull.Value ? Convert.ToInt32(row["PortalRowId"]) : 0;
+                    model.MasterCode = row["MasterCode"]?.ToString();
+
                     model.Name = row["Name"]?.ToString();
                     model.Address = row["Address"]?.ToString();
                     model.Address2 = row["Address2"]?.ToString();
@@ -1068,7 +1071,21 @@ namespace ERPAPP.Repository
 
                     model.ContactPerson = row["ContactPerson"]?.ToString();
                     model.MobileNo = row["MobileNo"]?.ToString();
+
+                    model.PhoneNo = row["PhoneNo"]?.ToString();
                     model.Email = row["Email"]?.ToString();
+                    model.Website = row["Website"]?.ToString();
+                  
+
+                    model.CustomerType = row["CustomerType"] != DBNull.Value ? Convert.ToInt32(row["CustomerType"]) : 0;
+
+                    model.PANNo = row["PANNo"]?.ToString();
+
+                    model.GSTRegistrationNo = row["GSTRegistrationNo"]?.ToString();
+                    model.GSTRegistrationType = row["GSTRegistrationType"] != DBNull.Value ? Convert.ToInt32(row["GSTRegistrationType"]) : 0;
+
+                    model.ARNNo = row["ARNNo"]?.ToString();
+
                 }
 
                 return model;

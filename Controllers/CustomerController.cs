@@ -31,7 +31,7 @@ namespace ERPAPP.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetCustomerMaster(string customerNo, int brandId)
+        public async Task<IActionResult> GetCustomerMaster(string customerNo)
         {
             //bool exists = await _customerRepository.CheckCustomerInMasterAndBrand(customerNo, brandId);
 
