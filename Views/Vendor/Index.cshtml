@@ -1,0 +1,70 @@
+﻿
+<script src="~/lib/jquery/dist/jquery.min.js" asp-append-version="true"></script>
+
+<script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+<script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
+
+<script src="~/js/customer/add-customer.js" asp-append-version="true"></script>
+
+<link rel="stylesheet" href="https://code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
+<script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
+
+<div class="container-fluid mt-4">
+
+    <div class="row">
+        <div class="col-lg-12">
+
+            <!-- 🔥 TITLE -->
+            <h4 class="mb-3 fw-semibold">Vendor Management</h4>
+
+            <!-- 🔥 TABS -->
+            <ul class="nav nav-tabs">
+                <li class="nav-item">
+                    <button class="nav-link active" id="listBtn" data-bs-toggle="tab" data-bs-target="#listTab">
+                        List
+                    </button>
+                </li>
+                <li class="nav-item">
+                    <button class="nav-link" id="detailsBtn" data-bs-toggle="tab" data-bs-target="#detailsTab">
+                        Details
+                    </button>
+                </li>
+            </ul>
+            <!-- Content -->
+            <div class="mt-3" id="tabContent">
+                <!-- AJAX content load thase -->
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<script>
+        $(document).ready(function () {
+
+        // Default load
+        loadList();
+
+        $("#listBtn").click(function () {
+            loadList();
+        });
+
+        $("#detailsBtn").click(function () {
+            loadDetails();
+        });
+
+        function loadList() {
+            $.get('/Vendor/VendorList', function (data) {
+                $("#tabContent").html(data);
+            });
+        }
+
+        function loadDetails() {
+            $.get('/Vendor/VendorDetails', function (data) {
+                $("#tabContent").html(data);
+            });
+        }
+
+    });
+</script>
+
