@@ -1,4 +1,6 @@
 ﻿using ERPAPP.Models;
+using System.ComponentModel.DataAnnotations;
+using System.Reflection;
 
 namespace ERPAPP.Helper
 {
@@ -16,6 +18,18 @@ namespace ERPAPP.Helper
                     Name = e.ToString()
                 })
                 .ToList();
+        }
+
+        public static string GetDisplayName(this Enum value)
+        {
+            var field = value.GetType().GetField(value.ToString());
+
+            if (field == null)
+                return value.ToString();
+
+            var attribute = field.GetCustomAttribute<DisplayAttribute>();
+
+            return attribute?.Name ?? value.ToString();
         }
     }
 }

@@ -224,7 +224,7 @@
                             <input asp-for="StateCode"
                                    type="text"
                                    class="form-control"
-                                   placeholder="" disabled/>
+                                   placeholder="" disabled />
 
                             <span asp-validation-for="StateCode" class="text-danger"></span>
                         </div>
@@ -374,7 +374,7 @@
                         </div>
                     </div>
 
-                     <div class="row mt-2">
+                    <div class="row mt-2">
                         <label class="col-12 col-sm-4 col-form-label">
                             Mobile No<span class="required-star">*</span>
                         </label>
@@ -397,7 +397,7 @@
 
                 <!-- Column 2 -->
                 <div class="col-4 ">
-                    
+
                     <div class="row mt-2">
                         <label class="col-12 col-sm-4 col-form-label">
                             Phone No
@@ -419,7 +419,7 @@
                     </div>
                 </div>
 
-               
+
 
             </div>
 
@@ -507,7 +507,7 @@
                         </div>
                     </div>
 
-                    
+
 
                 </div>
 
@@ -515,7 +515,7 @@
                 <!-- Column 2 -->
                 <div class="col-4 ">
 
-                   <!-- Commision Vendor No -->
+                    <!-- Commision Vendor No -->
                     <div class="row mt-2">
                         <label class="col-12 col-sm-4 col-form-label">Commision Vendor No</label>
                         <div class="col-12 col-sm-8">
@@ -524,7 +524,7 @@
                         </div>
                     </div>
 
-                    
+
 
                     <!-- Commission Type -->
                     <div class="row mt-2">
@@ -548,8 +548,8 @@
                         </div>
                     </div>
 
-                   
-                   
+
+
 
                 </div>
 
@@ -557,7 +557,7 @@
                 <!-- Column 3 -->
                 <div class="col-4">
 
-                     <!-- Bank Name -->
+                    <!-- Bank Name -->
                     <div class="row mt-2">
                         <label class="col-12 col-sm-4 col-form-label">Bank Name</label>
                         <div class="col-12 col-sm-8">
@@ -611,7 +611,7 @@
                     <div class="row mt-2">
                         <label class="col-12 col-sm-4 col-form-label">Bill to Customer</label>
                         <div class="col-12 col-sm-8">
-                            <input asp-for="BillToCustomer" class="form-control" disabled/>
+                            <input asp-for="BillToCustomer" class="form-control" disabled />
                             <span asp-validation-for="BillToCustomer" class="text-danger"></span>
                         </div>
                     </div>
@@ -655,9 +655,9 @@
                         </div>
                     </div>
 
-                   
 
-                   
+
+
 
                     <div class="row mt-2">
                         <label class="col-12 col-sm-4 col-form-label">E_INV Email<span class="required-star">*</span></label>
@@ -667,7 +667,7 @@
                         </div>
                     </div>
 
-                     <div class="row mt-2">
+                    <div class="row mt-2">
                         <label class="col-12 col-sm-4 col-form-label">E_INV Phone<span class="required-star">*</span></label>
                         <div class="col-12 col-sm-8">
                             <input asp-for="EInvPhoneNo" class="form-control" />
@@ -678,7 +678,7 @@
 
                 <!-- Column 3 -->
                 <div class="col-4">
-                     <div class="row mt-2">
+                    <div class="row mt-2">
                         <label class="col-12 col-sm-4 col-form-label">Currency</label>
                         <div class="col-12 col-sm-8">
                             <select asp-for="CurrencyCode"
@@ -690,7 +690,7 @@
                         </div>
                     </div>
 
-                    
+
                 </div>
 
             </div>
@@ -748,6 +748,227 @@
                 </div>
 
             </div>
+        </fieldset>
+
+        <!-- ================= Shipping ================= -->
+        <fieldset>
+            <legend class="fw-bold d-lg-flex">
+                Shipping
+                <div class="form-check ms-4 mb-2 ">
+                    <input class="form-check-input" type="checkbox" id="chkSameAsGeneral">
+                    <label class="form-check-label" for="chkSameAsGeneral">
+                        Same as General Details
+                    </label>
+                </div>
+                @* <div>
+                    <input type="checkbox" id="chkSameAsGeneral" />
+                    <label for="chkSameAsGeneral">Same as General Details</label>
+                </div> *@
+
+            </legend>
+
+            <div class="row">
+
+                <!-- Column 1 -->
+                <div class="col-4">
+
+                    <div class="row mt-2">
+                        <label class="col-12 col-sm-4 col-form-label">Code</label>
+                        <div class="col-12 col-sm-8">
+                            <input asp-for="ShippingCode" class="form-control" />
+                        </div>
+                    </div>
+
+                    <div class="row mt-2">
+                        <label class="col-12 col-sm-4 col-form-label">Name</label>
+                        <div class="col-12 col-sm-8">
+                            <input asp-for="ShippingName" class="form-control" />
+                        </div>
+                    </div>
+
+                    <div class="row mt-2">
+                        <label class="col-12 col-sm-4 col-form-label">Address</label>
+                        <div class="col-12 col-sm-8">
+                            <input asp-for="ShippingAddress" class="form-control" />
+                        </div>
+                    </div>
+
+                    <div class="row mt-2">
+                        <label class="col-12 col-sm-4 col-form-label">Address 2</label>
+                        <div class="col-12 col-sm-8">
+                            <input asp-for="ShippingAddress2" class="form-control" />
+                        </div>
+                    </div>
+
+                    <div class="row mt-2">
+                        <label class="col-12 col-sm-4 col-form-label">City</label>
+                        <div class="col-12 col-sm-8">
+                            <input asp-for="ShippingCity" class="form-control" />
+
+                            <span asp-validation-for="ShippingCity" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="row mt-2">
+                        <label class="col-12 col-sm-4 col-form-label">Postal Code</label>
+                        <div class="col-12 col-sm-8">
+
+                            <select asp-for="ShippingPostalCode" class="form-select">
+                                <option value="">--Select--</option>
+                            </select>
+                            <span asp-validation-for="ShippingPostalCode" class="text-danger"></span>
+
+                        </div>
+                    </div>
+
+
+
+                    <div class="row mt-2">
+                        <label class="col-12 col-sm-4 col-form-label">State</label>
+                        <div class="col-12 col-sm-8">
+                            <input asp-for="ShippingState" class="form-control" />
+                        </div>
+                    </div>
+
+                    <div class="row mt-2">
+                        <label class="col-12 col-sm-4 col-form-label">Country</label>
+                        <div class="col-12 col-sm-8">
+                            <select asp-for="ShippingCountry"
+                                    asp-items="@(new SelectList(Model.CustomerDropDownModel.ShippingCountries, "Code", "Name"))"
+                                    class="form-select">
+                                <option value="">--Select--</option>
+                            </select>
+
+                            <span asp-validation-for="ShippingCountry" class="text-danger"></span>
+                        </div>
+                    </div>
+                </div>
+
+
+                <!-- Column 2 -->
+                <div class="col-4">
+
+
+
+                    <div class="row mt-2">
+                        <label class="col-12 col-sm-4 col-form-label">Phone No</label>
+                        <div class="col-12 col-sm-8">
+                            <input asp-for="ShippingPhoneNo" class="form-control" />
+                        </div>
+                    </div>
+
+
+                    <div class="row mt-2">
+                        <label class="col-12 col-sm-4 col-form-label">Email</label>
+                        <div class="col-12 col-sm-8">
+                            <input asp-for="ShippingEmail" class="form-control" />
+                        </div>
+                    </div>
+
+                    <div class="row mt-2">
+                        <label class="col-12 col-sm-4 col-form-label">Contact Person</label>
+                        <div class="col-12 col-sm-8">
+                            <input asp-for="ShippingContactPerson" class="form-control" />
+                        </div>
+                    </div>
+                    <div class="row mt-2">
+                        <label class="col-12 col-sm-4 col-form-label">Location Code</label>
+                        <div class="col-12 col-sm-8">
+                            <select asp-for="ShippingLocationCode"
+                                    class="form-select">
+                                <option value="">-- Select --</option>
+                            </select>
+                            <span asp-validation-for="ShippingLocationCode" class="text-danger"></span>
+                        </div>
+                    </div>
+
+
+
+                    <div class="row mt-2">
+                        <label class="col-12 col-sm-4 col-form-label">Shipping Method</label>
+                        <div class="col-12 col-sm-8">
+                            @* <input asp-for="ShippingMethodCode" class="form-control" /> *@
+
+                            <select asp-for="ShippingMethodCode"
+                                    asp-items="@(new SelectList(Model.CustomerDropDownModel.ShipmentMethodCodes, "Code", "Name"))"
+                                    class="form-select">
+                                <option value="">-- Select --</option>
+                            </select>
+                            <span asp-validation-for="ShippingMethodCode" class="text-danger"></span>
+                        </div>
+                    </div>
+
+                    <div class="row mt-2">
+                        <label class="col-12 col-sm-4 col-form-label">Agent Code</label>
+                        <div class="col-12 col-sm-8">
+                            @*  <input asp-for="ShippingAgentCode" class="form-control" /> *@
+
+                            <select asp-for="ShippingAgentCode"
+                                    asp-items="@(new SelectList(Model.CustomerDropDownModel.ShippingAgentCodes, "Code", "Name"))"
+                                    class="form-select">
+                                <option value="">-- Select --</option>
+                            </select>
+                            <span asp-validation-for="ShippingAgentCode" class="text-danger"></span>
+                        </div>
+                    </div>
+
+                    <div class="row mt-2">
+                        <label class="col-12 col-sm-4 col-form-label">Agent Service</label>
+                        <div class="col-12 col-sm-8">
+                            @*    <input asp-for="ShippingAgentServiceCode" class="form-control" /> *@
+
+                            <select asp-for="ShippingAgentServiceCode"
+                                    asp-items="@(new SelectList(Model.CustomerDropDownModel.ShippingAgentServices, "Code", "Name"))"
+                                    class="form-select">
+                                <option value="">-- Select --</option>
+                            </select>
+                            <span asp-validation-for="ShippingAgentServiceCode" class="text-danger"></span>
+                        </div>
+                    </div>
+
+                    <div class="row mt-2">
+                        <label class="col-12 col-sm-4 col-form-label">Address Type</label>
+                        <div class="col-12 col-sm-8">
+                            @* <input asp-for="ShippingAddressType" class="form-control" /> *@
+
+                            <select asp-for="ShippingAddressType"
+                                    asp-items="@(new SelectList(Model.CustomerDropDownModel.ShippingAddressTypes, "Code", "Name"))"
+                                    class="form-select">
+                                <option value="">-- Select --</option>
+                            </select>
+                            <span asp-validation-for="ShippingAddressType" class="text-danger"></span>
+                        </div>
+                    </div>
+                </div>
+
+
+                <!-- Column 3 -->
+                <div class="col-4">
+
+                    <div class="row mt-2">
+                        <label class="col-12 col-sm-4 col-form-label">GST No</label>
+                        <div class="col-12 col-sm-8">
+                            <input asp-for="ShippingGSTRegistrationNo" class="form-control" />
+                        </div>
+                    </div>
+
+                    <div class="row mt-2">
+                        <label class="col-12 col-sm-4 col-form-label">GST Customer Type</label>
+                        <div class="col-12 col-sm-8">
+                            @* <input asp-for="ShipToGSTCustomerType" class="form-control" /> *@
+
+                            <select asp-for="ShipToGSTCustomerType"
+                                    asp-items="@(new SelectList(Model.CustomerDropDownModel.ShippingGSTCustomerTypes, "Code", "Name"))"
+                                    class="form-select">
+                                <option value="">-- Select --</option>
+                            </select>
+                            <span asp-validation-for="ShipToGSTCustomerType" class="text-danger"></span>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+
         </fieldset>
 
         <!-- ================= TAX ================= -->
@@ -935,6 +1156,8 @@
             </div>
 
         </fieldset>
+
+
 
         <div class="action-buttons">
             <button type="button" class="btn btn-primary" id="btnSaveCustomerMaster">Save</button>

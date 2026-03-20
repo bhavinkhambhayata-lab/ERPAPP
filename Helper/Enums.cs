@@ -66,5 +66,26 @@ namespace ERPAPP.Helper
             UID = 2,
             GID = 3
         }
+
+        public enum Shipping_To_GST_Customer_Type
+        {
+            None = 0,
+            Registered = 1,
+            Unregistered = 2,
+            Export = 3,
+            DeemedExport = 4,
+            Exempted = 5,
+            SEZDevelopment = 6,
+            SEZUnit = 7
+        }
+
+        public enum ShippingAddressType
+        {
+            [Display(Name = "Shipping Address")]
+            ShippingAddress = 0,
+
+            [Display(Name = "Document Forwarding Address")]
+            DocumentForwardingAddress = 1
+        }
     }
 }

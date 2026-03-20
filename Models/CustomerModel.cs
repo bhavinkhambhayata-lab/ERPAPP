@@ -149,6 +149,29 @@ namespace ERPAPP.Models
         public bool ThresholdOverlook { get; set; }
         public bool SurchargeOverlook { get; set; }
 
+        // ===================Shipping Details=================
+        public string? ShippingCode { get; set; }
+        public string? ShippingName { get; set; }
+        public string? ShippingAddress { get; set; }
+        public string? ShippingAddress2 { get; set; }
+        public string? ShippingCity { get; set; }
+        public string? ShippingPostalCode { get; set; }
+
+        public string? ShippingCountry { get; set; }
+        public string? ShippingPhoneNo { get; set; }
+        public string? ShippingContactPerson { get; set; }
+
+        // New Fields
+        public string? ShippingEmail { get; set; }
+        public string? ShippingLocationCode { get; set; }
+        public string? ShippingMethodCode { get; set; }
+        public string? ShippingAgentCode { get; set; }
+        public string? ShippingAgentServiceCode { get; set; }
+        public string? ShippingState { get; set; }
+        public string? ShippingGSTRegistrationNo { get; set; }
+        public int? ShippingAddressType { get; set; }
+        public int? ShipToGSTCustomerType { get; set; }
+
         // ================= BRAND LIST =================
 
         public List<CustomerBrandWiseAddModel> CustomerBrandAddList { get; set; } = new();
@@ -236,6 +259,22 @@ namespace ERPAPP.Models
 
     public class ChargesGroupModel : BaseDropDown { }
 
+    public class ShipmentMethodCodeModel : BaseDropDown { }
+
+    public class ShippingAgentCodeModel : BaseDropDown { }
+
+    public class ShippingAgentServiceModel : BaseDropDown { }
+
+    public class ShippingAgentServiceZoneCodeModel : BaseDropDown { }
+
+    public class ShippingGSTCustomerTypeModel : BaseDropDown { }
+
+    public class ShippingAddressTypeModel : BaseDropDown { }
+
+    public class ShipAlternatePriceGroupModel : BaseDropDown { }
+
+    public class ShippingCountryModel : BaseDropDown { }
+
     public class CustomerDropDownModel
     {
         public List<DivisionModel> Divisions { get; set; } = new();
@@ -275,6 +314,16 @@ namespace ERPAPP.Models
         public List<GSTRegistrationTypeModel> GSTRegistrationTypes { get; set; } = new();
         public List<PromoCodeModel> PromoCodes { get; set; } = new();
         public List<ChargesGroupModel> ChargesGroups { get; set; } = new();
+        public List<ShipmentMethodCodeModel> ShipmentMethodCodes { get; set; } = new();
+        public List<ShippingAgentCodeModel> ShippingAgentCodes { get; set; } = new();
+        public List<ShippingAgentServiceModel> ShippingAgentServices { get; set; } = new();
+        public List<ShippingAgentServiceZoneCodeModel> ShippingAgentServiceZoneCodes { get; set; } = new();
+        public List<ShippingGSTCustomerTypeModel> ShippingGSTCustomerTypes { get; set; } = new();
+        public List<ShippingAddressTypeModel> ShippingAddressTypes { get; set; } = new();
+        public List<ShipAlternatePriceGroupModel> ShipAlternatePriceGroups { get; set; } = new();
+
+        public List<ShippingCountryModel> ShippingCountries { get; set; } = new();
+
     }
 
 

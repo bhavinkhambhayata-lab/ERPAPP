@@ -26,7 +26,7 @@ namespace ERPAPP.Repository
                new SqlParameter("@Pssword", model.Password)
             };
 
-            DataTable loginDt = _db.GetDataTable("HRMS_1202.dbo.CheckUserNameAndPassword", loginParam);
+            DataTable loginDt = _db.GetDataTable("HRMS.dbo.CheckUserNameAndPassword", loginParam);
 
             if (loginDt.Rows.Count == 0)
             {
@@ -50,7 +50,7 @@ namespace ERPAPP.Repository
                         Nav2009_VendorDetails_FormDiaplsy,
                         Nav2009_FixedAssetDetails_FormDisplay,
                         Nav2009_Item_FormDisplay
-                             FROM HRMS_1202.dbo.Master_UserMaster WHERE RowId = @RowId";
+                             FROM HRMS.dbo.Master_UserMaster WHERE RowId = @RowId";
 
             DataTable menuDt = _db.GetDataTable(menuQuery, menuParam, false);
 

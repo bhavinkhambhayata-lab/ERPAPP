@@ -379,6 +379,18 @@
                         '<option value="' + item.code + '">' + item.name + '</option>'
                     );
                 });
+
+                // Location Bind Shipping Location Dropdown
+                var shippinglocationDropdown = $('#ShippingLocationCode');
+                shippinglocationDropdown.empty();
+
+                shippinglocationDropdown.append('<option value="">-- Select --</option>');
+
+                $.each(data, function (i, item) {
+                    shippinglocationDropdown.append(
+                        '<option value="' + item.code + '">' + item.name + '</option>'
+                    );
+                });
             }
         });
 
@@ -445,6 +457,125 @@
                 GetCustomerDataWithPortalRowId(value);   // function call
             }
 
+        }
+    });
+
+    // Shipping Related Bind City AutoComplete
+
+    //Empty city clears related fields
+    $("#ShippingCity").on("input", function () {
+
+        if ($(this).val().trim() === "") {
+
+            $("#ShippingCity").val('');
+            $("#ShippingState").val('');
+            $("#ShippingPostalCode").empty().append('<option value="">--Select--</option>');
+
+        }
+
+    });
+
+    // CITY AUTOCOMPLETE
+    $("#ShippingCity").autocomplete({
+
+        source: function (request, response) {
+
+            $.get("/Customer/GetCityList",
+                { city: request.term },
+                function (data) {
+
+                    response($.map(data, function (item) {
+                        return {
+                            label: item.name,
+                            value: item.name
+                        };
+                    }));
+
+                });
+
+        },
+
+        minLength: 1,
+
+        select: function (event, ui) {
+
+
+
+            // 🔥 CLEAR OLD DATA
+            $("#ShippingCountry").val('');
+            $("#ShippingState").val('');
+            $("#ShippingPostalCode").empty().append('<option value="">--Select--</option>');
+
+            // CITY DETAIL
+            $.get("/Customer/GetCityDetail",
+                { city: ui.item.value },
+                function (data) {
+                    console.log(data)
+                    if (data) {
+                        $("#ShippingCity").val(data.city);
+                        $("#ShippingCountry").val(data.countryCode || '');
+                        $("#ShippingState").val(data.stateCode || '');
+                    }
+
+                });
+
+            // POSTCODE LIST
+            $.get("/Customer/GetPostCodeList",
+                { city: ui.item.value },
+                function (data) {
+
+                    $("#ShippingPostalCode").empty().append('<option value="">--Select--</option>');
+
+                    $.each(data, function (i, item) {
+
+                        $("#ShippingPostalCode").append(
+                            '<option value="' + item.code + '">' + item.name + '</option>'
+                        );
+
+                    });
+
+                });
+
+            return false;
+        }
+
+    });
+
+    $("#chkSameAsGeneral").change(function () {
+
+        if ($(this).is(":checked")) {
+
+            // ================= General → Shipping =================
+            $("#ShippingName").val($("#Name").val());
+            $("#ShippingAddress").val($("#Address").val());
+            $("#ShippingAddress2").val($("#Address2").val());
+            $("#ShippingCity").val($("#CityCode").val());
+            $("#ShippingPostalCode").val($("#PostCode").val());
+            $("#ShippingState").val($("#StateCode").val());
+            $("#ShippingCountry").val($("#CountryCode").val());
+
+            $("#ShippingPhoneNo").val($("#PhoneNo").val());
+            $("#ShippingEmail").val($("#Email").val());
+            $("#ShippingContactPerson").val($("#ContactPerson").val());
+
+            $("#ShippingLocationCode").val($('#LocationCode').val());
+
+            loadCustomerShippingAddressData($("#ShippingCity").val());
+
+        } else {
+
+            // ================= Clear =================
+            $("#ShippingName").val("");
+            $("#ShippingAddress").val("");
+            $("#ShippingAddress2").val("");
+            $("#ShippingCity").val("");
+            $("#ShippingPostalCode").val("");
+            $("#ShippingState").val("");
+            $("#ShippingCountry").val("");
+
+            $("#ShippingPhoneNo").val("");
+            $("#ShippingEmail").val("");
+            $("#ShippingContactPerson").val("");
         }
     });
 });
@@ -855,4 +986,41 @@ function GetCustomerDataWithMasterCode(masterCode) {
         }
     });
 
+}
+function loadCustomerShippingAddressData(city) {
+    // 🔥 CLEAR OLD DATA
+    $("#ShippingCountry").val('');
+    $("#ShippingState").val('');
+    $("#ShippingPostalCode").empty().append('<option value="">--Select--</option>');
+   
+
+    // CITY DETAIL
+    $.get("/Customer/GetCityDetail",
+        { city: city },
+        function (data) {
+
+            if (data) {
+                $("#ShippingCity").val(data.city);
+                $("#ShippingCountry").val(data.countryCode || '');
+                $("#ShippingState").val(data.stateCode || '');
+            }
+
+        });
+
+    // POSTCODE LIST
+    $.get("/Customer/GetPostCodeList",
+        { city: city },
+        function (data) {
+
+            $("#ShippingPostalCode").empty().append('<option value="">--Select--</option>');
+
+            $.each(data, function (i, item) {
+
+                $("#ShippingPostalCode").append(
+                    '<option value="' + item.code + '">' + item.name + '</option>'
+                );
+
+            });
+
+        });
 }

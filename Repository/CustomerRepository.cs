@@ -244,6 +244,66 @@ namespace ERPAPP.Repository
                 });
             }
 
+            // 20 Shipment Method
+            foreach (DataRow row in ds.Tables[20].Rows)
+            {
+                dropDown.ShipmentMethodCodes.Add(new ShipmentMethodCodeModel
+                {
+                    Code = row["Code"].ToString(),
+                    Name = row["Name"].ToString()
+                });
+            }
+
+            // 21 Shipping Agent
+            foreach (DataRow row in ds.Tables[21].Rows)
+            {
+                dropDown.ShippingAgentCodes.Add(new ShippingAgentCodeModel
+                {
+                    Code = row["Code"].ToString(),
+                    Name = row["Name"].ToString()
+                });
+            }
+
+            // 22 Shipping Agent Service
+            foreach (DataRow row in ds.Tables[22].Rows)
+            {
+                dropDown.ShippingAgentServices.Add(new ShippingAgentServiceModel
+                {
+                    Code = row["Code"].ToString(),
+                    Name = row["Name"].ToString()
+                });
+            }
+
+            // 23 Service Zone
+            foreach (DataRow row in ds.Tables[23].Rows)
+            {
+                dropDown.ShippingAgentServiceZoneCodes.Add(new ShippingAgentServiceZoneCodeModel
+                {
+                    Code = row["Code"].ToString(),
+                    Name = row["Name"].ToString()
+                });
+            }
+
+            // 24 Alternate Customer Group
+            foreach (DataRow row in ds.Tables[24].Rows)
+            {
+                dropDown.ShipAlternatePriceGroups.Add(new ShipAlternatePriceGroupModel
+                {
+                    Code = row["Code"].ToString(),
+                    Name = row["Name"].ToString()
+                });
+            }
+
+            // 25 Shiiping Country
+            foreach (DataRow row in ds.Tables[1].Rows)
+            {
+                dropDown.ShippingCountries.Add(new ShippingCountryModel
+                {
+                    Code = row["Code"].ToString(),
+                    Name = row["Name"].ToString()
+                });
+            }
+
             #region Set Data Enum Values
 
             dropDown.BusinessCategories = Enum.GetValues(typeof(BusinessCategory))
@@ -306,6 +366,24 @@ namespace ERPAPP.Repository
                 {
                     Code = ((int)e).ToString(),
                     Name = e.ToString()
+                }).ToList();
+
+            // Shipping Address Type
+            dropDown.ShippingAddressTypes = Enum.GetValues(typeof(ShippingAddressType))
+                .Cast<ShippingAddressType>()
+                .Select(e => new ShippingAddressTypeModel
+                {
+                    Code = ((int)e).ToString(),
+                    Name = e.GetDisplayName().ToString()
+                }).ToList();
+
+            //Shipping GST Customer Type
+            dropDown.ShippingGSTCustomerTypes = Enum.GetValues(typeof(Shipping_To_GST_Customer_Type))
+                .Cast<Shipping_To_GST_Customer_Type>()
+                .Select(e => new ShippingGSTCustomerTypeModel
+                {
+                    Code = ((int)e).ToString(),
+                    Name = e.GetDisplayName().ToString()
                 }).ToList();
 
             #endregion
@@ -659,43 +737,45 @@ namespace ERPAPP.Repository
 
         public async Task<bool> InsertCustomer(CustomerModel model)
         {
-            bool result = false;
-
-            // Create DataTable for Brand List
-            DataTable dtBrand = new DataTable();
-
-            dtBrand.Columns.Add("BrandCode");
-            dtBrand.Columns.Add("CustomerCategoryCode");
-            dtBrand.Columns.Add("TradeSecurityAmount", typeof(decimal));
-            dtBrand.Columns.Add("CustomerDiscountGroup");
-            dtBrand.Columns.Add("DealerClassification");
-            dtBrand.Columns.Add("SalesPersonCode");
-            dtBrand.Columns.Add("Allocation");
-            dtBrand.Columns.Add("HOSalesPerson");
-            dtBrand.Columns.Add("DLRAppointmentDate", typeof(DateTime));
-            dtBrand.Columns.Add("DLRTerminationDate", typeof(DateTime));
-
-            if (model.CustomerBrandAddList != null && model.CustomerBrandAddList.Count > 0)
+            try
             {
-                foreach (var brand in model.CustomerBrandAddList)
+                bool result = false;
+
+                // Create DataTable for Brand List
+                DataTable dtBrand = new DataTable();
+
+                dtBrand.Columns.Add("BrandCode");
+                dtBrand.Columns.Add("CustomerCategoryCode");
+                dtBrand.Columns.Add("TradeSecurityAmount", typeof(decimal));
+                dtBrand.Columns.Add("CustomerDiscountGroup");
+                dtBrand.Columns.Add("DealerClassification");
+                dtBrand.Columns.Add("SalesPersonCode");
+                dtBrand.Columns.Add("Allocation");
+                dtBrand.Columns.Add("HOSalesPerson");
+                dtBrand.Columns.Add("DLRAppointmentDate", typeof(DateTime));
+                dtBrand.Columns.Add("DLRTerminationDate", typeof(DateTime));
+
+                if (model.CustomerBrandAddList != null && model.CustomerBrandAddList.Count > 0)
                 {
-                    dtBrand.Rows.Add(
-                        brand.BrandCode ?? "",
-                        brand.CustomerCategoryCode ?? "",
-                        brand.TradeSecurityAmount ?? (object)DBNull.Value,
-                        brand.CustomerDiscountGroup ?? "",
-                        brand.DealerClassification ?? "",
-                        brand.SalesPersonCode ?? "",
-                        brand.Allocation ?? "",
-                        brand.HOSalesPerson ?? "",
-                        brand.DLRAppointmentDate ?? new DateTime(1753, 1, 1),
-                        brand.DLRTerminationDate ?? new DateTime(1753, 1, 1)
-                    );
+                    foreach (var brand in model.CustomerBrandAddList)
+                    {
+                        dtBrand.Rows.Add(
+                            brand.BrandCode ?? "",
+                            brand.CustomerCategoryCode ?? "",
+                            brand.TradeSecurityAmount ?? (object)DBNull.Value,
+                            brand.CustomerDiscountGroup ?? "",
+                            brand.DealerClassification ?? "",
+                            brand.SalesPersonCode ?? "",
+                            brand.Allocation ?? "",
+                            brand.HOSalesPerson ?? "",
+                            brand.DLRAppointmentDate ?? new DateTime(1753, 1, 1),
+                            brand.DLRTerminationDate ?? new DateTime(1753, 1, 1)
+                        );
+                    }
                 }
-            }
 
-            SqlParameter[] param =
-            {
+                SqlParameter[] param =
+                {
                         // ================= SYSTEM =================
 
                         new SqlParameter("@LoginRowId", Convert.ToInt32(model.LoginRowId)),
@@ -780,6 +860,29 @@ namespace ERPAPP.Repository
                         new SqlParameter("@ThresholdOverlook", model.ThresholdOverlook),
                         new SqlParameter("@SurchargeOverlook", model.SurchargeOverlook),
 
+                       // ================= ShipTo =================
+
+                        new SqlParameter("@ShipToCode", model.ShippingCode ?? ""),
+                        new SqlParameter("@ShipToName", model.ShippingName ?? ""),
+                        new SqlParameter("@ShipToAddress", model.ShippingAddress ?? ""),
+                        new SqlParameter("@ShipToAddress2", model.ShippingAddress2 ?? ""),
+                        new SqlParameter("@ShipToCity", model.ShippingCity ?? ""),
+                        new SqlParameter("@ShipToPostCode", model.ShippingPostalCode ?? ""),
+                        new SqlParameter("@ShipToCountryCode", model.ShippingCountry ?? ""),
+                        new SqlParameter("@ShipToPhoneNo", model.ShippingPhoneNo ?? ""),
+                        new SqlParameter("@ShipToContact", model.ShippingContactPerson ?? ""),
+
+                        new SqlParameter("@ShipToEmail", model.ShippingEmail ?? ""),
+                        new SqlParameter("@ShipToLocationCode", model.ShippingLocationCode ?? ""),
+                        new SqlParameter("@ShipToShippingMethodCode", model.ShippingMethodCode ?? ""),
+                        new SqlParameter("@ShipToShippingAgentCode", model.ShippingAgentCode ?? ""),
+                        new SqlParameter("@ShipToShippingAgentServiceCode", model.ShippingAgentServiceCode ?? ""),
+                        new SqlParameter("@ShipToStateCode", model.ShippingState ?? ""),
+                        new SqlParameter("@ShipToGSTNo", model.ShippingGSTRegistrationNo ?? ""),
+
+                        new SqlParameter("@ShipToAddressType", model.ShippingAddressType ?? 0),
+                        new SqlParameter("@ShipToGSTCustomerType", model.ShipToGSTCustomerType ?? 0),
+
                         // ⭐ TABLE VALUED PARAMETER
                         new SqlParameter
                         {
@@ -790,14 +893,19 @@ namespace ERPAPP.Repository
                         }
     };
 
-            var customerNoObj = _db.ExecuteScalar("Customer_InsertDataWithTranferMasterAndCompnayData", param);
+                var customerNoObj = _db.ExecuteScalar("Customer_InsertDataWithTranferMasterAndCompnayData", param);
 
-            string customerNo = customerNoObj?.ToString();
+                string customerNo = customerNoObj?.ToString();
 
-            if (!string.IsNullOrEmpty(customerNo))
-                result = true;
+                if (!string.IsNullOrEmpty(customerNo))
+                    result = true;
 
-            return result;
+                return result;
+            }
+            catch (Exception e)
+            {
+                return false;
+            }
         }
 
 
