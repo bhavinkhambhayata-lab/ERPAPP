@@ -90,9 +90,13 @@
         border: 2px solid red !important;
     }
 
+    .customer-textarea {
+        height: 60px;
+    }
 </style>
 
 <form id="customerForm" method="post">
+    
     <div class="topbar d-flex justify-content-between align-items-center">
         <div class="fw-bold">
             Customer Details
@@ -102,7 +106,33 @@
             Row Unique ID : <span class="fw-semibold" id="DisplayNo">@Model.DisplayNo</span>
         </div>
     </div>
+    <div class="row mt-3 justify-content-end">
 
+        <div class="col-md-8 col-lg-6">
+            <div class="form-group row align-items-center">
+
+                <label class="col-6 col-form-label text-end">
+                    Extended From Portal
+                </label>
+
+                <div class="col-3 d-flex gap-2">
+                    <input type="text" id="PortalRowId" class="form-control" placeholder="Portal Customer No" />
+                </div>
+                <div class="col-3">
+                    <button type="button" id="btnFetchPortal" class="btn btn-success btn-sm">
+                        Fetch from Portal
+                    </button>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="offset-4 col-8">
+                    <span id="PortalRowIdError" class="text-danger"></span>
+                </div>
+            </div>
+        </div>
+
+    </div>
     <div class="container-fluid mt-3">
         <!-- ================= General ================= -->
         <fieldset>
@@ -113,14 +143,7 @@
                 <!-- Column 1 -->
                 <div class="col-4">
 
-                    <!-- Portal Customer No -->
-                    <div class="row mt-2">
-                        <label class="col-12 col-sm-4 col-form-label">Portal Customer No</label>
-                        <div class="col-12 col-sm-8">
-                            <input type="text" id="PortalRowId" class="form-control" />
-                            <span id="PortalRowIdError" class="text-danger"></span>
-                        </div>
-                    </div>
+                    
 
                     <!-- Division -->
                     <div class="row mt-2">
@@ -165,7 +188,7 @@
                             Address<span class="required-star">*</span>
                         </label>
                         <div class="col-12 col-sm-8">
-                            <input asp-for="Address" class="form-control" />
+                            <textarea asp-for="Address" class="form-control customer-textarea" rows="5"></textarea>
                             <span asp-validation-for="Address" class="text-danger"></span>
                         </div>
                     </div>
@@ -174,7 +197,7 @@
                     <div class="row mt-2">
                         <label class="col-12 col-sm-4 col-form-label">Address 2<span class="required-star">*</span></label>
                         <div class="col-12 col-sm-8">
-                            <input asp-for="Address2" class="form-control" />
+                            <textarea asp-for="Address2" class="form-control customer-textarea" rows="5"></textarea>
                             <span asp-validation-for="Address2" class="text-danger"></span>
                         </div>
                     </div>
@@ -376,7 +399,7 @@
 
                     <div class="row mt-2">
                         <label class="col-12 col-sm-4 col-form-label">
-                            Mobile No<span class="required-star">*</span>
+                            Mobile Phone No<span class="required-star">*</span>
                         </label>
                         <div class="col-12 col-sm-8">
                             <input asp-for="MobileNo" class="form-control" />
@@ -425,40 +448,6 @@
 
         </fieldset>
 
-        <!-- ================= Brand With Details ================= -->
-        <fieldset class="mt-3">
-            <legend class="fw-bold d-flex justify-content-between align-items-center">
-                Brand With Details
-
-                <button type="button" class="btn btn-primary btn-sm" onclick="addBrandRow()">
-                    +
-                </button>
-            </legend>
-
-            <div class="table-responsive">
-                <table class="table table-bordered table-sm mb-0 text-center" id="brandTable">
-                    <thead class="table-light text-nowrap">
-                        <tr>
-                            <th>Customer No</th>
-                            <th>Dimension<span class="required-star">*</span></th>
-                            <th>Customer Category Code<span class="required-star">*</span></th>
-                            <th>Trade Security Amount</th>
-                            <th>Customer Discount Group<span class="required-star">*</span></th>
-                            <th>Dealer Classification</th>
-                            <th>Sales Person Code<span class="required-star">*</span></th>
-                            <th>Allocation</th>
-                            <th>HO Sales Person<span class="required-star">*</span></th>
-                            <th>DLR Appointment Date</th>
-                            <th>DLR Termination Date</th>
-                            <th style="width:60px;">Action</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                    </tbody>
-                </table>
-            </div>
-        </fieldset>
-
         <!-- ================= Marketing ================= -->
         <fieldset>
             <legend class="fw-bold">Marketing</legend>
@@ -494,6 +483,11 @@
                         </div>
                     </div>
 
+                </div>
+
+                <!-- Column 2 -->
+                <div class="col-4 ">
+
                     <!-- Vendor -->
                     <div class="row mt-2">
                         <label class="col-12 col-sm-4 col-form-label">Vendor</label>
@@ -506,25 +500,6 @@
                             <span asp-validation-for="VendorCode" class="text-danger"></span>
                         </div>
                     </div>
-
-
-
-                </div>
-
-
-                <!-- Column 2 -->
-                <div class="col-4 ">
-
-                    <!-- Commision Vendor No -->
-                    <div class="row mt-2">
-                        <label class="col-12 col-sm-4 col-form-label">Commision Vendor No</label>
-                        <div class="col-12 col-sm-8">
-                            <input asp-for="CommissionVendorNo" class="form-control" />
-                            <span asp-validation-for="CommissionVendorNo" class="text-danger"></span>
-                        </div>
-                    </div>
-
-
 
                     <!-- Commission Type -->
                     <div class="row mt-2">
@@ -540,16 +515,13 @@
                     </div>
 
                     <!-- Commission -->
-                    <div class="row mt-2">
-                        <label class="col-12 col-sm-4 col-form-label">Commission</label>
+                    <div class="row mt-2 d-none">
+                        <label class="col-12 col-sm-4 col-form-label commission-labels">Commission</label>
                         <div class="col-12 col-sm-8">
                             <input asp-for="Commission" class="form-control" />
                             <span asp-validation-for="Commission" class="text-danger"></span>
                         </div>
                     </div>
-
-
-
 
                 </div>
 
@@ -597,6 +569,40 @@
 
             </div>
 
+        </fieldset>
+
+        <!-- ================= Brand With Details ================= -->
+        <fieldset class="mt-3">
+            <legend class="fw-bold d-flex justify-content-between align-items-center">
+                Brand With Details
+
+                <button type="button" class="btn btn-primary btn-sm" onclick="addBrandRow()">
+                    +
+                </button>
+            </legend>
+
+            <div class="table-responsive">
+                <table class="table table-bordered table-sm mb-0 text-center" id="brandTable">
+                    <thead class="table-light text-nowrap">
+                        <tr>
+                            <th>Customer No</th>
+                            <th>Dimension<span class="required-star">*</span></th>
+                            <th>Customer Category Code<span class="required-star">*</span></th>
+                            <th>Trade Security Amount</th>
+                            <th>Customer Discount Group<span class="required-star">*</span></th>
+                            <th>Dealer Classification</th>
+                            <th>Sales Person Code<span class="required-star">*</span></th>
+                            <th>Allocation</th>
+                            <th>HO Sales Person<span class="required-star">*</span></th>
+                            <th>DLR Appointment Date</th>
+                            <th>DLR Termination Date</th>
+                            <th style="width:60px;">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    </tbody>
+                </table>
+            </div>
         </fieldset>
 
         <!-- ================= Invoicing ================= -->
@@ -760,24 +766,12 @@
                         Same as General Details
                     </label>
                 </div>
-                @* <div>
-                    <input type="checkbox" id="chkSameAsGeneral" />
-                    <label for="chkSameAsGeneral">Same as General Details</label>
-                </div> *@
-
             </legend>
 
             <div class="row">
 
                 <!-- Column 1 -->
                 <div class="col-4">
-
-                    <div class="row mt-2">
-                        <label class="col-12 col-sm-4 col-form-label">Code</label>
-                        <div class="col-12 col-sm-8">
-                            <input asp-for="ShippingCode" class="form-control" />
-                        </div>
-                    </div>
 
                     <div class="row mt-2">
                         <label class="col-12 col-sm-4 col-form-label">Name</label>
@@ -789,14 +783,14 @@
                     <div class="row mt-2">
                         <label class="col-12 col-sm-4 col-form-label">Address</label>
                         <div class="col-12 col-sm-8">
-                            <input asp-for="ShippingAddress" class="form-control" />
+                            <textarea asp-for="ShippingAddress" class="form-control customer-textarea" rows="5"></textarea>
                         </div>
                     </div>
 
                     <div class="row mt-2">
                         <label class="col-12 col-sm-4 col-form-label">Address 2</label>
                         <div class="col-12 col-sm-8">
-                            <input asp-for="ShippingAddress2" class="form-control" />
+                            <textarea asp-for="ShippingAddress2" class="form-control customer-textarea" rows="5"></textarea>
                         </div>
                     </div>
 
@@ -825,7 +819,7 @@
                     <div class="row mt-2">
                         <label class="col-12 col-sm-4 col-form-label">State</label>
                         <div class="col-12 col-sm-8">
-                            <input asp-for="ShippingState" class="form-control" />
+                            <input asp-for="ShippingState" class="form-control" disabled />
                         </div>
                     </div>
 
@@ -841,13 +835,6 @@
                             <span asp-validation-for="ShippingCountry" class="text-danger"></span>
                         </div>
                     </div>
-                </div>
-
-
-                <!-- Column 2 -->
-                <div class="col-4">
-
-
 
                     <div class="row mt-2">
                         <label class="col-12 col-sm-4 col-form-label">Phone No</label>
@@ -855,7 +842,11 @@
                             <input asp-for="ShippingPhoneNo" class="form-control" />
                         </div>
                     </div>
+                </div>
 
+
+                <!-- Column 2 -->
+                <div class="col-4">
 
                     <div class="row mt-2">
                         <label class="col-12 col-sm-4 col-form-label">Email</label>
@@ -932,10 +923,17 @@
 
                             <select asp-for="ShippingAddressType"
                                     asp-items="@(new SelectList(Model.CustomerDropDownModel.ShippingAddressTypes, "Code", "Name"))"
-                                    class="form-select">
+                                    class="form-select" disabled>
                                 <option value="">-- Select --</option>
                             </select>
                             <span asp-validation-for="ShippingAddressType" class="text-danger"></span>
+                        </div>
+                    </div>
+
+                    <div class="row mt-2">
+                        <label class="col-12 col-sm-4 col-form-label">GST No</label>
+                        <div class="col-12 col-sm-8">
+                            <input asp-for="ShippingGSTRegistrationNo" class="form-control" />
                         </div>
                     </div>
                 </div>
@@ -944,12 +942,7 @@
                 <!-- Column 3 -->
                 <div class="col-4">
 
-                    <div class="row mt-2">
-                        <label class="col-12 col-sm-4 col-form-label">GST No</label>
-                        <div class="col-12 col-sm-8">
-                            <input asp-for="ShippingGSTRegistrationNo" class="form-control" />
-                        </div>
-                    </div>
+                   
 
                     <div class="row mt-2">
                         <label class="col-12 col-sm-4 col-form-label">GST Customer Type</label>
@@ -1066,7 +1059,10 @@
 
         <!-- ================= NOD / NOC ================= -->
         <fieldset>
-            <legend class="fw-bold">NOD / NOC</legend>
+            <legend class="fw-bold">
+                NOD / NOC
+                <span class="text-muted fw-normal ms-2" style="font-size: 14px;">(Only if required)</span>
+            </legend>
 
             <div class="row">
 

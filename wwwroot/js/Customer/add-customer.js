@@ -269,6 +269,67 @@
         formData.append("BillToCustomer", $('#BillToCustomer').val());
         formData.append("DivisionCode", $('#Division option:selected').text());
 
+        var isCheckedShipp = $("#chkSameAsGeneral").is(":checked");
+
+        var isShippingEmpty =
+            $('#ShippingName').val().trim() === '' &&
+            $('#ShippingAddress').val().trim() === '' &&
+            $('#ShippingCity').val().trim() === '';
+
+        // ✅ CASE 1: Checked → Shipping field ni value j levani
+        if (isCheckedShipp) {
+
+            formData.set("ShippingName", $("#ShippingName").val());
+            formData.set("ShippingAddress", $("#ShippingAddress").val());
+            formData.set("ShippingAddress2", $("#ShippingAddress2").val());
+            formData.set("ShippingCity", $("#ShippingCity").val());
+            formData.set("ShippingPostalCode", $("#ShippingPostalCode").val());
+            formData.set("ShippingState", $("#ShippingState").val());
+            formData.set("ShippingCountry", $("#ShippingCountry").val());
+            formData.set("ShippingPhoneNo", $("#ShippingPhoneNo").val());
+            formData.set("ShippingEmail", $("#ShippingEmail").val());
+            formData.set("ShippingContactPerson", $("#ShippingContactPerson").val());
+            formData.set("ShippingLocationCode", $("#ShippingLocationCode").val());
+
+            formData.set("ShippingAddressType", $("#ShippingAddressType").val());
+        }
+
+        // ✅ CASE 2: Unchecked + Empty → General values
+        else if (isShippingEmpty) {
+
+            formData.set("ShippingName", $("#Name").val());
+            formData.set("ShippingAddress", $("#Address").val());
+            formData.set("ShippingAddress2", $("#Address2").val());
+            formData.set("ShippingCity", $("#CityCode").val());
+            formData.set("ShippingPostalCode", $("#PostCode").val());
+            formData.set("ShippingState", $("#StateCode").val());
+            formData.set("ShippingCountry", $("#CountryCode").val());
+            formData.set("ShippingPhoneNo", $("#PhoneNo").val());
+            formData.set("ShippingEmail", $("#Email").val());
+            formData.set("ShippingContactPerson", $("#ContactPerson").val());
+            formData.set("ShippingLocationCode", $("#LocationCode").val());
+
+            formData.set("ShippingAddressType", $("#ShippingAddressType").val());
+        }
+
+        // ✅ CASE 3: Unchecked + Manual → Shipping values
+        else {
+
+            formData.set("ShippingName", $("#ShippingName").val());
+            formData.set("ShippingAddress", $("#ShippingAddress").val());
+            formData.set("ShippingAddress2", $("#ShippingAddress2").val());
+            formData.set("ShippingCity", $("#ShippingCity").val());
+            formData.set("ShippingPostalCode", $("#ShippingPostalCode").val());
+            formData.set("ShippingState", $("#ShippingState").val());
+            formData.set("ShippingCountry", $("#ShippingCountry").val());
+            formData.set("ShippingPhoneNo", $("#ShippingPhoneNo").val());
+            formData.set("ShippingEmail", $("#ShippingEmail").val());
+            formData.set("ShippingContactPerson", $("#ShippingContactPerson").val());
+            formData.set("ShippingLocationCode", $("#ShippingLocationCode").val());
+
+            formData.set("ShippingAddressType", $("#ShippingAddressType").val());
+        }
+
         // ===== Brand List =====
         $('#brandTable tbody tr').each(function (index) {
 
@@ -419,11 +480,12 @@
 
     });
 
-    $("#PortalRowId").on("keyup", function (e) {
+    $("#btnFetchPortal").click(function () {
 
-        var value = $(this).val();
+        var value = $("#PortalRowId").val().trim();
         var pattern = /^(ZZ\d+|\d+)$/i;
 
+        // Empty check
         if (value === "") {
             $("#PortalRowIdError").text("");
 
@@ -437,27 +499,24 @@
             $("#CountryCode").val("");
             $("#Region").val("");
             $("#Zone").val("");
-
             $("#ContactPerson").val("");
             $("#MobileNo").val("");
             $("#Email").val("");
+
             return;
         }
 
+        // Validation
         if (!pattern.test(value)) {
             $("#PortalRowIdError").text("Enter ZZ with digits or only digits.");
+            return;
         } else {
             $("#PortalRowIdError").text("");
         }
 
-        // Enter press
-        if (e.key === "Enter") {
+        // API Call
+        GetCustomerDataWithPortalRowId(value);
 
-            if (pattern.test(value)) {
-                GetCustomerDataWithPortalRowId(value);   // function call
-            }
-
-        }
     });
 
     // Shipping Related Bind City AutoComplete
@@ -546,38 +605,56 @@
         if ($(this).is(":checked")) {
 
             // ================= General → Shipping =================
-            $("#ShippingName").val($("#Name").val());
-            $("#ShippingAddress").val($("#Address").val());
-            $("#ShippingAddress2").val($("#Address2").val());
-            $("#ShippingCity").val($("#CityCode").val());
-            $("#ShippingPostalCode").val($("#PostCode").val());
-            $("#ShippingState").val($("#StateCode").val());
-            $("#ShippingCountry").val($("#CountryCode").val());
+            $("#ShippingName").val($("#Name").val()).prop("disabled", true);
+            $("#ShippingAddress").val($("#Address").val()).prop("disabled", true);
+            $("#ShippingAddress2").val($("#Address2").val()).prop("disabled", true);
+            $("#ShippingCity").val($("#CityCode").val()).prop("disabled", true);
+            $("#ShippingPostalCode").val($("#PostCode").val()).prop("disabled", true);
+            $("#ShippingState").val($("#StateCode").val()).prop("disabled", true);
+            $("#ShippingCountry").val($("#CountryCode").val()).prop("disabled", true);
 
-            $("#ShippingPhoneNo").val($("#PhoneNo").val());
-            $("#ShippingEmail").val($("#Email").val());
-            $("#ShippingContactPerson").val($("#ContactPerson").val());
+            $("#ShippingPhoneNo").val($("#PhoneNo").val()).prop("disabled", true);
+            $("#ShippingEmail").val($("#Email").val()).prop("disabled", true);
+            $("#ShippingContactPerson").val($("#ContactPerson").val()).prop("disabled", true);
 
-            $("#ShippingLocationCode").val($('#LocationCode').val());
+            $("#ShippingLocationCode").val($('#LocationCode').val()).prop("disabled", true);
 
             loadCustomerShippingAddressData($("#ShippingCity").val());
 
         } else {
 
             // ================= Clear =================
-            $("#ShippingName").val("");
-            $("#ShippingAddress").val("");
-            $("#ShippingAddress2").val("");
-            $("#ShippingCity").val("");
-            $("#ShippingPostalCode").val("");
-            $("#ShippingState").val("");
-            $("#ShippingCountry").val("");
+            $("#ShippingName").val("").prop("disabled", false);
+            $("#ShippingAddress").val("").prop("disabled", false);
+            $("#ShippingAddress2").val("").prop("disabled", false);
+            $("#ShippingCity").val("").prop("disabled", false);
+            $("#ShippingPostalCode").val("").prop("disabled", false);
+            $("#ShippingState").val("").prop("disabled", false);
+            $("#ShippingCountry").val("").prop("disabled", false);
 
-            $("#ShippingPhoneNo").val("");
-            $("#ShippingEmail").val("");
-            $("#ShippingContactPerson").val("");
+            $("#ShippingPhoneNo").val("").prop("disabled", false);
+            $("#ShippingEmail").val("").prop("disabled", false);
+            $("#ShippingContactPerson").val("").prop("disabled", false);
         }
     });
+
+    // On change
+    $('#CommissionType').change(function () {
+        handleCommission();
+    });
+
+    $('#CountryCode').on('change', function () {
+
+        handleCurrency();
+        handleCustomerPostingGroup();
+        handleGenBusPostingGroup();
+    });
+
+    // Page load par pan run karvu
+    handleCommission();
+
+
+    $('#ShippingAddressType').val('0');
 });
 
 
@@ -840,7 +917,7 @@ function GetCustomerDataWithPortalRowId(value) {
             var data = res.result;
 
             $("#PortalRowId").val(data.portalRowId);
-            $("#MasterCode").val(data.masterCode);
+            //$("#MasterCode").val(data.masterCode);
 
             $("#Name").val(data.name);
             $("#Address").val(data.address);
@@ -864,9 +941,6 @@ function GetCustomerDataWithPortalRowId(value) {
             $("#Website").val(data.website);
 
             $("#CustomerType").val(data.customerType);
-            $("#BusinessCategory").val(data.businessCategory);
-
-            $("#SalespersonCode").val(data.salespersonCode);
 
             $("#PANNo").val(data.panNo);
 
@@ -875,7 +949,6 @@ function GetCustomerDataWithPortalRowId(value) {
 
             $("#ARNNo").val(data.arnNo);
 
-            $("#ChargesGroup").val(data.chargesGroup);
         },
         error: function () {
 
@@ -992,7 +1065,7 @@ function loadCustomerShippingAddressData(city) {
     $("#ShippingCountry").val('');
     $("#ShippingState").val('');
     $("#ShippingPostalCode").empty().append('<option value="">--Select--</option>');
-   
+
 
     // CITY DETAIL
     $.get("/Customer/GetCityDetail",
@@ -1023,4 +1096,73 @@ function loadCustomerShippingAddressData(city) {
             });
 
         });
+}
+
+function handleCommission() {
+    var value = $('#CommissionType').val();
+
+    var commissionDiv = $('.commission-labels').closest('.row');
+    var label = $('.commission-labels');
+
+    if (value === "1") {
+        // Differential → hide
+        commissionDiv.addClass('d-none');
+    }
+    else if (value === "2") {
+        // PercentOfNetRealization
+        commissionDiv.removeClass('d-none');
+        label.text('Commission % of Net');
+    }
+    else if (value === "3") {
+        // QtyPerUOM
+        commissionDiv.removeClass('d-none');
+        label.text('Commission Per Unit');
+    }
+    else {
+        // None or empty
+        commissionDiv.addClass('d-none');
+    }
+}
+function handleCurrency() {
+    var country = $('#CountryCode').val();
+    var currency = $('#CurrencyCode');
+
+    if (country === "IN") {
+        // India → set INR & disable
+        currency.val("INR");
+        currency.prop("disabled", true);
+    } else {
+        // Other → enable
+        currency.prop("disabled", false);
+    }
+}
+function handleCustomerPostingGroup() {
+
+    var country = $('#CountryCode').val();
+    var postingGroup = $('#CustomerPostingGroup');
+
+    if (country === "IN") {
+        // India → DOMESTIC
+        postingGroup.val("DOMESTIC");
+        postingGroup.prop("disabled", true);
+    } else {
+        // Other → FOREIGN
+        postingGroup.val("FOREIGN");
+        postingGroup.prop("disabled", true);
+    }
+}
+function handleGenBusPostingGroup() {
+
+    var country = $('#CountryCode').val();
+    var genBusPostingGroup = $('#GenBusPostingGroup');
+
+    if (country === "IN") {
+        // India → DOMESTIC
+        genBusPostingGroup.val("DOMESTIC");
+        genBusPostingGroup.prop("disabled", true);
+    } else {
+        // Other → EXPORT
+        genBusPostingGroup.val("EXPORT");
+        genBusPostingGroup.prop("disabled", true);
+    }
 }
