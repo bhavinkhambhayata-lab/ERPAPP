@@ -1,0 +1,300 @@
+﻿<!-- ✅ jQuery -->
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
+
+<!-- ✅ DataTables CSS -->
+<link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css">
+
+<!-- ✅ DataTables JS -->
+<script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+
+<style>
+    /* Simple card */
+    .custom-card {
+        border: 1px solid #dee2e6;
+        border-radius: 6px;
+        background: #fff;
+        padding: 12px;
+    }
+
+    /* Header text */
+    .card-title {
+        font-size: 16px;
+        font-weight: 600;
+        margin-bottom: 10px;
+    }
+
+    /* Table */
+    #tblCustomer {
+        border-collapse: collapse;
+        width: 100%;
+    }
+
+        #tblCustomer th {
+            background-color: #f5f5f5;
+            border: 1px solid #dee2e6;
+            padding: 8px;
+            font-weight: 600;
+        }
+
+        #tblCustomer td {
+            border: 1px solid #dee2e6;
+            padding: 7px;
+        }
+
+        /* Light hover */
+        #tblCustomer tbody tr:hover {
+            background-color: #f9f9f9;
+        }
+
+    /* Search + button spacing */
+    #txtSearch {
+        height: 36px;
+    }
+
+    .btn-primary {
+        height: 36px;
+        padding: 0 15px;
+    }
+
+    .topbar {
+        background: #0d6efd;
+        color: #fff;
+        padding: 10px 20px;
+        font-size: 18px;
+        font-weight: 600;
+    }
+
+    #tblCustomer_length {
+        margin-top:2px;
+        margin-bottom:2px;
+    }
+
+    #tblCustomer th {
+        font-size: 13px;
+    }
+
+    #tblCustomer td {
+        font-size: 12px;
+    }
+
+    #tblCustomer th,
+    #tblCustomer td {
+        padding: 6px;
+    }
+
+
+    /* ===== DataTable Overall ===== */
+    .dataTables_wrapper {
+        font-size: 12px;
+    }
+
+    /* ===== Top Controls (Show entries + search) ===== */
+    .dataTables_length,
+    .dataTables_filter {
+        font-size: 12px;
+    }
+
+        /* Dropdown (Show entries) */
+        .dataTables_length select {
+            font-size: 12px;
+            padding: 2px 5px;
+            height: 28px;
+        }
+
+    /* ===== Bottom Info Text ===== */
+    .dataTables_info {
+        font-size: 12px;
+    }
+
+    /* ===== Pagination ===== */
+    .dataTables_paginate {
+        font-size: 12px;
+    }
+
+        .dataTables_paginate .paginate_button {
+            padding: 3px 8px !important;
+            margin: 0 2px;
+            font-size: 12px;
+        }
+
+    /* ===== Table ===== */
+    #tblCustomer {
+        font-size: 12px;
+    }
+
+        #tblCustomer th {
+            font-size: 13px;
+            padding: 6px;
+            white-space: nowrap;
+        }
+
+        #tblCustomer td {
+            font-size: 12px;
+            padding: 5px;
+        }
+
+    /* ===== Custom Search (Name + Button) ===== */
+    #txtSearch {
+        font-size: 12px;
+        height: 30px;
+    }
+
+    .btn-primary {
+        font-size: 12px;
+        height: 30px;
+        padding: 0 10px;
+    }
+
+    #tblCustomer th:nth-child(1),
+    #tblCustomer td:nth-child(1) {
+        text-align: center;
+    }
+</style>
+
+<div class="container-fluid mt-3">
+
+    <div class="topbar d-flex justify-content-between align-items-center">
+        <div class="fw-bold">
+            Customer List
+        </div>
+    </div>
+
+    <div class="custom-card mt-3">
+
+        <!-- Search -->
+        <div class="row align-items-center mb-2">
+            <div class="col-md-1">
+                <label><b>Name</b></label>
+            </div>
+            <div class="col-md-3">
+                <input type="text" id="txtSearch" class="form-control" placeholder="" />
+            </div>
+            <div class="col-md-2">
+                <button class="btn btn-primary" onclick="loadCustomer()">Search</button>
+            </div>
+        </div>
+
+        <!-- Table -->
+        <table class="table" id="tblCustomer">
+            <thead>
+                <tr>
+                    <th>SrNo</th>
+                    <th>Division</th>
+                    <th>Name</th>
+                    <th>City</th>
+                    <th>Region</th>
+                    <th>Location</th>
+                    <th>Contact Person</th>
+                    <th>Mobile</th>
+                    <th>Master Code</th>
+                    <th>Company Code</th>
+                    <th>Created By</th>
+                    <th>Master Code In Company</th>
+                </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+
+    </div>
+
+</div>
+
+
+<script>
+    $(document).ready(function () {
+
+        loadCustomer();
+
+        // Enter press search
+        $('#txtSearch').keypress(function (e) {
+            if (e.which == 13) {
+                loadCustomer();
+            }
+        });
+    });
+
+    function loadCustomer() {
+
+        var search = $('#txtSearch').val();
+
+        $.ajax({
+            url: '/Customer/GetCustomerList',
+            type: 'GET',
+            data: { searchCustomer: search },
+            dataType: 'json',
+
+            success: function (data) {
+
+                var rows = '';
+                var list = data.data || data;
+
+                // ✅ SAFE destroy (error fix)
+                if ($.fn.DataTable && $.fn.DataTable.isDataTable('#tblCustomer')) {
+                    $('#tblCustomer').DataTable().clear().destroy();
+                }
+
+                if (list && list.length > 0) {
+
+                    $.each(list, function (i, item) {
+
+                            rows += `<tr>
+                                        <td>${item.displayNo ?? ''}</td>
+                                        <td>${item.division ?? ''}</td>
+                                        <td>${item.name ?? ''}</td>
+                                        <td>${item.city ?? ''}</td>
+                                        <td>${item.region ?? ''}</td>
+                                        <td>${item.location ?? ''}</td>
+                                        <td>${item.contactPerson ?? ''}</td>
+                                        <td>${item.mobileNo ?? ''}</td>
+                                        <td>${item.masterCode ?? ''}</td>
+                                        <td>${item.companyCode ?? ''}</td>
+                                        <td>${item.createdBy ?? ''}</td>
+                                        <td>${item.masterCodeInCompany ?? ''}</td>
+                                    </tr>`;
+                    });
+
+                } else {
+                    rows = `<tr><td colspan="6" class="text-center">No Data Found</td></tr>`;
+                }
+
+                $('#tblCustomer tbody').html(rows);
+
+                // ✅ DataTable init
+                $('#tblCustomer').DataTable({
+                    paging: true,
+                    searching: false,
+                    ordering: true,
+                    info: true,
+                    pageLength: 10,
+                    lengthMenu: [5, 10, 25, 50],
+
+                    // columnDefs: [
+                    //     { orderable: false, targets: 0 }
+                    // ],
+                     autoWidth: false, // ✅ important
+
+                columnDefs: [
+                    { width: "80px", targets: 0 },   // SrNo
+                    { width: "120px", targets: 1 },  // Brand
+                    { width: "200px", targets: 2 },  // Name
+                    { width: "120px", targets: 3 },  // City
+                    { width: "100px", targets: 4 },  // Region
+                    { width: "120px", targets: 5 },  // Location
+                    { width: "180px", targets: 6 },  // Contact Person
+                    { width: "150px", targets: 7 },  // Mobile
+                    { width: "120px", targets: 8 },  // Master Code
+                    { width: "120px", targets: 9 },  // Company Code
+                    { width: "150px", targets: 10 }, // Created By
+                    { width: "180px", targets: 11 }  // Master Code in Company
+                ],
+
+                    order: [[1, 'asc']]
+                });
+            },
+
+            error: function () {
+                alert('Error loading data');
+            }
+        });
+    }
+</script>

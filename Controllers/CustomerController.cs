@@ -18,11 +18,29 @@ namespace ERPAPP.Controllers
 
         public async Task<IActionResult> Index()
         {
-            var data = await _customerRepository.GetCustomerAddData();
-
-
-            return View(data);
+            return View();
         }
+
+
+        
+        public IActionResult CustomerList()
+        {
+            return PartialView("_CustomerList");
+        }
+
+        public async Task<IActionResult> GetCustomerList(string searchCustomer)
+        {
+            var data = await _customerRepository.GetCustomerList(searchCustomer);
+            return Json(data);
+        }
+
+
+        public async Task<IActionResult> AddEditCustomer()
+        {
+            var data = await _customerRepository.GetCustomerAddData();
+            return PartialView("_AddEditCustomer", data);
+        }
+
 
         public async Task<IActionResult> SearchCustomer(string searchText)
         {

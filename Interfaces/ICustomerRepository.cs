@@ -23,5 +23,7 @@ namespace ERPAPP.Interfaces
         List<LocationModel> GetLocationListByDivisionCode(int divisionCode);
 
         Task<GetCustomerDataWithPortalRowIdModel> GetCustomerDataWithPortalRowId(int portalRowId);
+
+        Task<List<GetCustomerListModel>> GetCustomerList(string searchCustomer);
     }
 }

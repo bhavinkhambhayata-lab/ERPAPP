@@ -553,4 +553,28 @@ namespace ERPAPP.Models
 
         public string? ARNNo { get; set; }
     }
+
+    public class GetCustomerListModel
+    {
+        public int RowId { get; set; }
+        public int DisplayNo { get; set; }
+
+        public string? Name { get; set; }
+        public string? City { get; set; }
+
+        public string? Region { get; set; }
+        public string? Zone { get; set; }
+        public string? Location { get; set; }        
+        public string? ContactPerson { get; set; }
+
+        public string? MobileNo { get; set; }
+
+        public string? MasterCode { get; set; }
+        public string? CompanyCode { get; set; }
+        public string? MasterCodeInCompany { get; set; }
+
+        public string? Division { get; set; }           
+
+        public string? CreatedBy { get; set; }
+    }
 }

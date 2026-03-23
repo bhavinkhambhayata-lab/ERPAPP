@@ -337,7 +337,7 @@
                 $(this).find('[name*="CustomerNo"]').val());
 
             formData.append(`CustomerBrandAddList[${index}].BrandCode`,
-                $(this).find('[name*="BrandCode"]').val());
+                $(this).find('[name*="BrandCode"] option:selected').text());
 
             formData.append(`CustomerBrandAddList[${index}].CustomerCategoryCode`,
                 $(this).find('[name*="CustomerCategoryCode"]').val());

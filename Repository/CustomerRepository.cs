@@ -1183,7 +1183,7 @@ namespace ERPAPP.Repository
                     model.PhoneNo = row["PhoneNo"]?.ToString();
                     model.Email = row["Email"]?.ToString();
                     model.Website = row["Website"]?.ToString();
-                  
+
 
                     model.CustomerType = row["CustomerType"] != DBNull.Value ? Convert.ToInt32(row["CustomerType"]) : 0;
 
@@ -1202,6 +1202,57 @@ namespace ERPAPP.Repository
             {
 
                 return new GetCustomerDataWithPortalRowIdModel();
+            }
+        }
+
+        public async Task<List<GetCustomerListModel>> GetCustomerList(string searchCustomer)
+        {
+            try
+            {
+                SqlParameter[] param =
+                {
+                    new SqlParameter("@SearchCustomer", searchCustomer ?? (object)DBNull.Value)
+                };
+
+                DataTable dt = _db.GetDataTable("GetCustomerList", param);
+
+                List<GetCustomerListModel> list = new List<GetCustomerListModel>();
+
+                if (dt != null && dt.Rows.Count > 0)
+                {
+                    foreach (DataRow row in dt.Rows)
+                    {
+                        GetCustomerListModel model = new GetCustomerListModel();
+
+                        model.DisplayNo = row["DisplayNo"] != DBNull.Value ? Convert.ToInt32(row["DisplayNo"]) : 0;
+
+                        model.Name = row["Name"]?.ToString();
+                        model.City = row["City"]?.ToString();
+
+                        model.Region = row["Region"]?.ToString();
+                        model.Zone = row["Zone"]?.ToString();
+
+                        model.Location = row["Location"]?.ToString();   
+                        model.ContactPerson = row["ContactPerson"]?.ToString();
+
+                        model.MobileNo = row["MobileNo"]?.ToString();
+
+                        model.MasterCode = row["MasterCode"]?.ToString();
+                        model.CompanyCode = row["CompanyCode"]?.ToString();
+                        model.MasterCodeInCompany = row["MasterCodeInCompany"]?.ToString();
+
+                        model.Division = row["Division"]?.ToString();
+                        model.CreatedBy = row["CreatedBy"]?.ToString();
+
+                        list.Add(model);
+                    }
+                }
+
+                return list;
+            }
+            catch (Exception ex)
+            {
+                return new List<GetCustomerListModel>();
             }
         }
         #endregion
