@@ -763,7 +763,7 @@ function createBrandRow(data) {
 <td>
     <input name="CustomerList[${rowCount}].TradeSecurityAmount"
            type="number"
-           class="form-control form-control-sm text-end" value="0"/>
+           class="form-control form-control-sm text-end" value="0" max="0" />
 </td>
 
 <td>
