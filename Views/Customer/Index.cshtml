@@ -4,10 +4,6 @@
 <script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
 <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
 
-
-<link rel="stylesheet" href="https://code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
-<script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
-
 <div class="container-fluid mt-1">
 
     <div class="row">
@@ -70,12 +66,14 @@
         });
 
         function loadList() {
+            editCustomerNo='';
             $.get('/Customer/CustomerList', function (data) {
                 $("#tabContent").html(data);
             });
         }
 
         function loadDetails() {
+            editCustomerNo='';
             $.get('/Customer/AddEditCustomer', function (data) {
                 $("#tabContent").html(data);
             });
