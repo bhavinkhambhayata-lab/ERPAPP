@@ -143,20 +143,20 @@ namespace ERPAPP.Models
 
         // ================= TAX =================
 
-        [RegularExpression(@"^[A-Z]{5}[0-9]{4}[A-Z]{1}$", ErrorMessage = "Invalid PAN format")]
-        [StringLength(20)]
+        [RegularExpression(@"^[A-Z]{5}[0-9]{4}[A-Z]$", ErrorMessage = "Invalid PAN format")]
+        [StringLength(10, MinimumLength = 10)]
         public string? PANNo { get; set; }
 
         public int? GSTRegistrationType { get; set; }
 
-        [RegularExpression(@"^[0-9]{2}[A-Z]{5}[0-9]{4}[A-Z]{1}[1-9A-Z]{1}Z[0-9A-Z]{1}$", ErrorMessage = "Invalid GSTIN format")]
-        [StringLength(50)]
+        [RegularExpression(@"^[0-9]{2}[A-Z]{5}[0-9]{4}[A-Z][1-9A-Z]Z[0-9A-Z]$", ErrorMessage = "Invalid GSTIN format")]
+        [StringLength(15, MinimumLength = 15)]
         public string? GSTRegistrationNo { get; set; }
 
         public int? GSTCustomerType { get; set; }
 
-        [RegularExpression(@"^[A-Z]{2}[0-9]{13}$", ErrorMessage = "Invalid ARN format")]
-        [StringLength(15)]
+        [RegularExpression(@"^[A-Z]{2}[0-9]{12}[A-Z]{1}$", ErrorMessage = "Invalid ARN format")]
+        [StringLength(15, MinimumLength = 15)]
         public string? ARNNo { get; set; }
 
         public int? BusinessCategory { get; set; }
@@ -216,7 +216,8 @@ namespace ERPAPP.Models
         public string? ShippingAgentServiceCode { get; set; }
         public string? ShippingState { get; set; }
 
-        [StringLength(20)]
+        [RegularExpression(@"^[0-9]{2}[A-Z]{5}[0-9]{4}[A-Z][1-9A-Z]Z[0-9A-Z]$", ErrorMessage = "Invalid GSTIN format")]
+        [StringLength(15, MinimumLength = 15)]
         public string? ShippingGSTRegistrationNo { get; set; }
         public int? ShippingAddressType { get; set; }
         public int? ShipToGSTCustomerType { get; set; }
