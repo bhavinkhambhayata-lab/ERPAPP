@@ -1232,7 +1232,7 @@ namespace ERPAPP.Repository
                         model.Region = row["Region"]?.ToString();
                         model.Zone = row["Zone"]?.ToString();
 
-                        model.Location = row["Location"]?.ToString();   
+                        model.Location = row["Location"]?.ToString();
                         model.ContactPerson = row["ContactPerson"]?.ToString();
 
                         model.MobileNo = row["MobileNo"]?.ToString();
@@ -1255,7 +1255,526 @@ namespace ERPAPP.Repository
                 return new List<GetCustomerListModel>();
             }
         }
+
         #endregion
 
+
+
+
+        public async Task<GetCustomerEditModel> GetCustomerEditData(string customerNo)
+        {
+            SqlParameter[] param =
+                        {
+                        new SqlParameter("@CustomerNo", customerNo)
+                    };
+
+            DataSet ds = _db.GetDataSet("Customer_GetDataWithCustomerNo", param);
+
+            GetCustomerEditModel model = new GetCustomerEditModel();
+            CustomerEditModel customer = new CustomerEditModel();
+
+            // ================= MAIN DATA =================
+            if (ds.Tables.Count > 0 && ds.Tables[0].Rows.Count > 0)
+            {
+                DataRow row = ds.Tables[0].Rows[0];
+
+                model.DisplayNo = Convert.ToInt32(row["DisplayNo"]);
+
+                // ===== GENERAL =====
+                model.Name = row["Name"]?.ToString();
+                model.MasterCode = row["MasterCode"]?.ToString();
+                model.Address = row["Address"]?.ToString();
+                model.Address2 = row["Address2"]?.ToString();
+                model.CityCode = row["City"]?.ToString();
+                model.PostCode = row["Postcode"]?.ToString();
+                model.StateCode = row["StateCode"]?.ToString();
+                model.CountryCode = row["CountryCode"]?.ToString();
+                model.Region = row["Region"]?.ToString();
+                model.Zone = row["Zone"]?.ToString();
+                model.DivisionCode = row["DivisionCode"]?.ToString();
+                model.PromoCode = row["PromoCode"]?.ToString();
+                model.ChargesGroup = row["ChargesGroup"]?.ToString();
+                model.PriceListCode = row["PriceListCode"]?.ToString();
+                model.CreditLimit = Convert.ToDecimal(row["CreditLimit"]?.ToString());
+
+                // ===== CONTACT =====
+                model.ContactPerson = row["ContactPerson"]?.ToString();
+                model.MobileNo = row["MobileNo"]?.ToString();
+                model.PhoneNo = row["PhoneNo"]?.ToString();
+                model.Email = row["EMail"]?.ToString();
+                model.Website = row["Website_Homepage"]?.ToString();
+
+                // ===== MARKETING =====
+                model.CustomerType = row["CustomerType"] as int?;
+                model.ParentCustomerCode = row["ParentCustomerCode"]?.ToString();
+                model.CommissionType = row["CommissionType"] as int?;
+                model.BankName = row["BankName"]?.ToString();
+                model.BranchName = row["BranchName"]?.ToString();
+                model.BankAccountNo = row["BankAccountNo"]?.ToString();
+                model.IFSCCode = row["IFSCCode"]?.ToString();
+
+                // ===== INVOICING =====
+                model.BillToCustomer = row["BillToCustomer"]?.ToString();
+                model.LocationCode = row["LocationCode"]?.ToString();
+                model.CustomerPostingGroup = row["CustomerPostingGroup"]?.ToString();
+                model.GenBusPostingGroup = row["GenBusPostingGroup"]?.ToString();
+                model.EInvEmail = row["EInvEmail"]?.ToString();
+                model.EInvPhoneNo = row["EInvPhoneNo"]?.ToString();
+                model.CurrencyCode = row["CurrencyCode"]?.ToString();
+
+                // ===== PAYMENTS =====
+                model.ApplicationMethod = row["ApplicationMethod"] as int?;
+                model.PaymentTermsCode = row["PaymentTermsCode"]?.ToString();
+                model.PaymentMethodCode = row["PaymentTermsMethod"]?.ToString();
+
+                // ===== TAX =====
+                model.PANNo = row["PANNo"]?.ToString();
+                model.GSTRegistrationType = row["GSTRegistrationType"] as int?;
+                model.GSTRegistrationNo = row["GSTRegistrationNo"]?.ToString();
+                model.GSTCustomerType = row["GSTCustomerType"] as int?;
+                model.ARNNo = row["ARNNo"]?.ToString();
+                model.BusinessCategory = row["BusinessCategory"] as int?;
+                model.MSMEUAMNo = row["MSMEUAMNo"]?.ToString();
+
+                // ===== NOD/NOC =====
+                model.IsNodNocCreation = row["IsNODNOC_Creation"] != DBNull.Value && Convert.ToBoolean(row["IsNODNOC_Creation"]);
+                model.NODAccessCode = row["NOD_AccessCode"]?.ToString();
+                model.NODNOC = row["NOD_NODNOC"]?.ToString();
+                model.ConcessionalCode = row["NOD_ConcessionalCode"]?.ToString();
+                model.ThresholdOverlook = row["NOD_ThresholdOverlook"] != DBNull.Value && Convert.ToBoolean(row["NOD_ThresholdOverlook"]);
+                model.SurchargeOverlook = row["NOD_SurchargeOverlook"] != DBNull.Value && Convert.ToBoolean(row["NOD_SurchargeOverlook"]);
+
+                // ===== SHIPPING =====
+                model.ShippingCode = row["ShipToCode"]?.ToString();
+                model.ShippingName = row["ShipToName"]?.ToString();
+                model.ShippingAddress = row["ShipToAddress"]?.ToString();
+                model.ShippingAddress2 = row["ShipToAddress2"]?.ToString();
+                model.ShippingCity = row["ShipToCity"]?.ToString();
+                model.ShippingPostalCode = row["ShipToPostCode"]?.ToString();
+                model.ShippingCountry = row["ShipToCountryCode"]?.ToString();
+                model.ShippingPhoneNo = row["ShipToPhoneNo"]?.ToString();
+                model.ShippingContactPerson = row["ShipToContact"]?.ToString();
+                model.ShippingEmail = row["ShipToEmail"]?.ToString();
+                model.ShippingLocationCode = row["ShipToLocationCode"]?.ToString();
+                model.ShippingMethodCode = row["ShipToMethodCode"]?.ToString();
+                model.ShippingAgentCode = row["ShipToAgentCode"]?.ToString();
+                model.ShippingAgentServiceCode = row["ShipToAgentServiceCode"]?.ToString();
+                model.ShippingState = row["ShipToStateCode"]?.ToString();
+                model.ShippingGSTRegistrationNo = row["ShipToGSTNo"]?.ToString();
+                model.ShippingAddressType = row["ShipToAddressType"] as int?;
+                model.ShipToGSTCustomerType = row["ShipToGSTCustomerType"] as int?;
+
+            }
+
+            // ================= BRAND LIST =================
+            if (ds.Tables.Count > 1 && ds.Tables[1].Rows.Count > 0)
+            {
+                foreach (DataRow row in ds.Tables[1].Rows)
+                {
+                    model.CustomerBrandEditList.Add(new CustomerBrandWiseEditModel
+                    {
+                        CustomerNo = row["CustomerNo"]?.ToString(),
+                        BrandCode = row["BrandCode"]?.ToString(),
+                        CustomerCategoryCode = row["CustomerCategoryCode"]?.ToString(),
+                        TradeSecurityAmount = row["TradeSecurityAmount"] as decimal?,
+                        CustomerDiscountGroup = row["CustomerDiscountGroup"]?.ToString(),
+                        DealerClassification = row["DealerClassification"]?.ToString(),
+                        SalesPersonCode = row["SalespersonCode"]?.ToString(),
+                        Allocation = row["Allocation"]?.ToString(),
+                        HOSalesPerson = row["HOSalesPersonCode"]?.ToString(),
+                        DLRAppointmentDate = row["DealerAppointmnetDate"] as DateTime?,
+                        DLRTerminationDate = row["DLRTerminationDate"] as DateTime?
+                    });
+                }
+            }
+
+            if (model.DivisionCode == "MOSAIC")
+            {
+                model.Division = 2;
+            }
+            else if (model.DivisionCode == "TILE")
+            {
+                model.Division = 1;
+            }
+            else
+            {
+                model.Division = 3;
+            }
+
+            model.PostCodeStr = model.PostCode;
+
+            if (model.Division > 0)
+            {
+                model.CustomerDropDownModel.Locations = GetLocationListByDivisionCode(model.Division.Value);
+            }
+
+            if (model.CityCode != null)
+            {
+                model.CustomerDropDownModel.PostCode = GetPostCodeList(model.CityCode).Select(x => new PostCodeModel
+                {
+                    Code = x.Code,
+                    Name = x.Name
+                }).ToList();
+            }
+
+            return model;
+        }
+
+        public async Task<GetCustomerEditModel> GetCustomerEditDropDownData()
+        {
+            var model = new GetCustomerEditModel();
+            var dropDown = new CustomerDropDownModel();
+
+            DataSet ds = _db.GetDataSet("GetCustomerAddDropDownData");
+
+            // 0 Division
+            foreach (DataRow row in ds.Tables[0].Rows)
+            {
+                dropDown.Divisions.Add(new DivisionModel
+                {
+                    Code = row["RowID"].ToString(),
+                    Name = row["Division"].ToString()
+                });
+            }
+
+            // 1 Country
+            foreach (DataRow row in ds.Tables[1].Rows)
+            {
+                dropDown.Countries.Add(new CountryModel
+                {
+                    Code = row["Code"].ToString(),
+                    Name = row["Name"].ToString()
+                });
+            }
+
+            // 2 SalesPerson
+            foreach (DataRow row in ds.Tables[2].Rows)
+            {
+                dropDown.SalesPersons.Add(new SalesPersonModel
+                {
+                    Code = row["Code"].ToString(),
+                    Name = row["Name"].ToString()
+                });
+            }
+
+            // 3 HO SalesPerson
+            foreach (DataRow row in ds.Tables[3].Rows)
+            {
+                dropDown.HOSalesPersons.Add(new SalesPersonModel
+                {
+                    Code = row["Code"].ToString(),
+                    Name = row["Name"].ToString()
+                });
+            }
+
+            // 4 Customer Category
+            foreach (DataRow row in ds.Tables[4].Rows)
+            {
+                dropDown.CustomerCategories.Add(new CustomerCategoryModel
+                {
+                    Code = row["Code"].ToString(),
+                    Name = row["Name"].ToString()
+                });
+            }
+
+            // 5 Payment Terms
+            foreach (DataRow row in ds.Tables[5].Rows)
+            {
+                dropDown.PaymentTerms.Add(new PaymentTermsModel
+                {
+                    Code = row["Code"].ToString(),
+                    Name = row["Name"].ToString()
+                });
+            }
+
+            // 6 MRP Group
+            foreach (DataRow row in ds.Tables[6].Rows)
+            {
+                dropDown.MRPGroups.Add(new MRPGroupModel
+                {
+                    Code = row["Code"].ToString(),
+                    Name = row["Name"].ToString()
+                });
+            }
+
+            // 7 Payment Method
+            foreach (DataRow row in ds.Tables[7].Rows)
+            {
+                dropDown.PaymentMethods.Add(new PaymentMethodModel
+                {
+                    Code = row["Code"].ToString(),
+                    Name = row["Name"].ToString()
+                });
+            }
+
+            // 8 Vendor
+            foreach (DataRow row in ds.Tables[8].Rows)
+            {
+                dropDown.Vendors.Add(new VendorModel
+                {
+                    Code = row["No_"].ToString(),
+                    Name = row["Name"].ToString()
+                });
+            }
+
+            // 9 Customer Price Group
+            foreach (DataRow row in ds.Tables[9].Rows)
+            {
+                dropDown.CustomerPriceGroups.Add(new CustomerPriceGroupModel
+                {
+                    Code = row["Code"].ToString(),
+                    Name = row["Name"].ToString()
+                });
+            }
+
+            // 10 Price List
+            foreach (DataRow row in ds.Tables[10].Rows)
+            {
+                dropDown.PriceLists.Add(new PriceListModel
+                {
+                    Code = row["Code"].ToString(),
+                    Name = row["Name"].ToString()
+                });
+            }
+
+            // 11 Gen Business Posting Group
+            foreach (DataRow row in ds.Tables[11].Rows)
+            {
+                dropDown.GenBusPostingGroups.Add(new GenBusPostingGroupModel
+                {
+                    Code = row["Code"].ToString(),
+                    Name = row["Name"].ToString()
+                });
+            }
+
+            // 12 Customer Posting Group
+            foreach (DataRow row in ds.Tables[12].Rows)
+            {
+                dropDown.CustomerPostingGroups.Add(new CustomerPostingGroupModel
+                {
+                    Code = row["Code"]?.ToString(),
+                    Name = row["Name"]?.ToString()
+                });
+            }
+
+            // 13 Currency
+            foreach (DataRow row in ds.Tables[13].Rows)
+            {
+                dropDown.Currencies.Add(new CurrencyModel
+                {
+                    Code = row["Code"].ToString(),
+                    Name = row["Name"].ToString()
+                });
+            }
+
+            // 14 Parent Customer
+            foreach (DataRow row in ds.Tables[14].Rows)
+            {
+                dropDown.ParentCustomers.Add(new ParentCustomerModel
+                {
+                    Code = row["No_"].ToString(),
+                    Name = row["Name"].ToString()
+                });
+            }
+
+            // 15 Access Code
+            foreach (DataRow row in ds.Tables[15].Rows)
+            {
+                dropDown.AccessCodes.Add(new AccessCodeModel
+                {
+                    Code = row["Code"].ToString(),
+                    Name = row["Name"].ToString()
+                });
+            }
+
+            // 16 NOD/NOC
+            foreach (DataRow row in ds.Tables[16].Rows)
+            {
+                dropDown.NODNOCs.Add(new NODNOCModel
+                {
+                    Code = row["Code"].ToString(),
+                    Name = row["Name"].ToString()
+                });
+            }
+
+            // 17 Concessional Code
+            foreach (DataRow row in ds.Tables[17].Rows)
+            {
+                dropDown.ConcessionalCodes.Add(new ConcessionalCodeModel
+                {
+                    Code = row["Code"].ToString(),
+                    Name = row["Name"].ToString()
+                });
+            }
+
+            // 18 Promo Code
+            foreach (DataRow row in ds.Tables[18].Rows)
+            {
+                dropDown.PromoCodes.Add(new PromoCodeModel
+                {
+                    Code = row["Code"].ToString(),
+                    Name = row["Name"].ToString()
+                });
+            }
+
+            // 19 Charges Group
+            foreach (DataRow row in ds.Tables[19].Rows)
+            {
+                dropDown.ChargesGroups.Add(new ChargesGroupModel
+                {
+                    Code = row["Code"].ToString(),
+                    Name = row["Name"].ToString()
+                });
+            }
+
+            // 20 Shipment Method
+            foreach (DataRow row in ds.Tables[20].Rows)
+            {
+                dropDown.ShipmentMethodCodes.Add(new ShipmentMethodCodeModel
+                {
+                    Code = row["Code"].ToString(),
+                    Name = row["Name"].ToString()
+                });
+            }
+
+            // 21 Shipping Agent
+            foreach (DataRow row in ds.Tables[21].Rows)
+            {
+                dropDown.ShippingAgentCodes.Add(new ShippingAgentCodeModel
+                {
+                    Code = row["Code"].ToString(),
+                    Name = row["Name"].ToString()
+                });
+            }
+
+            // 22 Shipping Agent Service
+            foreach (DataRow row in ds.Tables[22].Rows)
+            {
+                dropDown.ShippingAgentServices.Add(new ShippingAgentServiceModel
+                {
+                    Code = row["Code"].ToString(),
+                    Name = row["Name"].ToString()
+                });
+            }
+
+            // 23 Service Zone
+            foreach (DataRow row in ds.Tables[23].Rows)
+            {
+                dropDown.ShippingAgentServiceZoneCodes.Add(new ShippingAgentServiceZoneCodeModel
+                {
+                    Code = row["Code"].ToString(),
+                    Name = row["Name"].ToString()
+                });
+            }
+
+            // 24 Alternate Customer Group
+            foreach (DataRow row in ds.Tables[24].Rows)
+            {
+                dropDown.ShipAlternatePriceGroups.Add(new ShipAlternatePriceGroupModel
+                {
+                    Code = row["Code"].ToString(),
+                    Name = row["Name"].ToString()
+                });
+            }
+
+            // 25 Shiiping Country
+            foreach (DataRow row in ds.Tables[1].Rows)
+            {
+                dropDown.ShippingCountries.Add(new ShippingCountryModel
+                {
+                    Code = row["Code"].ToString(),
+                    Name = row["Name"].ToString()
+                });
+            }
+
+            #region Set Data Enum Values
+
+            dropDown.BusinessCategories = Enum.GetValues(typeof(BusinessCategory))
+                .Cast<BusinessCategory>()
+                .Select(e => new BusinessCategoryModel
+                {
+                    Code = ((int)e).ToString(),
+                    Name = e.ToString()
+                }).ToList();
+
+            // Application Method
+            dropDown.ApplicationMethods = Enum.GetValues(typeof(ApplicationMethod))
+                .Cast<ApplicationMethod>()
+                .Select(e => new ApplicationMethodModel
+                {
+                    Code = ((int)e).ToString(),
+                    Name = e.ToString()
+                }).ToList();
+
+            // Dealer Classification
+            dropDown.DealerClassifications = Enum.GetValues(typeof(DealerClassification))
+                .Cast<DealerClassification>()
+                .Select(e => new DealerClassificationModel
+                {
+                    Code = ((int)e).ToString(),
+                    Name = e.ToString()
+                }).ToList();
+
+            // Customer Type
+            dropDown.CustomerTypes = Enum.GetValues(typeof(CustomerType))
+                .Cast<CustomerType>()
+                .Select(e => new CustomerTypeModel
+                {
+                    Code = ((int)e).ToString(),
+                    Name = e.ToString()
+                }).ToList();
+
+            // Commission Type
+            dropDown.CommissionTypes = Enum.GetValues(typeof(CommissionType))
+                .Cast<CommissionType>()
+                .Select(e => new CommissionTypeModel
+                {
+                    Code = ((int)e).ToString(),
+                    Name = e.ToString()
+                }).ToList();
+
+            // GST Customer Type
+            dropDown.GSTCustomerTypes = Enum.GetValues(typeof(GSTCustomerType))
+                .Cast<GSTCustomerType>()
+                .Select(e => new GSTCustomerTypeModel
+                {
+                    Code = ((int)e).ToString(),
+                    Name = e.ToString()
+                }).ToList();
+
+            // GST Registration Type
+            dropDown.GSTRegistrationTypes = Enum.GetValues(typeof(GSTRegistrationType))
+                .Cast<GSTRegistrationType>()
+                .Select(e => new GSTRegistrationTypeModel
+                {
+                    Code = ((int)e).ToString(),
+                    Name = e.ToString()
+                }).ToList();
+
+            // Shipping Address Type
+            dropDown.ShippingAddressTypes = Enum.GetValues(typeof(ShippingAddressType))
+                .Cast<ShippingAddressType>()
+                .Select(e => new ShippingAddressTypeModel
+                {
+                    Code = ((int)e).ToString(),
+                    Name = e.GetDisplayName().ToString()
+                }).ToList();
+
+            //Shipping GST Customer Type
+            dropDown.ShippingGSTCustomerTypes = Enum.GetValues(typeof(Shipping_To_GST_Customer_Type))
+                .Cast<Shipping_To_GST_Customer_Type>()
+                .Select(e => new ShippingGSTCustomerTypeModel
+                {
+                    Code = ((int)e).ToString(),
+                    Name = e.GetDisplayName().ToString()
+                }).ToList();
+
+            #endregion
+
+           
+            model.CustomerDropDownModel = dropDown;
+
+            return model;
+        }
     }
 }

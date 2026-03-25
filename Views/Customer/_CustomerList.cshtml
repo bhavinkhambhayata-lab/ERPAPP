@@ -65,8 +65,8 @@
     }
 
     #tblCustomer_length {
-        margin-top:2px;
-        margin-bottom:2px;
+        margin-top: 2px;
+        margin-bottom: 2px;
     }
 
     #tblCustomer th {
@@ -211,6 +211,21 @@
                 loadCustomer();
             }
         });
+
+            // Row click event
+    $('#tblCustomer tbody').on('click', 'tr', function () {
+
+        var table = $('#tblCustomer').DataTable();
+        var data = table.row(this).data();
+
+        // 👇 CustomerNo (tame je key field use karo cho)
+        var customerNo = data[9]; // CompanyCode OR jo biju hoy to change karo
+
+        if (customerNo) {
+            editCustomerNo = customerNo;
+            $('#detailsBtn').click();
+        }
+    });
     });
 
     function loadCustomer() {

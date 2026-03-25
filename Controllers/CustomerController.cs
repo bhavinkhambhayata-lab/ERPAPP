@@ -2,6 +2,7 @@
 using ERPAPP.Interfaces;
 using ERPAPP.Models;
 using Microsoft.AspNetCore.Mvc;
+using System.Text.RegularExpressions;
 using static ERPAPP.Helper.Enums;
 
 namespace ERPAPP.Controllers
@@ -22,7 +23,7 @@ namespace ERPAPP.Controllers
         }
 
 
-        
+
         public IActionResult CustomerList()
         {
             return PartialView("_CustomerList");
@@ -192,7 +193,7 @@ namespace ERPAPP.Controllers
                     ModelState.AddModelError("PANNo", "Length of PAN No. Must be 10");
                 }
                 else if (!System.Text.RegularExpressions.Regex
-                    .IsMatch(model.PANNo, @"^[A-Z]{5}[0-9]{4}[A-Z]{1}$"))
+                    .IsMatch(model.PANNo, @"^[A-Z]{5}[0-9]{4}[A-Z]$"))
                 {
                     ModelState.AddModelError("PANNo", "Invalid PAN No.");
                 }
@@ -204,13 +205,18 @@ namespace ERPAPP.Controllers
 
             if (!string.IsNullOrWhiteSpace(model.GSTRegistrationNo))
             {
-                if (model.GSTRegistrationNo.Length != 15)
+                model.GSTRegistrationNo = model.GSTRegistrationNo.Trim().ToUpper();
+                model.PANNo = model.PANNo?.Trim().ToUpper();
+
+                string pattern = @"^[0-9]{2}[A-Z]{5}[0-9]{4}[A-Z][1-9A-Z]Z[0-9A-Z]$";
+
+                if (model.GSTRegistrationNo.Length != 15 ||
+                    !Regex.IsMatch(model.GSTRegistrationNo, pattern))
                 {
-                    ModelState.AddModelError("GSTRegistrationNo", "Length of GSTIN No. Must be 15");
+                    ModelState.AddModelError("GSTRegistrationNo", "Invalid GSTIN format.");
                 }
                 else
                 {
-                    string gstStateCode = model.GSTRegistrationNo.Substring(0, 2);
                     string gstPanPart = model.GSTRegistrationNo.Substring(2, 10);
 
                     if (!string.IsNullOrWhiteSpace(model.PANNo) &&
@@ -219,17 +225,14 @@ namespace ERPAPP.Controllers
                         ModelState.AddModelError("GSTRegistrationNo", "GSTIN PAN does not match PAN No.");
                     }
 
-                    var stateValid = await _customerRepository.CheckStateGSTMatch(model.StateCode, model.GSTRegistrationNo);
-
-                    if (!stateValid)
+                    if (!string.IsNullOrWhiteSpace(model.StateCode))
                     {
-                        ModelState.AddModelError("GSTRegistrationNo", "Invalid GST Regi. No as per State.");
-                    }
+                        var stateValid = await _customerRepository.CheckStateGSTMatch(model.StateCode, model.GSTRegistrationNo);
 
-                    if (!System.Text.RegularExpressions.Regex
-                        .IsMatch(gstPanPart, @"^[A-Z]{5}[0-9]{4}[A-Z]{1}$"))
-                    {
-                        ModelState.AddModelError("GSTRegistrationNo", "Invalid GSTIN format.");
+                        if (!stateValid)
+                        {
+                            ModelState.AddModelError("GSTRegistrationNo", "Invalid GST Regi. No as per State.");
+                        }
                     }
                 }
             }
@@ -370,6 +373,42 @@ namespace ERPAPP.Controllers
                 success = true,
                 result = data
             });
+        }
+
+
+        [HttpGet]
+        public async Task<IActionResult> GetCustomerEditData(string customerNo)
+        {
+            var data = await _customerRepository.GetCustomerEditData(customerNo);
+            if (data == null || string.IsNullOrEmpty(data.Name))
+            {
+                return Json(new
+                {
+                    success = false,
+                    message = "Customer not found."
+                });
+            }
+
+            var dropdownData = await _customerRepository.GetCustomerEditDropDownData();
+
+            data.CustomerDropDownModel = dropdownData.CustomerDropDownModel;
+
+            data.CustomerDropDownModel.PostCode = _customerRepository.GetPostCodeList(data.CityCode).Select(x => new PostCodeModel
+            {
+                Code = x.Code,
+                Name = x.Name
+            }).ToList();
+
+            if (data.Division.HasValue)
+            {
+                data.CustomerDropDownModel.Locations = _customerRepository.GetLocationListByDivisionCode(data.Division.Value).Select(x => new LocationModel
+                {
+                    Code = x.Code,
+                    Name = x.Name
+                }).ToList();
+            }
+
+            return PartialView("_EditCustomer", data);
         }
     }
 }

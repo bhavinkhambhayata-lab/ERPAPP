@@ -190,7 +190,7 @@
                     console.log(data)
                     if (data) {
                         $("#CityCode").val(data.city);
-                        $("#CountryCode").val(data.countryCode || '');
+                        $("#CountryCode").val(data.countryCode || '').trigger('change');;
                         $("#StateCode").val(data.stateCode || '');
                     }
 
@@ -609,7 +609,7 @@
             $("#ShippingAddress").val($("#Address").val()).prop("disabled", true);
             $("#ShippingAddress2").val($("#Address2").val()).prop("disabled", true);
             $("#ShippingCity").val($("#CityCode").val()).prop("disabled", true);
-            $("#ShippingPostalCode").val($("#PostCode").val()).prop("disabled", true);
+          
             $("#ShippingState").val($("#StateCode").val()).prop("disabled", true);
             $("#ShippingCountry").val($("#CountryCode").val()).prop("disabled", true);
 
@@ -620,7 +620,7 @@
             $("#ShippingLocationCode").val($('#LocationCode').val()).prop("disabled", true);
 
             loadCustomerShippingAddressData($("#ShippingCity").val());
-
+            
         } else {
 
             // ================= Clear =================
@@ -1094,8 +1094,14 @@ function loadCustomerShippingAddressData(city) {
                 );
 
             });
+            // 👉 Ahiya select karavvu
+            var postCode = $("#PostCode").val();
 
+            $("#ShippingPostalCode")
+                .val(postCode)
+                .prop("disabled", true);
         });
+
 }
 
 function handleCommission() {

@@ -25,5 +25,9 @@ namespace ERPAPP.Interfaces
         Task<GetCustomerDataWithPortalRowIdModel> GetCustomerDataWithPortalRowId(int portalRowId);
 
         Task<List<GetCustomerListModel>> GetCustomerList(string searchCustomer);
+
+        Task<GetCustomerEditModel> GetCustomerEditData(string customerNo);
+
+        Task<GetCustomerEditModel> GetCustomerEditDropDownData();
     }
 }
