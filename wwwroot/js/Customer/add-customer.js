@@ -268,6 +268,10 @@
         formData.append("Zone", $('#Zone').val());
         formData.append("BillToCustomer", $('#BillToCustomer').val());
         formData.append("DivisionCode", $('#Division option:selected').text());
+        
+        formData.append("CurrencyCode", $('#CurrencyCode').val());
+        formData.append("CustomerPostingGroup", $('#CustomerPostingGroup').val());
+        formData.append("GenBusPostingGroup", $('#GenBusPostingGroup').val());
 
         var isCheckedShipp = $("#chkSameAsGeneral").is(":checked");
 

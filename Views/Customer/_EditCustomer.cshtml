@@ -462,14 +462,14 @@
 
                     <!-- Vendor -->
                     <div class="row mt-2">
-                        <label class="col-12 col-sm-4 col-form-label">Vendor</label>
+                        <label class="col-12 col-sm-4 col-form-label">Commission Vendor No</label>
                         <div class="col-12 col-sm-8">
-                            <select asp-for="VendorCode"
+                            <select asp-for="CommissionVendorNo"
                                     asp-items="@(new SelectList(Model.CustomerDropDownModel.Vendors, "Code", "Name"))"
                                     class="form-select" disabled>
                                 <option value="">--Select--</option>
                             </select>
-                            <span asp-validation-for="VendorCode" class="text-danger"></span>
+                            <span asp-validation-for="CommissionVendorNo" class="text-danger"></span>
                         </div>
                     </div>
 

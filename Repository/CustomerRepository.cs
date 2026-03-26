@@ -816,7 +816,7 @@ namespace ERPAPP.Repository
                         new SqlParameter("@ParentCustomerCode", model.ParentCustomerCode ?? ""),
                         new SqlParameter("@VendorCode", model.VendorCode ?? ""),
 
-                        new SqlParameter("@CommissionVendorNo", model.CommissionVendorNo ?? 0),
+                        new SqlParameter("@CommissionVendorNo", model.CommissionVendorNo ?? ""),
                         new SqlParameter("@CommissionType", model.CommissionType ?? 0),
                         new SqlParameter("@Commission", model.Commission ?? 0),
 
@@ -1306,6 +1306,7 @@ namespace ERPAPP.Repository
 
                 // ===== MARKETING =====
                 model.CustomerType = row["CustomerType"] as int?;
+                model.CommissionVendorNo = row["CommissionVendorNo"]?.ToString();
                 model.ParentCustomerCode = row["ParentCustomerCode"]?.ToString();
                 model.CommissionType = row["CommissionType"] as int?;
                 model.BankName = row["BankName"]?.ToString();

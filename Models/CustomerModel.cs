@@ -100,7 +100,7 @@ namespace ERPAPP.Models
         public string? ParentCustomerCode { get; set; }
         public string? VendorCode { get; set; }
 
-        public int? CommissionVendorNo { get; set; }
+        public string? CommissionVendorNo { get; set; }
         public int? CommissionType { get; set; }
         public int? Commission { get; set; }
 
@@ -712,7 +712,7 @@ namespace ERPAPP.Models
         public string? ParentCustomerCode { get; set; }
         public string? VendorCode { get; set; }
 
-        public int? CommissionVendorNo { get; set; }
+        public string? CommissionVendorNo { get; set; }
         public int? CommissionType { get; set; }
         public int? Commission { get; set; }
 
