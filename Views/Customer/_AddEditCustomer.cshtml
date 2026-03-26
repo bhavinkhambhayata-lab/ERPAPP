@@ -325,7 +325,6 @@
 
                         <div class="col-12 col-sm-8">
                             <select asp-for="PriceListCode"
-                                    asp-items="@(new SelectList(Model.CustomerDropDownModel.PriceLists, "Code", "Name"))"
                                     class="form-select">
                                 <option value="">--Select--</option>
                             </select>
@@ -343,7 +342,6 @@
 
                         <div class="col-12 col-sm-8">
                             <select asp-for="PromoCode"
-                                    asp-items="@(new SelectList(Model.CustomerDropDownModel.PromoCodes, "Code", "Name"))"
                                     class="form-select">
                                 <option value="">--Select--</option>
                             </select>
@@ -360,7 +358,6 @@
 
                         <div class="col-12 col-sm-8">
                             <select asp-for="ChargesGroup"
-                                    asp-items="@(new SelectList(Model.CustomerDropDownModel.ChargesGroups, "Code", "Name"))"
                                     class="form-select">
                                 <option value="">--Select--</option>
                             </select>
@@ -470,7 +467,6 @@
                         <label class="col-12 col-sm-4 col-form-label">Parent Customer</label>
                         <div class="col-12 col-sm-8">
                             <select asp-for="ParentCustomerCode"
-                                    asp-items="@(new SelectList(Model.CustomerDropDownModel.ParentCustomers, "Code", "Name"))"
                                     class="form-select">
                                 <option value="">--Select--</option>
                             </select>
@@ -581,7 +577,7 @@
                     <thead class="table-light text-nowrap">
                         <tr>
                             <th>Customer No</th>
-                            <th>Dimension<span class="required-star">*</span></th>
+                            <th>Brand Code<span class="required-star">*</span></th>
                             <th>Customer Category Code<span class="required-star">*</span></th>
                             <th>Trade Security Amount</th>
                             <th>Customer Discount Group<span class="required-star">*</span></th>
@@ -925,23 +921,17 @@
                         </div>
                     </div>
 
-                    <div class="row mt-2">
-                        <label class="col-12 col-sm-4 col-form-label">GST No</label>
-                        <div class="col-12 col-sm-8">
-                            <input asp-for="ShippingGSTRegistrationNo" class="form-control" />
-                            <span asp-validation-for="ShippingGSTRegistrationNo" class="text-danger"></span>
-                        </div>
-                    </div>
+                  
                 </div>
 
 
                 <!-- Column 3 -->
                 <div class="col-4">
 
-
+                    
 
                     <div class="row mt-2">
-                        <label class="col-12 col-sm-4 col-form-label">GST Customer Type</label>
+                        <label class="col-12 col-sm-4 col-form-label">Shipping GST Cust Type</label>
                         <div class="col-12 col-sm-8">
                             @* <input asp-for="ShipToGSTCustomerType" class="form-control" /> *@
 
@@ -951,6 +941,14 @@
                                 <option value="">-- Select --</option>
                             </select>
                             <span asp-validation-for="ShipToGSTCustomerType" class="text-danger"></span>
+                        </div>
+                    </div>
+
+                    <div class="row mt-2">
+                        <label class="col-12 col-sm-4 col-form-label">Shipping GST Reg No</label>
+                        <div class="col-12 col-sm-8">
+                            <input asp-for="ShippingGSTRegistrationNo" class="form-control" />
+                            <span asp-validation-for="ShippingGSTRegistrationNo" class="text-danger"></span>
                         </div>
                     </div>
 
@@ -1054,7 +1052,7 @@
         </fieldset>
 
         <!-- ================= NOD / NOC ================= -->
-        <fieldset>
+        @* <fieldset>
             <legend class="fw-bold">
                 NOD / NOC
                 <span class="text-muted fw-normal ms-2" style="font-size: 14px;">(Only if required)</span>
@@ -1147,7 +1145,7 @@
 
             </div>
 
-        </fieldset>
+        </fieldset> *@
 
 
 

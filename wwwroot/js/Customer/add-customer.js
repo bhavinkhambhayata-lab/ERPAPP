@@ -424,6 +424,29 @@
         // Brand Table Clear
         $('#brandTable tbody').empty();
 
+        // 🔴 If division not selected → clear everything
+        if (!divisionCode) {
+
+            // Location
+            $('#LocationCode').empty().append('<option value="">-- Select --</option>');
+            $('#ShippingLocationCode').empty().append('<option value="">-- Select --</option>');
+
+            // Price List
+            $('#PriceListCode').empty().append('<option value="">-- Select --</option>');
+
+            // Promo Code
+            $('#PromoCode').empty().append('<option value="">-- Select --</option>');
+
+            // Charges Group
+            $('#ChargesGroup').empty().append('<option value="">-- Select --</option>');
+
+            // Parent Customer Code
+            $('#ParentCustomerCode').empty().append('<option value="">-- Select --</option>');
+
+            return; // 🚀 stop further ajax calls
+        }
+
+        // 🔹 Location Call
         $.ajax({
             url: '/Customer/GetLocationListByDivisionCode',
             type: 'GET',
@@ -431,9 +454,7 @@
             success: function (data) {
 
                 var locationDropdown = $('#LocationCode');
-                locationDropdown.empty();
-
-                locationDropdown.append('<option value="">-- Select --</option>');
+                locationDropdown.empty().append('<option value="">-- Select --</option>');
 
                 $.each(data, function (i, item) {
                     locationDropdown.append(
@@ -441,17 +462,85 @@
                     );
                 });
 
-                // Location Bind Shipping Location Dropdown
                 var shippinglocationDropdown = $('#ShippingLocationCode');
-                shippinglocationDropdown.empty();
-
-                shippinglocationDropdown.append('<option value="">-- Select --</option>');
+                shippinglocationDropdown.empty().append('<option value="">-- Select --</option>');
 
                 $.each(data, function (i, item) {
                     shippinglocationDropdown.append(
                         '<option value="' + item.code + '">' + item.name + '</option>'
                     );
                 });
+
+                // ✅ Default selection logic
+                if (divisionCode == 1) {
+                    locationDropdown.val("FG-KAIYAL");
+                    shippinglocationDropdown.val("FG-KAIYAL");
+                }
+                else if (divisionCode == 2) {
+                    locationDropdown.val("FG-MOSAIC");
+                    shippinglocationDropdown.val("FG-MOSAIC");
+                }
+            }
+        });
+
+        // 🔹 Division Wise Dropdown Call
+        var divisionStr = $(this).find("option:selected").text();
+
+        $.ajax({
+            url: '/Customer/GetCustomerDivisionWiseDropDown',
+            type: 'GET',
+            data: { division: divisionStr },
+            success: function (res) {
+                debugger
+                console.log(res); // debug
+
+                // Price List
+                var priceList = $('#PriceListCode');
+                priceList.empty().append('<option value="">-- Select --</option>');
+
+                if (res.priceList) {
+                    $.each(res.priceList, function (i, item) {
+                        priceList.append(
+                            '<option value="' + item.code + '">' + item.name + '</option>'
+                        );
+                    });
+                }
+
+                // Promo Code
+                var promoList = $('#PromoCode');
+                promoList.empty().append('<option value="">-- Select --</option>');
+
+                if (res.promoCodeList) {
+                    $.each(res.promoCodeList, function (i, item) {
+                        promoList.append(
+                            '<option value="' + item.code + '">' + item.name + '</option>'
+                        );
+                    });
+                }
+
+                // Charges Group (FIX ID 👇)
+                var chargesList = $('#ChargesGroup');
+                chargesList.empty().append('<option value="">-- Select --</option>');
+
+                if (res.chargesGroupList) {
+                    $.each(res.chargesGroupList, function (i, item) {
+                        chargesList.append(
+                            '<option value="' + item.code + '">' + item.name + '</option>'
+                        );
+                    });
+                }
+
+                // Parent Customer Dropdown
+                var parentCustomer = $('#ParentCustomerCode');
+                parentCustomer.empty().append('<option value="">-- Select --</option>');
+
+                if (res.parentCustomerList) {
+                    $.each(res.parentCustomerList, function (i, item) {
+                        parentCustomer.append(
+                            '<option value="' + item.code + '">' + item.name + '</option>'
+                        );
+                    });
+                }
             }
         });
 
@@ -490,18 +579,30 @@
             $("#PortalRowIdError").text("");
 
             // Clear all fields
+            $('#Division').val('').trigger('change');
             $("#Name").val("");
             $("#Address").val("");
             $("#Address2").val("");
-            $("#CityCode").val("");
-            $("#PostCode").val("");
+
+            $("#CityCode").val("").trigger('change');
+            $("#PostCode").empty().append('<option value="">--Select--</option>');
             $("#StateCode").val("");
             $("#CountryCode").val("");
             $("#Region").val("");
             $("#Zone").val("");
+
             $("#ContactPerson").val("");
+            $("#Website").val("");
             $("#MobileNo").val("");
+            $("#PhoneNo").val("");
             $("#Email").val("");
+
+            $("#CustomerType").val("");
+            $("#PANNo").val("");
+            $("#GSTRegistrationNo").val("");
+            $("#GSTRegistrationType").val("");
+
+            $("#ARNNo").val("");
 
             return;
         }
@@ -916,19 +1017,21 @@ function GetCustomerDataWithPortalRowId(value) {
 
             var data = res.result;
 
-            $("#PortalRowId").val(data.portalRowId);
             //$("#MasterCode").val(data.masterCode);
+
+            //First Default Select MOSAIC because that is getting bella 
+            $('#Division').val('2').trigger('change');
 
             $("#Name").val(data.name);
             $("#Address").val(data.address);
             $("#Address2").val(data.address2);
             $("#CityCode").val(data.cityCode);
 
-            loadCustomerAddressData(data.cityCode);
+            loadCustomerAddressData(data.cityCode, data.postCode);
 
             $("#PostCode").val(data.postCode);
             $("#StateCode").val(data.stateCode);
-            $("#CountryCode").val(data.countryCode);
+            $("#CountryCode").val(data.countryCode).trigger('change');
 
             $("#Region").val(data.region);
             $("#Zone").val(data.zone);
@@ -958,7 +1061,7 @@ function GetCustomerDataWithPortalRowId(value) {
 }
 
 
-function loadCustomerAddressData(city) {
+function loadCustomerAddressData(city,postcode) {
     // 🔥 CLEAR OLD DATA
     $("#CountryCode").val('');
     $("#StateCode").val('');
@@ -993,6 +1096,9 @@ function loadCustomerAddressData(city) {
                 );
 
             });
+
+            $("#PostCode").val(postcode);
+
 
         });
 }
@@ -1133,41 +1239,58 @@ function handleCurrency() {
     var country = $('#CountryCode').val();
     var currency = $('#CurrencyCode');
 
+    if (!country) {
+        // ❌ No country selected → reset
+        currency.val("");
+        currency.prop("disabled", false);
+        return;
+    }
+
     if (country === "IN") {
-        // India → set INR & disable
-        currency.val("INR");
+        currency.val("");
         currency.prop("disabled", true);
     } else {
-        // Other → enable
         currency.prop("disabled", false);
     }
 }
+
 function handleCustomerPostingGroup() {
 
     var country = $('#CountryCode').val();
     var postingGroup = $('#CustomerPostingGroup');
 
+    if (!country) {
+        // ❌ Reset
+        postingGroup.val("");
+        postingGroup.prop("disabled", false);
+        return;
+    }
+
     if (country === "IN") {
-        // India → DOMESTIC
         postingGroup.val("DOMESTIC");
         postingGroup.prop("disabled", true);
     } else {
-        // Other → FOREIGN
         postingGroup.val("FOREIGN");
         postingGroup.prop("disabled", true);
     }
 }
+
 function handleGenBusPostingGroup() {
 
     var country = $('#CountryCode').val();
     var genBusPostingGroup = $('#GenBusPostingGroup');
 
+    if (!country) {
+        // ❌ Reset
+        genBusPostingGroup.val("");
+        genBusPostingGroup.prop("disabled", false);
+        return;
+    }
+
     if (country === "IN") {
-        // India → DOMESTIC
         genBusPostingGroup.val("DOMESTIC");
         genBusPostingGroup.prop("disabled", true);
     } else {
-        // Other → EXPORT
         genBusPostingGroup.val("EXPORT");
         genBusPostingGroup.prop("disabled", true);
     }

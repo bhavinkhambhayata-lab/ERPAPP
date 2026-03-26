@@ -4,6 +4,7 @@ using ERPAPP.Models;
 using Microsoft.AspNetCore.Mvc;
 using System.Text.RegularExpressions;
 using static ERPAPP.Helper.Enums;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace ERPAPP.Controllers
 {
@@ -132,6 +133,11 @@ namespace ERPAPP.Controllers
 
             if (string.IsNullOrWhiteSpace(model.Zone))
                 ModelState.AddModelError("Zone", "Zone is required.");
+
+            if (!string.IsNullOrWhiteSpace(model.CountryCode) && model.CountryCode != "IN" && string.IsNullOrWhiteSpace(model.CurrencyCode))
+            {
+                ModelState.AddModelError("CurrencyCode", "Currency is required.");
+            }
 
             //if (string.IsNullOrWhiteSpace(model.PaymentTermsCode))
             //    ModelState.AddModelError("PaymentTermsCode", "Payment Term is required.");
@@ -269,6 +275,15 @@ namespace ERPAPP.Controllers
             }
 
             // =========================
+
+            // =========================
+            // Shipping Sections
+            // =========================
+
+            if (model.ShipToGSTCustomerType == 1 && string.IsNullOrWhiteSpace(model.ShippingGSTRegistrationNo))
+            {
+                ModelState.AddModelError("ShippingGSTRegistrationNo", "Shipping GST Registration No is required.");
+            }
 
             if (!ModelState.IsValid)
             {
@@ -409,6 +424,21 @@ namespace ERPAPP.Controllers
             }
 
             return PartialView("_EditCustomer", data);
+        }
+
+
+        [HttpGet]
+        public JsonResult GetCustomerDivisionWiseDropDown(string division)
+        {
+            var result = _customerRepository.GetCustomerDivisionWiseDropDown(division);
+
+            return Json(new
+            {
+                priceList = result.PriceList,
+                promoCodeList = result.PromoCodeList,
+                chargesGroupList = result.ChargesGroupList,
+                parentCustomerList = result.ParentCustomerList
+            });
         }
     }
 }

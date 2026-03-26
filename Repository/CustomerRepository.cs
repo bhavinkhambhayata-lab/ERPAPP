@@ -1776,5 +1776,59 @@ namespace ERPAPP.Repository
 
             return model;
         }
+
+        public GetCustomerDivisionWiseDropDown GetCustomerDivisionWiseDropDown(string division)
+        {
+            var dropDown = new GetCustomerDivisionWiseDropDown();
+
+            SqlParameter[] parameters = new SqlParameter[]
+                         {
+                            new SqlParameter("@Division", string.IsNullOrEmpty(division) ? (object)DBNull.Value : division)
+                         };
+
+            DataSet ds = _db.GetDataSet("Customer_GetDivisionWiseDropDownData", parameters);
+
+            // 0 Price List
+            foreach (DataRow row in ds.Tables[0].Rows)
+            {
+                dropDown.PriceList.Add(new PriceListModel
+                {
+                    Code = row["Code"].ToString(),
+                    Name = row["Name"].ToString()
+                });
+            }
+
+            // 1 Promo Code List
+            foreach (DataRow row in ds.Tables[1].Rows)
+            {
+                dropDown.PromoCodeList.Add(new PromoCodeModel
+                {
+                    Code = row["Code"].ToString(),
+                    Name = row["Name"].ToString()
+                });
+            }
+
+            // 2 Charges List
+            foreach (DataRow row in ds.Tables[2].Rows)
+            {
+                dropDown.ChargesGroupList.Add(new ChargesGroupModel
+                {
+                    Code = row["Code"].ToString(),
+                    Name = row["Name"].ToString()
+                });
+            }
+
+            // 3 Parent Customer List
+            foreach (DataRow row in ds.Tables[3].Rows)
+            {
+                dropDown.ParentCustomerList.Add(new ParentCustomerModel
+                {
+                    Code = row["Code"].ToString(),
+                    Name = row["Name"].ToString()
+                });
+            }
+
+            return dropDown;
+        }
     }
 }

@@ -75,11 +75,14 @@ namespace ERPAPP.Models
         public string ContactPerson { get; set; } = string.Empty;
 
         [Required(ErrorMessage = "Mobile No is required")]
-        [RegularExpression(@"^[6-9][0-9]{9}$", ErrorMessage = "Invalid mobile number")]
+        [RegularExpression(@"^(\+?[\d\-]+)(,\+?[\d\-]+)*$",
+    ErrorMessage = "Invalid mobile number")]
         [StringLength(30)]
         public string MobileNo { get; set; } = string.Empty;
 
         [StringLength(30)]
+        [RegularExpression(@"^(\+?[\d\-]+)(,\+?[\d\-]+)*$",
+    ErrorMessage = "Invalid mobile number")]
         public string? PhoneNo { get; set; }
 
         [Required(ErrorMessage = "Email is required")]
@@ -684,11 +687,14 @@ namespace ERPAPP.Models
         public string ContactPerson { get; set; } = string.Empty;
 
         [Required(ErrorMessage = "Mobile No is required")]
-        [RegularExpression(@"^[6-9][0-9]{9}$", ErrorMessage = "Invalid mobile number")]
+        [RegularExpression(@"^(\+?[\d\-]+)(,\+?[\d\-]+)*$",
+    ErrorMessage = "Invalid mobile number")]
         [StringLength(30)]
         public string MobileNo { get; set; } = string.Empty;
 
         [StringLength(30)]
+        [RegularExpression(@"^(\+?[\d\-]+)(,\+?[\d\-]+)*$",
+    ErrorMessage = "Invalid phone number")]
         public string? PhoneNo { get; set; }
 
         [Required(ErrorMessage = "Email is required")]
@@ -834,5 +840,17 @@ namespace ERPAPP.Models
         // ================= BRAND LIST =================
 
         public List<CustomerBrandWiseEditModel> CustomerBrandEditList { get; set; } = new();
+    }
+
+
+    public class GetCustomerDivisionWiseDropDown
+    {
+        public List<PriceListModel> PriceList = new List<PriceListModel>();
+
+        public List<PromoCodeModel> PromoCodeList = new List<PromoCodeModel>();
+
+        public List<ChargesGroupModel> ChargesGroupList = new List<ChargesGroupModel>();
+
+        public List<ParentCustomerModel> ParentCustomerList = new List<ParentCustomerModel>();
     }
 }

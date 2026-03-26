@@ -17,7 +17,7 @@ builder.Services.AddScoped<ILoginRepository,LoginRepository>();
 builder.Services.AddScoped<ICustomerRepository, CustomerRepository>();
 builder.Services.AddSession(options =>
 {
-    options.IdleTimeout = TimeSpan.FromMinutes(15); // ?? 15 minutes
+    options.IdleTimeout = TimeSpan.FromMinutes(30); // ?? 30 minutes
     options.Cookie.HttpOnly = true;
     options.Cookie.IsEssential = true;
 });

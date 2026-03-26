@@ -29,5 +29,8 @@ namespace ERPAPP.Interfaces
         Task<GetCustomerEditModel> GetCustomerEditData(string customerNo);
 
         Task<GetCustomerEditModel> GetCustomerEditDropDownData();
+
+        GetCustomerDivisionWiseDropDown GetCustomerDivisionWiseDropDown(string division);
+
     }
 }
