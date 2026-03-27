@@ -897,8 +897,15 @@ namespace ERPAPP.Repository
 
                 string customerNo = customerNoObj?.ToString();
 
-                if (!string.IsNullOrEmpty(customerNo))
+                if (!string.IsNullOrEmpty(customerNo) &&
+                    (customerNo.StartsWith("TD") || customerNo.StartsWith("MD")))
+                {
                     result = true;
+                }
+                else
+                {
+                    result = false;
+                }
 
                 return result;
             }
