@@ -440,5 +440,32 @@ namespace ERPAPP.Controllers
                 parentCustomerList = result.ParentCustomerList
             });
         }
+
+        [HttpPost]
+        public async Task<IActionResult> EditCustomerDetailsBrandWiseDataOnly([FromBody] List<CustomerBrandWiseEditModel> model)
+        {
+            if (model == null || model.Count == 0)
+            {
+                return Json(new { success = false, message = "No brand data received!" });
+            }
+
+            try
+            {
+                var result = await _customerRepository.EditCustomerBrandWiseOnly(model);
+
+                if (result)
+                {
+                    return Json(new { success = true, message = "Brand details saved successfully!" });
+                }
+                else
+                {
+                    return Json(new { success = false, message = "No new brand added (already exists)!" });
+                }
+            }
+            catch (Exception ex)
+            {
+                return Json(new { success = false, message = ex.Message });
+            }
+        }
     }
 }

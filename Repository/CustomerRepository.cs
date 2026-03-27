@@ -1372,7 +1372,7 @@ namespace ERPAPP.Repository
             {
                 foreach (DataRow row in ds.Tables[1].Rows)
                 {
-                    DealerClassification dealerEnum =new DealerClassification();
+                    DealerClassification dealerEnum = new DealerClassification();
 
                     DateTime? appointmentDate = row["DealerAppointmnetDate"] as DateTime?;
                     DateTime? terminationDate = row["DLRTerminationDate"] as DateTime?;
@@ -1381,7 +1381,7 @@ namespace ERPAPP.Repository
 
                     if (dealerClassification != null)
                     {
-                       dealerEnum = (DealerClassification)Enum.Parse(typeof(DealerClassification), dealerClassification);
+                        dealerEnum = (DealerClassification)Enum.Parse(typeof(DealerClassification), dealerClassification);
                     }
 
                     model.CustomerBrandEditList.Add(new CustomerBrandWiseEditModel
@@ -1403,7 +1403,7 @@ namespace ERPAPP.Repository
                         DLRTerminationDate = (terminationDate.HasValue && terminationDate.Value > new DateTime(1753, 1, 1))
                                     ? terminationDate
                                     : null
-                        
+
 
                     });
                 }
@@ -1792,7 +1792,7 @@ namespace ERPAPP.Repository
 
             #endregion
 
-           
+
             model.CustomerDropDownModel = dropDown;
 
             return model;
@@ -1850,6 +1850,73 @@ namespace ERPAPP.Repository
             }
 
             return dropDown;
+        }
+
+        public async Task<bool> EditCustomerBrandWiseOnly(List<CustomerBrandWiseEditModel> model)
+        {
+            try
+            {
+                if (model == null || model.Count == 0)
+                    return false;
+
+                var custNo = "";
+
+                if (model.Count > 0)
+                {
+                    custNo = model?.FirstOrDefault(x => !string.IsNullOrEmpty(x.CustomerNo))?.CustomerNo ?? "";
+                }
+
+                // 🔹 Create DataTable
+                DataTable dtBrand = new DataTable();
+
+                dtBrand.Columns.Add("BrandCode");
+                dtBrand.Columns.Add("CustomerCategoryCode");
+                dtBrand.Columns.Add("TradeSecurityAmount", typeof(decimal));
+                dtBrand.Columns.Add("CustomerDiscountGroup");
+                dtBrand.Columns.Add("DealerClassification");
+                dtBrand.Columns.Add("SalesPersonCode");
+                dtBrand.Columns.Add("Allocation");
+                dtBrand.Columns.Add("HOSalesPerson");
+                dtBrand.Columns.Add("DLRAppointmentDate", typeof(DateTime));
+                dtBrand.Columns.Add("DLRTerminationDate", typeof(DateTime));
+
+                // 🔹 Fill DataTable
+                foreach (var brand in model)
+                {
+                    dtBrand.Rows.Add(
+                        brand.BrandCode ?? "",
+                        brand.CustomerCategoryCode ?? "",
+                        brand.TradeSecurityAmount ?? (object)DBNull.Value,
+                        brand.CustomerDiscountGroup ?? "",
+                        brand.DealerClassification ?? "",
+                        brand.SalesPersonCode ?? "",
+                        brand.Allocation ?? "",
+                        brand.HOSalesPerson ?? "",
+                        brand.DLRAppointmentDate ?? new DateTime(1753, 1, 1),
+                        brand.DLRTerminationDate ?? new DateTime(1753, 1, 1)
+                    );
+                }
+
+                var param = new SqlParameter[]
+                            {
+                            new SqlParameter("@CustomerNo", custNo),
+                            new SqlParameter
+                            {
+                                ParameterName = "@CustomerBrands",
+                                SqlDbType = SqlDbType.Structured,
+                                TypeName = "dbo.CustomerBrandType",
+                                Value = dtBrand
+                            }
+                            };
+
+                var result = _db.ExecuteScalar("Customer_EditBrandWiseDataWithCustomerCode", param);
+
+                return result != null;
+            }
+            catch (Exception ex)
+            {
+                return false;
+            }
         }
     }
 }

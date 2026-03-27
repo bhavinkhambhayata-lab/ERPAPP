@@ -1,5 +1,46 @@
 ﻿$(document).ready(function () {
 
+
+    $(document).on("change", ".brand", function () {
+        
+        var current = $(this);
+
+        var currentText = current.find("option:selected").text().trim();
+
+        if (!currentText || currentText === "Select") return;
+
+        var brandList = [];
+
+        // ✅ Hidden inputs (jo text store hoy to)
+        $("#brandTable tbody input[name*='BrandCode']").each(function () {
+            var val = $(this).val();
+            if (val) {
+                brandList.push(val.trim().toUpperCase());
+            }
+        });
+
+        // ✅ Other dropdowns mathi TEXT lo (except current)
+        $("#brandTable tbody .brand").not(current).each(function () {
+
+            var txt = $(this).find("option:selected").text().trim();
+
+            if (txt && txt !== "Select") {
+                brandList.push(txt.toUpperCase());
+            }
+
+        });
+
+        // ✅ Duplicate check (TEXT compare)
+        if (brandList.includes(currentText.toUpperCase())) {
+
+            showToast("'" + currentText + "' already added!", "danger", 4000);
+
+            current.val("").trigger("change");
+            return;
+        }
+
+    });
+
     $(document).on('input', '.trade-security-amount', function () {
         var value = $(this).val();
 
@@ -14,9 +55,88 @@
         }
     });
 
+
+    $("#btnSaveCustomerMaster").click(function () {
+
+        if (!validateBrandTable()) return;
+
+        if ($("#brandTable tbody tr").filter(function () {
+            return $(this).find(".is-edit-cls").val() == "false";
+        }).length === 0) {
+
+            showToast("Please add at least one Brand.", "danger", 4000);
+            return;
+        }
+
+        var list = [];
+
+        $("#brandTable tbody tr").each(function () {
+
+            var row = $(this);
+
+            // ✅ Only take IsEdited = false
+            if (row.find(".is-edit-cls").val() !== "false") return;
+
+            var item = {
+                CustomerNo: $('#BillToCustomer').val(),
+                BrandCode: row.find("[name*='BrandCode'] option:selected").text() || "",
+                CustomerCategoryCode: row.find("[name*='CustomerCategoryCode']").val() || "",
+                TradeSecurityAmount: parseFloat(row.find("[name*='TradeSecurityAmount']").val()) || 0,
+                CustomerDiscountGroup: row.find("[name*='CustomerDiscountGroup']").val() || "",
+                DealerClassification: row.find("[name*='DealerClassification']").val() || "",
+                SalesPersonCode: row.find("[name*='SalesPersonCode']").val() || "",
+                Allocation: row.find("[name*='Allocation']").val() || "",
+                HOSalesPerson: row.find("[name*='HOSalesPerson']").val() || "",
+                DLRAppointmentDate: formatDate(row.find("[name*='DLRAppointmentDate']").val()),
+                DLRTerminationDate: formatDate(row.find("[name*='DLRTerminationDate']").val()),
+                IsEdited: false
+            };
+
+            list.push(item);
+        });
+
+
+        $.ajax({
+            url: '/Customer/EditCustomerDetailsBrandWiseDataOnly',
+            type: 'POST',
+            contentType: 'application/json',
+            data: JSON.stringify(list),
+            success: function (res) {
+                if (res.success) {
+                    showToast(res.message, "success", 4000);
+                    $('#listBtn').click();
+                    
+                } else {
+                    showToast(res.message, "danger", 4000);
+                }
+            }
+        });
+
+    });
+
 });
 
+function formatDate(val) {
+    if (!val) return null;
 
+    var parts = val.split('/');
+
+    // "21/03/26" → dd/MM/yy
+    if (parts.length === 3) {
+        var day = parts[0];
+        var month = parts[1];
+        var year = parts[2];
+
+        // 2 digit year → 20xx
+        if (year.length === 2) {
+            year = "20" + year;
+        }
+
+        return `${year}-${month}-${day}`; // yyyy-MM-dd
+    }
+
+    return null;
+}
 
 var maxBrandCount = 0;
 function addBrandRow() {
@@ -169,13 +289,16 @@ function createBrandRow(data) {
 <td>
     <input name="CustomerList[${rowCount}].TradeSecurityAmount"
            type="number"
-           class="form-control form-control-sm text-end" value="0"/>
+           class="form-control form-control-sm text-end trade-security-amount" value="0"/>
 </td>
 
 <td class="text-center">
     <button type="button" class="btn btn-danger btn-sm" onclick="removeRow(this)">
         ✕
     </button>
+</td>
+ <td class="d-none">
+     <input type="text" name="CustomerBrandEditList[@i].IsEdited" value="false" class="form-control is-edit-cls" />
 </td>
 `;
 }

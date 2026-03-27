@@ -383,7 +383,8 @@
 
                 if (response.success) {
 
-                    alert(response.message);
+                    //alert(response.message);
+                    showToast("Customer Inserted Successfully.", "success", 4000);
 
                     $('#customerForm')[0].reset();
 

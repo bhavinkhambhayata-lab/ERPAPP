@@ -647,6 +647,9 @@
                                             X
                                         </button>
                                     </td>
+                                    <td class="d-none">
+                                        <input type="text" name="CustomerBrandEditList[@i].IsEdited" class="form-control is-edit-cls" value="true"/>
+                                    </td>
                                 </tr>
 
                                 i++;
@@ -1216,8 +1219,7 @@
 
 
         <div class="action-buttons">
-            <button type="button" class="btn btn-primary" id="btnSaveCustomerMaster">Save</button>
-            <button type="reset" class="btn btn-secondary">Refresh</button>
+            <button type="button" class="btn btn-primary" id="btnSaveCustomerMaster" @(Model.Division == 1 ? "disabled" : "")>Save</button>
         </div>
     </div>
 </form>

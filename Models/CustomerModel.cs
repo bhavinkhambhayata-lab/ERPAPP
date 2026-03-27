@@ -607,6 +607,8 @@ namespace ERPAPP.Models
         public DateTime? DLRAppointmentDate { get; set; }
 
         public DateTime? DLRTerminationDate { get; set; }
+
+        public bool IsEdited { get; set; } = false;
     }
 
 
@@ -852,5 +854,10 @@ namespace ERPAPP.Models
         public List<ChargesGroupModel> ChargesGroupList = new List<ChargesGroupModel>();
 
         public List<ParentCustomerModel> ParentCustomerList = new List<ParentCustomerModel>();
+    }
+
+    public class CustomerBrandEditRequest
+    {
+        public List<CustomerBrandWiseEditModel> CustomerBrandEditList { get; set; } = new();
     }
 }

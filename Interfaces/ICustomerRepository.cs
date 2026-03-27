@@ -32,5 +32,7 @@ namespace ERPAPP.Interfaces
 
         GetCustomerDivisionWiseDropDown GetCustomerDivisionWiseDropDown(string division);
 
+        Task<bool> EditCustomerBrandWiseOnly(List<CustomerBrandWiseEditModel> model);
+
     }
 }
