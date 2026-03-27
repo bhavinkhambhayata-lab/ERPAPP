@@ -220,9 +220,9 @@
     });
     });
 
-    function loadCustomer() {
+        function loadCustomer() {
 
-        var search = $('#txtSearch').val();
+        var search = $('#txtSearch').val().trim();
 
         $.ajax({
             url: '/Customer/GetCustomerList',
@@ -235,7 +235,7 @@
                 var rows = '';
                 var list = data.data || data;
 
-                // ✅ SAFE destroy (error fix)
+                // ✅ Destroy DataTable safely
                 if ($.fn.DataTable && $.fn.DataTable.isDataTable('#tblCustomer')) {
                     $('#tblCustomer').DataTable().clear().destroy();
                 }
@@ -244,29 +244,30 @@
 
                     $.each(list, function (i, item) {
 
-                            rows += `<tr>
-                                        <td>${item.displayNo ?? ''}</td>
-                                        <td>${item.division ?? ''}</td>
-                                        <td>${item.name ?? ''}</td>
-                                        <td>${item.city ?? ''}</td>
-                                        <td>${item.region ?? ''}</td>
-                                        <td>${item.location ?? ''}</td>
-                                        <td>${item.contactPerson ?? ''}</td>
-                                        <td>${item.mobileNo ?? ''}</td>
-                                        <td>${item.masterCode ?? ''}</td>
-                                        <td>${item.companyCode ?? ''}</td>
-                                        <td>${item.createdBy ?? ''}</td>
-                                        <td>${item.masterCodeInCompany ?? ''}</td>
-                                    </tr>`;
+                        rows += `<tr>
+                                    <td>${item.displayNo ?? ''}</td>
+                                    <td>${item.division ?? ''}</td>
+                                    <td>${item.name ?? ''}</td>
+                                    <td>${item.city ?? ''}</td>
+                                    <td>${item.region ?? ''}</td>
+                                    <td>${item.location ?? ''}</td>
+                                    <td>${item.contactPerson ?? ''}</td>
+                                    <td>${item.mobileNo ?? ''}</td>
+                                    <td>${item.masterCode ?? ''}</td>
+                                    <td>${item.companyCode ?? ''}</td>
+                                    <td>${item.createdBy ?? ''}</td>
+                                    <td>${item.masterCodeInCompany ?? ''}</td>
+                                 </tr>`;
                     });
 
+                    $('#tblCustomer tbody').html(rows);
+
                 } else {
-                    rows = `<tr><td colspan="6" class="text-center">No Data Found</td></tr>`;
+                    // ✅ Keep tbody empty (NO manual row)
+                    $('#tblCustomer tbody').html('');
                 }
 
-                $('#tblCustomer tbody').html(rows);
-
-                // ✅ DataTable init
+                // ✅ Always initialize DataTable (handles empty case itself)
                 $('#tblCustomer').DataTable({
                     paging: true,
                     searching: false,
@@ -274,28 +275,29 @@
                     info: true,
                     pageLength: 10,
                     lengthMenu: [5, 10, 25, 50],
+                    autoWidth: false,
 
-                    // columnDefs: [
-                    //     { orderable: false, targets: 0 }
-                    // ],
-                     autoWidth: false, // ✅ important
+                    columnDefs: [
+                        { width: "80px", targets: 0 },
+                        { width: "120px", targets: 1 },
+                        { width: "200px", targets: 2 },
+                        { width: "120px", targets: 3 },
+                        { width: "100px", targets: 4 },
+                        { width: "120px", targets: 5 },
+                        { width: "180px", targets: 6 },
+                        { width: "150px", targets: 7 },
+                        { width: "120px", targets: 8 },
+                        { width: "120px", targets: 9 },
+                        { width: "150px", targets: 10 },
+                        { width: "180px", targets: 11 }
+                    ],
 
-                columnDefs: [
-                    { width: "80px", targets: 0 },   // SrNo
-                    { width: "120px", targets: 1 },  // Brand
-                    { width: "200px", targets: 2 },  // Name
-                    { width: "120px", targets: 3 },  // City
-                    { width: "100px", targets: 4 },  // Region
-                    { width: "120px", targets: 5 },  // Location
-                    { width: "180px", targets: 6 },  // Contact Person
-                    { width: "150px", targets: 7 },  // Mobile
-                    { width: "120px", targets: 8 },  // Master Code
-                    { width: "120px", targets: 9 },  // Company Code
-                    { width: "150px", targets: 10 }, // Created By
-                    { width: "180px", targets: 11 }  // Master Code in Company
-                ],
+                    order: [[1, 'asc']],
 
-                    order: [[1, 'asc']]
+                    // ✅ Built-in message
+                    language: {
+                        emptyTable: "No Data Found"
+                    }
                 });
             },
 
