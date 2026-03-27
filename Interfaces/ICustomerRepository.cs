@@ -34,5 +34,7 @@ namespace ERPAPP.Interfaces
 
         Task<bool> EditCustomerBrandWiseOnly(List<CustomerBrandWiseEditModel> model);
 
+        Task<bool> CheckCustomerEntryAlreadyExists(string masterCode, string dimension);
+
     }
 }

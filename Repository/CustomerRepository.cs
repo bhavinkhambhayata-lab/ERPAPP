@@ -1925,5 +1925,28 @@ namespace ERPAPP.Repository
                 return false;
             }
         }
+
+        public async Task<bool> CheckCustomerEntryAlreadyExists(string masterCode, string dimension)
+        {
+            try
+            {
+                SqlParameter[] param = new SqlParameter[]
+                {
+                new SqlParameter("@MasterCode", masterCode),
+                new SqlParameter("@Dimension", dimension)
+                };
+
+                var result = _db.ExecuteScalar(
+                    "Customer_Transfer_Entry_AlreadyExists",
+                    param
+                );
+
+                return Convert.ToInt32(result) == 1;
+            }
+            catch(Exception e)
+            {
+                return false;
+            }
+        }
     }
 }

@@ -9,6 +9,14 @@
             return;
         }
 
+        var divisionId = $("#Division").val();
+
+        if (!divisionId || divisionId === "0") {
+          
+            showToast("Please select first division", "danger", 4000);
+            return;
+        }
+
         $.ajax({
             url: '/Customer/SearchCustomer',
             type: 'GET',
@@ -69,27 +77,36 @@
 
         e.preventDefault();
 
-        var customerNo = $(this).data("no");
-        //var brandId = $("#Brand").val();
+        var masterCode = $(this).data("no");
+
+        var divisionId = $("#Division").val();
+        var divisionText = $("#Division option:selected").text();
+
+        if (!divisionId || divisionId === "0") {
+            showToast("Please select first division", "danger", 4000);
+            return;
+        }
 
         $("#Name").val($(this).text());
-        $("#CustomerNo").val(customerNo);
+        $("#MasterCode").val(masterCode);
         $("#customerSearchResult").html("");
 
         // 🔥 Call API
         $.ajax({
-            url: "/Customer/GetCustomerMaster",
+            url: "/Customer/GetCustomerMasterData",
             type: "GET",
-            data: { customerNo: customerNo },
+            data: { masterCode: masterCode, division: divisionText },
             success: function (response) {
 
                 if (!response.success) {
-                    showToast(response.message, "warning", 4000);
-                    $("#SaveBtn").prop("disabled", true);
+                    showToast(response.message, "danger", 4000);
+                    //$("#SaveBtn").prop("disabled", true);
                     return;
                 }
 
                 var data = response.data;
+
+                loadCustomerAddressData(data.city, data.postcode)
 
                 $("#Name").val(data.name);
                 $("#Address").val(data.address);

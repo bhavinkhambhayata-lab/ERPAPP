@@ -51,20 +51,20 @@ namespace ERPAPP.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetCustomerMaster(string customerNo)
+        public async Task<IActionResult> GetCustomerMasterData(string masterCode, string division)
         {
-            //bool exists = await _customerRepository.CheckCustomerInMasterAndBrand(customerNo, brandId);
+            bool exists = await _customerRepository.CheckCustomerEntryAlreadyExists(masterCode, division);
 
-            //if (exists)
-            //{
-            //    return Json(new
-            //    {
-            //        success = false,
-            //        message = "Customer already exists in this brand."
-            //    });
-            //}
+            if (exists)
+            {
+                return Json(new
+                {
+                    success = false,
+                    message = "Customer already exists in this division."
+                });
+            }
 
-            var data = await _customerRepository.GetCustomerMaster(customerNo);
+            var data = await _customerRepository.GetCustomerMaster(masterCode);
 
             if (data == null)
                 return NotFound();
