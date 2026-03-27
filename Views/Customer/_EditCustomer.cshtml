@@ -557,10 +557,10 @@
                 <table class="table table-bordered table-sm mb-0 text-center" id="brandTable">
                     <thead class="table-light text-nowrap">
                         <tr>
-                            <th>Customer No</th>
-                            <th>Dimension<span class="required-star">*</span></th>
+                            <th class="d-none">Customer No</th>
+                            <th>Brand Code<span class="required-star">*</span></th>
                             <th>Customer Category Code<span class="required-star">*</span></th>
-                            <th>Trade Security Amount</th>
+                           
                             <th>Customer Discount Group<span class="required-star">*</span></th>
                             <th>Dealer Classification</th>
                             <th>Sales Person Code<span class="required-star">*</span></th>
@@ -568,6 +568,7 @@
                             <th>HO Sales Person<span class="required-star">*</span></th>
                             <th>DLR Appointment Date</th>
                             <th>DLR Termination Date</th>
+                            <th>Trade Security Amount</th>
                             <th style="width:60px;">Action</th>
                         </tr>
                     </thead>
@@ -578,7 +579,7 @@
                             foreach (var item in Model.CustomerBrandEditList)
                             {
                                 <tr>
-                                    <td>
+                                    <td class="d-none">
                                         <input type="text" name="CustomerBrandEditList[@i].CustomerNo"
                                                value="@item.CustomerNo" class="form-control" disabled />
                                     </td>
@@ -593,11 +594,7 @@
                                                value="@item.CustomerCategoryCode" class="form-control" disabled />
                                     </td>
 
-                                    <td>
-                                        <input type="number" step="0.01"
-                                               name="CustomerBrandEditList[@i].TradeSecurityAmount"
-                                               value="@item.TradeSecurityAmount" class="form-control" disabled />
-                                    </td>
+                                    
 
                                     <td>
                                         <input type="text" name="CustomerBrandEditList[@i].CustomerDiscountGroup"
@@ -625,17 +622,23 @@
                                     </td>
 
                                     <td>
-                                        <input type="date"
+                                        <input type="text"
                                                name="CustomerBrandEditList[@i].DLRAppointmentDate"
-                                               value="@(item.DLRAppointmentDate?.ToString("yyyy-MM-dd"))"
+                                               value="@(item.DLRAppointmentDate.HasValue? item.DLRAppointmentDate.Value.ToString("dd/MM/yy") : "")"
                                                class="form-control" disabled />
                                     </td>
 
                                     <td>
-                                        <input type="date"
+                                        <input type="text"
                                                name="CustomerBrandEditList[@i].DLRTerminationDate"
-                                               value="@(item.DLRTerminationDate?.ToString("yyyy-MM-dd"))"
+                                               value="@(item.DLRTerminationDate.HasValue? item.DLRTerminationDate.Value.ToString("dd/MM/yy") : "")"
                                                class="form-control" disabled />
+                                    </td>
+
+                                    <td>
+                                        <input type="number" step="0.01"
+                                               name="CustomerBrandEditList[@i].TradeSecurityAmount"
+                                               value="@item.TradeSecurityAmount" class="form-control" disabled />
                                     </td>
 
                                     <td>

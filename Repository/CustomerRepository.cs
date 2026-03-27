@@ -1372,6 +1372,18 @@ namespace ERPAPP.Repository
             {
                 foreach (DataRow row in ds.Tables[1].Rows)
                 {
+                    DealerClassification dealerEnum =new DealerClassification();
+
+                    DateTime? appointmentDate = row["DealerAppointmnetDate"] as DateTime?;
+                    DateTime? terminationDate = row["DLRTerminationDate"] as DateTime?;
+
+                    var dealerClassification = row["DealerClassification"]?.ToString();
+
+                    if (dealerClassification != null)
+                    {
+                       dealerEnum = (DealerClassification)Enum.Parse(typeof(DealerClassification), dealerClassification);
+                    }
+
                     model.CustomerBrandEditList.Add(new CustomerBrandWiseEditModel
                     {
                         CustomerNo = row["CustomerNo"]?.ToString(),
@@ -1379,12 +1391,20 @@ namespace ERPAPP.Repository
                         CustomerCategoryCode = row["CustomerCategoryCode"]?.ToString(),
                         TradeSecurityAmount = row["TradeSecurityAmount"] as decimal?,
                         CustomerDiscountGroup = row["CustomerDiscountGroup"]?.ToString(),
-                        DealerClassification = row["DealerClassification"]?.ToString(),
+                        DealerClassification = dealerEnum.ToString() ?? "",
                         SalesPersonCode = row["SalespersonCode"]?.ToString(),
                         Allocation = row["Allocation"]?.ToString(),
                         HOSalesPerson = row["HOSalesPersonCode"]?.ToString(),
-                        DLRAppointmentDate = row["DealerAppointmnetDate"] as DateTime?,
-                        DLRTerminationDate = row["DLRTerminationDate"] as DateTime?
+                        // ✅ fix here
+                        DLRAppointmentDate = (appointmentDate.HasValue && appointmentDate.Value > new DateTime(1753, 1, 1))
+                                    ? appointmentDate
+                                    : null,
+
+                        DLRTerminationDate = (terminationDate.HasValue && terminationDate.Value > new DateTime(1753, 1, 1))
+                                    ? terminationDate
+                                    : null
+                        
+
                     });
                 }
             }

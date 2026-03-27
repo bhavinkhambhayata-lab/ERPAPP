@@ -755,6 +755,22 @@
         handleGenBusPostingGroup();
     });
 
+    $(document).on('input', '.trade-security-amount', function () {
+        var value = $(this).val();
+
+        if (value && parseFloat(value) > 0) {
+            $(this).val('0'); // blank kari devu
+        }
+
+        if (value && parseFloat(value) < 0) {
+        }
+
+        if (value == 0) {
+        }
+    });
+
+
+
     // Page load par pan run karvu
     handleCommission();
 
@@ -846,7 +862,7 @@ function createBrandRow(data) {
     });
 
     row.innerHTML = `
-<td>
+<td class='d-none'>
     <input name="CustomerList[${rowCount}].CustomerNo"
            class="form-control form-control-sm"/>
 </td>
@@ -863,12 +879,6 @@ function createBrandRow(data) {
             class="form-control form-control-sm category">
         ${categoryOptions}
     </select>
-</td>
-
-<td>
-    <input name="CustomerList[${rowCount}].TradeSecurityAmount"
-           type="number"
-           class="form-control form-control-sm text-end" value="0" max="0" />
 </td>
 
 <td>
@@ -916,7 +926,13 @@ function createBrandRow(data) {
 <td>
     <input type="text"
            name="CustomerList[${rowCount}].DLRTerminationDate"
-           class="form-control form-control-sm dlr-datepicker"/>
+           class="form-control form-control-sm dlr-datepicker" disabled/>
+</td>
+
+<td>
+    <input name="CustomerList[${rowCount}].TradeSecurityAmount"
+           type="number"
+           class="form-control form-control-sm text-end trade-security-amount" value="0" max="0" />
 </td>
 
 <td class="text-center">
