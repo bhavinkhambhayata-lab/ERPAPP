@@ -388,42 +388,35 @@ namespace ERPAPP.Models
 
     public class CustomerMasterModel
     {
-        public string No { get; set; }
-        public string Name { get; set; }
+        public string No { get; set; } = string.Empty;
+        public string Name { get; set; } = string.Empty;
 
-        public string Address { get; set; }
-        public string Address2 { get; set; }
+        public string Address { get; set; } = string.Empty;
+        public string Address2 { get; set; } = string.Empty;
 
-        public string City { get; set; }
-        public string Postcode { get; set; }
-        public string StateCode { get; set; }
-        public string CountryCode { get; set; }
-        public string Region { get; set; }
-        public string Zone { get; set; }
+        public string City { get; set; } = string.Empty;
+        public string Postcode { get; set; } = string.Empty;
+        public string StateCode { get; set; } = string.Empty;
+        public string CountryCode { get; set; } = string.Empty;
+        public string Region { get; set; } = string.Empty;
+        public string Zone { get; set; } = string.Empty;
 
-        public string ContactPerson { get; set; }
-        public string MobileNo { get; set; }
-        public string PhoneNo { get; set; }
-        public string FaxNo { get; set; }
+        public string ContactPerson { get; set; } = string.Empty;
+        public string MobileNo { get; set; } = string.Empty;
+        public string PhoneNo { get; set; } = string.Empty;
 
-        public string EMail { get; set; }
-        public string E_Inv_E_Mail { get; set; }
-        public string E_Inv_PhoneNo { get; set; }
+        public string EMail { get; set; } = string.Empty;
+        public string E_Inv_E_Mail { get; set; } = string.Empty;
+        public string E_Inv_PhoneNo { get; set; } = string.Empty;
 
-        public string Website_Homepage { get; set; }
+        public string? Website_Homepage { get; set; }
 
-        public string LSTNo { get; set; }
-        public DateTime? LSTTINDate { get; set; }
+        public string PANNO { get; set; } = string.Empty;
 
-        public string CSTNo { get; set; }
-        public DateTime? CSTTINDate { get; set; }
-
-        public string PANNO { get; set; }
-
-        public string BankName { get; set; }
-        public string BankAccountNo { get; set; }
-        public string BranchName { get; set; }
-        public string IFSCode { get; set; }
+        public string? BankName { get; set; }
+        public string? BankAccountNo { get; set; }
+        public string? BranchName { get; set; }
+        public string? IFSCode { get; set; }
 
         public string? GSTRegistrationNo { get; set; }
         public int? GSTRegistrationType { get; set; }
@@ -431,7 +424,35 @@ namespace ERPAPP.Models
 
         public int? CustomerType { get; set; }
 
-        public string Allocation { get; set; }
+        public string? ParentCustomerCode { get; set; }
+
+        public string? CommissionVendorNo { get; set; }
+
+        public int? CommissionType { get; set; }
+
+        public string? PriceListCode { get; set; }
+
+        public string? PromoCode { get; set; }
+
+        public string? ChargesGroup { get; set; }
+
+        public decimal? CreditLimit { get; set; }
+
+        public int? ApplicationMethod { get; set; }
+
+        public string? PaymentTermsCode { get; set; }
+
+        public string? PaymentMethodCode { get; set; }
+
+        public string? CustomerPostingGroup { get; set; }
+
+        public string? GenBusPostingGroup { get; set; }
+
+        public string? Currency { get; set; }
+
+        public string? BusinessCategory { get; set; }
+        public string? MSMEUAMNo { get; set; }
+
     }
 
     public class AddressDropdownModel

@@ -115,6 +115,7 @@
                 $("#CityCode").val(data.city);
                 $("#PostCode").val(data.postcode);
                 $("#StateCode").val(data.stateCode);
+                
                 $("#CountryCode").val(data.countryCode);
                 $("#Region").val(data.region);
                 $("#Zone").val(data.zone);
@@ -140,10 +141,26 @@
                 $("#GSTRegistrationType").val(data.gstRegistrationType);
                 $("#GSTCustomerType").val(data.gstCustomerType);
                 $("#CustomerType").val(data.customerType);
+                
+                $("#ParentCustomerCode").val(data.parentCustomerCode);
+                $("#CommissionVendorNo").val(data.commissionVendorNo);
+                $("#CommissionType").val(data.commissionType);
+                $("#PriceListCode").val(data.priceListCode);
+                $("#PromoCode").val(data.promoCode);
+                $("#ChargesGroup").val(data.chargesGroup);
+                $("#CreditLimit").val(data.creditLimit);
+                $("#ApplicationMethod").val(data.applicationMethod);
+                $("#PaymentTermsCode").val(data.paymentTermsCode);
+                $("#PaymentMethodCode").val(data.paymentMethodCode);
 
-                $("#Allocation").val(data.allocation);
+                $("#CustomerPostingGroup").val(data.customerPostingGroup);
+                $("#GenBusPostingGroup").val(data.genBusPostingGroup);
+                $("#CurrencyCode").val(data.currency);
 
-                $("#SaveBtn").prop("disabled", false);
+                $("#BusinessCategory").val(data.businessCategory);
+                $("#MSMEUAMNo").val(data.msmeuamNo);
+
+                
             },
             error: function () {
                 alert("Error loading customer data.");
@@ -1114,7 +1131,7 @@ function loadCustomerAddressData(city,postcode) {
 
             if (data) {
                 $("#CityCode").val(data.city);
-                $("#CountryCode").val(data.countryCode || '');
+                //$("#CountryCode").val(data.countryCode || '');
                 $("#StateCode").val(data.stateCode || '');
             }
 

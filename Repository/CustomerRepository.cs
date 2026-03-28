@@ -454,39 +454,51 @@ namespace ERPAPP.Repository
                         ContactPerson = row["ContactPerson"]?.ToString(),
                         MobileNo = row["MobileNo"]?.ToString(),
                         PhoneNo = row["PhoneNo"]?.ToString(),
-                        FaxNo = row["FaxNo"]?.ToString(),
                         EMail = row["EMail"]?.ToString(),
                         E_Inv_E_Mail = row["E_Inv_E_Mail"]?.ToString(),
                         E_Inv_PhoneNo = row["E_Inv_PhoneNo"]?.ToString(),
 
                         Website_Homepage = row["WebsiteHomepage"]?.ToString(),
-                        //LSTNo = row["LSTNo"]?.ToString(),
-                        //CSTNo = row["CSTNo"]?.ToString(),
-                        //PANNO = row["PANNO"]?.ToString(),
-
+                        
                         BankName = row["BankName"]?.ToString(),
                         BankAccountNo = row["BankAccountNo"]?.ToString(),
                         BranchName = row["BranchName"]?.ToString(),
                         IFSCode = row["IFSCode"]?.ToString(),
 
-                        //GSTRegistrationNo = row["GSTRegistrationNo"]?.ToString(),
-                        Allocation = row["Allocation"]?.ToString()
+                        ParentCustomerCode = row["ParentCustomerCode"]?.ToString(),
+                        CommissionVendorNo = row["CommisionVendorNo"]?.ToString(), // check spelling
+                        PriceListCode = row["PriceListCode"]?.ToString(),
+                        PromoCode = row["PromoCode"]?.ToString(),
+                        ChargesGroup = row["ChargesGroup"]?.ToString(),
+                        PaymentTermsCode = row["PaymentTermsCode"]?.ToString(),
+                        PaymentMethodCode = row["PaymentMethodCode"]?.ToString(),
+                        CustomerPostingGroup = row["CustomerPostingGroup"]?.ToString(),
+                        GenBusPostingGroup = row["GenBusPostingGroup"]?.ToString(),
+                        Currency = row["Currency"]?.ToString(),
+                        PANNO = row["PANNO"]?.ToString(),
+                        BusinessCategory= row["BusinessCategory"]?.ToString(),
+                        MSMEUAMNo = row["MSMEUAMNo"]?.ToString(),
+                        CreditLimit = row["CreditLimit"] != DBNull.Value ? Convert.ToDecimal(row["CreditLimit"]) : (decimal?)null
                     };
 
-                    //if (row["LSTTINDate"] != DBNull.Value)
-                    //    model.LSTTINDate = Convert.ToDateTime(row["LSTTINDate"]);
+                    
+                    if (row["GSTRegistrationType"] != DBNull.Value)
+                        model.GSTRegistrationType = Convert.ToInt32(row["GSTRegistrationType"]);
 
-                    //if (row["CSTTINDate"] != DBNull.Value)
-                    //    model.CSTTINDate = Convert.ToDateTime(row["CSTTINDate"]);
+                    if (row["GSTCustomerType"] != DBNull.Value)
+                        model.GSTCustomerType = Convert.ToInt32(row["GSTCustomerType"]);
 
-                    //if (row["GSTRegistrationType"] != DBNull.Value)
-                    //    model.GSTRegistrationType = Convert.ToInt32(row["GSTRegistrationType"]);
-
-                    //if (row["GSTCustomerType"] != DBNull.Value)
-                    //    model.GSTCustomerType = Convert.ToInt32(row["GSTCustomerType"]);
+                    if (row["GSTRegistrationNo"] != DBNull.Value)
+                        model.GSTRegistrationNo = row["GSTRegistrationNo"].ToString();
 
                     if (row["CustomerType"] != DBNull.Value)
                         model.CustomerType = Convert.ToInt32(row["CustomerType"]);
+
+                    if (row["CommissionType"] != DBNull.Value)
+                        model.CommissionType = Convert.ToInt32(row["CommissionType"]);
+
+                    if (row["ApplicationMethod"] != DBNull.Value)
+                        model.ApplicationMethod = Convert.ToInt32(row["ApplicationMethod"]);
                 }
 
                 return model;
