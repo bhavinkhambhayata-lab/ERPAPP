@@ -15,6 +15,7 @@ builder.Services.AddControllersWithViews(options =>
 builder.Services.AddScoped<DbHelper>();
 builder.Services.AddScoped<ILoginRepository,LoginRepository>();
 builder.Services.AddScoped<ICustomerRepository, CustomerRepository>();
+builder.Services.AddScoped<IVendorRepository, VendorRepository>();
 builder.Services.AddSession(options =>
 {
     options.IdleTimeout = TimeSpan.FromMinutes(50); // ?? 50 minutes

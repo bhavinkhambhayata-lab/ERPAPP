@@ -1,9 +1,18 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using ERPAPP.Interfaces;
+using Microsoft.AspNetCore.Mvc;
 
 namespace ERPAPP.Controllers
 {
     public class VendorController : Controller
     {
+
+        private readonly IVendorRepository _vendorRepository;
+
+        public VendorController(IVendorRepository vendorRepository)
+        {
+            _vendorRepository = vendorRepository;
+        }
+
         public IActionResult Index()
         {
             return View();
@@ -14,9 +23,10 @@ namespace ERPAPP.Controllers
             return PartialView("_VendorList");
         }
 
-        public IActionResult VendorDetails()
+        public async Task<IActionResult> VendorDetails()
         {
-            return PartialView("_VendorDetails");
+            var model = await _vendorRepository.GetVendorAddData();
+            return PartialView("_VendorDetails", model);
         }
 
     }

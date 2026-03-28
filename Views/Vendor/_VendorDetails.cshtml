@@ -1,1 +1,449 @@
-﻿<h6>Detail Page</h6>
+﻿@model GetVendorAddData
+@using Microsoft.AspNetCore.Mvc.Rendering
+@using static ERPAPP.Models.VendorsModel
+
+@{
+    ViewData["Title"] = "Vendor Details";
+}
+
+<script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+<script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
+
+<style>
+    body {
+        font-size: 13px;
+        background: #f4f6f9;
+    }
+
+    fieldset {
+        border: 1px solid #d0d7de;
+        border-radius: 6px;
+        padding: 15px;
+        background: #fff;
+        margin-bottom: 15px;
+    }
+
+    legend {
+        font-size: 14px;
+        font-weight: 600;
+        color: #0d6efd;
+    }
+
+    .form-control, .form-select {
+        height: 30px;
+        font-size: 13px;
+    }
+
+    .col-form-label {
+        font-weight: 500;
+        padding-top: 5px;
+    }
+
+    .required-star {
+        color: red;
+    }
+</style>
+
+<form id="vendorForm" method="post">
+
+    <!-- HEADER -->
+    <div class="bg-primary text-white p-2 d-flex justify-content-between">
+        <b>Vendor Details</b>
+        <b>Row ID : @Model.DisplayNo</b>
+    </div>
+
+    <div class="container-fluid mt-3">
+        <!-- ================= GENERAL ================= -->
+        <fieldset>
+            <legend>General Details</legend>
+
+            <div class="row">
+
+                <!-- LEFT -->
+                <div class="col-4">
+
+                    <div class="row mt-2">
+                        <label class="col-4 col-form-label">Name<span class="required-star">*</span></label>
+                        <div class="col-8">
+                            <input asp-for="Name" class="form-control" />
+                        </div>
+                    </div>
+
+                    <div class="row mt-2">
+                        <label class="col-4 col-form-label">Master Code</label>
+                        <div class="col-8">
+                            <input asp-for="MasterCode" class="form-control" disabled />
+                            <input type="hidden" asp-for="MasterCode" />
+                        </div>
+                    </div>
+
+                    <div class="row mt-2">
+                        <label class="col-4 col-form-label">Address</label>
+                        <div class="col-8">
+                            <textarea asp-for="Address" class="form-control"></textarea>
+                        </div>
+                    </div>
+
+                    <div class="row mt-2">
+                        <label class="col-4 col-form-label">Range</label>
+                        <div class="col-8">
+                            <input asp-for="Range" class="form-control" />
+                        </div>
+                    </div>
+
+                    <div class="row mt-2">
+                        <label class="col-4 col-form-label">Collectorate</label>
+                        <div class="col-8">
+                            <input asp-for="Collectorate" class="form-control" />
+                        </div>
+                    </div>
+
+                </div>
+
+                <!-- CENTER -->
+                <div class="col-4">
+
+                    <div class="row mt-2">
+                        <label class="col-4 col-form-label">City</label>
+                        <div class="col-8">
+                            <input asp-for="CityCode" class="form-control" />
+                        </div>
+                    </div>
+
+                    <div class="row mt-2">
+                        <label class="col-4 col-form-label">Post Code</label>
+                        <div class="col-8">
+                            <input asp-for="PostCode" class="form-control" />
+                        </div>
+                    </div>
+
+                    <div class="row mt-2">
+                        <label class="col-4 col-form-label">State</label>
+                        <div class="col-8">
+                            <input asp-for="StateCode" class="form-control" disabled />
+                            <input type="hidden" asp-for="StateCode" />
+                        </div>
+                    </div>
+
+                    <div class="row mt-2">
+                        <label class="col-4 col-form-label">Country</label>
+                        <div class="col-8">
+                            <input asp-for="CountryCode" class="form-control" />
+                        </div>
+                    </div>
+
+                    <div class="row mt-2">
+                        <label class="col-4 col-form-label">Vendor Location</label>
+                        <div class="col-8">
+                            <input asp-for="VendorLocation" class="form-control" />
+                        </div>
+                    </div>
+
+                    <div class="row mt-2">
+                        <label class="col-4 col-form-label">GST Not To Hold</label>
+                        <div class="col-8 pt-2">
+                            <input type="checkbox" asp-for="GSTNotToHold" />
+                        </div>
+                    </div>
+
+                </div>
+
+                <!-- RIGHT -->
+                <div class="col-4">
+
+                    <div class="row mt-2">
+                        <label class="col-4 col-form-label">Vendor Code</label>
+                        <div class="col-8">
+                            <input asp-for="VendorCode" class="form-control" />
+                        </div>
+                    </div>
+
+                    <div class="row mt-2">
+                        <label class="col-4 col-form-label">Aggregate Turnover</label>
+                        <div class="col-8">
+                            <input asp-for="AggregateTurnover" class="form-control" />
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+        </fieldset>
+
+        <!-- ================= CONTACT ================= -->
+        <fieldset>
+            <legend>Contact Details</legend>
+
+            <div class="row">
+
+                <div class="col-4">
+                    <div class="row mt-2">
+                        <label class="col-4 col-form-label">Contact Person</label>
+                        <div class="col-8">
+                            <input asp-for="ContactPerson" class="form-control" />
+                        </div>
+                    </div>
+
+                    <div class="row mt-2">
+                        <label class="col-4 col-form-label">Mobile No</label>
+                        <div class="col-8">
+                            <input asp-for="MobileNo" class="form-control" />
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-4">
+                    <div class="row mt-2">
+                        <label class="col-4 col-form-label">Email</label>
+                        <div class="col-8">
+                            <input asp-for="Email" class="form-control" />
+                        </div>
+                    </div>
+
+                    <div class="row mt-2">
+                        <label class="col-4 col-form-label">Phone No</label>
+                        <div class="col-8">
+                            <input asp-for="PhoneNo" class="form-control" />
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-4">
+                    <div class="row mt-2">
+                        <label class="col-4 col-form-label">Website</label>
+                        <div class="col-8">
+                            <input asp-for="Website" class="form-control" />
+                        </div>
+                    </div>
+
+                    <div class="row mt-2">
+                        <label class="col-4 col-form-label">Email Not Available</label>
+                        <div class="col-8 pt-2">
+                            <input type="checkbox" asp-for="EmailNotAvailable" />
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </fieldset>
+
+        <!-- ================= TAX ================= -->
+        <fieldset>
+            <legend>Tax Details</legend>
+
+            <div class="row">
+
+                <div class="col-4">
+                    <div class="row mt-2">
+                        <label class="col-4 col-form-label">PAN No</label>
+                        <div class="col-8">
+                            <input asp-for="PANNo" class="form-control" />
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-4">
+                    <div class="row mt-2">
+                        <label class="col-4 col-form-label">ECC No</label>
+                        <div class="col-8">
+                            <input asp-for="ECCNo" class="form-control" />
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-4">
+                    <div class="row mt-2">
+                        <label class="col-4 col-form-label">Service Tax Reg No</label>
+                        <div class="col-8">
+                            <input asp-for="ServiceTaxRegNo" class="form-control" />
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </fieldset>
+
+        <!-- ================= BUSINESS ================= -->
+        <fieldset>
+            <legend>Business Details</legend>
+
+            <div class="row">
+
+                <div class="col-4">
+                    <div class="row mt-2">
+                        <label class="col-4 col-form-label">Vendor Type</label>
+                        <div class="col-8">
+                            <input asp-for="VendorType" class="form-control" />
+                        </div>
+                    </div>
+
+                    <div class="row mt-2">
+                        <label class="col-4 col-form-label">Payment Terms</label>
+                        <div class="col-8">
+                            <input asp-for="PaymentTerms" class="form-control" />
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-4">
+                    <div class="row mt-2">
+                        <label class="col-4 col-form-label">Payment Method</label>
+                        <div class="col-8">
+                            <input asp-for="PaymentMethod" class="form-control" />
+                        </div>
+                    </div>
+
+                    <div class="row mt-2">
+                        <label class="col-4 col-form-label">Purchaser Code</label>
+                        <div class="col-8">
+                            <input asp-for="PurchaserCode" class="form-control" />
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </fieldset>
+
+        <!-- ================= POSTING ================= -->
+        <fieldset>
+            <legend>Posting Details</legend>
+
+            <div class="row">
+
+                <div class="col-3">
+                    <div class="row mt-2">
+                        <label class="col-6 col-form-label">VAT Bus</label>
+                        <div class="col-6">
+                            <input asp-for="VATBusPostingGroup" class="form-control" />
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-3">
+                    <div class="row mt-2">
+                        <label class="col-6 col-form-label">Gen Bus</label>
+                        <div class="col-6">
+                            <input asp-for="GenBusPostingGroup" class="form-control" />
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-3">
+                    <div class="row mt-2">
+                        <label class="col-6 col-form-label">Vendor PG</label>
+                        <div class="col-6">
+                            <input asp-for="VendorPostingGroup" class="form-control" />
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-3">
+                    <div class="row mt-2">
+                        <label class="col-6 col-form-label">Excise</label>
+                        <div class="col-6">
+                            <input asp-for="ExciseBusPostingGroup" class="form-control" />
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </fieldset>
+
+        <!-- ================= MSME ================= -->
+        <fieldset>
+            <legend>MSME Details</legend>
+
+            <div class="row">
+
+                <div class="col-4">
+                    <div class="row mt-2">
+                        <label class="col-4 col-form-label">MSME UAM No</label>
+                        <div class="col-8">
+                            <input asp-for="MSMEUAMNo" class="form-control" />
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-4">
+                    <div class="row mt-2">
+                        <label class="col-4 col-form-label">Intimation Date</label>
+                        <div class="col-8">
+                            <input asp-for="MSMEIntimationDate" type="date" class="form-control" />
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-4">
+                    <div class="row mt-2">
+                        <label class="col-4 col-form-label">Effective Date</label>
+                        <div class="col-8">
+                            <input asp-for="MSMEEffectiveDate" type="date" class="form-control" />
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </fieldset>
+
+        <!-- ================= NOD/NOC ================= -->
+        <fieldset>
+            <legend>NOD/NOC Details</legend>
+
+            <div class="row">
+
+                <div class="col-4">
+                    <div class="row mt-2">
+                        <label class="col-4 col-form-label">Access Code</label>
+                        <div class="col-8">
+                            <input asp-for="AccessCode" class="form-control" />
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-4">
+                    <div class="row mt-2">
+                        <label class="col-4 col-form-label">NOD/NOC</label>
+                        <div class="col-8">
+                            <input asp-for="NOCNOD" class="form-control" />
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-4">
+                    <div class="row mt-2">
+                        <label class="col-4 col-form-label">Concessional Code</label>
+                        <div class="col-8">
+                            <input asp-for="ConcessionalCode" class="form-control" />
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-4 mt-2">
+                    <div class="row">
+                        <label class="col-4 col-form-label">Threshold</label>
+                        <div class="col-8 pt-2">
+                            <input type="checkbox" asp-for="ThresholdOverlook" />
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-4 mt-2">
+                    <div class="row">
+                        <label class="col-4 col-form-label">Surcharge</label>
+                        <div class="col-8 pt-2">
+                            <input type="checkbox" asp-for="SurchargeOverlook" />
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </fieldset>
+
+        <!-- BUTTONS -->
+        <div class="text-center mt-3">
+            <button type="submit" class="btn btn-primary">Save</button>
+            <button type="reset" class="btn btn-secondary">Reset</button>
+        </div>
+
+    </div>
+</form>
