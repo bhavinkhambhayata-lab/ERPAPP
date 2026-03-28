@@ -108,57 +108,59 @@
 
                 loadCustomerAddressData(data.city, data.postcode)
 
-                $("#Name").val(data.name);
-                $("#Address").val(data.address);
-                $("#Address2").val(data.address2);
+                $('#Division').prop("disabled", true);
+                $("#Name").val(data.name).prop("disabled", true);
+                $("#Address").val(data.address).prop("disabled", true);
+                $("#Address2").val(data.address2).prop("disabled", true);
 
-                $("#CityCode").val(data.city);
-                $("#PostCode").val(data.postcode);
-                $("#StateCode").val(data.stateCode);
+                $("#CityCode").val(data.city).prop("disabled", true);
+                $("#PostCode").val(data.postcode).prop("disabled", true);
+                $("#StateCode").val(data.stateCode).prop("disabled", true);
                 
-                $("#CountryCode").val(data.countryCode);
-                $("#Region").val(data.region);
-                $("#Zone").val(data.zone);
+                $("#CountryCode").val(data.countryCode).prop("disabled", true);
+                $("#Region").val(data.region).prop("disabled", true);
+                $("#Zone").val(data.zone).prop("disabled", true);
 
-                $("#ContactPerson").val(data.contactPerson);
-                $("#MobileNo").val(data.mobileNo);
-                $("#PhoneNo").val(data.phoneNo);
-                $("#FaxNo").val(data.faxNo);
+                $("#ContactPerson").val(data.contactPerson).prop("disabled", true);
+                $("#MobileNo").val(data.mobileNo).prop("disabled", true);
+                $("#PhoneNo").val(data.phoneNo).prop("disabled", true);
 
-                $("#Email").val(data.eMail);
-                $("#EInvEmail").val(data.e_Inv_E_Mail);
-                $("#EInvPhoneNo").val(data.e_Inv_PhoneNo);
+                $("#Email").val(data.eMail).prop("disabled", true);
+                $("#EInvEmail").val(data.e_Inv_E_Mail).prop("disabled", true);
+                $("#EInvPhoneNo").val(data.e_Inv_PhoneNo).prop("disabled", true);
 
-                $("#Website").val(data.website_Homepage);
+                $("#Website").val(data.website_Homepage).prop("disabled", true);
 
-                $("#PANNo").val(data.panno);
-                $("#BankName").val(data.bankName);
-                $("#BankAccountNo").val(data.bankAccountNo);
-                $("#BranchName").val(data.branchName);
-                $("#IFSCCode").val(data.ifsCode);
+                $("#PANNo").val(data.panno).prop("disabled", true);
+                $("#BankName").val(data.bankName).prop("disabled", true);
+                $("#BankAccountNo").val(data.bankAccountNo).prop("disabled", true);
+                $("#BranchName").val(data.branchName).prop("disabled", true);
+                $("#IFSCCode").val(data.ifsCode).prop("disabled", true);
 
-                $("#GSTRegistrationNo").val(data.gstRegistrationNo);
-                $("#GSTRegistrationType").val(data.gstRegistrationType);
-                $("#GSTCustomerType").val(data.gstCustomerType);
-                $("#CustomerType").val(data.customerType);
+                $("#GSTRegistrationNo").val(data.gstRegistrationNo).prop("disabled", true);
+                $("#GSTRegistrationType").val(data.gstRegistrationType).prop("disabled", true);
+                $("#GSTCustomerType").val(data.gstCustomerType).prop("disabled", true);
+                $("#CustomerType").val(data.customerType).prop("disabled", true);
                 
-                $("#ParentCustomerCode").val(data.parentCustomerCode);
-                $("#CommissionVendorNo").val(data.commissionVendorNo);
-                $("#CommissionType").val(data.commissionType);
-                $("#PriceListCode").val(data.priceListCode);
-                $("#PromoCode").val(data.promoCode);
-                $("#ChargesGroup").val(data.chargesGroup);
-                $("#CreditLimit").val(data.creditLimit);
-                $("#ApplicationMethod").val(data.applicationMethod);
-                $("#PaymentTermsCode").val(data.paymentTermsCode);
-                $("#PaymentMethodCode").val(data.paymentMethodCode);
+                $("#CommissionVendorNo").val(data.commissionVendorNo).prop("disabled", true);
+                $("#CommissionType").val(data.commissionType).prop("disabled", true);
+                
+                $("#CreditLimit").val(data.creditLimit).prop("disabled", true);
+                $("#ApplicationMethod").val(data.applicationMethod).prop("disabled", true);
+                $("#PaymentTermsCode").val(data.paymentTermsCode).prop("disabled", true);
+                $("#PaymentMethodCode").val(data.paymentMethodCode).prop("disabled", true);
 
-                $("#CustomerPostingGroup").val(data.customerPostingGroup);
-                $("#GenBusPostingGroup").val(data.genBusPostingGroup);
-                $("#CurrencyCode").val(data.currency);
+                $("#CustomerPostingGroup").val(data.customerPostingGroup).prop("disabled", true);
+                $("#GenBusPostingGroup").val(data.genBusPostingGroup).prop("disabled", true);
+                $("#CurrencyCode").val(data.currency).prop("disabled", true);
 
-                $("#BusinessCategory").val(data.businessCategory);
-                $("#MSMEUAMNo").val(data.msmeuamNo);
+                $("#BusinessCategory").val(data.businessCategory || '').prop("disabled", true);
+                $("#MSMEUAMNo").val(data.msmeuamNo).prop("disabled", true);
+
+                //$("#ParentCustomerCode").val(data.parentCustomerCode).prop("disabled", true);
+                //$("#PriceListCode").val(data.priceListCode).prop("disabled", true);
+                //$("#PromoCode").val(data.promoCode).prop("disabled", true);
+                //$("#ChargesGroup").val(data.chargesGroup).prop("disabled", true);
 
                 
             },
@@ -306,6 +308,43 @@
         formData.append("CurrencyCode", $('#CurrencyCode').val());
         formData.append("CustomerPostingGroup", $('#CustomerPostingGroup').val());
         formData.append("GenBusPostingGroup", $('#GenBusPostingGroup').val());
+
+        //------------------- Customer Select Name After Disabled Field-----------
+        formData.set("Division", $("#Division").val());
+        formData.set("Name", $("#Name").val());
+        formData.set("Address", $("#Address").val());
+        formData.set("Address2", $("#Address2").val());
+        formData.set("CityCode", $("#CityCode").val());
+        formData.set("PostCode", $("#PostCode").val());
+        formData.set("StateCode", $("#StateCode").val());
+        formData.set("CountryCode", $("#CountryCode").val());
+        formData.set("Region", $("#Region").val());
+        formData.set("Zone", $("#Zone").val());
+        formData.set("ContactPerson", $("#ContactPerson").val());
+        formData.set("MobileNo", $("#MobileNo").val());
+        formData.set("PhoneNo", $("#PhoneNo").val());
+        formData.set("Email", $("#Email").val());
+        formData.set("EInvEmail", $("#EInvEmail").val());
+        formData.set("EInvPhoneNo", $("#EInvPhoneNo").val());
+        formData.set("Website", $("#Website").val());
+        formData.set("PANNo", $("#PANNo").val());
+        formData.set("BankName", $("#BankName").val());
+        formData.set("BankAccountNo", $("#BankAccountNo").val());
+        formData.set("BranchName", $("#BranchName").val());
+        formData.set("IFSCCode", $("#IFSCCode").val());
+        formData.set("GSTRegistrationNo", $("#GSTRegistrationNo").val());
+        formData.set("GSTRegistrationType", $("#GSTRegistrationType").val());
+        formData.set("GSTCustomerType", $("#GSTCustomerType").val());
+        formData.set("CustomerType", $("#CustomerType").val());
+        formData.set("CommissionVendorNo", $("#CommissionVendorNo").val());
+        formData.set("CommissionType", $("#CommissionType").val());
+        formData.set("CreditLimit", $("#CreditLimit").val());
+        formData.set("ApplicationMethod", $("#ApplicationMethod").val());
+        formData.set("PaymentTermsCode", $("#PaymentTermsCode").val());
+        formData.set("PaymentMethodCode", $("#PaymentMethodCode").val());
+        formData.set("BusinessCategory", $("#BusinessCategory").val());
+        formData.set("MSMEUAMNo", $("#MSMEUAMNo").val());
+        //----------------------------------------------------------------------
 
         var isCheckedShipp = $("#chkSameAsGeneral").is(":checked");
 
@@ -1075,37 +1114,54 @@ function GetCustomerDataWithPortalRowId(value) {
             //$("#MasterCode").val(data.masterCode);
 
             //First Default Select MOSAIC because that is getting bella 
-            $('#Division').val('2').trigger('change');
+            $('#Division').val('2').trigger('change').addClass("portal-bind-data");;
 
-            $("#Name").val(data.name);
-            $("#Address").val(data.address);
-            $("#Address2").val(data.address2);
-            $("#CityCode").val(data.cityCode);
+            $("#Name").val(data.name).addClass("portal-bind-data");;
+            $("#Address").val(data.address).addClass("portal-bind-data");;
+            $("#Address2").val(data.address2).addClass("portal-bind-data");;
+            $("#CityCode").val(data.cityCode).addClass("portal-bind-data");;
 
             loadCustomerAddressData(data.cityCode, data.postCode);
 
-            $("#PostCode").val(data.postCode);
-            $("#StateCode").val(data.stateCode);
-            $("#CountryCode").val(data.countryCode).trigger('change');
+            $("#PostCode").val(data.postCode).addClass("portal-bind-data");;
+            $("#StateCode").val(data.stateCode).addClass("portal-bind-data");;
+            $("#CountryCode").val(data.countryCode).trigger('change').addClass("portal-bind-data");;
 
-            $("#Region").val(data.region);
-            $("#Zone").val(data.zone);
+            $("#Region").val(data.region).addClass("portal-bind-data");;
+            $("#Zone").val(data.zone).addClass("portal-bind-data");;
 
-            $("#ContactPerson").val(data.contactPerson);
-            $("#MobileNo").val(data.mobileNo);
-            $("#PhoneNo").val(data.phoneNo);
+            if (data.contactPerson) {
+                $("#ContactPerson").val(data.contactPerson).addClass("portal-bind-data");
+            }
 
-            $("#Email").val(data.email);
-            $("#Website").val(data.website);
+            if (data.mobileNo) {
+                $("#MobileNo").val(data.mobileNo).addClass("portal-bind-data");
+            }
 
-            $("#CustomerType").val(data.customerType);
+            if (data.phoneNo) {
+                $("#PhoneNo").val(data.phoneNo).addClass("portal-bind-data");
+            }
 
-            $("#PANNo").val(data.panNo);
+            $("#Email").val(data.email).addClass("portal-bind-data");
+            $("#Website").val(data.website).addClass("portal-bind-data");
 
-            $("#GSTRegistrationNo").val(data.gstRegistrationNo);
-            $("#GSTRegistrationType").val(data.gstRegistrationType);
+            $("#CustomerType").val(data.customerType).addClass("portal-bind-data");
 
-            $("#ARNNo").val(data.arnNo);
+            if (data.panNo) {
+                $("#PANNo").val(data.panNo).addClass("portal-bind-data");
+            }
+
+            if (data.gstRegistrationNo) {
+                $("#GSTRegistrationNo").val(data.gstRegistrationNo).addClass("portal-bind-data");
+            }
+
+            if (data.gstRegistrationType) {
+                $("#GSTRegistrationType").val(data.gstRegistrationType).addClass("portal-bind-data");
+            }
+
+            if (data.arnNo) {
+                $("#ARNNo").val(data.arnNo).addClass("portal-bind-data");
+            }
 
         },
         error: function () {
