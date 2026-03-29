@@ -93,6 +93,22 @@
     .customer-textarea {
         height: 60px;
     }
+
+
+    .table-responsive {
+        overflow-x: auto; /* horizontal scroll */
+    }
+
+    #brandTable {
+        width: max-content; /* table expand thase */
+        min-width: 100%; /* minimum full width */
+    }
+
+        #brandTable th,
+        #brandTable td {
+            white-space: nowrap; /* text ek line ma */
+            min-width: 120px; /* column squeeze na thay */
+        }
 </style>
 
 <form id="customerForm" method="post">
@@ -288,7 +304,7 @@
                             <input asp-for="CreditLimit"
                                    type="number"
                                    step="0.01"
-                                   class="form-control" disabled />
+                                   class="form-control" disabled value="@Model.CreditLimit?.ToString("0.00")" />
 
                             <span asp-validation-for="CreditLimit" class="text-danger"></span>
                         </div>
@@ -568,7 +584,7 @@
                             <th>HO Sales Person<span class="required-star">*</span></th>
                             <th>DLR Appointment Date</th>
                             <th>DLR Termination Date</th>
-                            <th>Trade Security Amount</th>
+                            <th>TSD Amount</th>
                             <th style="width:60px;">Action</th>
                         </tr>
                     </thead>
@@ -638,7 +654,7 @@
                                     <td>
                                         <input type="number" step="0.01"
                                                name="CustomerBrandEditList[@i].TradeSecurityAmount"
-                                               value="@item.TradeSecurityAmount" class="form-control" disabled />
+                                               value="@item.TradeSecurityAmount?.ToString("0.00")" class="form-control text-end" disabled />
                                     </td>
 
                                     <td>
@@ -723,9 +739,25 @@
                         </div>
                     </div>
 
+                    <div class="row mt-2">
+                        <label class="col-12 col-sm-4 col-form-label">Currency</label>
+                        <div class="col-12 col-sm-8">
+                            <select asp-for="CurrencyCode"
+                                    asp-items="@(new SelectList(Model.CustomerDropDownModel.Currencies, "Code", "Name"))"
+                                    class="form-select" disabled>
+                                <option value="">--Select--</option>
+                            </select>
+                            <span asp-validation-for="CurrencyCode" class="text-danger"></span>
+                        </div>
+                    </div>
 
 
 
+                   
+                </div>
+
+                <!-- Column 3 -->
+                <div class="col-4">
 
                     <div class="row mt-2">
                         <label class="col-12 col-sm-4 col-form-label">E_INV Email<span class="required-star">*</span></label>
@@ -742,22 +774,6 @@
                             <span asp-validation-for="EInvPhoneNo" class="text-danger"></span>
                         </div>
                     </div>
-                </div>
-
-                <!-- Column 3 -->
-                <div class="col-4">
-                    <div class="row mt-2">
-                        <label class="col-12 col-sm-4 col-form-label">Currency</label>
-                        <div class="col-12 col-sm-8">
-                            <select asp-for="CurrencyCode"
-                                    asp-items="@(new SelectList(Model.CustomerDropDownModel.Currencies, "Code", "Name"))"
-                                    class="form-select" disabled>
-                                <option value="">--Select--</option>
-                            </select>
-                            <span asp-validation-for="CurrencyCode" class="text-danger"></span>
-                        </div>
-                    </div>
-
 
                 </div>
 

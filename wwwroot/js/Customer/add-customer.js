@@ -827,6 +827,7 @@
         handleCurrency();
         handleCustomerPostingGroup();
         handleGenBusPostingGroup();
+        handlePriceListCode();
     });
 
     $(document).on('input', '.trade-security-amount', function () {
@@ -843,13 +844,19 @@
         }
     });
 
+    $("#CustomerType").change(function () {
 
+        // Clear all rows
+        $("#brandTable tbody").empty();
+
+    });
 
     // Page load par pan run karvu
     handleCommission();
 
 
-    $('#ShippingAddressType').val('0');
+    $('#ShippingAddressType').val('1');
+    $('#ApplicationMethod').val('1');
 });
 
 
@@ -859,11 +866,19 @@ function addBrandRow() {
 
 
     var divisionId = $("#Division").val();
+    var customerType = $("#CustomerType").val();
 
     // Division selected check
     if (!divisionId) {
 
         showToast("Please select Division first.", "danger", 4000);
+        return;
+    }
+
+    // Customer Type selected check
+    if (!customerType) {
+
+        showToast("Please select Customer Type.", "danger", 4000);
         return;
     }
 
@@ -908,9 +923,15 @@ function createBrandRow(data) {
         brandOptions += `<option value="${item.code}">${item.name}</option>`;
     });
 
+    var customerType = $("#CustomerType").val();
+
     // Customer Category
     data.customerCategoryList.forEach(function (item) {
-        categoryOptions += `<option value="${item.code}">${item.name}</option>`;
+        var typePrefix = item.code.split('.')[0]; // 1 / 2 / 3
+
+        if (typePrefix === customerType) {
+            categoryOptions += `<option value="${item.code}">${item.name}</option>`;
+        }
     });
 
     // Discount Group
@@ -1404,5 +1425,32 @@ function handleGenBusPostingGroup() {
     } else {
         genBusPostingGroup.val("EXPORT");
         genBusPostingGroup.prop("disabled", true);
+    }
+}
+
+function handlePriceListCode() {
+    
+    var country = $('#CountryCode').val();
+    var division = $('#Division option:selected').text();
+    var priceListCode = $('#PriceListCode');
+
+    if (!country || !division) return;
+
+    // MOSAIC
+    if (division === "MOSAIC") {
+        if (country === "IN") {
+            priceListCode.val("CPL-INR");
+        } else {
+            priceListCode.val("CPL-USD");
+        }
+    }
+
+    // TILE
+    else if (division === "TILE") {
+        if (country === "IN") {
+            priceListCode.val("TD-CPL-INR");
+        } else {
+            priceListCode.val("TD-CPL-USD");
+        }
     }
 }

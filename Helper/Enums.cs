@@ -10,7 +10,6 @@ namespace ERPAPP.Helper
 
         public enum BusinessCategory
         {
-            //None = 0,
             MSMEMicro = 1,
             MSMESmall = 2,
             MSMEMedium = 3,
@@ -25,7 +24,6 @@ namespace ERPAPP.Helper
 
         public enum DealerClassification
         {
-            //None = 0,
             A = 1,
             B = 2,
             C = 3,
@@ -34,7 +32,6 @@ namespace ERPAPP.Helper
 
         public enum CustomerType
         {
-            //None = 0,
             Channel = 1,
             InstitutionalClient = 2,
             EndClient = 3
@@ -42,7 +39,6 @@ namespace ERPAPP.Helper
 
         public enum CommissionType
         {
-            //None = 0,
             Differential = 1,
             PercentOfNetRealization = 2,
             QtyPerUOM = 3
@@ -50,7 +46,6 @@ namespace ERPAPP.Helper
 
         public enum GSTCustomerType
         {
-            //None = 0,
             Registered = 1,
             Unregistered = 2,
             Export = 3,
@@ -62,14 +57,13 @@ namespace ERPAPP.Helper
 
         public enum GSTRegistrationType
         {
-            GSTIN = 1,
-            UID = 2,
-            GID = 3
+            GSTIN = 0,
+            UID = 1,
+            GID = 2
         }
 
         public enum Shipping_To_GST_Customer_Type
         {
-            //None = 0,
             Registered = 1,
             Unregistered = 2,
             Export = 3,
@@ -82,10 +76,10 @@ namespace ERPAPP.Helper
         public enum ShippingAddressType
         {
             [Display(Name = "Shipping Address")]
-            ShippingAddress = 0,
+            ShippingAddress = 1,
 
             [Display(Name = "Document Forwarding Address")]
-            DocumentForwardingAddress = 1
+            DocumentForwardingAddress = 2
         }
     }
 }
