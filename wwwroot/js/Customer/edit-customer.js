@@ -1,5 +1,24 @@
 ﻿$(document).ready(function () {
 
+    $(document).on("focus", ".dlr-datepicker", function () {
+
+        if (!$(this).hasClass("hasDatepicker")) {
+
+            $(this).datepicker({
+                dateFormat: "dd/mm/y",
+                changeMonth: true,
+                changeYear: true,
+
+                onSelect: function (dateText) {
+
+                    $(this).val(dateText);
+                }
+
+            });
+
+        }
+
+    });
 
     $(document).on("change", ".brand", function () {
         
@@ -303,7 +322,7 @@ function createBrandRow(data) {
 <td>
     <input name="CustomerList[${rowCount}].TradeSecurityAmount"
            type="number"
-           class="form-control form-control-sm text-end trade-security-amount" value="0"/>
+           class="form-control form-control-sm text-end trade-security-amount" value="0.00" disabled/>
 </td>
 
 <td class="text-center">

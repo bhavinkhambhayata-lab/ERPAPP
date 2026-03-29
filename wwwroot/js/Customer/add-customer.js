@@ -851,6 +851,31 @@
 
     });
 
+    $("#sameAsContact").change(function () {
+        if ($(this).is(":checked")) {
+
+            // Email
+            let email = $("#Email").val();
+            if (email) {
+                email = email.split(',')[0].trim();
+            }
+
+            // Mobile
+            let mobile = $("#MobileNo").val();
+            if (mobile) {
+                mobile = mobile.split(',')[0].trim();
+            }
+
+            $("#EInvEmail").val(email);
+            $("#EInvPhoneNo").val(mobile);
+
+        } else {
+
+            $("#EInvEmail").val('');
+            $("#EInvPhoneNo").val('');
+        }
+    });
+
     // Page load par pan run karvu
     handleCommission();
 
@@ -1027,7 +1052,7 @@ function createBrandRow(data) {
 <td>
     <input name="CustomerList[${rowCount}].TradeSecurityAmount"
            type="number"
-           class="form-control form-control-sm text-end trade-security-amount" value="0" max="0" />
+           class="form-control form-control-sm text-end trade-security-amount" value="0.00" max="0" disabled />
 </td>
 
 <td class="text-center">

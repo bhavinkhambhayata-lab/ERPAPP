@@ -86,7 +86,7 @@ namespace ERPAPP.Models
         public string? PhoneNo { get; set; }
 
         [Required(ErrorMessage = "Email is required")]
-        [EmailAddress(ErrorMessage = "Invalid email address")]
+        //[EmailAddress(ErrorMessage = "Invalid email address")]
         [StringLength(80)]
         public string Email { get; set; } = string.Empty;
 
@@ -721,7 +721,7 @@ namespace ERPAPP.Models
         public string? PhoneNo { get; set; }
 
         [Required(ErrorMessage = "Email is required")]
-        [EmailAddress(ErrorMessage = "Invalid email address")]
+        //[EmailAddress(ErrorMessage = "Invalid email address")]
         [StringLength(80)]
         public string Email { get; set; } = string.Empty;
 
