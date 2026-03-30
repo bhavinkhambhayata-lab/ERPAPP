@@ -132,6 +132,14 @@
                 <!-- Column 1 -->
                 <div class="col-4">
 
+                    <!-- Customer Code -->
+                    <div class="row mt-2">
+                        <label class="col-12 col-sm-4 col-form-label">Customer Code</label>
+                        <div class="col-12 col-sm-8">
+                            <input asp-for="CustomerCode" class="form-control" disabled />
+                        </div>
+                    </div>
+
                     <!-- Division -->
                     <div class="row mt-2">
                         <label class="col-12 col-sm-4 col-form-label">Division<span class="required-star">*</span></label>
@@ -578,10 +586,11 @@
                             <th>Customer Category Code<span class="required-star">*</span></th>
                            
                             <th>Customer Discount Group<span class="required-star">*</span></th>
-                            <th>Dealer Classification</th>
+                           
                             <th>Sales Person Code<span class="required-star">*</span></th>
                             <th>Allocation</th>
                             <th>HO Sales Person<span class="required-star">*</span></th>
+                            <th>DLR Classification</th>
                             <th>DLR Appointment Date</th>
                             <th>DLR Termination Date</th>
                             <th>TSD Amount</th>
@@ -617,10 +626,7 @@
                                                value="@item.CustomerDiscountGroup" class="form-control" disabled />
                                     </td>
 
-                                    <td>
-                                        <input type="text" name="CustomerBrandEditList[@i].DealerClassification"
-                                               value="@item.DealerClassification" class="form-control" disabled />
-                                    </td>
+                                   
 
                                     <td>
                                         <input type="text" name="CustomerBrandEditList[@i].SalesPersonCode"
@@ -635,6 +641,11 @@
                                     <td>
                                         <input type="text" name="CustomerBrandEditList[@i].HOSalesPerson"
                                                value="@item.HOSalesPerson" class="form-control" disabled />
+                                    </td>
+
+                                    <td>
+                                        <input type="text" name="CustomerBrandEditList[@i].DealerClassification"
+                                               value="@item.DealerClassification" class="form-control" disabled />
                                     </td>
 
                                     <td>

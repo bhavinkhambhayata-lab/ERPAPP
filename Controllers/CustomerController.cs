@@ -176,6 +176,11 @@ namespace ERPAPP.Controllers
                 {
                     ModelState.AddModelError("GSTRegistrationNo", "Either GST No or ARN is mandatory");
                 }
+
+                if (!string.IsNullOrWhiteSpace(model.GSTRegistrationNo) && string.IsNullOrWhiteSpace(model.PANNo))
+                {
+                    ModelState.AddModelError("PANNo", "PAN Number is mandatory when GST Registration Number is provided.");
+                }
             }
 
             // Registered specific rule
@@ -461,6 +466,23 @@ namespace ERPAPP.Controllers
                 {
                     return Json(new { success = false, message = "No new brand added (already exists)!" });
                 }
+            }
+            catch (Exception ex)
+            {
+                return Json(new { success = false, message = ex.Message });
+            }
+        }
+
+
+        [HttpGet]
+        public async Task<IActionResult> CheckCustomerGSTRegistrationAlreadyExists(string gstRegistrationNo)
+        {
+            try
+            {
+                var isExists = await _customerRepository
+                    .CheckCustomerGSTRegistrationAlreadyExists(gstRegistrationNo);
+
+                return Json(new { success = true, data = isExists });
             }
             catch (Exception ex)
             {

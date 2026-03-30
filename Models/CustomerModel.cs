@@ -644,8 +644,7 @@ namespace ERPAPP.Models
         public int PortalRowId { get; set; }
         public int DisplayNo { get; set; }
 
-
-
+        public string? CustomerCode { get; set; }
 
         // ================= GENERAL DETAILS =================
 

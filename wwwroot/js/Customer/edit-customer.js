@@ -278,13 +278,7 @@ function createBrandRow(data) {
     </select>
 </td>
 
-<td>
 
- <select name="CustomerList[${rowCount}].DealerClassification"
-            class="form-control form-control-sm dealerClassfication">
-        ${dealerClassificationOptions}
-    </select>
-</td>
 
 <td>
     <select name="CustomerList[${rowCount}].SalesPersonCode"
@@ -304,6 +298,14 @@ function createBrandRow(data) {
     <select name="CustomerList[${rowCount}].HOSalesPerson"
             class="form-control form-control-sm ho">
         ${hoSalesPersonOptions}
+    </select>
+</td>
+
+<td>
+
+ <select name="CustomerList[${rowCount}].DealerClassification"
+            class="form-control form-control-sm dealerClassfication">
+        ${dealerClassificationOptions}
     </select>
 </td>
 

@@ -1302,6 +1302,7 @@ namespace ERPAPP.Repository
                 // ===== GENERAL =====
                 model.Name = row["Name"]?.ToString();
                 model.MasterCode = row["MasterCode"]?.ToString();
+                model.CustomerCode = row["BillToCustomer"]?.ToString();
                 model.Address = row["Address"]?.ToString();
                 model.Address2 = row["Address2"]?.ToString();
                 model.CityCode = row["City"]?.ToString();
@@ -1958,6 +1959,28 @@ namespace ERPAPP.Repository
             catch(Exception e)
             {
                 return false;
+            }
+        }
+
+        public Task<bool> CheckCustomerGSTRegistrationAlreadyExists(string GstRegistrationNo)
+        {
+            try
+            {
+                SqlParameter[] param = new SqlParameter[]
+                {
+                    new SqlParameter("@GSTRegistrationNo", GstRegistrationNo)
+                };
+
+                var result = _db.ExecuteScalar(
+                    "Customer_CheckGSTRegistrationNoAlreadyExist",
+                    param
+                );
+
+                return Task.FromResult(Convert.ToInt32(result) == 1);
+            }
+            catch (Exception)
+            {
+                return Task.FromResult(false);
             }
         }
     }

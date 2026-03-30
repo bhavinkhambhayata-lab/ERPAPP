@@ -445,6 +445,15 @@
 
         });
 
+        var gstNo = $("#GSTRegistrationNo").val();
+
+        if (checkCustomerGSTExists(gstNo)) {
+
+            showToast("GST already exists!", "danger", 4000);
+            return;
+        }
+
+
         $.ajax({
             url: '/Customer/SaveCustomerMaster',
             type: 'POST',
@@ -1008,13 +1017,7 @@ function createBrandRow(data) {
     </select>
 </td>
 
-<td>
 
- <select name="CustomerList[${rowCount}].DealerClassification"
-            class="form-control form-control-sm dealerClassfication">
-        ${dealerClassificationOptions}
-    </select>
-</td>
 
 <td>
     <select name="CustomerList[${rowCount}].SalesPersonCode"
@@ -1034,6 +1037,14 @@ function createBrandRow(data) {
     <select name="CustomerList[${rowCount}].HOSalesPerson"
             class="form-control form-control-sm ho">
         ${hoSalesPersonOptions}
+    </select>
+</td>
+
+<td>
+
+ <select name="CustomerList[${rowCount}].DealerClassification"
+            class="form-control form-control-sm dealerClassfication">
+        ${dealerClassificationOptions}
     </select>
 </td>
 
@@ -1478,4 +1489,23 @@ function handlePriceListCode() {
             priceListCode.val("TD-CPL-USD");
         }
     }
+}
+function checkCustomerGSTExists(gstNo) {
+
+    var isExists = false;
+
+    $.ajax({
+        url: '/Customer/CheckCustomerGSTRegistrationAlreadyExists',
+        type: 'GET',
+        data: { gstRegistrationNo: gstNo },
+        async: false, // ⚠️ important (sync call)
+        success: function (res) {
+            isExists = res.data; // true / false
+        },
+        error: function () {
+            isExists = false;
+        }
+    });
+
+    return isExists;
 }

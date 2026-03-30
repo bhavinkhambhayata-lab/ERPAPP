@@ -36,5 +36,7 @@ namespace ERPAPP.Interfaces
 
         Task<bool> CheckCustomerEntryAlreadyExists(string masterCode, string dimension);
 
+        Task<bool> CheckCustomerGSTRegistrationAlreadyExists(string GstRegistrationNo);
+
     }
 }
