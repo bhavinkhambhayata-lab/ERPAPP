@@ -234,7 +234,7 @@
         var search = $('#txtSearch').val().trim();
 
         $.ajax({
-            url: '/Customer/GetCustomerList',
+            url: baseURL +'Customer/GetCustomerList',
             type: 'GET',
             data: { searchCustomer: search },
             dataType: 'json',

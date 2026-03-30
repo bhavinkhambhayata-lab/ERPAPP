@@ -14,7 +14,7 @@
 
             <!-- 🔥 TABS -->
             <ul class="nav nav-tabs">
-                
+
                 <li class="nav-item">
                     <button class="nav-link active" id="detailsBtn" data-bs-toggle="tab" data-bs-target="#detailsTab">
                         Details
@@ -49,7 +49,7 @@
             if(editCustomerNo!='')
             {
                  $.ajax({
-                            url: '/Customer/GetCustomerEditData',
+                            url: baseURL + 'Customer/GetCustomerEditData',
                             type: 'GET',
                             data: { customerNo: editCustomerNo },
                             success: function (response) {
@@ -68,14 +68,14 @@
 
         function loadList() {
             editCustomerNo='';
-            $.get('/Customer/CustomerList', function (data) {
+            $.get(baseURL +'Customer/CustomerList', function (data) {
                 $("#tabContent").html(data);
             });
         }
 
         function loadDetails() {
             editCustomerNo='';
-            $.get('/Customer/AddEditCustomer', function (data) {
+            $.get(baseURL +'Customer/AddEditCustomer', function (data) {
                 $("#tabContent").html(data);
             });
         }

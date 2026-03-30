@@ -18,7 +18,7 @@
         }
 
         $.ajax({
-            url: '/Customer/SearchCustomer',
+            url: baseURL + 'Customer/SearchCustomer',
             type: 'GET',
             data: { searchText: searchText },
             success: function (data) {
@@ -93,7 +93,7 @@
 
         // 🔥 Call API
         $.ajax({
-            url: "/Customer/GetCustomerMasterData",
+            url: baseURL + "Customer/GetCustomerMasterData",
             type: "GET",
             data: { masterCode: masterCode, division: divisionText },
             success: function (response) {
@@ -191,7 +191,7 @@
 
         source: function (request, response) {
 
-            $.get("/Customer/GetCityList",
+            $.get(baseURL + "Customer/GetCityList",
                 { city: request.term },
                 function (data) {
 
@@ -220,7 +220,7 @@
             $("#Zone").val('');
 
             // CITY DETAIL
-            $.get("/Customer/GetCityDetail",
+            $.get(baseURL + "Customer/GetCityDetail",
                 { city: ui.item.value },
                 function (data) {
                     console.log(data)
@@ -233,7 +233,7 @@
                 });
 
             // POSTCODE LIST
-            $.get("/Customer/GetPostCodeList",
+            $.get(baseURL + "Customer/GetPostCodeList",
                 { city: ui.item.value },
                 function (data) {
 
@@ -265,7 +265,7 @@
 
         if (!postcode) return;
 
-        $.get("/Customer/GetPostCodeDetail",
+        $.get(baseURL + "Customer/GetPostCodeDetail",
             { postcode: postcode },
             function (data) {
 
@@ -455,7 +455,7 @@
 
 
         $.ajax({
-            url: '/Customer/SaveCustomerMaster',
+            url: baseURL + 'Customer/SaveCustomerMaster',
             type: 'POST',
             data: formData,
             processData: false,
@@ -535,7 +535,7 @@
 
         // 🔹 Location Call
         $.ajax({
-            url: '/Customer/GetLocationListByDivisionCode',
+            url: baseURL + 'Customer/GetLocationListByDivisionCode',
             type: 'GET',
             data: { DivisionCode: divisionCode },
             success: function (data) {
@@ -574,7 +574,7 @@
         var divisionStr = $(this).find("option:selected").text();
 
         $.ajax({
-            url: '/Customer/GetCustomerDivisionWiseDropDown',
+            url: baseURL + 'Customer/GetCustomerDivisionWiseDropDown',
             type: 'GET',
             data: { division: divisionStr },
             success: function (res) {
@@ -727,7 +727,7 @@
 
         source: function (request, response) {
 
-            $.get("/Customer/GetCityList",
+            $.get(baseURL + "Customer/GetCityList",
                 { city: request.term },
                 function (data) {
 
@@ -754,7 +754,7 @@
             $("#ShippingPostalCode").empty().append('<option value="">--Select--</option>');
 
             // CITY DETAIL
-            $.get("/Customer/GetCityDetail",
+            $.get(baseURL + "Customer/GetCityDetail",
                 { city: ui.item.value },
                 function (data) {
                     console.log(data)
@@ -767,7 +767,7 @@
                 });
 
             // POSTCODE LIST
-            $.get("/Customer/GetPostCodeList",
+            $.get(baseURL + "Customer/GetPostCodeList",
                 { city: ui.item.value },
                 function (data) {
 
@@ -917,7 +917,7 @@ function addBrandRow() {
     }
 
     $.ajax({
-        url: '/Customer/GetBrandRowDropdown',
+        url: baseURL + 'Customer/GetBrandRowDropdown',
         type: 'GET',
         data: { divisionRowId: divisionId },
         success: function (data) {
@@ -1156,7 +1156,7 @@ function GetCustomerDataWithPortalRowId(value) {
     $("#PortalRowIdError").text("");
 
     $.ajax({
-        url: '/Customer/GetCustomerDataWithPortalRowId',
+        url: baseURL + 'Customer/GetCustomerDataWithPortalRowId',
         type: 'GET',
         data: { portalRowId: portalRowId },
         success: function (res) {
@@ -1238,7 +1238,7 @@ function loadCustomerAddressData(city,postcode) {
     $("#Zone").val('');
 
     // CITY DETAIL
-    $.get("/Customer/GetCityDetail",
+    $.get(baseURL + "Customer/GetCityDetail",
         { city: city },
         function (data) {
 
@@ -1251,7 +1251,7 @@ function loadCustomerAddressData(city,postcode) {
         });
 
     // POSTCODE LIST
-    $.get("/Customer/GetPostCodeList",
+    $.get(baseURL + "Customer/GetPostCodeList",
         { city: city },
         function (data) {
 
@@ -1274,7 +1274,7 @@ function loadCustomerAddressData(city,postcode) {
 function GetCustomerDataWithMasterCode(masterCode) {
 
     $.ajax({
-        url: '/Customer/GetCustomerDataWithMasterCode',
+        url: baseURL + 'Customer/GetCustomerDataWithMasterCode',
         type: 'GET',
         data: { masterCode: masterCode },
 
@@ -1342,7 +1342,7 @@ function loadCustomerShippingAddressData(city) {
 
 
     // CITY DETAIL
-    $.get("/Customer/GetCityDetail",
+    $.get(baseURL + "Customer/GetCityDetail",
         { city: city },
         function (data) {
 
@@ -1355,7 +1355,7 @@ function loadCustomerShippingAddressData(city) {
         });
 
     // POSTCODE LIST
-    $.get("/Customer/GetPostCodeList",
+    $.get(baseURL + "Customer/GetPostCodeList",
         { city: city },
         function (data) {
 
@@ -1495,7 +1495,7 @@ function checkCustomerGSTExists(gstNo) {
     var isExists = false;
 
     $.ajax({
-        url: '/Customer/CheckCustomerGSTRegistrationAlreadyExists',
+        url: baseURL + 'Customer/CheckCustomerGSTRegistrationAlreadyExists',
         type: 'GET',
         data: { gstRegistrationNo: gstNo },
         async: false, // ⚠️ important (sync call)

@@ -116,7 +116,7 @@
 
 
         $.ajax({
-            url: '/Customer/EditCustomerDetailsBrandWiseDataOnly',
+            url: baseURL + 'Customer/EditCustomerDetailsBrandWiseDataOnly',
             type: 'POST',
             contentType: 'application/json',
             data: JSON.stringify(list),
@@ -178,7 +178,7 @@ function addBrandRow() {
     }
 
     $.ajax({
-        url: '/Customer/GetBrandRowDropdown',
+        url: baseURL + 'Customer/GetBrandRowDropdown',
         type: 'GET',
         data: { divisionRowId: divisionId },
         success: function (data) {

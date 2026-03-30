@@ -54,13 +54,13 @@
         });
 
         function loadList() {
-            $.get('/Vendor/VendorList', function (data) {
+            $.get(baseURL +'Vendor/VendorList', function (data) {
                 $("#tabContent").html(data);
             });
         }
 
         function loadDetails() {
-            $.get('/Vendor/VendorDetails', function (data) {
+            $.get(baseURL +'Vendor/VendorDetails', function (data) {
                 $("#tabContent").html(data);
             });
         }
