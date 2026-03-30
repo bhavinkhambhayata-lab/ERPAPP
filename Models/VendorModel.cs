@@ -133,6 +133,19 @@ namespace ERPAPP.Models
         public class VendorPaymentMethodModel : BaseDropDown { }
         public class VendorGenBusPostingGroupModel : BaseDropDown { }
         public class VendorCountryModel : BaseDropDown { }
+        public class VendorTypeModel : BaseDropDown { }
+        public class VendorGSTVendorType : BaseDropDown { }
+        public class VendorGSTReturnFrequency : BaseDropDown { }
+        public class VendorLocation : BaseDropDown { }
+
+        public class VendorType: BaseDropDown { }
+
+        public class VendorPaymentTerms : BaseDropDown { }
+        public class VendorPaymentMethod : BaseDropDown { }
+
+        public class Vendor : BaseDropDown { }
+
+
 
         public class VendorDropDownModel
         {

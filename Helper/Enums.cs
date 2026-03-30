@@ -81,5 +81,56 @@ namespace ERPAPP.Helper
             [Display(Name = "Document Forwarding Address")]
             DocumentForwardingAddress = 2
         }
+
+        //Vendor Module
+
+        public enum VendorGSTReturnFrequency
+        {
+            Quarterly = 1,
+            Monthly = 2
+        }
+
+        public enum VendorType
+        {
+            Manufacturer = 1,
+            FirstStageDealer = 2,
+            SecondStageDealer = 3,
+            Importer = 4
+        }
+
+        public enum GSTVendorType
+        {
+            [Display(Name = "Registred")]
+            Registred = 1,
+
+            [Display(Name = "Composite")]
+            Composite = 2,
+
+            [Display(Name = "Unregistred")]
+            Unregistred = 3,
+
+            [Display(Name = "Import")]
+            Import = 4,
+
+            [Display(Name = "Exempted")]
+            Exempted = 5,
+
+            [Display(Name = "SEZ")]
+            SEZ = 6
+        }
+
+        public enum VendorApplicationMethod
+        {
+            Manual = 1,
+            ApplyToOldest = 2
+        }
+        public enum VendorBusinessCategory
+        {
+            MSMEMicro = 1,
+            MSMESmall = 2,
+            MSMEMedium = 3,
+            Large = 4
+        }
+
     }
 }

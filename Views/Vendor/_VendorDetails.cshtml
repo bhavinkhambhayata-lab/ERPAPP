@@ -142,7 +142,11 @@
                     <div class="row mt-2">
                         <label class="col-4 col-form-label">GST Not To Hold</label>
                         <div class="col-8 pt-2">
-                            <input type="checkbox" asp-for="GSTNotToHold" />
+                            <select asp-for="GSTNotToHold" class="form-select">
+                                <option value="">--Select--</option>
+                                <option value="true">Yes</option>
+                                <option value="false">No</option>
+                            </select>
                         </div>
                     </div>
 
@@ -283,9 +287,7 @@
                             <input asp-for="PaymentTerms" class="form-control" />
                         </div>
                     </div>
-                </div>
 
-                <div class="col-4">
                     <div class="row mt-2">
                         <label class="col-4 col-form-label">Payment Method</label>
                         <div class="col-8">
@@ -293,10 +295,72 @@
                         </div>
                     </div>
 
+                    
+                </div>
+
+                <div class="col-4">
                     <div class="row mt-2">
                         <label class="col-4 col-form-label">Purchaser Code</label>
                         <div class="col-8">
                             <input asp-for="PurchaserCode" class="form-control" />
+                        </div>
+                    </div>
+                    <div class="row mt-2">
+                        <label class="col-4 col-form-label">GTA</label>
+                        <div class="col-8">
+                            <select asp-for="GTA" class="form-select">
+                                <option value="">--Select--</option>
+                                <option value="true">Yes</option>
+                                <option value="false">No</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="row mt-2">
+                        <label class="col-4 col-form-label">Related Party</label>
+                        <div class="col-8">
+                            <select asp-for="RelatedParty" class="form-select">
+                                <option value="">--Select--</option>
+                                <option value="true">Yes</option>
+                                <option value="false">No</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    
+
+                </div>
+                <div class="col-4">
+                    <div class="row mt-2">
+                        <label class="col-4 col-form-label">Subcontractor</label>
+                        <div class="col-8">
+                            <select asp-for="Subcontractor" class="form-select">
+                                <option value="">--Select--</option>
+                                <option value="true">Yes</option>
+                                <option value="false">No</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="row mt-2">
+                        <label class="col-4 col-form-label">Tax Liable</label>
+                        <div class="col-8">
+                            <select asp-for="TaxLiable" class="form-select">
+                                <option value="">--Select--</option>
+                                <option value="true">Yes</option>
+                                <option value="false">No</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="row mt-2">
+                        <label class="col-4 col-form-label">Fixed Due Date</label>
+                        <div class="col-8">
+                            <select asp-for="FixedDueDate" class="form-select">
+                                <option value="">--Select--</option>
+                                <option value="true">Yes</option>
+                                <option value="false">No</option>
+                            </select>
                         </div>
                     </div>
                 </div>
@@ -385,59 +449,6 @@
             </div>
         </fieldset>
 
-        <!-- ================= NOD/NOC ================= -->
-        <fieldset>
-            <legend>NOD/NOC Details</legend>
-
-            <div class="row">
-
-                <div class="col-4">
-                    <div class="row mt-2">
-                        <label class="col-4 col-form-label">Access Code</label>
-                        <div class="col-8">
-                            <input asp-for="AccessCode" class="form-control" />
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-4">
-                    <div class="row mt-2">
-                        <label class="col-4 col-form-label">NOD/NOC</label>
-                        <div class="col-8">
-                            <input asp-for="NOCNOD" class="form-control" />
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-4">
-                    <div class="row mt-2">
-                        <label class="col-4 col-form-label">Concessional Code</label>
-                        <div class="col-8">
-                            <input asp-for="ConcessionalCode" class="form-control" />
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-4 mt-2">
-                    <div class="row">
-                        <label class="col-4 col-form-label">Threshold</label>
-                        <div class="col-8 pt-2">
-                            <input type="checkbox" asp-for="ThresholdOverlook" />
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-4 mt-2">
-                    <div class="row">
-                        <label class="col-4 col-form-label">Surcharge</label>
-                        <div class="col-8 pt-2">
-                            <input type="checkbox" asp-for="SurchargeOverlook" />
-                        </div>
-                    </div>
-                </div>
-
-            </div>
-        </fieldset>
 
         <!-- BUTTONS -->
         <div class="text-center mt-3">
