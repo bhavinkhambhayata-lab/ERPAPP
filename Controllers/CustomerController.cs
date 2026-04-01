@@ -309,11 +309,22 @@ namespace ERPAPP.Controllers
             {
                 var insertResult = await _customerRepository.InsertCustomer(model);
 
-                return Json(new
+                if (insertResult)
                 {
-                    success = true,
-                    message = "Customer saved successfully."
-                });
+                    return Json(new
+                    {
+                        success = true,
+                        message = "Customer saved successfully."
+                    });
+                }
+                else
+                {
+                    return Json(new
+                    {
+                        success = false,
+                        message = "something went wrong!."
+                    });
+                }
             }
             catch
             {
