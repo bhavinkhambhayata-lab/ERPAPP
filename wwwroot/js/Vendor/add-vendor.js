@@ -1,6 +1,18 @@
 ﻿$(document).ready(function () {
 
 
+    $("#EmailNotAvailable").change(function () {
+        debugger
+        if ($(this).is(":checked")) {
+            $("#Email").attr("required", true);
+            $("#emailStar").show();   // ⭐ show *
+        } else {
+            $("#Email").removeAttr("required");
+            $("#emailStar").hide();   // ❌ hide *
+        }
+
+    });
+
     //Empty city clears related fields
     $("#CityCode").on("input", function () {
 
@@ -19,7 +31,7 @@
 
         source: function (request, response) {
 
-            $.get(baseURL + "Customer/GetCityList",
+            $.get(baseURL + "Vendor/GetCityList",
                 { city: request.term },
                 function (data) {
 
@@ -46,10 +58,10 @@
             $("#PostCode").empty().append('<option value="">--Select--</option>');
 
             // CITY DETAIL
-            $.get(baseURL + "Customer/GetCityDetail",
+            $.get(baseURL + "Vendor/GetCityDetail",
                 { city: ui.item.value },
                 function (data) {
-                    console.log(data)
+                    
                     if (data) {
                         $("#CityCode").val(data.city);
                         $("#CountryCode").val(data.countryCode || '').trigger('change');;
@@ -59,7 +71,7 @@
                 });
 
             // POSTCODE LIST
-            $.get(baseURL + "Customer/GetPostCodeList",
+            $.get(baseURL + "Vendor/GetPostCodeList",
                 { city: ui.item.value },
                 function (data) {
 
@@ -83,7 +95,9 @@
 
     $('#CountryCode').on('change', function () {
 
-        handleCurrency();
+        handleVendorCurrency();
+        handleVendorPostingGroup();
+        handleVendorGenBusPostingGroup();
     });
 
     $("#GSTVendorType").change(function () {
@@ -107,7 +121,7 @@
     });
 
     $('#btnSaveVendorMaster').click(function () {
-
+        
         var form = $('#vendorForm');
 
         if (!form.valid()) return;
@@ -116,7 +130,23 @@
 
         // disabled fields
         formData.append("AggregateTurnover", $('#AggregateTurnover').val());
+        formData.append("StateCode", $('#StateCode').val());
+        formData.append("DisplayNo", $('#DisplayNo').text());
+        formData.append("MasterCode", $('#MasterCode').val());
+        formData.append("CurrencyCode", $('#CurrencyCode').val());
+        formData.append("VendorPostingGroup", $('#VendorPostingGroup').val());
+        formData.append("GenBusPostingGroup", $('#GenBusPostingGroup').val());
 
+        // 👉 Email + Checkbox validation
+        var vendorEmail = $('#Email').val().trim();
+        var isCheckedEmailNoAvailable = $('#EmailNotAvailable').is(':checked');
+
+        // ❌ Required when checkbox checked
+        if (isCheckedEmailNoAvailable && vendorEmail === "") {
+            $('[data-valmsg-for="Email"]').text("Email is required");
+            $('#Email').focus();
+            return;
+        }
 
         $.ajax({
             url: baseURL + 'Vendor/SaveVendorMaster',
@@ -167,7 +197,8 @@
         });
     });
 });
-function handleCurrency() {
+function handleVendorCurrency() {
+    
     var country = $('#CountryCode').val();
     var currency = $('#CurrencyCode');
 
@@ -183,5 +214,46 @@ function handleCurrency() {
         currency.prop("disabled", true);
     } else {
         currency.prop("disabled", false);
+    }
+}
+function handleVendorPostingGroup() {
+
+    var country = $('#CountryCode').val();
+    var postingGroup = $('#VendorPostingGroup');
+
+    if (!country) {
+        // ❌ Reset
+        postingGroup.val("");
+        postingGroup.prop("disabled", false);
+        return;
+    }
+
+    if (country === "IN") {
+        postingGroup.val("DOMESTIC");
+        postingGroup.prop("disabled", true);
+    } else {
+        postingGroup.val("FOREIGN");
+        postingGroup.prop("disabled", true);
+    }
+}
+
+function handleVendorGenBusPostingGroup() {
+
+    var country = $('#CountryCode').val();
+    var genBusPostingGroup = $('#GenBusPostingGroup');
+
+    if (!country) {
+        // ❌ Reset
+        genBusPostingGroup.val("");
+        genBusPostingGroup.prop("disabled", false);
+        return;
+    }
+
+    if (country === "IN") {
+        genBusPostingGroup.val("DOMESTIC");
+        genBusPostingGroup.prop("disabled", true);
+    } else {
+        genBusPostingGroup.val("EXPORT");
+        genBusPostingGroup.prop("disabled", true);
     }
 }

@@ -241,7 +241,7 @@ namespace ERPAPP.Repository
 
             new SqlParameter("@Name", model.Name ?? ""),
             new SqlParameter("@MasterCode", model.MasterCode ?? ""),
-            new SqlParameter("@VendorCode", model.VendorCode ?? ""),
+         
 
             new SqlParameter("@Address", model.Address ?? ""),
             new SqlParameter("@Address2", model.Address2 ?? ""),
@@ -255,7 +255,7 @@ namespace ERPAPP.Repository
 
             new SqlParameter("@Range", model.Range ?? ""),
             new SqlParameter("@Collectorate", model.Collectorate ?? ""),
-            new SqlParameter("@GTA", model.GTA ?? ""),
+         
             new SqlParameter("@VendorLocation", model.VendorLocation ?? ""),
 
             new SqlParameter("@GSTNotToHold", model.GSTNotToHold),
@@ -282,8 +282,8 @@ namespace ERPAPP.Repository
 
             // ================= GST =================
 
-            new SqlParameter("@GSTVendorType", model.GSTVendorType ?? "0"),
-            new SqlParameter("@GSTReturnFrequency", model.GSTReturnFrequency ?? "0"),
+            new SqlParameter("@GSTVendorType", model.GSTVendorType),
+            new SqlParameter("@GSTReturnFrequency", model.GSTReturnFrequency),
             new SqlParameter("@GSTRegNo", model.GSTRegNo ?? ""),
             new SqlParameter("@ARN", model.ARN ?? ""),
 
@@ -296,9 +296,9 @@ namespace ERPAPP.Repository
 
             // ================= BUSINESS =================
 
-            new SqlParameter("@VendorType", model.VendorType ?? "0"),
+            new SqlParameter("@VendorType", model.VendorType),
             new SqlParameter("@VendorCategory", model.VendorCategory ?? ""),
-            new SqlParameter("@BusinessCategory", model.BusinessCategory ?? "0"),
+            new SqlParameter("@BusinessCategory", model.BusinessCategory),
 
             new SqlParameter("@RelatedParty", model.RelatedParty ?? false),
             new SqlParameter("@Subcontractor", model.Subcontractor ?? false),
@@ -315,8 +315,8 @@ namespace ERPAPP.Repository
 
             // ================= OTHER =================
 
-            new SqlParameter("@ApplicationMethod", model.ApplicationMethod ?? "0"),
-            new SqlParameter("@TaxLiable", model.TaxLiable ?? "0"),
+            new SqlParameter("@ApplicationMethod", model.ApplicationMethod),
+            new SqlParameter("@TaxLiable", model.TaxLiable),
             new SqlParameter("@Location", model.Location ?? ""),
 
             // ================= MSME =================
@@ -355,5 +355,120 @@ namespace ERPAPP.Repository
                 return false;
             }
         }
+
+
+        #region Address Related Methods
+
+        public async Task<bool> CheckStateGSTMatch(string stateCode, string gstRegistrationNo)
+        {
+            SqlParameter[] parameters = new SqlParameter[]
+            {
+                new SqlParameter("@StateCode", stateCode),
+                new SqlParameter("@GSTRegistrationNo", gstRegistrationNo)
+            };
+
+            DataTable dt = _db.GetDataTable("Customer_StateGSTMatchCheck", parameters);
+
+            if (dt.Rows.Count > 0)
+            {
+                return Convert.ToBoolean(dt.Rows[0]["IsValid"]);
+            }
+
+            return false;
+        }
+        public List<AddressDropdownModel> GetCityList(string city)
+        {
+            SqlParameter[] parameters = new SqlParameter[]
+           {
+                new SqlParameter("@Type", "City"),
+                new SqlParameter("@City", (object?)city ?? DBNull.Value)
+           };
+
+            DataTable dt = _db.GetDataTable("GetCustomer_Address", parameters);
+
+            List<AddressDropdownModel> list = new List<AddressDropdownModel>();
+
+            foreach (DataRow row in dt.Rows)
+            {
+                list.Add(new AddressDropdownModel
+                {
+                    Code = row["Code"].ToString(),
+                    Name = row["Name"].ToString()
+                });
+            }
+
+            return list;
+        }
+        public AddressCityDetailModel GetCityDetail(string city)
+        {
+            SqlParameter[] parameters =
+            {
+                    new SqlParameter("@Type","CityDetails"),
+                    new SqlParameter("@City",(object?)city ?? DBNull.Value)
+            };
+
+            DataTable dt = _db.GetDataTable("GetCustomer_Address", parameters);
+
+            AddressCityDetailModel model = new();
+
+            if (dt.Rows.Count > 0)
+            {
+                DataRow row = dt.Rows[0];
+
+                model.CountryCode = row["CountryCode"].ToString();
+                model.StateCode = row["StateCode"].ToString();
+                model.City = row["City"].ToString();
+            }
+
+            return model;
+        }
+        public List<AddressPostCodeModel> GetPostCodeList(string city)
+        {
+            SqlParameter[] parameters =
+            {
+                new SqlParameter("@Type","PostCode"),
+                new SqlParameter("@City",(object?)city ?? DBNull.Value)
+            };
+
+            DataTable dt = _db.GetDataTable("GetCustomer_Address", parameters);
+
+            List<AddressPostCodeModel> list = new();
+
+            foreach (DataRow row in dt.Rows)
+            {
+                list.Add(new AddressPostCodeModel
+                {
+                    Code = row["Code"].ToString(),
+                    Name = row["Name"].ToString()
+                });
+            }
+
+            return list;
+        }
+        public AddressPostCodeDetailModel GetPostCodeDetail(string code)
+        {
+            SqlParameter[] parameters =
+            {
+                new SqlParameter("@Type","PostCodeDetails"),
+                new SqlParameter("@Code",(object?)code ?? DBNull.Value)
+            };
+
+            DataTable dt = _db.GetDataTable("GetCustomer_Address", parameters);
+
+            AddressPostCodeDetailModel model = new AddressPostCodeDetailModel();
+
+            if (dt.Rows.Count > 0)
+            {
+                DataRow row = dt.Rows[0];
+
+                model.PostCode = row["PostCode"]?.ToString();
+                model.Region = row["Region"]?.ToString();
+                model.Zone = row["Zone"]?.ToString();
+            }
+
+            return model;
+        }
+
+        #endregion
     }
 }
