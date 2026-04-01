@@ -1,6 +1,6 @@
 ﻿@model GetVendorAddData
 @using Microsoft.AspNetCore.Mvc.Rendering
-@using static ERPAPP.Models.VendorsModel
+
 
 @{
     ViewData["Title"] = "Vendor Details";
@@ -9,10 +9,20 @@
 <script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
 <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
 
+<script src="~/js/vendor/add-vendor.js"></script>
+
 <style>
     body {
         font-size: 13px;
         background: #f4f6f9;
+    }
+
+    .topbar {
+        background: #0d6efd;
+        color: #fff;
+        padding: 10px 20px;
+        font-size: 18px;
+        font-weight: 600;
     }
 
     fieldset {
@@ -26,22 +36,56 @@
     legend {
         font-size: 14px;
         font-weight: 600;
+        padding: 0 8px;
         color: #0d6efd;
+    }
+
+    .form-row {
+        /* display: flex; */
+        align-items: center;
+        margin-bottom: 6px;
+    }
+
+    .form-label-custom {
+        /* width: 45%; */
+        font-weight: 500;
+        padding-right: 6px;
+    }
+
+    .form-input-custom {
+        /* width: 55%; */
     }
 
     .form-control, .form-select {
         height: 30px;
         font-size: 13px;
+        padding: 3px 6px;
     }
 
-    .col-form-label {
-        font-weight: 500;
-        padding-top: 5px;
+    .action-buttons {
+        text-align: center;
+        padding: 20px 0;
+    }
+
+    .btn {
+        font-size: 13px;
+        padding: 6px 22px;
     }
 
     .required-star {
         color: red;
+        font-size: 13px;
     }
+
+    .vendor-textarea {
+        height: 60px;
+    }
+
+   
+
+   
+
+    
 </style>
 
 <form id="vendorForm" method="post">
@@ -80,10 +124,105 @@
                     <div class="row mt-2">
                         <label class="col-4 col-form-label">Address</label>
                         <div class="col-8">
-                            <textarea asp-for="Address" class="form-control"></textarea>
+                            <textarea asp-for="Address" class="form-control vendor-textarea"></textarea>
                         </div>
                     </div>
 
+                    <div class="row mt-2">
+                        <label class="col-4 col-form-label">Address 2</label>
+                        <div class="col-8">
+                            <textarea asp-for="Address2" class="form-control vendor-textarea"></textarea>
+                        </div>
+                    </div>
+
+
+
+                </div>
+
+                <!-- CENTER -->
+                <div class="col-4">
+
+                    <div class="row mt-2">
+                        <label class="col-4 col-form-label">City</label>
+                        <div class="col-8">
+                            <input type="text"
+                                   asp-for="CityCode"
+                                   class="form-control" />
+
+                            <input type="hidden"
+                                   asp-for="CityCode" />
+
+                            <span asp-validation-for="CityCode" class="text-danger"></span>
+                        </div>
+                    </div>
+
+                    <div class="row mt-2">
+                        <label class="col-4 col-form-label">Post Code</label>
+                        <div class="col-8">
+                            <select asp-for="PostCode" class="form-select">
+                                <option value="">--Select--</option>
+                            </select>
+                            <span asp-validation-for="PostCode" class="text-danger"></span>
+                        </div>
+                    </div>
+
+                    <div class="row mt-2">
+                        <label class="col-4 col-form-label">State</label>
+                        <div class="col-8">
+                            <input asp-for="StateCode"
+                                   type="text"
+                                   class="form-control"
+                                   placeholder="" disabled />
+
+                            <span asp-validation-for="StateCode" class="text-danger"></span>
+                        </div>
+                    </div>
+
+                    <div class="row mt-2">
+                        <label class="col-4 col-form-label">Country</label>
+                        <div class="col-8">
+                            <select asp-for="CountryCode"
+                                    asp-items="@(new SelectList(Model.DropDownData.Countries, "Code", "Name"))"
+                                    class="form-select">
+                                <option value="">--Select--</option>
+                            </select>
+
+                            <span asp-validation-for="CountryCode" class="text-danger"></span>
+                        </div>
+                    </div>
+
+                    <div class="row mt-2">
+                        <label class="col-4 col-form-label">Vendor Location</label>
+                        <div class="col-8">
+
+                            <select asp-for="VendorLocation"
+                                    asp-items="@(new SelectList(Model.DropDownData.VendorLocations, "Code", "Name"))"
+                                    class="form-select">
+                                <option value="">--Select--</option>
+                            </select>
+                            <span asp-validation-for="VendorLocation" class="text-danger"></span>
+
+                        </div>
+                    </div>
+
+
+
+                </div>
+
+                <!-- RIGHT -->
+                <div class="col-4">
+
+                    <div class="row mt-2">
+                        <label class="col-4 col-form-label">Aggregate Turnover</label>
+                        <div class="col-8">
+                            <select asp-for="AggregateTurnover"
+                                    asp-items="@(new SelectList(Model.DropDownData.VendorAggregateTurnover, "Code", "Name"))"
+                                    class="form-select" disabled>
+                                <option value="">--Select--</option>
+                            </select>
+                            <span asp-validation-for="AggregateTurnover" class="text-danger"></span>
+                        </div>
+                    </div>
                     <div class="row mt-2">
                         <label class="col-4 col-form-label">Range</label>
                         <div class="col-8">
@@ -97,78 +236,6 @@
                             <input asp-for="Collectorate" class="form-control" />
                         </div>
                     </div>
-
-                </div>
-
-                <!-- CENTER -->
-                <div class="col-4">
-
-                    <div class="row mt-2">
-                        <label class="col-4 col-form-label">City</label>
-                        <div class="col-8">
-                            <input asp-for="CityCode" class="form-control" />
-                        </div>
-                    </div>
-
-                    <div class="row mt-2">
-                        <label class="col-4 col-form-label">Post Code</label>
-                        <div class="col-8">
-                            <input asp-for="PostCode" class="form-control" />
-                        </div>
-                    </div>
-
-                    <div class="row mt-2">
-                        <label class="col-4 col-form-label">State</label>
-                        <div class="col-8">
-                            <input asp-for="StateCode" class="form-control" disabled />
-                            <input type="hidden" asp-for="StateCode" />
-                        </div>
-                    </div>
-
-                    <div class="row mt-2">
-                        <label class="col-4 col-form-label">Country</label>
-                        <div class="col-8">
-                            <input asp-for="CountryCode" class="form-control" />
-                        </div>
-                    </div>
-
-                    <div class="row mt-2">
-                        <label class="col-4 col-form-label">Vendor Location</label>
-                        <div class="col-8">
-                            <input asp-for="VendorLocation" class="form-control" />
-                        </div>
-                    </div>
-
-                    <div class="row mt-2">
-                        <label class="col-4 col-form-label">GST Not To Hold</label>
-                        <div class="col-8 pt-2">
-                            <select asp-for="GSTNotToHold" class="form-select">
-                                <option value="">--Select--</option>
-                                <option value="true">Yes</option>
-                                <option value="false">No</option>
-                            </select>
-                        </div>
-                    </div>
-
-                </div>
-
-                <!-- RIGHT -->
-                <div class="col-4">
-
-                    <div class="row mt-2">
-                        <label class="col-4 col-form-label">Vendor Code</label>
-                        <div class="col-8">
-                            <input asp-for="VendorCode" class="form-control" />
-                        </div>
-                    </div>
-
-                    <div class="row mt-2">
-                        <label class="col-4 col-form-label">Aggregate Turnover</label>
-                        <div class="col-8">
-                            <input asp-for="AggregateTurnover" class="form-control" />
-                        </div>
-                    </div>
-
                 </div>
 
             </div>
@@ -194,9 +261,22 @@
                             <input asp-for="MobileNo" class="form-control" />
                         </div>
                     </div>
+                    <div class="row mt-2">
+                        <label class="col-4 col-form-label">Website</label>
+                        <div class="col-8">
+                            <input asp-for="Website" class="form-control" />
+                        </div>
+                    </div>
+
                 </div>
 
                 <div class="col-4">
+                    <div class="row mt-2">
+                        <label class="col-4 col-form-label">Email Not Available</label>
+                        <div class="col-8 pt-2">
+                            <input type="checkbox" asp-for="EmailNotAvailable" />
+                        </div>
+                    </div>
                     <div class="row mt-2">
                         <label class="col-4 col-form-label">Email</label>
                         <div class="col-8">
@@ -212,54 +292,54 @@
                     </div>
                 </div>
 
-                <div class="col-4">
-                    <div class="row mt-2">
-                        <label class="col-4 col-form-label">Website</label>
-                        <div class="col-8">
-                            <input asp-for="Website" class="form-control" />
-                        </div>
-                    </div>
-
-                    <div class="row mt-2">
-                        <label class="col-4 col-form-label">Email Not Available</label>
-                        <div class="col-8 pt-2">
-                            <input type="checkbox" asp-for="EmailNotAvailable" />
-                        </div>
-                    </div>
-                </div>
+               
 
             </div>
         </fieldset>
 
-        <!-- ================= TAX ================= -->
+        <!-- ================= Bank Details ================= -->
         <fieldset>
-            <legend>Tax Details</legend>
+            <legend>Bank Details</legend>
 
             <div class="row">
 
                 <div class="col-4">
                     <div class="row mt-2">
-                        <label class="col-4 col-form-label">PAN No</label>
+                        <label class="col-4 col-form-label">Bank Name</label>
                         <div class="col-8">
-                            <input asp-for="PANNo" class="form-control" />
+                            <input asp-for="BankName" class="form-control" />
+                        </div>
+                    </div>
+                    <div class="row mt-2">
+                        <label class="col-4 col-form-label">Bank Account No</label>
+                        <div class="col-8">
+                            <input asp-for="BankAccountNo" class="form-control" />
+                        </div>
+                    </div>
+                   
+                    
+                </div>
+
+                <div class="col-4">
+                    <div class="row mt-2">
+                        <label class="col-4 col-form-label">Branch Name</label>
+                        <div class="col-8">
+                            <input asp-for="BranchName" class="form-control" />
+                        </div>
+                    </div>
+                    <div class="row mt-2">
+                        <label class="col-4 col-form-label">IFSC Code</label>
+                        <div class="col-8">
+                            <input asp-for="IFSCCode" class="form-control" />
                         </div>
                     </div>
                 </div>
 
                 <div class="col-4">
                     <div class="row mt-2">
-                        <label class="col-4 col-form-label">ECC No</label>
+                        <label class="col-4 col-form-label">Fax No</label>
                         <div class="col-8">
-                            <input asp-for="ECCNo" class="form-control" />
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-4">
-                    <div class="row mt-2">
-                        <label class="col-4 col-form-label">Service Tax Reg No</label>
-                        <div class="col-8">
-                            <input asp-for="ServiceTaxRegNo" class="form-control" />
+                            <input asp-for="FaxNo" class="form-control" />
                         </div>
                     </div>
                 </div>
@@ -277,32 +357,42 @@
                     <div class="row mt-2">
                         <label class="col-4 col-form-label">Vendor Type</label>
                         <div class="col-8">
-                            <input asp-for="VendorType" class="form-control" />
+
+                            <select asp-for="VendorType"
+                                    asp-items="@(new SelectList(Model.DropDownData.VendorTypes, "Code", "Name"))"
+                                    class="form-select">
+                                <option value="">--Select--</option>
+                            </select>
+                            <span asp-validation-for="VendorType" class="text-danger"></span>
+
                         </div>
                     </div>
 
                     <div class="row mt-2">
-                        <label class="col-4 col-form-label">Payment Terms</label>
+                        <label class="col-4 col-form-label">Vendor Category</label>
                         <div class="col-8">
-                            <input asp-for="PaymentTerms" class="form-control" />
+                            <select asp-for="VendorCategory"
+                                    asp-items="@(new SelectList(Model.DropDownData.VendorCategories, "Code", "Name"))"
+                                    class="form-select">
+                                <option value="">--Select--</option>
+                            </select>
+                            <span asp-validation-for="VendorCategory" class="text-danger"></span>
                         </div>
                     </div>
 
-                    <div class="row mt-2">
-                        <label class="col-4 col-form-label">Payment Method</label>
-                        <div class="col-8">
-                            <input asp-for="PaymentMethod" class="form-control" />
-                        </div>
-                    </div>
-
-                    
                 </div>
-
                 <div class="col-4">
                     <div class="row mt-2">
                         <label class="col-4 col-form-label">Purchaser Code</label>
                         <div class="col-8">
-                            <input asp-for="PurchaserCode" class="form-control" />
+
+                            <select asp-for="PurchaserCode"
+                                    asp-items="@(new SelectList(Model.DropDownData.VendorPurchasers, "Code", "Name"))"
+                                    class="form-select">
+                                <option value="">--Select--</option>
+                            </select>
+                            <span asp-validation-for="PurchaserCode" class="text-danger"></span>
+
                         </div>
                     </div>
                     <div class="row mt-2">
@@ -327,7 +417,7 @@
                         </div>
                     </div>
 
-                    
+
 
                 </div>
                 <div class="col-4">
@@ -363,81 +453,227 @@
                             </select>
                         </div>
                     </div>
-                </div>
 
+                    <div class="row mt-2">
+                        <label class="col-4 col-form-label">Location</label>
+                        <div class="col-8">
+                            <select asp-for="Location"
+                                    asp-items="@(new SelectList(Model.DropDownData.VendorAllLocations, "Code", "Name"))"
+                                    class="form-select">
+                                <option value="">--Select--</option>
+                            </select>
+                            <span asp-validation-for="Location" class="text-danger"></span>
+                        </div>
+                    </div>
+                </div>
             </div>
+
         </fieldset>
 
-        <!-- ================= POSTING ================= -->
+        <!-- ================= Payments ================== -->
         <fieldset>
-            <legend>Posting Details</legend>
-
+            <legend>Payments</legend>
             <div class="row">
 
-                <div class="col-3">
+                <div class="col-4">
                     <div class="row mt-2">
-                        <label class="col-6 col-form-label">VAT Bus</label>
-                        <div class="col-6">
-                            <input asp-for="VATBusPostingGroup" class="form-control" />
+                        <label class="col-4 col-form-label">Application Method</label>
+                        <div class="col-8">
+                            <select asp-for="ApplicationMethod"
+                                    asp-items="@(new SelectList(Model.DropDownData.VendorApplicationMethods, "Code", "Name"))"
+                                    class="form-select">
+                                <option value="">--Select--</option>
+                            </select>
+                            <span asp-validation-for="ApplicationMethod" class="text-danger"></span>
                         </div>
                     </div>
                 </div>
 
-                <div class="col-3">
+                <div class="col-4">
                     <div class="row mt-2">
-                        <label class="col-6 col-form-label">Gen Bus</label>
-                        <div class="col-6">
-                            <input asp-for="GenBusPostingGroup" class="form-control" />
+                        <label class="col-4 col-form-label">Payment Terms</label>
+                        <div class="col-8">
+
+                            <select asp-for="PaymentTerms"
+                                    asp-items="@(new SelectList(Model.DropDownData.VendorPaymentTerms, "Code", "Name"))"
+                                    class="form-select">
+                                <option value="">--Select--</option>
+                            </select>
+                            <span asp-validation-for="PaymentTerms" class="text-danger"></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-4">
+                    <div class="row mt-2">
+                        <label class="col-4 col-form-label">Payment Method</label>
+                        <div class="col-8">
+                            <select asp-for="PaymentMethod"
+                                    asp-items="@(new SelectList(Model.DropDownData.VendorPaymentMethods, "Code", "Name"))"
+                                    class="form-select">
+                                <option value="">--Select--</option>
+                            </select>
+                            <span asp-validation-for="PaymentMethod" class="text-danger"></span>
                         </div>
                     </div>
                 </div>
 
-                <div class="col-3">
-                    <div class="row mt-2">
-                        <label class="col-6 col-form-label">Vendor PG</label>
-                        <div class="col-6">
-                            <input asp-for="VendorPostingGroup" class="form-control" />
-                        </div>
-                    </div>
-                </div>
 
-                <div class="col-3">
-                    <div class="row mt-2">
-                        <label class="col-6 col-form-label">Excise</label>
-                        <div class="col-6">
-                            <input asp-for="ExciseBusPostingGroup" class="form-control" />
-                        </div>
-                    </div>
-                </div>
 
             </div>
+
         </fieldset>
 
-        <!-- ================= MSME ================= -->
+
+        <!-- ================= Invoicing ================= -->
         <fieldset>
-            <legend>MSME Details</legend>
+            <legend>Invoicing</legend>
 
             <div class="row">
 
                 <div class="col-4">
+
+                    <div class="row mt-2">
+                        <label class="col-4 col-form-label">Currency Code</label>
+                        <div class="col-8">
+                            <select asp-for="CurrencyCode"
+                                    asp-items="@(new SelectList(Model.DropDownData.VendorCurrencies, "Code", "Name"))"
+                                    class="form-select">
+                                <option value="">--Select--</option>
+                            </select>
+                            <span asp-validation-for="CurrencyCode" class="text-danger"></span>
+                        </div>
+                    </div>
+
+                    <div class="row mt-2">
+                        <label class="col-4 col-form-label">VAT Bus Posting Group</label>
+                        <div class="col-8">
+                            <select asp-for="VATBusPostingGroup"
+                                    asp-items="@(new SelectList(Model.DropDownData.VendorVATBusPostingGroups, "Code", "Name"))"
+                                    class="form-select">
+                                <option value="">--Select--</option>
+                            </select>
+                            <span asp-validation-for="VATBusPostingGroup" class="text-danger"></span>
+                        </div>
+                    </div>
+
+                    <div class="row mt-2">
+                        <label class="col-4 col-form-label">Gen Bus Posting Group</label>
+                        <div class="col-8">
+                            <select asp-for="GenBusPostingGroup"
+                                    asp-items="@(new SelectList(Model.DropDownData.VendorGenBusPostingGroups, "Code", "Name"))"
+                                    class="form-select">
+                                <option value="">--Select--</option>
+                            </select>
+                            <span asp-validation-for="GenBusPostingGroup" class="text-danger"></span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-4">
+                    <div class="row mt-2">
+                        <label class="col-4 col-form-label">Vendor Posting Group</label>
+                        <div class="col-8">
+                            <select asp-for="VendorPostingGroup"
+                                    asp-items="@(new SelectList(Model.DropDownData.VendorPostingGroups, "Code", "Name"))"
+                                    class="form-select">
+                                <option value="">--Select--</option>
+                            </select>
+                            <span asp-validation-for="VendorPostingGroup" class="text-danger"></span>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </fieldset>
+
+        <!-- ================= Tax ================= -->
+        <fieldset>
+            <legend>Tax</legend>
+
+            <div class="row">
+
+
+
+                <div class="col-4">
+                    <div class="row mt-2">
+                        <label class="col-4 col-form-label">GST Not To Hold</label>
+                        <div class="col-8 pt-2">
+                            <select asp-for="GSTNotToHold" class="form-select">
+                                <option value="">--Select--</option>
+                                <option value="true">Yes</option>
+                                <option value="false">No</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="row mt-2">
+                        <label class="col-4 col-form-label">GST Vendor Type</label>
+                        <div class="col-8">
+                            <select asp-for="GSTVendorType"
+                                    asp-items="@(new SelectList(Model.DropDownData.VendorGSTVendorTypes, "Code", "Name"))"
+                                    class="form-select">
+                                <option value="">--Select--</option>
+                            </select>
+                            <span asp-validation-for="GSTVendorType" class="text-danger"></span>
+                        </div>
+                    </div>
+
+                    <div class="row mt-2">
+                        <label class="col-4 col-form-label">GST Return Frequency</label>
+                        <div class="col-8">
+                            <select asp-for="GSTReturnFrequency"
+                                    asp-items="@(new SelectList(Model.DropDownData.VendorGSTReturnFrequencies, "Code", "Name"))"
+                                    class="form-select">
+                                <option value="">--Select--</option>
+                            </select>
+                            <span asp-validation-for="GSTReturnFrequency" class="text-danger"></span>
+                        </div>
+                    </div>
+
+                    <div class="row mt-2">
+                        <label class="col-4 col-form-label">GST Reg No</label>
+                        <div class="col-8">
+                            <input asp-for="GSTRegNo" class="form-control" />
+                        </div>
+                    </div>
+
+                    <div class="row mt-2">
+                        <label class="col-4 col-form-label">ARN</label>
+                        <div class="col-8">
+                            <input asp-for="ARN" class="form-control" />
+                        </div>
+                    </div>
+                </div>
+
+               
+
+                <div class="col-4">
+                    <div class="row mt-2">
+                        <label class="col-4 col-form-label">Business Category</label>
+                        <div class="col-8">
+                            <select asp-for="BusinessCategory"
+                                    asp-items="@(new SelectList(Model.DropDownData.VendorBussinessCategories, "Code", "Name"))"
+                                    class="form-select">
+                                <option value="">--Select--</option>
+                            </select>
+                            <span asp-validation-for="BusinessCategory" class="text-danger"></span>
+                        </div>
+                    </div>
+
                     <div class="row mt-2">
                         <label class="col-4 col-form-label">MSME UAM No</label>
                         <div class="col-8">
                             <input asp-for="MSMEUAMNo" class="form-control" />
                         </div>
                     </div>
-                </div>
 
-                <div class="col-4">
                     <div class="row mt-2">
                         <label class="col-4 col-form-label">Intimation Date</label>
                         <div class="col-8">
                             <input asp-for="MSMEIntimationDate" type="date" class="form-control" />
                         </div>
                     </div>
-                </div>
 
-                <div class="col-4">
                     <div class="row mt-2">
                         <label class="col-4 col-form-label">Effective Date</label>
                         <div class="col-8">
@@ -446,13 +682,34 @@
                     </div>
                 </div>
 
+                <div class="col-4">
+                    <div class="row mt-2">
+                        <label class="col-4 col-form-label">PAN No</label>
+                        <div class="col-8">
+                            <input asp-for="PANNo" class="form-control" />
+                        </div>
+                    </div>
+                    <div class="row mt-2">
+                        <label class="col-4 col-form-label">ECC No</label>
+                        <div class="col-8">
+                            <input asp-for="ECCNo" class="form-control" />
+                        </div>
+                    </div>
+                    <div class="row mt-2">
+                        <label class="col-4 col-form-label">Service Tax Reg No</label>
+                        <div class="col-8">
+                            <input asp-for="ServiceTaxRegNo" class="form-control" />
+                        </div>
+                    </div>
+                </div>
+
             </div>
         </fieldset>
 
-
+        
         <!-- BUTTONS -->
         <div class="text-center mt-3">
-            <button type="submit" class="btn btn-primary">Save</button>
+            <button type="button" class="btn btn-primary" id="btnSaveVendorMaster">Save & Create In ERP</button>
             <button type="reset" class="btn btn-secondary">Reset</button>
         </div>
 

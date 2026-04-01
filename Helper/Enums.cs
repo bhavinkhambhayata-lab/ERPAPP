@@ -84,13 +84,13 @@ namespace ERPAPP.Helper
 
         //Vendor Module
 
-        public enum VendorGSTReturnFrequency
+        public enum VendorGSTReturnFrequencyEnum
         {
             Quarterly = 1,
             Monthly = 2
         }
 
-        public enum VendorType
+        public enum VendorTypeEnum
         {
             Manufacturer = 1,
             FirstStageDealer = 2,
@@ -98,7 +98,7 @@ namespace ERPAPP.Helper
             Importer = 4
         }
 
-        public enum GSTVendorType
+        public enum GSTVendorTypeEnum
         {
             [Display(Name = "Registred")]
             Registred = 1,
@@ -119,17 +119,26 @@ namespace ERPAPP.Helper
             SEZ = 6
         }
 
-        public enum VendorApplicationMethod
+        public enum VendorApplicationMethodEnum
         {
             Manual = 1,
             ApplyToOldest = 2
         }
-        public enum VendorBusinessCategory
+        public enum VendorBusinessCategoryEnum
         {
             MSMEMicro = 1,
             MSMESmall = 2,
             MSMEMedium = 3,
             Large = 4
+        }
+
+        public enum VendorAggTurnOver
+        {
+            [Display(Name = "More than 20 lakh")]
+            MoreThanTwentyLakh = 1,
+
+            [Display(Name = "Less than 20 lakh")]
+            LessThanTwentyLakh = 2
         }
 
     }

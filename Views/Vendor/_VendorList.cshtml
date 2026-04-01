@@ -1,1 +1,315 @@
-﻿<h6>List Page</h6>
+﻿
+
+<link rel="stylesheet" href="https://code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
+<link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css">
+
+
+<!-- ✅ DataTables JS -->
+<script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+
+
+<style>
+    /* Simple card */
+    .custom-card {
+        border: 1px solid #dee2e6;
+        border-radius: 6px;
+        background: #fff;
+        padding: 12px;
+    }
+
+    /* Header text */
+    .card-title {
+        font-size: 16px;
+        font-weight: 600;
+        margin-bottom: 10px;
+    }
+
+    /* Table */
+    #tblVendor {
+        border-collapse: collapse;
+        width: 100%;
+    }
+
+        #tblVendor th {
+            background-color: #f5f5f5;
+            border: 1px solid #dee2e6;
+            padding: 8px;
+            font-weight: 600;
+        }
+
+        #tblVendor td {
+            border: 1px solid #dee2e6;
+            padding: 7px;
+        }
+
+        /* Light hover */
+        #tblVendor tbody tr:hover {
+            background-color: #f9f9f9;
+        }
+
+    /* Search + button spacing */
+    #txtSearch {
+        height: 36px;
+    }
+
+    .btn-primary {
+        height: 36px;
+        padding: 0 15px;
+    }
+
+    .topbar {
+        background: #0d6efd;
+        color: #fff;
+        padding: 10px 20px;
+        font-size: 18px;
+        font-weight: 600;
+    }
+
+    #tblVendor_length {
+        margin-top: 2px;
+        margin-bottom: 2px;
+    }
+
+    #tblVendor th {
+        font-size: 13px;
+    }
+
+    #tblVendor td {
+        font-size: 12px;
+    }
+
+    #tblVendor th,
+    #tblVendor td {
+        padding: 6px;
+    }
+
+
+    /* ===== DataTable Overall ===== */
+    .dataTables_wrapper {
+        font-size: 12px;
+    }
+
+    /* ===== Top Controls (Show entries + search) ===== */
+    .dataTables_length,
+    .dataTables_filter {
+        font-size: 12px;
+    }
+
+        /* Dropdown (Show entries) */
+        .dataTables_length select {
+            font-size: 12px;
+            padding: 2px 5px;
+            height: 28px;
+        }
+
+    /* ===== Bottom Info Text ===== */
+    .dataTables_info {
+        font-size: 12px;
+    }
+
+    /* ===== Pagination ===== */
+    .dataTables_paginate {
+        font-size: 12px;
+    }
+
+        .dataTables_paginate .paginate_button {
+            padding: 3px 8px !important;
+            margin: 0 2px;
+            font-size: 12px;
+        }
+
+    /* ===== Table ===== */
+    #tblVendor {
+        font-size: 12px;
+    }
+
+        #tblVendor th {
+            font-size: 13px;
+            padding: 6px;
+            white-space: nowrap;
+        }
+
+        #tblVendor td {
+            font-size: 12px;
+            padding: 5px;
+        }
+
+    /* ===== Custom Search (Name + Button) ===== */
+    #txtSearch {
+        font-size: 12px;
+        height: 30px;
+    }
+
+    .btn-primary {
+        font-size: 12px;
+        height: 30px;
+        padding: 0 10px;
+    }
+
+    #tblVendor th:nth-child(1),
+    #tblVendor td:nth-child(1) {
+        text-align: center;
+    }
+</style>
+
+<div class="container-fluid mt-3">
+
+    <div class="topbar d-flex justify-content-between align-items-center">
+        <div class="fw-bold">
+            Vendor List
+        </div>
+    </div>
+
+    <div class="custom-card mt-3">
+
+        <!-- Search -->
+        <div class="row align-items-center mb-2">
+            <div class="col-md-1">
+                <label><b>Name</b></label>
+            </div>
+            <div class="col-md-3">
+                <input type="text" id="txtSearch" class="form-control" placeholder="" />
+            </div>
+            <div class="col-md-2">
+                <button class="btn btn-primary" onclick="loadVendor()">Search</button>
+            </div>
+        </div>
+
+        <!-- Table -->
+        <table class="table" id="tblVendor">
+            <thead>
+                <tr>
+                    <th>SrNo</th>
+                    <th>Name</th>
+                    <th>City</th>
+                    <th>Location</th>
+                    <th>Contact Person</th>
+                    <th>Mobile</th>
+                    <th>Master Code</th>
+                    <th>Company Code</th>
+                    <th>Created By</th>
+                </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+
+    </div>
+
+</div>
+
+
+<script>
+    $(document).ready(function () {
+
+        loadVendor();
+
+        // Enter press search
+        $('#txtSearch').keypress(function (e) {
+            if (e.which == 13) {
+                loadVendor();
+            }
+        });
+
+            // Row click event
+    $('#tblVendor tbody').on('click', 'tr', function () {
+
+        var table = $('#tblVendor').DataTable();
+        var data = table.row(this).data();
+
+        // 👇 VendorNo (tame je key field use karo cho)
+        var vendorNo = data[9]; // CompanyCode OR jo biju hoy to change karo
+
+        if (vendorNo) {
+            editVendorNo = vendorNo;
+            $('#detailsBtn').click();
+        }
+    });
+    });
+
+        function loadVendor() {
+
+        var search = $('#txtSearch').val().trim();
+
+        $.ajax({
+            url: baseURL +'Vendor/GetVendorList',
+            type: 'GET',
+            data: { searchVendor: search },
+            dataType: 'json',
+
+            success: function (data) {
+
+                var rows = '';
+                var list = data.data || data;
+
+                // ✅ Destroy DataTable safely
+                if ($.fn.DataTable && $.fn.DataTable.isDataTable('#tblVendor')) {
+                    $('#tblVendor').DataTable().clear().destroy();
+                }
+
+                if (list && list.length > 0) {
+
+                    $.each(list, function (i, item) {
+
+                        rows += `<tr>
+                                    <td>${item.displayNo ?? ''}</td>
+                                    
+                                    <td>${item.name ?? ''}</td>
+                                    <td>${item.city ?? ''}</td>
+                                  
+                                    <td>${item.location ?? ''}</td>
+                                    <td>${item.contactPerson ?? ''}</td>
+                                    <td>${item.mobileNo ?? ''}</td>
+                                    <td>${item.masterCode ?? ''}</td>
+                                    <td>${item.companyCode ?? ''}</td>
+                                    <td>${item.createdBy ?? ''}</td>
+                                   
+                                 </tr>`;
+                    });
+
+                    $('#tblVendor tbody').html(rows);
+
+                } else {
+                    // ✅ Keep tbody empty (NO manual row)
+                    $('#tblVendor tbody').html('');
+                }
+
+                // ✅ Always initialize DataTable (handles empty case itself)
+                $('#tblVendor').DataTable({
+                    paging: true,
+                    searching: false,
+                    ordering: true,
+                    info: true,
+                    pageLength: 10,
+                    lengthMenu: [5, 10, 25, 50],
+                    autoWidth: false,
+
+                    columnDefs: [
+                        { width: "80px", targets: 0 },
+                       
+                        { width: "200px", targets: 1 },
+                        { width: "120px", targets: 2 },
+                      
+                        { width: "120px", targets: 3 },
+                        { width: "180px", targets: 4 },
+                        { width: "150px", targets: 5 },
+                        { width: "120px", targets: 6 },
+                        { width: "120px", targets: 7 },
+                        { width: "150px", targets: 8 },
+                      
+                    ],
+
+                    order: [[0, 'desc']],
+
+                    // ✅ Built-in message
+                    language: {
+                        emptyTable: "No Data Found"
+                    }
+                });
+            },
+
+            error: function () {
+                alert('Error loading data');
+            }
+        });
+    }
+</script>

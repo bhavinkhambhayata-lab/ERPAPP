@@ -2,166 +2,214 @@
 
 namespace ERPAPP.Models
 {
+
     public class VendorsModel
     {
-        public class VendorModel
-        {// ================= BASIC =================
+        public string? LoginRowId { get; set; }
+        public int DisplayNo { get; set; }
 
-            public int DisplayNo { get; set; }
+        // ================= BASIC =================
 
-            public int? CompanyId { get; set; }
+        [Required(ErrorMessage = "Name is required")]
+        public string Name { get; set; } = string.Empty;
 
-            [Required(ErrorMessage = "Name is required")]
-            public string? Name { get; set; }
+        public string? MasterCode { get; set; }
 
-            public string? MasterCode { get; set; }
+        [Required(ErrorMessage = "Address is required")]
+        public string Address { get; set; } = string.Empty;
 
-            public string? VendorCode { get; set; }
+        [Required(ErrorMessage = "Address 2 is required")]
+        public string Address2 { get; set; } = string.Empty;
 
-            public string? Address { get; set; }
-            public string? Address2 { get; set; }
+        [Required(ErrorMessage = "City is required")]
+        public string CityCode { get; set; } = string.Empty;
 
-            public string? CityCode { get; set; }
-            public string? PostCode { get; set; }
-            public string? StateCode { get; set; }
-            public string? CountryCode { get; set; }
+        [Required(ErrorMessage = "Postal Code is required")]
+        public string PostCode { get; set; } = string.Empty;
 
-            // ================= EXTRA GENERAL =================
+        [Required(ErrorMessage = "State is required")]
+        public string StateCode { get; set; } = string.Empty;
 
-            public string? Range { get; set; }
-            public string? Collectorate { get; set; }
-            public string? GTA { get; set; }
-            public string? VendorLocation { get; set; }
+        [Required(ErrorMessage = "Country is required")]
+        public string CountryCode { get; set; } = string.Empty;
 
-            public bool GSTNotToHold { get; set; }
+        // ================= EXTRA GENERAL =================
 
-            public DateTime? FixedDueDate { get; set; }
+        public string? Range { get; set; }
+        public string? Collectorate { get; set; }
+        public string? GTA { get; set; }
+        public string? VendorLocation { get; set; }
 
-            public decimal? AggregateTurnover { get; set; }
+        public bool GSTNotToHold { get; set; }
 
-            public string? FaxNo { get; set; }
-            public string? ECCNo { get; set; }
-            public string? ServiceTaxRegNo { get; set; }
+        public int? FixedDueDate { get; set; }
 
-            // ================= CONTACT =================
+        public decimal? AggregateTurnover { get; set; }
 
-            public string? ContactPerson { get; set; }
-            public string? MobileNo { get; set; }
-            public string? PhoneNo { get; set; }
-            public string? Email { get; set; }
-            public string? Website { get; set; }
+        public string? FaxNo { get; set; }
+        public string? ECCNo { get; set; }
+        public string? ServiceTaxRegNo { get; set; }
 
-            public bool EmailNotAvailable { get; set; }
+        // ================= CONTACT =================
 
-            // ================= TAX =================
+        [Required(ErrorMessage = "Contact is required")]
+        public string ContactPerson { get; set; } = string.Empty;
 
-            public string? PANNo { get; set; }
+        [Required(ErrorMessage = "Mobile Phone No is required")]
+        [StringLength(30)]
+        [RegularExpression(@"^(\+?[\d\-]+)(,\+?[\d\-]+)*$", ErrorMessage = "Invalid mobile phone number")]
+        public string MobileNo { get; set; } = string.Empty;
 
-            // ================= GST =================
+        [Required(ErrorMessage = "Phone No is required")]
+        [StringLength(30)]
+        [RegularExpression(@"^(\+?[\d\-]+)(,\+?[\d\-]+)*$", ErrorMessage = "Invalid phone number")]
+        public string PhoneNo { get; set; } = string.Empty;
+        public string? Email { get; set; }
+        public string? Website { get; set; }
 
-            public string? GSTVendorType { get; set; }
-            public string? GSTReturnFrequency { get; set; }
-            public string? GSTRegNo { get; set; }
-            public string? ARN { get; set; }
+        public bool EmailNotAvailable { get; set; } = false;
 
-            // ================= BANK =================
+        // ================= TAX =================
 
-            public string? BankName { get; set; }
-            public string? BankAccountNo { get; set; }
-            public string? IFSCCode { get; set; }
+        [RegularExpression(@"^[A-Z]{5}[0-9]{4}[A-Z]$", ErrorMessage = "Invalid PAN format")]
+        [StringLength(10, MinimumLength = 10)]
+        public string? PANNo { get; set; }
 
-            // ================= BUSINESS =================
+        public string? CurrencyCode { get; set; }
 
-            public string? VendorType { get; set; }
-            public string? VendorCategory { get; set; }
-            public string? BusinessCategory { get; set; }
-            public string? Structure { get; set; }
+        // ================= GST =================
 
-            public bool? RelatedParty { get; set; }
-            public bool? Subcontractor { get; set; }
+        public string? GSTVendorType { get; set; }
+        public string? GSTReturnFrequency { get; set; }
 
-            public string? PaymentTerms { get; set; }
-            public string? PaymentMethod { get; set; }
-            public string? PurchaserCode { get; set; }
+        [RegularExpression(@"^[0-9]{2}[A-Z]{5}[0-9]{4}[A-Z][1-9A-Z]Z[0-9A-Z]$", ErrorMessage = "Invalid GSTIN format")]
+        [StringLength(15, MinimumLength = 15)]
+        public string? GSTRegNo { get; set; }
 
-            // ================= POSTING =================
+        [RegularExpression(@"^[A-Z]{2}[0-9]{12}[A-Z]{1}$", ErrorMessage = "Invalid ARN format")]
+        public string? ARN { get; set; }
 
-            public string? VATBusPostingGroup { get; set; }
-            public string? GenBusPostingGroup { get; set; }
-            public string? ExciseBusPostingGroup { get; set; }
-            public string? VendorPostingGroup { get; set; }
+        // ================= BANK =================
 
-            // ================= OTHER CONFIG =================
+        public string? BankName { get; set; }
 
-            public string? ApplicationMethod { get; set; }
-            public string? TaxLiable { get; set; }
-            public string? Location { get; set; }
+        [RegularExpression(@"^[0-9]{9,18}$", ErrorMessage = "Invalid bank account number")]
+        [StringLength(20)]
+        public string? BankAccountNo { get; set; }
 
-            // ================= MSME =================
+        public string? BranchName { get; set; }
 
-            public string? MSMEUAMNo { get; set; }
+        [RegularExpression(@"^[A-Z]{4}0[A-Z0-9]{6}$", ErrorMessage = "Invalid IFSC code")]
+        [StringLength(20)]
+        public string? IFSCCode { get; set; }
 
-            public DateTime? MSMEIntimationDate { get; set; }
-            public DateTime? MSMEEffectiveDate { get; set; }
+        // ================= BUSINESS =================
 
-            // ================= NOD/NOC =================
+        public string? VendorType { get; set; }
+        public string? VendorCategory { get; set; }
+        public string? BusinessCategory { get; set; }
 
-            public string? AccessCode { get; set; }
-            public string? NOCNOD { get; set; }
-            public string? ConcessionalCode { get; set; }
+        public bool? RelatedParty { get; set; }
+        public bool? Subcontractor { get; set; }
 
-            public bool ThresholdOverlook { get; set; }
-            public bool SurchargeOverlook { get; set; }
+        public string? PaymentTerms { get; set; }
+        public string? PaymentMethod { get; set; }
+        public string? PurchaserCode { get; set; }
 
-        }
+        // ================= POSTING =================
 
+        public string? VATBusPostingGroup { get; set; }
+        public string? GenBusPostingGroup { get; set; }
 
-        public class GetVendorAddData : VendorModel
-        {
-            public VendorDropDownModel DropDownData { get; set; } = new();
-        }
+        public string? VendorPostingGroup { get; set; }
 
-        public class VendorCategoryModel : BaseDropDown { }
-      
-        public class VendorPurchaserModel : BaseDropDown { }
-        public class VendorPostingGroupModel : BaseDropDown { }
-        public class VendorVATBusPostingGroupModel : BaseDropDown { }
-        public class VendorAssesseeCodeModel : BaseDropDown { }
-        public class VendorPaymentTermsModel : BaseDropDown { }
-        public class VendorCurrencyModel : BaseDropDown { }
-        public class VendorLocationModel : BaseDropDown { }
-        public class VendorPaymentMethodModel : BaseDropDown { }
-        public class VendorGenBusPostingGroupModel : BaseDropDown { }
-        public class VendorCountryModel : BaseDropDown { }
-        public class VendorTypeModel : BaseDropDown { }
-        public class VendorGSTVendorType : BaseDropDown { }
-        public class VendorGSTReturnFrequency : BaseDropDown { }
-        public class VendorLocation : BaseDropDown { }
+        // ================= OTHER CONFIG =================
 
-        public class VendorType: BaseDropDown { }
+        public string? ApplicationMethod { get; set; }
+        public string? TaxLiable { get; set; }
+        public string? Location { get; set; }
 
-        public class VendorPaymentTerms : BaseDropDown { }
-        public class VendorPaymentMethod : BaseDropDown { }
+        // ================= MSME =================
 
-        public class Vendor : BaseDropDown { }
+        public string? MSMEUAMNo { get; set; }
 
+        public DateTime? MSMEIntimationDate { get; set; }
+        public DateTime? MSMEEffectiveDate { get; set; }
 
+        // ================= NOD/NOC =================
 
-        public class VendorDropDownModel
-        {
-            public List<VendorCountryModel> Countries { get; set; } = new();
-            public List<VendorCurrencyModel> VendorCurrencies { get; set; } = new();
-            public List<VendorLocationModel> VendorLocations { get; set; } = new(); // Subcontracting
-            public List<VendorCategoryModel> VendorCategories { get; set; } = new();
-            public List<VendorPaymentTermsModel> VendorPaymentTerms { get; set; } = new();
-            public List<VendorPaymentMethodModel> VendorPaymentMethods { get; set; } = new();
-            public List<VendorPurchaserModel> VendorPurchasers { get; set; } = new();
-            public List<VendorGenBusPostingGroupModel> VendorGenBusPostingGroups { get; set; } = new();
-            public List<VendorPostingGroupModel> VendorPostingGroups { get; set; } = new();
-            public List<VendorVATBusPostingGroupModel> VendorVATBusPostingGroups { get; set; } = new();
-            public List<LocationModel> VendorAllLocations { get; set; } = new(); // All Locations
-            public List<VendorAssesseeCodeModel> VendorAssesseeCodes { get; set; } = new();
-            public List<ConcessionalCodeModel> VendorConcessionalCodes { get; set; } = new();
-        }
+        public string? AccessCode { get; set; }
+        public string? NOCNOD { get; set; }
+        public string? ConcessionalCode { get; set; }
+
+        public bool ThresholdOverlook { get; set; }
+        public bool SurchargeOverlook { get; set; }
+
     }
+
+
+    public class GetVendorAddData : VendorsModel
+    {
+        public VendorDropDownModel DropDownData { get; set; } = new();
+    }
+
+    public class VendorStructureModel : BaseDropDown { }
+    public class VendorGSTVendorTypeModel : BaseDropDown { }
+    public class VendorGSTReturnFrequencyModel : BaseDropDown { }
+    public class VendorLocationModel : BaseDropDown { }
+    public class VendorTypeModel : BaseDropDown { }
+    public class VendorPaymentTermsModel : BaseDropDown { }
+    public class VendorPaymentMethodModel : BaseDropDown { }
+    public class VendorGenBusPostingGroupModel : BaseDropDown { }
+    public class VendorPostingGroupModel : BaseDropDown { }
+    public class VendorApplicationMethodModel : BaseDropDown { }
+    public class VendorCategoryModel : BaseDropDown { }
+    public class VendorPurchaserModel : BaseDropDown { }
+    public class VendorBussinessCategoryModel : BaseDropDown { }
+    public class VendorCurrencyModel : BaseDropDown { }
+    public class VendorVATBusPostingGroupModel : BaseDropDown { }
+
+    public class VendorAllLocationModel : BaseDropDown { }
+    public class VendorCountryModel : BaseDropDown { }
+    public class VendorCurrencyCodeModel : BaseDropDown { }
+
+    public class VendorAggregateTurnoverModel : BaseDropDown { }
+
+
+    public class VendorDropDownModel
+    {
+        public List<VendorGSTVendorTypeModel> VendorGSTVendorTypes { get; set; } = new();
+        public List<VendorGSTReturnFrequencyModel> VendorGSTReturnFrequencies { get; set; } = new();
+        public List<VendorLocationModel> VendorLocations { get; set; } = new(); // Subcontracting
+        public List<VendorTypeModel> VendorTypes { get; set; } = new();
+        public List<VendorBussinessCategoryModel> VendorBussinessCategories { get; set; } = new();
+        public List<VendorApplicationMethodModel> VendorApplicationMethods { get; set; } = new();
+        public List<VendorCurrencyModel> VendorCurrencies { get; set; } = new();
+        public List<VendorCategoryModel> VendorCategories { get; set; } = new();
+        public List<VendorPaymentTermsModel> VendorPaymentTerms { get; set; } = new();
+        public List<VendorPaymentMethodModel> VendorPaymentMethods { get; set; } = new();
+        public List<VendorPurchaserModel> VendorPurchasers { get; set; } = new();
+        public List<VendorGenBusPostingGroupModel> VendorGenBusPostingGroups { get; set; } = new();
+        public List<VendorPostingGroupModel> VendorPostingGroups { get; set; } = new();
+        public List<VendorVATBusPostingGroupModel> VendorVATBusPostingGroups { get; set; } = new();
+        public List<VendorAllLocationModel> VendorAllLocations { get; set; } = new(); // All Locations
+        public List<VendorCountryModel> Countries { get; set; } = new();
+        public List<VendorCurrencyCodeModel> VendorCurrencyCodes { get; set; } = new();
+        public List<VendorAggregateTurnoverModel> VendorAggregateTurnover { get; set; } = new List<VendorAggregateTurnoverModel>();
+
+    }
+
+    public class GetVendorListModel
+    {
+        public int DisplayNo { get; set; }
+        public string Name { get; set; }
+        public string City { get; set; }
+        public string Location { get; set; }
+        public string ContactPerson { get; set; }
+        public string MobileNo { get; set; }
+        public string MasterCode { get; set; }
+        public string CompanyCode { get; set; }
+        public string CreatedBy { get; set; }
+    }
+
 }
