@@ -200,11 +200,22 @@ namespace ERPAPP.Controllers
             {
                 var insertResult = await _vendorRepository.InsertVendor(model);
 
-                return Json(new
+                if (insertResult)
                 {
-                    success = true,
-                    message = "Vendor saved successfully."
-                });
+                    return Json(new
+                    {
+                        success = true,
+                        message = "Vendor saved successfully."
+                    });
+                }
+                else
+                {
+                    return Json(new
+                    {
+                        success = false,
+                        message = "something went wrong!."
+                    });
+                }      
             }
             catch
             {

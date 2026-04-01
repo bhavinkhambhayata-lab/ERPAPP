@@ -332,7 +332,9 @@ namespace ERPAPP.Repository
             new SqlParameter("@ConcessionalCode", model.ConcessionalCode ?? ""),
 
             new SqlParameter("@ThresholdOverlook", model.ThresholdOverlook),
-            new SqlParameter("@SurchargeOverlook", model.SurchargeOverlook)
+            new SqlParameter("@SurchargeOverlook", model.SurchargeOverlook),
+
+             new SqlParameter("@EmailIdAvailable", model.EmailNotAvailable ? 1 : 0)
         };
 
                 var vendorObj = _db.ExecuteScalar("Vendor_InsertDataWithMasterAndCompnayData", param);
