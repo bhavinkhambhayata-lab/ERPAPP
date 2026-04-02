@@ -43,14 +43,6 @@ namespace ERPAPP.Models
         // ================= EXTRA GENERAL =================
 
         [StringLength(20)]
-        public string? Range { get; set; }
-
-        [StringLength(20)]
-        public string? Collectorate { get; set; }
-
-        public int? GTA { get; set; }
-
-        [StringLength(20)]
         public string? VendorLocation { get; set; }
 
         public int? GSTNotToHold { get; set; }
@@ -58,15 +50,6 @@ namespace ERPAPP.Models
         public int? FixedDueDate { get; set; }
 
         public int? AggregateTurnover { get; set; }
-
-        [StringLength(30)]
-        public string? FaxNo { get; set; }
-
-        [StringLength(30)]
-        public string? ECCNo { get; set; }
-
-        [StringLength(30)]
-        public string? ServiceTaxRegNo { get; set; }
 
         // ================= CONTACT =================
 
@@ -134,7 +117,6 @@ namespace ERPAPP.Models
 
         // ================= BUSINESS =================
 
-        public int? VendorType { get; set; }
 
         [Required(ErrorMessage = "Vendor Category is required")]
         [StringLength(20)]
@@ -337,14 +319,6 @@ namespace ERPAPP.Models
         // ================= EXTRA GENERAL =================
 
         [StringLength(20)]
-        public string? Range { get; set; }
-
-        [StringLength(20)]
-        public string? Collectorate { get; set; }
-
-        public int? GTA { get; set; }
-
-        [StringLength(20)]
         public string? VendorLocation { get; set; }
 
         public int? GSTNotToHold { get; set; }
@@ -352,15 +326,6 @@ namespace ERPAPP.Models
         public int? FixedDueDate { get; set; }
 
         public int? AggregateTurnover { get; set; }
-
-        [StringLength(30)]
-        public string? FaxNo { get; set; }
-
-        [StringLength(30)]
-        public string? ECCNo { get; set; }
-
-        [StringLength(30)]
-        public string? ServiceTaxRegNo { get; set; }
 
         // ================= CONTACT =================
 
@@ -427,8 +392,6 @@ namespace ERPAPP.Models
         public string? IFSCCode { get; set; }
 
         // ================= BUSINESS =================
-
-        public int? VendorType { get; set; }
 
         [Required(ErrorMessage = "Vendor Category is required")]
         [StringLength(20)]

@@ -253,18 +253,11 @@ namespace ERPAPP.Repository
 
             // ================= EXTRA =================
 
-            new SqlParameter("@Range", model.Range ?? ""),
-            new SqlParameter("@Collectorate", model.Collectorate ?? ""),
-
             new SqlParameter("@VendorLocation", model.VendorLocation ?? ""),
 
             new SqlParameter("@GSTNotToHold", model.GSTNotToHold ?? 0),
             new SqlParameter("@FixedDueDate", model.FixedDueDate ?? 0),
             new SqlParameter("@AggregateTurnover", model.AggregateTurnover ?? 0),
-
-            new SqlParameter("@FaxNo", model.FaxNo ?? ""),
-            new SqlParameter("@ECCNo", model.ECCNo ?? ""),
-            new SqlParameter("@ServiceTaxRegNo", model.ServiceTaxRegNo ?? ""),
 
             // ================= CONTACT =================
 
@@ -296,7 +289,6 @@ namespace ERPAPP.Repository
 
             // ================= BUSINESS =================
 
-            new SqlParameter("@VendorType", model.VendorType ?? 0),
             new SqlParameter("@VendorCategory", model.VendorCategory ?? ""),
             new SqlParameter("@BusinessCategory", model.BusinessCategory ?? 0),
 
@@ -500,16 +492,12 @@ namespace ERPAPP.Repository
                 model.CountryCode = row["CountryCode"]?.ToString();
 
                 // ===== EXTRA =====
-                model.Range = row["Range"]?.ToString();
-                model.Collectorate = row["Collectorate"]?.ToString();
-                model.GTA = row["GTA"] != DBNull.Value ? Convert.ToInt32(row["GTA"]) : (int?)null;
+               
                 model.VendorLocation = row["VendorLocation"]?.ToString();
                 model.GSTNotToHold = row["GSTNotToHold"] != DBNull.Value ? Convert.ToInt32(row["GSTNotToHold"]) : (int?)null;
                 model.FixedDueDate = row["FixedDueDate"] != DBNull.Value ? Convert.ToInt32(row["FixedDueDate"]) : (int?)null;
                 model.AggregateTurnover = row["AggregateTurnover"] != DBNull.Value ? Convert.ToInt32(row["AggregateTurnover"]) : (int?)null;
-                model.FaxNo = row["FaxNo"]?.ToString();
-                model.ECCNo = row["ECCNo"]?.ToString();
-                model.ServiceTaxRegNo = row["ServiceTaxRegistrationNo"]?.ToString();
+               
 
                 // ===== CONTACT =====
                 model.ContactPerson = row["ContactPerson"]?.ToString();
@@ -536,7 +524,7 @@ namespace ERPAPP.Repository
                 model.IFSCCode = row["IFSCCode"]?.ToString();
 
                 // ===== BUSINESS =====
-                model.VendorType = row["VendorType"] != DBNull.Value ? Convert.ToInt32(row["VendorType"]) : (int?)null;
+                
                 model.VendorCategory = row["VendorCategory"]?.ToString();
                 model.BusinessCategory = row["BusinessCategory"] != DBNull.Value ? Convert.ToInt32(row["BusinessCategory"]) : (int?)null;
                 model.RelatedParty = row["RelatedParty"] != DBNull.Value && Convert.ToBoolean(row["RelatedParty"]);
