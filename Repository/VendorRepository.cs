@@ -492,12 +492,12 @@ namespace ERPAPP.Repository
                 model.CountryCode = row["CountryCode"]?.ToString();
 
                 // ===== EXTRA =====
-               
+
                 model.VendorLocation = row["VendorLocation"]?.ToString();
                 model.GSTNotToHold = row["GSTNotToHold"] != DBNull.Value ? Convert.ToInt32(row["GSTNotToHold"]) : (int?)null;
                 model.FixedDueDate = row["FixedDueDate"] != DBNull.Value ? Convert.ToInt32(row["FixedDueDate"]) : (int?)null;
                 model.AggregateTurnover = row["AggregateTurnover"] != DBNull.Value ? Convert.ToInt32(row["AggregateTurnover"]) : (int?)null;
-               
+
 
                 // ===== CONTACT =====
                 model.ContactPerson = row["ContactPerson"]?.ToString();
@@ -524,7 +524,7 @@ namespace ERPAPP.Repository
                 model.IFSCCode = row["IFSCCode"]?.ToString();
 
                 // ===== BUSINESS =====
-                
+
                 model.VendorCategory = row["VendorCategory"]?.ToString();
                 model.BusinessCategory = row["BusinessCategory"] != DBNull.Value ? Convert.ToInt32(row["BusinessCategory"]) : (int?)null;
                 model.RelatedParty = row["RelatedParty"] != DBNull.Value && Convert.ToBoolean(row["RelatedParty"]);
@@ -555,6 +555,8 @@ namespace ERPAPP.Repository
                 model.ConcessionalCode = row["ConcessionalCode"]?.ToString();
                 model.ThresholdOverlook = row["ThresholdOverlook"] != DBNull.Value && Convert.ToBoolean(row["ThresholdOverlook"]);
                 model.SurchargeOverlook = row["SurchargeOverlook"] != DBNull.Value && Convert.ToBoolean(row["SurchargeOverlook"]);
+
+                model.CompanyCode = row["CompanyCode"]?.ToString();
             }
 
             var editDropDownData = await GetVendorEditDropDownData();

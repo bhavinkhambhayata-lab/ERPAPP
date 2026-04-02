@@ -284,6 +284,8 @@ namespace ERPAPP.Models
         public string? LoginRowId { get; set; }
         public int DisplayNo { get; set; }
 
+        public string? CompanyCode { get; set; }
+
         // ================= BASIC =================
 
         [Required(ErrorMessage = "Name is required")]
