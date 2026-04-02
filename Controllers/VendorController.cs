@@ -69,8 +69,16 @@ namespace ERPAPP.Controllers
                     if (model.Email.ToLower().Contains("italiagroup.in"))
                         ModelState.AddModelError("Email", "italiagroup.in emails are not allowed");
 
-                    if (!Regex.IsMatch(model.Email, @"^[^@\s]+@[^@\s]+\.[^@\s]+$"))
-                        ModelState.AddModelError("Email", "Invalid email format");
+                    if (!string.IsNullOrWhiteSpace(model.Email))
+                    {
+                        var emails = model.Email.Split(',');
+
+                        if (emails.Any(e =>
+                            !Regex.IsMatch(e.Trim(), @"^[^@\s]+@[^@\s]+\.[^@\s]+$")))
+                        {
+                            ModelState.AddModelError("Email", "Invalid email format");
+                        }
+                    }
                 }
             }
 
@@ -85,6 +93,10 @@ namespace ERPAPP.Controllers
                 if (!string.IsNullOrWhiteSpace(model.GSTRegNo) && string.IsNullOrWhiteSpace(model.PANNo))
                 {
                     ModelState.AddModelError("PANNo", "PAN Number is mandatory when GST Registration Number is provided.");
+                }
+                if (!model.GSTReturnFrequency.HasValue || model.GSTReturnFrequency == 0)
+                {
+                    ModelState.AddModelError("GSTReturnFrequency", "GST Return Frequency is required.");
                 }
             }
 

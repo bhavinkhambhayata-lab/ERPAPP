@@ -1,8 +1,13 @@
 ﻿$(document).ready(function () {
 
+    $('.vendor-datepicker').datepicker({
+        dateFormat: "dd/mm/y",
+        changeMonth: true,
+        changeYear: true
+    });
 
     $("#EmailNotAvailable").change(function () {
-        debugger
+        
         if ($(this).is(":checked")) {
             $("#Email").attr("required", true);
             $("#emailStar").show();   // ⭐ show *
@@ -196,6 +201,8 @@
             }
         });
     });
+    
+    $('#ApplicationMethod').val('1');
 });
 function handleVendorCurrency() {
     
@@ -257,3 +264,4 @@ function handleVendorGenBusPostingGroup() {
         genBusPostingGroup.prop("disabled", true);
     }
 }
+

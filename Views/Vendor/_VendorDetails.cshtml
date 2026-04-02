@@ -219,17 +219,7 @@
                 <!-- RIGHT -->
                 <div class="col-4">
 
-                    <div class="row mt-2">
-                        <label class="col-4 col-form-label">Aggregate Turnover</label>
-                        <div class="col-8">
-                            <select asp-for="AggregateTurnover"
-                                    asp-items="@(new SelectList(Model.DropDownData.VendorAggregateTurnover, "Code", "Name"))"
-                                    class="form-select" disabled>
-                                <option value="">--Select--</option>
-                            </select>
-                            <span asp-validation-for="AggregateTurnover" class="text-danger"></span>
-                        </div>
-                    </div>
+                   
                     <div class="row mt-2">
                         <label class="col-4 col-form-label">Range</label>
                         <div class="col-8">
@@ -398,9 +388,6 @@
                             <span asp-validation-for="VendorCategory" class="text-danger"></span>
                         </div>
                     </div>
-
-                </div>
-                <div class="col-4">
                     <div class="row mt-2">
                         <label class="col-4 col-form-label">Purchaser Code<span class="required-star">*</span></label>
                         <div class="col-8">
@@ -414,6 +401,20 @@
 
                         </div>
                     </div>
+                    <div class="row mt-2">
+                        <label class="col-4 col-form-label">Location</label>
+                        <div class="col-8">
+                            <select asp-for="Location"
+                                    asp-items="@(new SelectList(Model.DropDownData.VendorAllLocations, "Code", "Name"))"
+                                    class="form-select">
+                                <option value="">--Select--</option>
+                            </select>
+                            <span asp-validation-for="Location" class="text-danger"></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-4">
+                    
                     <div class="row mt-2">
                         <label class="col-4 col-form-label">GTA</label>
                         <div class="col-8">
@@ -438,10 +439,6 @@
                         </div>
                     </div>
 
-
-
-                </div>
-                <div class="col-4">
                     <div class="row mt-2">
                         <label class="col-4 col-form-label">Subcontractor</label>
                         <div class="col-8">
@@ -478,17 +475,11 @@
                         </div>
                     </div>
 
-                    <div class="row mt-2">
-                        <label class="col-4 col-form-label">Location</label>
-                        <div class="col-8">
-                            <select asp-for="Location"
-                                    asp-items="@(new SelectList(Model.DropDownData.VendorAllLocations, "Code", "Name"))"
-                                    class="form-select">
-                                <option value="">--Select--</option>
-                            </select>
-                            <span asp-validation-for="Location" class="text-danger"></span>
-                        </div>
-                    </div>
+                </div>
+                <div class="col-4">
+                   
+
+                   
                 </div>
             </div>
 
@@ -622,6 +613,18 @@
                 <div class="col-4">
 
                     <div class="row mt-2">
+                        <label class="col-4 col-form-label">Aggregate Turnover</label>
+                        <div class="col-8">
+                            <select asp-for="AggregateTurnover"
+                                    asp-items="@(new SelectList(Model.DropDownData.VendorAggregateTurnover, "Code", "Name"))"
+                                    class="form-select" disabled>
+                                <option value="">--Select--</option>
+                            </select>
+                            <span asp-validation-for="AggregateTurnover" class="text-danger"></span>
+                        </div>
+                    </div>
+
+                    <div class="row mt-2">
                         <label class="col-4 col-form-label">GST Vendor Type<span class="required-star">*</span></label>
                         <div class="col-8">
                             <select asp-for="GSTVendorType"
@@ -702,7 +705,7 @@
                     <div class="row mt-2">
                         <label class="col-4 col-form-label">Intimation Date</label>
                         <div class="col-8">
-                            <input asp-for="MSMEIntimationDate" type="date" class="form-control" />
+                            <input type="text" asp-for="MSMEIntimationDate" class="form-control vendor-datepicker" />
                             <span asp-validation-for="MSMEIntimationDate" class="text-danger"></span>
                         </div>
                     </div>
@@ -710,8 +713,8 @@
                     <div class="row mt-2">
                         <label class="col-4 col-form-label">Effective Date</label>
                         <div class="col-8">
-                            <input asp-for="MSMEEffectiveDate" type="date" class="form-control" />
-                            <span asp-validation-for="MSMEEffectiveDate" class="text-danger"></span>
+                            <input type="text" asp-for="MSMEEffectiveDate" class="form-control vendor-datepicker" />
+                            <span asp-validation-for="MSMEEffectiveDate" class="text-danger "></span>
                         </div>
                     </div>
                 </div>

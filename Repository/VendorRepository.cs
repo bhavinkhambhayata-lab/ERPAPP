@@ -209,7 +209,7 @@ namespace ERPAPP.Repository
 
                         model.MasterCode = row["MasterCode"]?.ToString();
                         model.CompanyCode = row["CompanyCode"]?.ToString();
-                       
+
                         model.CreatedBy = row["CreatedBy"]?.ToString();
 
                         list.Add(model);
@@ -241,7 +241,7 @@ namespace ERPAPP.Repository
 
             new SqlParameter("@Name", model.Name ?? ""),
             new SqlParameter("@MasterCode", model.MasterCode ?? ""),
-         
+
 
             new SqlParameter("@Address", model.Address ?? ""),
             new SqlParameter("@Address2", model.Address2 ?? ""),
@@ -255,11 +255,11 @@ namespace ERPAPP.Repository
 
             new SqlParameter("@Range", model.Range ?? ""),
             new SqlParameter("@Collectorate", model.Collectorate ?? ""),
-         
+
             new SqlParameter("@VendorLocation", model.VendorLocation ?? ""),
 
-            new SqlParameter("@GSTNotToHold", model.GSTNotToHold),
-            new SqlParameter("@FixedDueDate", model.FixedDueDate ?? (object)DBNull.Value),
+            new SqlParameter("@GSTNotToHold", model.GSTNotToHold ?? 0),
+            new SqlParameter("@FixedDueDate", model.FixedDueDate ?? 0),
             new SqlParameter("@AggregateTurnover", model.AggregateTurnover ?? 0),
 
             new SqlParameter("@FaxNo", model.FaxNo ?? ""),
@@ -283,7 +283,7 @@ namespace ERPAPP.Repository
             // ================= GST =================
 
             new SqlParameter("@GSTVendorType", model.GSTVendorType),
-            new SqlParameter("@GSTReturnFrequency", model.GSTReturnFrequency),
+            new SqlParameter("@GSTReturnFrequency", model.GSTReturnFrequency ?? 0),
             new SqlParameter("@GSTRegNo", model.GSTRegNo ?? ""),
             new SqlParameter("@ARN", model.ARN ?? ""),
 
@@ -296,9 +296,9 @@ namespace ERPAPP.Repository
 
             // ================= BUSINESS =================
 
-            new SqlParameter("@VendorType", model.VendorType),
+            new SqlParameter("@VendorType", model.VendorType ?? 0),
             new SqlParameter("@VendorCategory", model.VendorCategory ?? ""),
-            new SqlParameter("@BusinessCategory", model.BusinessCategory),
+            new SqlParameter("@BusinessCategory", model.BusinessCategory ?? 0),
 
             new SqlParameter("@RelatedParty", model.RelatedParty ?? false),
             new SqlParameter("@Subcontractor", model.Subcontractor ?? false),
@@ -322,8 +322,8 @@ namespace ERPAPP.Repository
             // ================= MSME =================
 
             new SqlParameter("@MSMEUAMNo", model.MSMEUAMNo ?? ""),
-            new SqlParameter("@MSMEIntimationDate", model.MSMEIntimationDate ?? (object)DBNull.Value),
-            new SqlParameter("@MSMEEffectiveDate", model.MSMEEffectiveDate ?? (object)DBNull.Value),
+            new SqlParameter("@MSMEIntimationDate",model.MSMEIntimationDate.HasValue ? model.MSMEIntimationDate.Value: new DateTime(1753, 1, 1)),
+            new SqlParameter("@MSMEEffectiveDate",model.MSMEEffectiveDate.HasValue? model.MSMEEffectiveDate.Value: new DateTime(1753, 1, 1)),
 
             // ================= NOD/NOC =================
 

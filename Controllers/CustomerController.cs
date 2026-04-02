@@ -139,6 +139,22 @@ namespace ERPAPP.Controllers
                 ModelState.AddModelError("CurrencyCode", "Currency is required.");
             }
 
+            if (!string.IsNullOrWhiteSpace(model.Email))
+            {
+                var emails = model.Email.Split(',');
+
+                if (emails.Any(e =>
+                    !Regex.IsMatch(e.Trim(), @"^[^@\s]+@[^@\s]+\.[^@\s]+$")))
+                {
+                    ModelState.AddModelError("Email", "Invalid email format");
+                }
+            }
+            else
+            {
+                ModelState.AddModelError("Email", "Email is required.");
+            }
+
+
             //if (string.IsNullOrWhiteSpace(model.PaymentTermsCode))
             //    ModelState.AddModelError("PaymentTermsCode", "Payment Term is required.");
 
