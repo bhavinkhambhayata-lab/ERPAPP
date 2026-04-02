@@ -276,5 +276,12 @@ namespace ERPAPP.Controllers
         }
 
         #endregion
+
+
+        public async Task<IActionResult> GetVendorEditData(string vendorCode)
+        {
+            var model = await _vendorRepository.GetVendorEditData(vendorCode);
+            return PartialView("_EditVendor", model);
+        }
     }
 }

@@ -217,8 +217,9 @@
         var data = table.row(this).data();
 
         // 👇 VendorNo (tame je key field use karo cho)
-        var vendorNo = data[9]; // CompanyCode OR jo biju hoy to change karo
+        var vendorNo = data[7]; // CompanyCode OR jo biju hoy to change karo
 
+        
         if (vendorNo) {
             editVendorNo = vendorNo;
             $('#detailsBtn').click();

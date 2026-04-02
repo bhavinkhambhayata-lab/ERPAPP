@@ -40,6 +40,7 @@
 </div>
 
 <script>
+    var editVendorNo='';
         $(document).ready(function () {
 
         // Default load
@@ -50,16 +51,36 @@
         });
 
         $("#detailsBtn").click(function () {
-            loadDetails();
+            
+             if(editVendorNo!='')
+            {
+                 $.ajax({
+                            url: baseURL + 'Vendor/GetVendorEditData',
+                            type: 'GET',
+                            data: { vendorCode: editVendorNo },
+                            success: function (response) {
+                                $('#tabContent').html(response);
+                            },
+                            error: function () {
+                                alert('Error loading customer details');
+                            }
+                        });
+            }
+            else
+            {
+                loadDetails();
+            }
         });
 
         function loadList() {
+            editVendorNo='';
             $.get(baseURL +'Vendor/VendorList', function (data) {
                 $("#tabContent").html(data);
             });
         }
 
         function loadDetails() {
+            editVendorNo='';
             $.get(baseURL +'Vendor/VendorDetails', function (data) {
                 $("#tabContent").html(data);
             });
