@@ -7,15 +7,30 @@
     });
 
     $("#EmailNotAvailable").change(function () {
-        
+
         if ($(this).is(":checked")) {
             $("#Email").attr("required", true);
-            $("#emailStar").show();   // ⭐ show *
+            $("#emailStar").show();
         } else {
             $("#Email").removeAttr("required");
-            $("#emailStar").hide();   // ❌ hide *
+            $("#emailStar").hide();
+            $('[data-valmsg-for="Email"]').text('');
         }
 
+        validateEmailField();
+    });
+
+    $('#Email').on('input', function () {
+        var emailValue = $(this).val().trim();
+
+        if (emailValue !== "") {
+            $('#EmailNotAvailable').prop('checked', true);
+        } else {
+            $('#EmailNotAvailable').prop('checked', false);
+        }
+
+        $('#EmailNotAvailable').change(); // sync UI
+        validateEmailField(); // 🔥 live validation
     });
 
     //Empty city clears related fields
@@ -265,3 +280,35 @@ function handleVendorGenBusPostingGroup() {
     }
 }
 
+function validateEmailField() {
+    var email = $('#Email').val().trim();
+    var isChecked = $('#EmailNotAvailable').is(':checked');
+    var errorSpan = $('[data-valmsg-for="Email"]');
+
+    errorSpan.text(''); // clear old error
+
+    if (isChecked) {
+
+        if (email === "") {
+            errorSpan.text("Email is required");
+            return false;
+        }
+
+        if (email.toLowerCase().includes("italiagroup.in")) {
+            errorSpan.text("italiagroup.in emails are not allowed");
+            return false;
+        }
+
+        var emails = email.split(',');
+        var regex = /^[^@\s]+@[^@\s]+\.[^@\s]+$/;
+
+        for (var i = 0; i < emails.length; i++) {
+            if (!regex.test(emails[i].trim())) {
+                errorSpan.text("Invalid email format");
+                return false;
+            }
+        }
+    }
+
+    return true;
+}

@@ -32,9 +32,9 @@ namespace ERPAPP.Models
         [StringLength(20)]
         public string PostCode { get; set; } = string.Empty;
 
-        [Required(ErrorMessage = "State is required")]
+        //[Required(ErrorMessage = "State is required")]
         [StringLength(10)]
-        public string StateCode { get; set; } = string.Empty;
+        public string? StateCode { get; set; } = string.Empty;
 
         [Required(ErrorMessage = "Country is required")]
         [StringLength(10)]
