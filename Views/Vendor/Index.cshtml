@@ -20,13 +20,14 @@
             <!-- 🔥 TABS -->
             <ul class="nav nav-tabs">
                 <li class="nav-item">
-                    <button class="nav-link active" id="listBtn" data-bs-toggle="tab" data-bs-target="#listTab">
-                        List
+                    <button class="nav-link active" id="detailsBtn" data-bs-toggle="tab" data-bs-target="#detailsTab">
+                        Details
                     </button>
                 </li>
                 <li class="nav-item">
-                    <button class="nav-link" id="detailsBtn" data-bs-toggle="tab" data-bs-target="#detailsTab">
-                        Details
+                  
+                    <button class="nav-link" id="listBtn" data-bs-toggle="tab" data-bs-target="#listTab">
+                        List
                     </button>
                 </li>
             </ul>
@@ -44,7 +45,7 @@
         $(document).ready(function () {
 
         // Default load
-        loadList();
+        loadDetails();
 
         $("#listBtn").click(function () {
             loadList();
