@@ -33,8 +33,8 @@ namespace ERPAPP.Helper
         public enum CustomerType
         {
             Channel = 1,
-            InstitutionalClient = 2,
-            EndClient = 3
+            Client = 2,
+            Specifier = 3
         }
 
         public enum CommissionType
