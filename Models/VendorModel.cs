@@ -62,10 +62,9 @@ namespace ERPAPP.Models
         [RegularExpression(@"^(\+?[\d\-]+)(,\+?[\d\-]+)*$", ErrorMessage = "Invalid mobile phone number")]
         public string MobileNo { get; set; } = string.Empty;
 
-        [Required(ErrorMessage = "Phone No is required")]
         [StringLength(30)]
         [RegularExpression(@"^(\+?[\d\-]+)(,\+?[\d\-]+)*$", ErrorMessage = "Invalid phone number")]
-        public string PhoneNo { get; set; } = string.Empty;
+        public string? PhoneNo { get; set; } = string.Empty;
 
         [StringLength(80)]
         public string? Email { get; set; }
@@ -340,10 +339,10 @@ namespace ERPAPP.Models
         [RegularExpression(@"^(\+?[\d\-]+)(,\+?[\d\-]+)*$", ErrorMessage = "Invalid mobile phone number")]
         public string MobileNo { get; set; } = string.Empty;
 
-        [Required(ErrorMessage = "Phone No is required")]
+        
         [StringLength(30)]
         [RegularExpression(@"^(\+?[\d\-]+)(,\+?[\d\-]+)*$", ErrorMessage = "Invalid phone number")]
-        public string PhoneNo { get; set; } = string.Empty;
+        public string? PhoneNo { get; set; } = string.Empty;
 
         [StringLength(80)]
         public string? Email { get; set; }
