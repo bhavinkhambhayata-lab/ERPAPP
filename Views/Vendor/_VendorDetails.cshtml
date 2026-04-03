@@ -81,10 +81,34 @@
         height: 60px;
     }
 
+    
+    /* --------------Drop Down Related changes-----------------*/
+    .select2-container--bootstrap-5 .select2-selection {
+        height: 32px !important;
+        min-height: 32px;
+        padding: 0.25rem 0.75rem;
+        border: 1px solid #ced4da;
+        border-radius: 0.375rem;
+        display: flex;
+        align-items: center;
+    }
 
+    
+    .select2-container--bootstrap-5 .select2-selection__rendered {
+        line-height: 20px !important;
+        padding-left: 0 !important;
+    }
 
+   
+    .select2-container--bootstrap-5 .select2-selection__arrow {
+        height: 100%;
+        right: 10px;
+    }
 
-
+    .select2-container {
+        width: 100% !important;
+    }
+    /* ----------------------------------------------------------- */
 
 </style>
 
@@ -166,7 +190,7 @@
                     <div class="row mt-2">
                         <label class="col-4 col-form-label">Post Code<span class="required-star">*</span></label>
                         <div class="col-8">
-                            <select asp-for="PostCode" class="form-select">
+                            <select asp-for="PostCode" class="form-select searchable-dropdown">
                                 <option value="">--Select--</option>
                             </select>
                             <span asp-validation-for="PostCode" class="text-danger"></span>
@@ -190,7 +214,7 @@
                         <div class="col-8">
                             <select asp-for="CountryCode"
                                     asp-items="@(new SelectList(Model.DropDownData.Countries, "Code", "Name"))"
-                                    class="form-select">
+                                    class="form-select searchable-dropdown">
                                 <option value="">--Select--</option>
                             </select>
 
@@ -396,7 +420,7 @@
 
                             <select asp-for="PurchaserCode"
                                     asp-items="@(new SelectList(Model.DropDownData.VendorPurchasers, "Code", "Name"))"
-                                    class="form-select">
+                                    class="form-select searchable-dropdown">
                                 <option value="">--Select--</option>
                             </select>
                             <span asp-validation-for="PurchaserCode" class="text-danger"></span>

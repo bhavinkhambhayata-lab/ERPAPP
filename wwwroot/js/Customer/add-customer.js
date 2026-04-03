@@ -1,5 +1,12 @@
 ﻿$(document).ready(function () {
 
+    $('.searchable-dropdown').select2({
+        theme: "bootstrap-5",   // 🔥 IMPORTANT
+        placeholder: "--Select--",
+        allowClear: true,
+        width: '100%'
+    });
+
     $("#Name").keyup(function () {
 
         var searchText = $(this).val();

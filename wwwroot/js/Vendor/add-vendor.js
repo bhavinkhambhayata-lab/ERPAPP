@@ -1,10 +1,75 @@
 ﻿$(document).ready(function () {
 
-    $('.vendor-datepicker').datepicker({
-        dateFormat: "dd/mm/y",
-        changeMonth: true,
-        changeYear: true
+    $('.searchable-dropdown').select2({
+        theme: "bootstrap-5",   // 🔥 IMPORTANT
+        placeholder: "--Select--",
+        allowClear: true,
+        width: '100%'
     });
+
+    $('.vendor-datepicker').datepicker({
+        dateFormat: "dd/mm/yy", 
+        changeMonth: true,
+        changeYear: true,
+
+        onSelect: function () {
+            var input = $(this);
+            var date = input.datepicker('getDate');
+
+            formatDate(input, date);
+            clearError(input);
+        }
+    });
+
+   
+    $('.vendor-datepicker').on('blur', function () {
+
+        var input = $(this);
+        var value = input.val().trim();
+
+        clearError(input);
+
+        if (value === '') return;
+
+        var regex = /^(0[1-9]|[12][0-9]|3[01])\/(0[1-9]|1[0-2])\/\d{4}$/;
+
+        if (!regex.test(value)) {
+            showError(input, "Invalid date format (dd/mm/yyyy)");
+            return;
+        }
+
+        try {
+            var parsedDate = $.datepicker.parseDate('dd/mm/yy', value);
+
+            formatDate(input, parsedDate);
+            input.datepicker('setDate', parsedDate);
+
+        } catch (e) {
+            showError(input, "Invalid date");
+        }
+    });
+
+    function formatDate(input, date) {
+        var day = ("0" + date.getDate()).slice(-2);
+        var month = ("0" + (date.getMonth() + 1)).slice(-2);
+        var year = date.getFullYear();
+
+        input.val(day + '/' + month + '/' + year);
+    }
+
+    function showError(input, message) {
+        var span = $('[data-valmsg-for="' + input.attr('name') + '"]');
+
+        input.addClass('input-validation-error');
+        span.text(message);
+    }
+
+    function clearError(input) {
+        var span = $('[data-valmsg-for="' + input.attr('name') + '"]');
+
+        input.removeClass('input-validation-error');
+        span.text('');
+    }
 
     $("#EmailNotAvailable").change(function () {
 
@@ -167,6 +232,45 @@
             $('#Email').focus();
             return;
         }
+
+        var isDateValid = true;
+
+        $('.vendor-datepicker').each(function () {
+
+            var input = $(this);
+            var value = input.val().trim();
+
+            clearError(input);
+
+            if (value === '') return;
+
+            var regex = /^(0[1-9]|[12][0-9]|3[01])\/(0[1-9]|1[0-2])\/\d{4}$/;
+
+            if (!regex.test(value)) {
+                showError(input, "Invalid date format (dd/mm/yyyy)");
+                isDateValid = false;
+                return;
+            }
+
+            try {
+                var parsedDate = $.datepicker.parseDate('dd/mm/yy', value);
+
+                var day = ("0" + parsedDate.getDate()).slice(-2);
+                var month = ("0" + (parsedDate.getMonth() + 1)).slice(-2);
+                var year = parsedDate.getFullYear();
+
+                var formatted = day + '/' + month + '/' + year;
+
+                input.val(formatted);
+                input.datepicker('setDate', parsedDate);
+
+            } catch (e) {
+                showError(input, "Invalid date");
+                isDateValid = false;
+            }
+        });
+
+        if (!isDateValid) return;
 
         $.ajax({
             url: baseURL + 'Vendor/SaveVendorMaster',

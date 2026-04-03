@@ -243,7 +243,7 @@
                     <div class="row mt-2">
                         <label class="col-4 col-form-label">MSME Intimation Date</label>
                         <div class="col-8">
-                            <input type="text" asp-for="MSMEIntimationDate" class="form-control vendor-datepicker" value="@(Model.MSMEIntimationDate?.ToString("dd/MM/yy"))" disabled />
+                            <input type="text" asp-for="MSMEIntimationDate" class="form-control vendor-datepicker" value="@(Model.MSMEIntimationDate?.ToString("dd/MM/yyyy"))" disabled />
                             <span asp-validation-for="MSMEIntimationDate" class="text-danger"></span>
                         </div>
                     </div>
@@ -251,7 +251,7 @@
                     <div class="row mt-2">
                         <label class="col-4 col-form-label">MSME Effective Date</label>
                         <div class="col-8">
-                            <input type="text" asp-for="MSMEEffectiveDate" class="form-control vendor-datepicker" value="@(Model.MSMEEffectiveDate?.ToString("dd/MM/yy"))" disabled />
+                            <input type="text" asp-for="MSMEEffectiveDate" class="form-control vendor-datepicker" value="@(Model.MSMEEffectiveDate?.ToString("dd/MM/yyyy"))" disabled />
                             <span asp-validation-for="MSMEEffectiveDate" class="text-danger "></span>
                         </div>
                     </div>
