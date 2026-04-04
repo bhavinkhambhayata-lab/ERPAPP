@@ -141,5 +141,42 @@ namespace ERPAPP.Helper
             LessThanTwentyLakh = 2
         }
 
+        #region Fixed Asset Module
+        public enum FixedAssetMainAssetComponet
+        {
+            [Display(Name = "Main Asset")]
+            MainAsset = 1,
+
+            [Display(Name = "Component")]
+            Component = 2
+        }
+
+        public enum FixedAssetDepreciationMethod
+        {
+            [Display(Name = "Straight-Line")]
+            StraightLine = 1,
+
+            [Display(Name = "Declining-Balance 1")]
+            DecliningBalance = 2
+        }
+
+        public enum FixedAssetExciseAccountingType
+        {
+            [Display(Name = "With CENTVAT")]
+            WithCENTVAT = 1,
+
+            [Display(Name = "Without CENTVAT")]
+            WithoutCENTVAT = 2
+        }
+
+        public enum FixedAssetDepreciationBookCode
+        {
+            [Display(Name = "COMPANY")]
+            COMPANY = 1,
+
+            [Display(Name = "INCOME TAX")]
+            INCOMETAX = 2
+        }
+        #endregion
     }
 }

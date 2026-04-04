@@ -1,0 +1,92 @@
+﻿
+<script src="~/lib/jquery/dist/jquery.min.js" asp-append-version="true"></script>
+
+<script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+<script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
+
+<script src="~/js/customer/add-fixed-asset.js" asp-append-version="true"></script>
+
+<link rel="stylesheet" href="https://code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
+<script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
+
+<div class="container-fluid mt-4">
+
+    <div class="row">
+        <div class="col-lg-12">
+
+            <!-- 🔥 TITLE -->
+            <h4 class="mb-3 fw-semibold">Fixed Asset Management</h4>
+
+            <!-- 🔥 TABS -->
+            <ul class="nav nav-tabs">
+                <li class="nav-item">
+                    <button class="nav-link active" id="detailsBtn" data-bs-toggle="tab" data-bs-target="#detailsTab">
+                        Details
+                    </button>
+                </li>
+                <li class="nav-item">
+
+                    <button class="nav-link" id="listBtn" data-bs-toggle="tab" data-bs-target="#listTab">
+                        List
+                    </button>
+                </li>
+            </ul>
+            <!-- Content -->
+            <div class="mt-3" id="tabContent">
+                <!-- AJAX content load thase -->
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<script>
+    var editFixedAssetNo='';
+        $(document).ready(function () {
+
+        // Default load
+        loadDetails();
+
+        $("#listBtn").click(function () {
+            loadList();
+        });
+
+        $("#detailsBtn").click(function () {
+
+             if(editFixedAssetNo!='')
+            {
+                 // $.ajax({
+                 //            url: baseURL + 'Vendor/GetVendorEditData',
+                 //            type: 'GET',
+                 //            data: { vendorCode: editFixedAssetNo },
+                 //            success: function (response) {
+                 //                $('#tabContent').html(response);
+                 //            },
+                 //            error: function () {
+                 //                alert('Error loading customer details');
+                 //            }
+                 //        });
+            }
+            else
+            {
+                loadDetails();
+            }
+        });
+
+        function loadList() {
+            editFixedAssetNo='';
+            // $.get(baseURL +'Vendor/VendorList', function (data) {
+            //     $("#tabContent").html(data);
+            // });
+        }
+
+        function loadDetails() {
+            editFixedAssetNo='';
+            $.get(baseURL +'FixedAsset/FixedAssetDetails', function (data) {
+                $("#tabContent").html(data);
+            });
+        }
+
+    });
+</script>
+
