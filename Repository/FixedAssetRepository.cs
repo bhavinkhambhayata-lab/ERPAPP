@@ -101,7 +101,7 @@ namespace ERPAPP.Repository
                  .Select(e => new MainAssetComponentModel
                  {
                      Code = ((int)e).ToString(),
-                     Name = e.ToString()
+                     Name = e.GetDisplayName().ToString()
                  }).ToList();
 
             dropDown.DepreciationMethodList = Enum.GetValues(typeof(FixedAssetDepreciationMethod))
@@ -109,7 +109,7 @@ namespace ERPAPP.Repository
                 .Select(e => new DepreciationMethodModel
                 {
                     Code = ((int)e).ToString(),
-                    Name = e.ToString()
+                    Name = e.GetDisplayName().ToString()
                 }).ToList();
 
             dropDown.ExciseAccountingTypeList = Enum.GetValues(typeof(FixedAssetExciseAccountingType))
@@ -117,15 +117,15 @@ namespace ERPAPP.Repository
                 .Select(e => new ExciseAccountingTypeModel
                 {
                     Code = ((int)e).ToString(),
-                    Name = e.ToString()
+                    Name = e.GetDisplayName().ToString()
                 }).ToList();
 
             dropDown.DepreciationBookCode = Enum.GetValues(typeof(FixedAssetDepreciationBookCode))
                 .Cast<FixedAssetDepreciationBookCode>()
                 .Select(e => new DepreciationBookCodeModel
                 {
-                    Code = ((int)e).ToString(),
-                    Name = e.ToString()
+                    Code = e.GetDisplayName().ToString(),
+                    Name = e.GetDisplayName().ToString()
                 }).ToList();
             #endregion
 
@@ -173,6 +173,113 @@ namespace ERPAPP.Repository
             }
 
             return list;
+        }
+
+        public async Task<List<FixedAssetComponetOfMainAssetModel>> GetFixedAssetComponentWithDivision(string division)
+        {
+            List<FixedAssetComponetOfMainAssetModel> list = new List<FixedAssetComponetOfMainAssetModel>();
+
+            SqlParameter[] param = new SqlParameter[]
+            {
+                 new SqlParameter("@Division", division)
+            };
+
+            DataSet ds = _db.GetDataSet("GetFixedAssetComponetWithDivision", param);
+
+            if (ds != null && ds.Tables.Count > 0)
+            {
+                list = ds.Tables[0].AsEnumerable().Select(row => new FixedAssetComponetOfMainAssetModel
+                {
+                    Code = row["Code"]?.ToString(),
+                    Name = row["Name"]?.ToString()
+                }).ToList();
+            }
+
+            return list;
+        }
+
+        public async Task<bool> InsertFixedAssetData(FixedAssetModel model)
+        {
+            try
+            {
+                // ================= BUSINESS LOGIC =================
+
+                if (model.DepreciationMethod == 0) // Straight-Line
+                {
+                    model.DecliningBalancePercent = 0;
+                }
+                else if (model.DepreciationMethod == 1) // Declining-Balance
+                {
+                    model.StraightLinePercent = 0;
+                }
+
+                // ================= PARAMETERS =================
+
+                SqlParameter[] param =
+                {
+                        new SqlParameter("@LoginRowId", model.LoginRowID),
+                        new SqlParameter("@Brand", model.Brand),
+                        new SqlParameter("@DisplayNo", model.DisplayNo),
+
+                        new SqlParameter("@FAClassCode", model.FAClassCode),
+                        new SqlParameter("@FASubclassCode", model.FASubclassCode),
+                        new SqlParameter("@Description", model.Description),
+                        new SqlParameter("@Description2", (object?)model.Description2 ?? DBNull.Value),
+                        new SqlParameter("@SerialNo", (object?)model.SerialNo ?? DBNull.Value),
+
+                        new SqlParameter("@MainAssetComponent", model.MainAssetComponent ?? 0),
+                        new SqlParameter("@ComponentOfMainAsset", (object?)model.ComponentOfMainAsset ?? DBNull.Value),
+
+                        new SqlParameter("@LocationCode", (object?)model.LocationCode ?? DBNull.Value),
+                        new SqlParameter("@FALocationCode", (object?)model.FALocationCode ?? DBNull.Value),
+
+                        new SqlParameter("@GenProdPostingGroup", model.GenProdPostingGroup),
+                        new SqlParameter("@FAPostingGroup", model.FAPostingGroup),
+
+                        new SqlParameter("@ExciseAccountingType", model.ExciseAccountingType ?? 0),
+
+                        new SqlParameter("@TaxGroupCode", (object?)model.TaxGroupCode ?? DBNull.Value),
+                        new SqlParameter("@VATProductPostingGroup", (object?)model.VATProductPostingGroup ?? DBNull.Value),
+
+                        new SqlParameter("@DepreciationBookCode", (object?)model.DepreciationBookCode ?? DBNull.Value),
+                        new SqlParameter("@DepreciationMethod", model.DepreciationMethod ?? 0),
+
+                        new SqlParameter("@DepreciationStartingDate", (object?)model.DepreciationStartingDate ?? DBNull.Value),
+
+                        new SqlParameter("@StraightLinePercent", model.StraightLinePercent ?? 0),
+                        new SqlParameter("@DecliningBalancePercent", model.DecliningBalancePercent ?? 0),
+
+                        new SqlParameter("@InstallationDate", (object?)model.InstallationDate ?? DBNull.Value),
+
+                        new SqlParameter("@MasterCode", (object?)model.MasterCode ?? DBNull.Value),
+                        new SqlParameter("@CompanyCode", (object?)model.CompanyCode ?? DBNull.Value),
+                         new SqlParameter("@DivisionStr", model.DivisionStr),
+                        new SqlParameter("@Division", model.Division),
+
+                        new SqlParameter("@GSTGroupCode", (object?)model.GSTGroupCode ?? DBNull.Value),
+                        new SqlParameter("@HSNSACCode", (object?)model.HSNSACCode ?? DBNull.Value),
+                       
+                    };
+
+                // ================= EXECUTE =================
+
+                var resultObj = _db.ExecuteScalar("FixedAsset_InsertDataWithCompanyData", param);
+
+                string resultValue = resultObj?.ToString();
+
+                // ================= RESULT CHECK =================
+
+                if (!string.IsNullOrEmpty(resultValue) && (resultValue.StartsWith("AFA") || resultValue.StartsWith("MFA") || resultValue.StartsWith("FA")))
+                {
+                    return true;
+                }
+
+                return false;
+            }
+            catch (Exception ex)
+            {
+                return false;
+            }
         }
     }
 }

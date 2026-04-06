@@ -9,7 +9,7 @@
 <script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
 <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
 
-<script src="~/js/fixedasset/add-fixed-asset.js"></script>
+<script src="~/js/fixedasset/add-fixed-asset.js" asp-append-version="true"></script>
 
 <style>
     body {
@@ -217,7 +217,10 @@
                     <div class="row mt-2">
                         <label class="col-4 col-form-label">Component of Main Asset</label>
                         <div class="col-8">
-                            <input asp-for="ComponentOfMainAsset" class="form-control" />
+                            <select asp-for="ComponentOfMainAsset"
+                                    class="form-select">
+                                <option value="">--Select--</option>
+                            </select>
                             <span asp-validation-for="ComponentOfMainAsset" class="text-danger"></span>
                         </div>
                     </div>
@@ -343,13 +346,13 @@
 
                 <div class="col-2">
                     <label>Straight-Line %</label>
-                    <input asp-for="StraightLinePercent" class="form-control" />
+                    <input asp-for="StraightLinePercent" type="number" class="form-control" value="0" disabled />
                     <span asp-validation-for="StraightLinePercent" class="text-danger"></span>
                 </div>
 
                 <div class="col-2">
                     <label>Declining-Balance %</label>
-                    <input asp-for="DecliningBalancePercent" class="form-control" />
+                    <input asp-for="DecliningBalancePercent" type="number" class="form-control" value="0" disabled />
                     <span asp-validation-for="DecliningBalancePercent" class="text-danger"></span>
                 </div>
 

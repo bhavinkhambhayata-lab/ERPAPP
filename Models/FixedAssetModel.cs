@@ -30,8 +30,8 @@ namespace ERPAPP.Models
         public string? TaxGroupCode { get; set; }
         public string? VATProductPostingGroup { get; set; }
         public string? DepreciationBookCode { get; set; }
-        [Required(ErrorMessage = "Depreciation Method is required")]
-        public int DepreciationMethod { get; set; }
+        //[Required(ErrorMessage = "Depreciation Method is required")]
+        public int? DepreciationMethod { get; set; }
         public DateTime? DepreciationStartingDate { get; set; }
         [Range(0, 100, ErrorMessage = "Straight Line % must be between 0 and 100")]
         public double? StraightLinePercent { get; set; }
@@ -69,6 +69,8 @@ namespace ERPAPP.Models
     public class DepreciationBookCodeModel : BaseDropDown { }
     public class FAHSNModel : BaseDropDown { }
     public class FixedAssetDivisionModel : BaseDropDown { }
+
+    public class FixedAssetComponetOfMainAssetModel : BaseDropDown { }
 
     public class FixedAssetDropDownModel
     {

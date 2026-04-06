@@ -51,6 +51,50 @@ namespace ERPAPP.Controllers
         {
             model.LoginRowID = Convert.ToInt16(HttpContext.Session.GetInt32("UserRowId").ToString());
 
+            if (model.FAClassCode == null || model.FAClassCode == "")
+                ModelState.AddModelError("FAClassCode", "FA Class Code is required");
+
+            if (model.FASubclassCode == null || model.FASubclassCode == "")
+                ModelState.AddModelError("FASubClassCode", "FA Subclass Code is required");
+
+            if (string.IsNullOrWhiteSpace(model.Description))
+                ModelState.AddModelError("Description", "Description is required");
+
+            if (string.IsNullOrWhiteSpace(model.GenProdPostingGroup))
+                ModelState.AddModelError("GenProdPostingGroup", "Gen Prod Posting Group is required");
+
+            if (string.IsNullOrWhiteSpace(model.FAPostingGroup))
+                ModelState.AddModelError("FAPostingGroup", "FA Posting Group is required");
+
+            if (!model.DepreciationMethod.HasValue)
+            {
+                ModelState.AddModelError("DepreciationMethod", "Depreciation Method is required");
+            }
+
+
+            // 🔢 Numeric + Range Validation
+            if (model.DepreciationMethod == 0) // Straight Line
+            {
+                if (model.StraightLinePercent != null)
+                {
+                    if (model.StraightLinePercent < 0 || model.StraightLinePercent > 100)
+                    {
+                        ModelState.AddModelError("StraightLinePercent", "Straight-Line % must be between 0 to 100");
+                    }
+                }
+            }
+
+            if (model.DepreciationMethod == 1 || model.DepreciationMethod == 2)
+            {
+                if (model.DecliningBalancePercent != null)
+                {
+                    if (model.DecliningBalancePercent < 0 || model.DecliningBalancePercent > 100)
+                    {
+                        ModelState.AddModelError("DecliningBalancePercent", "Declining Balance % must be between 0 to 100");
+                    }
+                }
+            }
+
             if (!ModelState.IsValid)
             {
                 return Json(new
@@ -68,7 +112,7 @@ namespace ERPAPP.Controllers
 
             try
             {
-                var insertResult = true;
+                var insertResult = await _fixedAssetRepository.InsertFixedAssetData(model);
 
                 if (insertResult)
                 {
@@ -94,6 +138,26 @@ namespace ERPAPP.Controllers
                     success = false,
                     message = "Something went wrong while saving."
                 });
+            }
+        }
+
+        [HttpGet]
+        public async Task<JsonResult> GetFixedAssetComponetWithDivision(string division)
+        {
+            try
+            {
+                if (string.IsNullOrEmpty(division))
+                {
+                    return Json(new List<FAHSNModel>());
+                }
+
+                var data = await _fixedAssetRepository.GetFixedAssetComponentWithDivision(division);
+
+                return Json(data);
+            }
+            catch (Exception ex)
+            {
+                return Json(new { success = false, message = ex.Message });
             }
         }
     }

@@ -1,5 +1,45 @@
 ﻿$(document).ready(function () {
 
+    $(".fixed-asset-datepicker").datepicker({
+        dateFormat: "dd/mm/y",   // 👈 dd/MM/yyyy format
+        changeMonth: true,
+        changeYear: true
+    });
+
+    $('#DepreciationMethod').change(function () {
+
+        var selectedText = $('#DepreciationMethod option:selected').text().trim();
+
+        if (selectedText === 'Straight-Line') {
+
+            $('#StraightLinePercent').prop('disabled', false);
+            $('#DecliningBalancePercent').prop('disabled', true).val('0');
+
+        }
+        else if (selectedText === 'Declining-Balance 1') {
+
+            $('#DecliningBalancePercent').prop('disabled', false);
+            $('#StraightLinePercent').prop('disabled', true).val('0');
+
+        }
+        else {
+
+            $('#StraightLinePercent').prop('disabled', false);
+            $('#DecliningBalancePercent').prop('disabled', false);
+
+        }
+
+    });
+
+    $('#Division').change(function () {
+
+        $('#MainAssetComponent').val('');
+
+        $('#ComponentOfMainAsset').empty()
+            .append('<option value="">--Select--</option>');
+    });
+
+
     $('#GSTGroupCode').change(function () {
 
         var gstCode = $(this).val();
@@ -44,6 +84,8 @@
         // disabled fields
         formData.append("DisplayNo", $('#DisplayNo').text());
         formData.append("MasterCode", $('#MasterCode').val());
+        formData.append("Division", $("#Division").val());
+        formData.append("DivisionStr", $('#Division option:selected').text());
 
         $.ajax({
             url: baseURL + 'FixedAsset/SaveFixedAssetMaster',
@@ -92,6 +134,60 @@
 
             }
         });
+    });
+
+    $('#MainAssetComponent').change(function () {
+        debugger
+        var division = $('#Division').val();
+        var divisionText = $('#Division option:selected').text();
+
+        // Check Division selected or not
+        if (!division || division === '') {
+            showToast('Please select Division first','danger');
+
+            // reset dropdown
+            $('#ComponentOfMainAsset').empty();
+            $('#ComponentOfMainAsset').append('<option value="">--Select--</option>');
+            return;
+        }
+
+        var selectedText = $(this).find("option:selected").text();
+
+        if (selectedText && selectedText.trim() === 'Main Asset') {
+
+            $('#ComponentOfMainAsset').empty()
+                .append('<option value="">--Select--</option>');
+
+            return;
+        }
+
+
+        $('#ComponentOfMainAsset').empty();
+        $('#ComponentOfMainAsset').append('<option value="">--Select--</option>');
+
+        $.ajax({
+            url: baseURL + 'FixedAsset/GetFixedAssetComponetWithDivision',
+            type: 'GET',
+            data: {
+                division: divisionText
+            },
+            success: function (data) {
+
+                $.each(data, function (i, item) {
+                    $('#ComponentOfMainAsset').append(
+                        $('<option>', {
+                            value: item.code,
+                            text: item.name
+                        })
+                    );
+                });
+
+            },
+            error: function () {
+                alert('Error loading Component data');
+            }
+        });
+
     });
 
 });

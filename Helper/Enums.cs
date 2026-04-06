@@ -145,19 +145,19 @@ namespace ERPAPP.Helper
         public enum FixedAssetMainAssetComponet
         {
             [Display(Name = "Main Asset")]
-            MainAsset = 1,
+            MainAsset = 0,
 
             [Display(Name = "Component")]
-            Component = 2
+            Component = 1
         }
 
         public enum FixedAssetDepreciationMethod
         {
             [Display(Name = "Straight-Line")]
-            StraightLine = 1,
+            StraightLine = 0,
 
             [Display(Name = "Declining-Balance 1")]
-            DecliningBalance = 2
+            DecliningBalance = 1
         }
 
         public enum FixedAssetExciseAccountingType

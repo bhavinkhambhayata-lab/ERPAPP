@@ -9,6 +9,8 @@ namespace ERPAPP.Interfaces
 
         Task<List<FAHSNModel>> GetFixedAssetHSNDataWithGSTGroupCode(string gstGroupCode);
 
+        Task<List<FixedAssetComponetOfMainAssetModel>> GetFixedAssetComponentWithDivision(string division);
 
+        Task<bool> InsertFixedAssetData(FixedAssetModel model);
     }
 }
