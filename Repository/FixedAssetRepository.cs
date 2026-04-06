@@ -218,7 +218,6 @@ namespace ERPAPP.Repository
                 SqlParameter[] param =
                 {
                         new SqlParameter("@LoginRowId", model.LoginRowID),
-                        new SqlParameter("@Brand", model.Brand),
                         new SqlParameter("@DisplayNo", model.DisplayNo),
 
                         new SqlParameter("@FAClassCode", model.FAClassCode),
