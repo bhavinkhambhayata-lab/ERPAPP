@@ -171,5 +171,36 @@ namespace ERPAPP.Controllers
             var data = await _fixedAssetRepository.GetFixedAssetList(searchDescription);
             return Json(data);
         }
+
+
+        [HttpGet]
+        public async Task<IActionResult> GetFixedAssetEditData(string fixedAssetNo)
+        {
+            var data = await _fixedAssetRepository.GetFixedAssetEditData(fixedAssetNo);
+            if (data == null)
+            {
+                return Json(new
+                {
+                    success = false,
+                    message = "Fixed Asset not found."
+                });
+            }
+
+            var dropdownData = await _fixedAssetRepository.GetFixedAssetEditDropDownData();
+
+            data.DropDownData = dropdownData.DropDownData;
+
+            if (data.DivisionStr != null)
+            {
+                data.DropDownData.ComponentOfMainAssetList = await _fixedAssetRepository.GetFixedAssetComponentWithDivision(data.DivisionStr);
+            }
+            
+            if(data.GSTGroupCode != null)
+            {
+                data.DropDownData.FAHSNList = await _fixedAssetRepository.GetFixedAssetHSNDataWithGSTGroupCode(data.GSTGroupCode);
+            }
+
+            return PartialView("_EditFixedAsset", data);
+        }
     }
 }

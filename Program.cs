@@ -2,6 +2,7 @@ using ERPAPP.Filters;
 using ERPAPP.Helper;
 using ERPAPP.Interfaces;
 using ERPAPP.Repository;
+using Microsoft.AspNetCore.HttpOverrides;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -26,6 +27,11 @@ builder.Services.AddSession(options =>
 
 var app = builder.Build();
 
+// IIS Forwarded Headers (VERY IMPORTANT for HTTPS loop fix)
+app.UseForwardedHeaders(new ForwardedHeadersOptions
+{
+    ForwardedHeaders = ForwardedHeaders.XForwardedProto
+});
 
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())

@@ -322,5 +322,197 @@ namespace ERPAPP.Repository
                 return new List<GetFixedAssetListModel>();
             }
         }
+
+        public async Task<GetFixedAssetEditData> GetFixedAssetEditData(string fixedAssetNo)
+        {
+                    SqlParameter[] param =
+             {
+                new SqlParameter("@CompanyCode", fixedAssetNo)
+            };
+
+            DataSet ds = _db.GetDataSet("GetFixedAsset_GetEditData", param);
+
+            GetFixedAssetEditData model = new GetFixedAssetEditData();
+
+            // ================= MAIN DATA =================
+            if (ds.Tables.Count > 0 && ds.Tables[0].Rows.Count > 0)
+            {
+                DataRow row = ds.Tables[0].Rows[0];
+
+                model.RowID = Convert.ToInt32(row["RowID"]);
+                model.DisplayNo = Convert.ToInt32(row["DisplayNo"]);
+
+                // ===== BASIC =====
+                model.FAClassCode = row["FAClassCode"]?.ToString();
+                model.FASubclassCode = row["FASubclassCode"]?.ToString();
+                model.Description = row["Description"]?.ToString();
+                model.Description2 = row["Description2"]?.ToString();
+                model.SerialNo = row["SerialNo"]?.ToString();
+
+                // ===== ASSET =====
+                model.MainAssetComponent = row["MainAssetComponent"] as int?;
+                model.ComponentOfMainAsset = row["ComponentOfMainAsset"]?.ToString();
+
+                model.LocationCode = row["LocationCode"]?.ToString();
+                model.FALocationCode = row["FALocationCode"]?.ToString();
+
+                // ===== POSTING =====
+                model.GenProdPostingGroup = row["GenProdPostingGroup"]?.ToString();
+                model.FAPostingGroup = row["FAPostingGroup"]?.ToString();
+
+                model.ExciseAccountingType = row["ExciseAccountingType"] as int?;
+                model.TaxGroupCode = row["TaxGroupCode"]?.ToString();
+                model.VATProductPostingGroup = row["VATProductPostingGroup"]?.ToString();
+
+                // ===== DEPRECIATION =====
+                model.DepreciationBookCode = row["DepreciationBookCode"]?.ToString();
+                model.DepreciationMethod = row["DepreciationMethod"] as int?;
+                model.DepreciationStartingDate = row["DepreciationStartingDate"] as DateTime?;
+
+                model.StraightLinePercent = row["StraightLinePercent"] as double?;
+                model.DecliningBalancePercent = row["DecliningBalancePercent"] as double?;
+
+                model.InstallationDate = row["InstallationDate"] as DateTime?;
+
+                // ===== OTHER =====
+                model.MasterCode = row["MasterCode"]?.ToString();
+                model.CompanyCode = row["CompanyCode"]?.ToString();
+                model.LoginRowID = Convert.ToInt32(row["LoginRowID"]);
+
+                model.GSTGroupCode = row["GSTGroupCode"]?.ToString();
+                model.HSNSACCode = row["HSNSACCode"]?.ToString();
+
+                // ===== DIVISION =====
+                model.DivisionStr = row["Division"]?.ToString();
+
+                if (model.DivisionStr == "MOSAIC")
+                    model.Division = 2;
+                else if (model.DivisionStr == "TILE")
+                    model.Division = 1;
+                else
+                    model.Division = 3;
+            }
+
+            return model;
+        }
+
+        public async Task<GetFixedAssetEditData> GetFixedAssetEditDropDownData()
+        {
+            var model = new GetFixedAssetEditData();
+            var dropDown = new FixedAssetEditDropDownModel();
+
+            DataSet ds = _db.GetDataSet("FixedAssetAddDropDownData");
+
+            // 0 FA Class
+            dropDown.FAClass = ds.Tables[0].AsEnumerable().Select(row => new FAClassModel
+            {
+                Code = row["Code"]?.ToString(),
+                Name = row["Name"]?.ToString()
+            }).ToList();
+
+            // 1 FA Subclass
+            dropDown.FASubClass = ds.Tables[1].AsEnumerable().Select(row => new FASubClassModel
+            {
+                Code = row["Code"]?.ToString(),
+                Name = row["Name"]?.ToString()
+            }).ToList();
+
+            // 2 Location
+            dropDown.Location = ds.Tables[2].AsEnumerable().Select(row => new LocationModel
+            {
+                Code = row["Code"]?.ToString(),
+                Name = row["Name"]?.ToString()
+            }).ToList();
+
+            // 3 FA Location
+            dropDown.FALocation = ds.Tables[3].AsEnumerable().Select(row => new FALocationModel
+            {
+                Code = row["Code"]?.ToString(),
+                Name = row["Name"]?.ToString()
+            }).ToList();
+
+            // 4 Gen Product Posting Group
+            dropDown.GenProductPostingGroup = ds.Tables[4].AsEnumerable().Select(row => new GenProductPostingGroupModel
+            {
+                Code = row["Code"]?.ToString(),
+                Name = row["Name"]?.ToString()
+            }).ToList();
+
+            // 5 FA Posting Group
+            dropDown.FAPostingGroup = ds.Tables[5].AsEnumerable().Select(row => new FAPostingGroupModel
+            {
+                Code = row["Code"]?.ToString(),
+                Name = row["Name"]?.ToString()
+            }).ToList();
+
+            // 6 GST Group
+            dropDown.GSTGroup = ds.Tables[6].AsEnumerable().Select(row => new GSTGroupModel
+            {
+                Code = row["Code"]?.ToString(),
+                Name = row["Name"]?.ToString()
+            }).ToList();
+
+            // 7 Tax Group
+            dropDown.TaxGroup = ds.Tables[7].AsEnumerable().Select(row => new TaxGroupModel
+            {
+                Code = row["Code"]?.ToString(),
+                Name = row["Name"]?.ToString()
+            }).ToList();
+
+            // 8 VAT Product Posting Group
+            dropDown.VATProductPostingGroup = ds.Tables[8].AsEnumerable().Select(row => new VATProductPostingGroupModel
+            {
+                Code = row["Code"]?.ToString(),
+                Name = row["Name"]?.ToString()
+            }).ToList();
+
+            // 9 Company Division
+            dropDown.FixedAssetDivision = ds.Tables[9].AsEnumerable().Select(row => new FixedAssetDivisionModel
+            {
+                Code = row["Code"]?.ToString(),
+                Name = row["Name"]?.ToString()
+            }).ToList();
+
+            #region Enums 
+
+            dropDown.MainAssetComponentList = Enum.GetValues(typeof(FixedAssetMainAssetComponet))
+                 .Cast<FixedAssetMainAssetComponet>()
+                 .Select(e => new MainAssetComponentModel
+                 {
+                     Code = ((int)e).ToString(),
+                     Name = e.GetDisplayName().ToString()
+                 }).ToList();
+
+            dropDown.DepreciationMethodList = Enum.GetValues(typeof(FixedAssetDepreciationMethod))
+                .Cast<FixedAssetDepreciationMethod>()
+                .Select(e => new DepreciationMethodModel
+                {
+                    Code = ((int)e).ToString(),
+                    Name = e.GetDisplayName().ToString()
+                }).ToList();
+
+            dropDown.ExciseAccountingTypeList = Enum.GetValues(typeof(FixedAssetExciseAccountingType))
+                .Cast<FixedAssetExciseAccountingType>()
+                .Select(e => new ExciseAccountingTypeModel
+                {
+                    Code = ((int)e).ToString(),
+                    Name = e.GetDisplayName().ToString()
+                }).ToList();
+
+            dropDown.DepreciationBookCode = Enum.GetValues(typeof(FixedAssetDepreciationBookCode))
+                .Cast<FixedAssetDepreciationBookCode>()
+                .Select(e => new DepreciationBookCodeModel
+                {
+                    Code = e.GetDisplayName().ToString(),
+                    Name = e.GetDisplayName().ToString()
+                }).ToList();
+            #endregion
+
+
+            model.DropDownData = dropDown;
+
+           
+            return await Task.FromResult(model);
+        }
     }
 }

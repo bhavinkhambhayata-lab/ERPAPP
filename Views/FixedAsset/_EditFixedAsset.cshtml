@@ -1,0 +1,398 @@
+﻿@model GetFixedAssetEditData
+@using Microsoft.AspNetCore.Mvc.Rendering
+
+
+@{
+    ViewData["Title"] = "Edit Fixed Asset Details";
+}
+
+<script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+<script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
+
+<script src="~/js/fixedasset/edit-fixed-asset.js" asp-append-version="true"></script>
+
+<style>
+    body {
+        font-size: 13px;
+        background: #f4f6f9;
+    }
+
+    .topbar {
+        background: #0d6efd;
+        color: #fff;
+        padding: 10px 20px;
+        font-size: 18px;
+        font-weight: 600;
+    }
+
+    fieldset {
+        border: 1px solid #d0d7de;
+        border-radius: 6px;
+        padding: 15px;
+        background: #fff;
+        margin-bottom: 15px;
+    }
+
+    legend {
+        font-size: 14px;
+        font-weight: 600;
+        padding: 0 8px;
+        color: #0d6efd;
+    }
+
+    .form-row {
+        /* display: flex; */
+        align-items: center;
+        margin-bottom: 6px;
+    }
+
+    .form-label-custom {
+        /* width: 45%; */
+        font-weight: 500;
+        padding-right: 6px;
+    }
+
+    .form-input-custom {
+        /* width: 55%; */
+    }
+
+    .form-control, .form-select {
+        height: 30px;
+        font-size: 13px;
+        padding: 3px 6px;
+    }
+
+    .action-buttons {
+        text-align: center;
+        padding: 20px 0;
+    }
+
+    .btn {
+        font-size: 13px;
+        padding: 6px 22px;
+    }
+
+    .required-star {
+        color: red;
+        font-size: 13px;
+    }
+
+    .vendor-textarea {
+        height: 60px;
+    }
+
+
+    /* --------------Drop Down Related changes-----------------*/
+    .select2-container--bootstrap-5 .select2-selection {
+        height: 32px !important;
+        min-height: 32px;
+        padding: 0.25rem 0.75rem;
+        border: 1px solid #ced4da;
+        border-radius: 0.375rem;
+        display: flex;
+        align-items: center;
+    }
+
+
+    .select2-container--bootstrap-5 .select2-selection__rendered {
+        line-height: 20px !important;
+        padding-left: 0 !important;
+    }
+
+
+    .select2-container--bootstrap-5 .select2-selection__arrow {
+        height: 100%;
+        right: 10px;
+    }
+
+    .select2-container {
+        width: 100% !important;
+    }
+    /* ----------------------------------------------------------- */
+
+</style>
+
+<form id="editFixedAssetForm" method="post">
+
+    <!-- HEADER -->
+    <div class="topbar d-flex justify-content-between align-items-center">
+        <div class="fw-bold">
+            Edit Fixed Asset Details
+        </div>
+
+        <div class="fw-bold">
+            Row Unique ID : <span class="fw-semibold" id="DisplayNo">@Model.DisplayNo</span>
+        </div>
+    </div>
+
+    <div class="container-fluid mt-3">
+        <!-- ================= GENERAL ================= -->
+        <fieldset>
+            <legend>Edit Fixed Asset Details</legend>
+
+            <div class="row">
+
+                <!-- LEFT SIDE -->
+                <div class="col-6">
+
+                   
+
+                    <div class="row mt-2">
+                        <label class="col-4 col-form-label">Division<span class="required-star">*</span></label>
+                        <div class="col-8">
+                            <select asp-for="Division"
+                                    asp-items="@(new SelectList(Model.DropDownData.FixedAssetDivision, "Code", "Name"))"
+                                    class="form-select">
+                                <option value="">--Select--</option>
+                            </select>
+                            <span asp-validation-for="Division" class="text-danger"></span>
+                        </div>
+                    </div>
+
+                    <div class="row mt-2">
+                        <label class="col-4 col-form-label">Company Code</label>
+                        <div class="col-8">
+                            <input asp-for="CompanyCode" class="form-control" disabled />
+                        </div>
+                    </div>
+
+                    <div class="row mt-2">
+                        <label class="col-4 col-form-label">FA Class Code<span class="required-star">*</span></label>
+                        <div class="col-8">
+                            <select asp-for="FAClassCode"
+                                    asp-items="@(new SelectList(Model.DropDownData.FAClass, "Code", "Name"))"
+                                    class="form-select">
+                                <option value="">--Select--</option>
+                            </select>
+                            <span asp-validation-for="FAClassCode" class="text-danger"></span>
+                        </div>
+                    </div>
+
+                    <div class="row mt-2">
+                        <label class="col-4 col-form-label">FA Subclass Code<span class="required-star">*</span></label>
+                        <div class="col-8">
+                            <select asp-for="FASubclassCode"
+                                    asp-items="@(new SelectList(Model.DropDownData.FASubClass, "Code", "Name"))"
+                                    class="form-select">
+                                <option value="">--Select--</option>
+                            </select>
+                            <span asp-validation-for="FASubclassCode" class="text-danger"></span>
+                        </div>
+                    </div>
+
+                    <div class="row mt-2">
+                        <label class="col-4 col-form-label">Description<span class="required-star">*</span></label>
+                        <div class="col-8">
+                            <input asp-for="Description" class="form-control" />
+                            <span asp-validation-for="Description" class="text-danger"></span>
+                        </div>
+                    </div>
+
+                    <div class="row mt-2">
+                        <label class="col-4 col-form-label">Description 2</label>
+                        <div class="col-8">
+                            <input asp-for="Description2" class="form-control" />
+                            <span asp-validation-for="Description2" class="text-danger"></span>
+                        </div>
+                    </div>
+
+                    <div class="row mt-2">
+                        <label class="col-4 col-form-label">Serial No</label>
+                        <div class="col-8">
+                            <input asp-for="SerialNo" class="form-control" />
+                            <span asp-validation-for="SerialNo" class="text-danger"></span>
+                        </div>
+                    </div>
+
+                    <div class="row mt-2">
+                        <label class="col-4 col-form-label">Main Asset / Component</label>
+                        <div class="col-8">
+                            <select asp-for="MainAssetComponent"
+                                    asp-items="@(new SelectList(Model.DropDownData.MainAssetComponentList, "Code", "Name"))"
+                                    class="form-select">
+                                <option value="">--Select--</option>
+                            </select>
+                            <span asp-validation-for="MainAssetComponent" class="text-danger"></span>
+                        </div>
+                    </div>
+
+                    <div class="row mt-2">
+                        <label class="col-4 col-form-label">Component of Main Asset</label>
+                        <div class="col-8">
+                            <select asp-for="ComponentOfMainAsset"
+                                    asp-items="@(new SelectList(Model.DropDownData.ComponentOfMainAssetList, "Code", "Name"))"
+                                    class="form-select">
+                                <option value="">--Select--</option>
+                            </select>
+                            <span asp-validation-for="ComponentOfMainAsset" class="text-danger"></span>
+                        </div>
+                    </div>
+
+                </div>
+
+                <!-- RIGHT SIDE -->
+                <div class="col-6">
+
+                    <div class="row mt-2">
+                        <label class="col-5 col-form-label">Location Code</label>
+                        <div class="col-7">
+                            <select asp-for="LocationCode"
+                                    asp-items="@(new SelectList(Model.DropDownData.Location, "Code", "Name"))"
+                                    class="form-select">
+                                <option value="">--Select--</option>
+                            </select>
+                            <span asp-validation-for="LocationCode" class="text-danger"></span>
+                        </div>
+                    </div>
+
+                    <div class="row mt-2">
+                        <label class="col-5 col-form-label">FA Location Code</label>
+                        <div class="col-7">
+                            <select asp-for="FALocationCode"
+                                    asp-items="@(new SelectList(Model.DropDownData.FALocation, "Code", "Name"))"
+                                    class="form-select">
+                                <option value="">--Select--</option>
+                            </select>
+                            <span asp-validation-for="FALocationCode" class="text-danger"></span>
+                        </div>
+                    </div>
+
+                    <div class="row mt-2">
+                        <label class="col-5 col-form-label">FA Posting Group<span class="required-star">*</span></label>
+                        <div class="col-7">
+                            <select asp-for="FAPostingGroup"
+                                    asp-items="@(new SelectList(Model.DropDownData.FAPostingGroup, "Code", "Name"))"
+                                    class="form-select">
+                                <option value="">--Select--</option>
+                            </select>
+                            <span asp-validation-for="FAPostingGroup" class="text-danger"></span>
+                        </div>
+                    </div>
+
+                    <div class="row mt-2">
+                        <label class="col-5 col-form-label">Gen. Prod Posting Group<span class="required-star">*</span></label>
+                        <div class="col-7">
+                            <select asp-for="GenProdPostingGroup"
+                                    asp-items="@(new SelectList(Model.DropDownData.GenProductPostingGroup, "Code", "Name"))"
+                                    class="form-select">
+                                <option value="">--Select--</option>
+                            </select>
+                            <span asp-validation-for="GenProdPostingGroup" class="text-danger"></span>
+                        </div>
+                    </div>
+
+                    <div class="row mt-2">
+                        <label class="col-5 col-form-label">Excise Accounting Type</label>
+                        <div class="col-7">
+                            <select asp-for="ExciseAccountingType"
+                                    asp-items="@(new SelectList(Model.DropDownData.ExciseAccountingTypeList, "Code", "Name"))"
+                                    class="form-select">
+                                <option value="">--Select--</option>
+                            </select>
+                            <span asp-validation-for="ExciseAccountingType" class="text-danger"></span>
+                        </div>
+                    </div>
+
+                    <div class="row mt-2">
+                        <label class="col-5 col-form-label">Tax Group Code</label>
+                        <div class="col-7">
+                            <select asp-for="TaxGroupCode"
+                                    asp-items="@(new SelectList(Model.DropDownData.TaxGroup, "Code", "Name"))"
+                                    class="form-select">
+                                <option value="">--Select--</option>
+                            </select>
+                            <span asp-validation-for="TaxGroupCode" class="text-danger"></span>
+                        </div>
+                    </div>
+
+                    <div class="row mt-2">
+                        <label class="col-5 col-form-label">GST Group Code</label>
+                        <div class="col-7">
+                            <select asp-for="GSTGroupCode"
+                                    asp-items="@(new SelectList(Model.DropDownData.GSTGroup, "Code", "Name"))"
+                                    class="form-select">
+                                <option value="">--Select--</option>
+                            </select>
+                            <span asp-validation-for="GSTGroupCode" class="text-danger"></span>
+                        </div>
+                    </div>
+
+                    <div class="row mt-2">
+                        <label class="col-5 col-form-label">HSN/SAC Code</label>
+                        <div class="col-7">
+                            <select asp-for="HSNSACCode"
+                                    asp-items="@(new SelectList(Model.DropDownData.FAHSNList, "Code", "Name"))"
+                                    class="form-select">
+                                <option value="">--Select--</option>
+                            </select>
+                            <span asp-validation-for="HSNSACCode" class="text-danger"></span>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+
+            <hr />
+
+            <!-- DEPRECIATION SECTION -->
+            <div class="row">
+
+                <div class="col-3">
+                    <label>Depreciation Method<span class="required-star">*</span></label>
+                    <select asp-for="DepreciationMethod"
+                            asp-items="@(new SelectList(Model.DropDownData.DepreciationMethodList, "Code", "Name"))"
+                            class="form-select">
+                        <option value="">--Select--</option>
+                    </select>
+                    <span asp-validation-for="DepreciationMethod" class="text-danger"></span>
+                </div>
+
+                <div class="col-2">
+                    <label>Straight-Line %</label>
+                    <input asp-for="StraightLinePercent" type="number" class="form-control" disabled />
+                    <span asp-validation-for="StraightLinePercent" class="text-danger"></span>
+                </div>
+
+                <div class="col-2">
+                    <label>Declining-Balance %</label>
+                    <input asp-for="DecliningBalancePercent" type="number" class="form-control" disabled />
+                    <span asp-validation-for="DecliningBalancePercent" class="text-danger"></span>
+                </div>
+
+                <div class="col-2">
+                    <label>Depreciation Start Date</label>
+                    <input asp-for="DepreciationStartingDate" type="text" class="form-control fixed-asset-datepicker" value="@(Model.DepreciationStartingDate?.ToString("dd/MM/yy"))" />
+                    <span asp-validation-for="DepreciationStartingDate" class="text-danger"></span>
+                </div>
+
+                <div class="col-3">
+                    <label>Installation Date</label>
+                    <input asp-for="InstallationDate" type="text" class="form-control fixed-asset-datepicker" value="@(Model.InstallationDate?.ToString("dd/MM/yy"))" />
+                    <span asp-validation-for="InstallationDate" class="text-danger"></span>
+                </div>
+
+            </div>
+
+            <div class="row mt-2">
+                <div class="col-3">
+                    <label>Depreciation Book Code</label>
+                    <select asp-for="DepreciationBookCode"
+                            asp-items="@(new SelectList(Model.DropDownData.DepreciationBookCode, "Code", "Name"))"
+                            class="form-select">
+                        <option value="">--Select--</option>
+                    </select>
+                    <span asp-validation-for="DepreciationBookCode" class="text-danger"></span>
+                </div>
+            </div>
+
+        </fieldset>
+
+        <!-- BUTTONS -->
+        <div class="text-center mt-3">
+           @*  <button type="button" class="btn btn-primary" id="btnSaveFixedAssetMaster">Save & Create In ERP</button> *@
+           @*  <button type="reset" class="btn btn-secondary">Reset</button> *@
+        </div>
+
+    </div>
+</form>

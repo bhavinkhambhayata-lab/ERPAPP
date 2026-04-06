@@ -54,17 +54,17 @@
 
              if(editFixedAssetNo!='')
             {
-                 // $.ajax({
-                 //            url: baseURL + 'Vendor/GetVendorEditData',
-                 //            type: 'GET',
-                 //            data: { vendorCode: editFixedAssetNo },
-                 //            success: function (response) {
-                 //                $('#tabContent').html(response);
-                 //            },
-                 //            error: function () {
-                 //                alert('Error loading customer details');
-                 //            }
-                 //        });
+                 $.ajax({
+                            url: baseURL + 'FixedAsset/GetFixedAssetEditData',
+                            type: 'GET',
+                            data: { fixedAssetNo: editFixedAssetNo },
+                            success: function (response) {
+                                $('#tabContent').html(response);
+                            },
+                            error: function () {
+                                alert('Error loading fixed asset details');
+                            }
+                        });
             }
             else
             {
