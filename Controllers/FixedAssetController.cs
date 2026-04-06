@@ -160,5 +160,16 @@ namespace ERPAPP.Controllers
                 return Json(new { success = false, message = ex.Message });
             }
         }
+
+        public IActionResult FixedAssetList()
+        {
+            return PartialView("_FixedAssetList");
+        }
+
+        public async Task<IActionResult> GetFixedAssetList(string searchDescription)
+        {
+            var data = await _fixedAssetRepository.GetFixedAssetList(searchDescription);
+            return Json(data);
+        }
     }
 }

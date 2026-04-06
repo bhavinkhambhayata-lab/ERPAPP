@@ -1,0 +1,306 @@
+﻿
+
+<link rel="stylesheet" href="https://code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
+<link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css">
+
+
+<!-- ✅ DataTables JS -->
+<script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+
+
+<style>
+    /* Simple card */
+    .custom-card {
+        border: 1px solid #dee2e6;
+        border-radius: 6px;
+        background: #fff;
+        padding: 12px;
+    }
+
+    /* Header text */
+    .card-title {
+        font-size: 16px;
+        font-weight: 600;
+        margin-bottom: 10px;
+    }
+
+    /* Table */
+    #tblFixedAsset {
+        border-collapse: collapse;
+        width: 100%;
+    }
+
+    #tblFixedAsset th {
+            background-color: #f5f5f5;
+            border: 1px solid #dee2e6;
+            padding: 8px;
+            font-weight: 600;
+        }
+
+    #tblFixedAsset td {
+            border: 1px solid #dee2e6;
+            padding: 7px;
+        }
+
+        /* Light hover */
+    #tblFixedAsset tbody tr:hover {
+            background-color: #f9f9f9;
+        }
+
+    /* Search + button spacing */
+    #txtSearch {
+        height: 36px;
+    }
+
+    .btn-primary {
+        height: 36px;
+        padding: 0 15px;
+    }
+
+    .topbar {
+        background: #0d6efd;
+        color: #fff;
+        padding: 10px 20px;
+        font-size: 18px;
+        font-weight: 600;
+    }
+
+    #tblFixedAsset_length {
+        margin-top: 2px;
+        margin-bottom: 2px;
+    }
+
+    #tblFixedAsset th {
+        font-size: 13px;
+    }
+
+    #tblFixedAsset td {
+        font-size: 12px;
+    }
+
+    #tblFixedAsset th,
+    #tblFixedAsset td {
+        padding: 6px;
+    }
+
+
+    /* ===== DataTable Overall ===== */
+    .dataTables_wrapper {
+        font-size: 12px;
+    }
+
+    /* ===== Top Controls (Show entries + search) ===== */
+    .dataTables_length,
+    .dataTables_filter {
+        font-size: 12px;
+    }
+
+        /* Dropdown (Show entries) */
+        .dataTables_length select {
+            font-size: 12px;
+            padding: 2px 5px;
+            height: 28px;
+        }
+
+    /* ===== Bottom Info Text ===== */
+    .dataTables_info {
+        font-size: 12px;
+    }
+
+    /* ===== Pagination ===== */
+    .dataTables_paginate {
+        font-size: 12px;
+    }
+
+        .dataTables_paginate .paginate_button {
+            padding: 3px 8px !important;
+            margin: 0 2px;
+            font-size: 12px;
+        }
+
+    /* ===== Table ===== */
+    #tblFixedAsset {
+        font-size: 12px;
+    }
+
+        #tblFixedAsset th {
+            font-size: 13px;
+            padding: 6px;
+            white-space: nowrap;
+        }
+
+        #tblFixedAsset td {
+            font-size: 12px;
+            padding: 5px;
+        }
+
+    /* ===== Custom Search (Name + Button) ===== */
+    #txtSearch {
+        font-size: 12px;
+        height: 30px;
+    }
+
+    .btn-primary {
+        font-size: 12px;
+        height: 30px;
+        padding: 0 10px;
+    }
+
+    #tblFixedAsset th:nth-child(1),
+    #tblFixedAsset td:nth-child(1) {
+        text-align: center;
+    }
+</style>
+
+<div class="container-fluid mt-3">
+
+    <div class="topbar d-flex justify-content-between align-items-center">
+        <div class="fw-bold">
+            Fixed Asset List
+        </div>
+    </div>
+
+    <div class="custom-card mt-3">
+
+        <!-- Search -->
+        <div class="row align-items-center mb-2">
+            <div class="col-md-1">
+                <label><b>Description</b></label>
+            </div>
+            <div class="col-md-3">
+                <input type="text" id="txtSearch" class="form-control" placeholder="" />
+            </div>
+            <div class="col-md-2">
+                <button class="btn btn-primary" onclick="loadFixedAsset()">Search</button>
+            </div>
+        </div>
+
+        <!-- Table -->
+        <table class="table" id="tblFixedAsset">
+            <thead>
+                <tr>
+                    <th>SrNo</th>
+                    <th>Division</th>
+                    <th>Description</th>
+                    <th>FA Class</th>
+                    <th>FA Sub Class</th>
+                    <th>Location</th>
+                    <th>Company Code</th>
+                    <th>Created By</th>
+                </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+
+    </div>
+
+</div>
+
+
+<script>
+    $(document).ready(function () {
+
+        loadFixedAsset();
+
+        // Enter press search
+        $('#txtSearch').keypress(function (e) {
+            if (e.which == 13) {
+                loadFixedAsset();
+            }
+        });
+
+            // Row click event
+    $('#tblFixedAsset tbody').on('click', 'tr', function () {
+
+        var table = $('#tblFixedAsset').DataTable();
+        var data = table.row(this).data();
+
+        var fixedAssetNo = data[9];
+
+        if (fixedAssetNo) {
+            editFixedAssetNo = fixedAssetNo;
+            $('#detailsBtn').click();
+        }
+    });
+    });
+
+        function loadFixedAsset() {
+
+        var search = $('#txtSearch').val().trim();
+
+        $.ajax({
+            url: baseURL +'FixedAsset/GetFixedAssetList',
+            type: 'GET',
+            data: { searchDescription: search },
+            dataType: 'json',
+
+            success: function (data) {
+
+                var rows = '';
+                var list = data.data || data;
+
+                // ✅ Destroy DataTable safely
+                if ($.fn.DataTable && $.fn.DataTable.isDataTable('#tblFixedAsset')) {
+                    $('#tblFixedAsset').DataTable().clear().destroy();
+                }
+
+                if (list && list.length > 0) {
+
+                    $.each(list, function (i, item) {
+                      debugger
+                        rows += `<tr>
+                                    <td>${item.displayNo ?? ''}</td>
+                                    <td>${item.division ?? ''}</td>
+                                    <td>${item.description ?? ''}</td>
+                                    <td>${item.faClassCode ?? ''}</td>
+                                    <td>${item.faSubClassCode ?? ''}</td>
+                                    <td>${item.locationCode ?? ''}</td>
+                                   
+                                    <td>${item.companyCode ?? ''}</td>
+                                    <td>${item.createdBy ?? ''}</td>
+                                 </tr>`;
+                    });
+
+                    $('#tblFixedAsset tbody').html(rows);
+
+                } else {
+                    // ✅ Keep tbody empty (NO manual row)
+                    $('#tblFixedAsset tbody').html('');
+                }
+
+                // ✅ Always initialize DataTable (handles empty case itself)
+                $('#tblFixedAsset').DataTable({
+                    paging: true,
+                    searching: false,
+                    ordering: true,
+                    info: true,
+                    pageLength: 10,
+                    lengthMenu: [5, 10, 25, 50],
+                    autoWidth: false,
+
+                    columnDefs: [
+                        { width: "80px", targets: 0 },
+                        { width: "120px", targets: 1 },
+                        { width: "200px", targets: 2 },
+                        { width: "120px", targets: 3 },
+                        { width: "100px", targets: 4 },
+                        { width: "120px", targets: 5 },
+                        { width: "180px", targets: 6 },
+                        { width: "150px", targets: 7 },
+                    ],
+
+                    order: [[0, 'desc']],
+
+                    // ✅ Built-in message
+                    language: {
+                        emptyTable: "No Data Found"
+                    }
+                });
+            },
+
+            error: function () {
+                alert('Error loading data');
+            }
+        });
+    }
+</script>

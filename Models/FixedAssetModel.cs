@@ -89,4 +89,18 @@ namespace ERPAPP.Models
         public List<DepreciationBookCodeModel> DepreciationBookCode { get; set; } = new();
         public List<FixedAssetDivisionModel> FixedAssetDivision { get; set; } = new();
     }
+
+    public class GetFixedAssetListModel
+    {
+        public string? RowID { get; set; }
+        public int DisplayNo { get; set; }
+        public string? Division { get; set; }
+
+        public string? Description { get; set; }
+        public string? FAClassCode { get; set; }
+        public string? FASubClassCode { get; set; }
+        public string? LocationCode { get; set; }
+        public string? CompanyCode { get; set; }
+        public string? CreatedBy { get; set; }
+    }
 }

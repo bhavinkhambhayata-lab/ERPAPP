@@ -281,5 +281,47 @@ namespace ERPAPP.Repository
                 return false;
             }
         }
+
+        public async Task<List<GetFixedAssetListModel>> GetFixedAssetList(string searchDescription)
+        {
+            try
+            {
+                SqlParameter[] param =
+                {
+                    new SqlParameter("@SearchDescription", searchDescription ?? (object)DBNull.Value)
+                };
+
+                DataTable dt = _db.GetDataTable("GetFixedAssetList", param);
+
+                List<GetFixedAssetListModel> list = new List<GetFixedAssetListModel>();
+
+                if (dt != null && dt.Rows.Count > 0)
+                {
+                    foreach (DataRow row in dt.Rows)
+                    {
+                        GetFixedAssetListModel model = new GetFixedAssetListModel();
+
+                        model.RowID = row["RowID"]?.ToString();
+                        model.DisplayNo = row["DisplayNo"] != DBNull.Value ? Convert.ToInt32(row["DisplayNo"]) : 0;
+                        model.Description = row["Description"]?.ToString();
+                        model.CompanyCode = row["CompanyCode"]?.ToString();
+
+                        model.Division = row["Division"]?.ToString();
+                        model.LocationCode = row["LocationCode"]?.ToString();
+                        model.FASubClassCode = row["FASubClassCode"]?.ToString();
+                        model.FAClassCode = row["FAClassCode"]?.ToString();
+                        model.CreatedBy = row["CreatedBy"]?.ToString();
+
+                        list.Add(model);
+                    }
+                }
+
+                return list;
+            }
+            catch (Exception ex)
+            {
+                return new List<GetFixedAssetListModel>();
+            }
+        }
     }
 }

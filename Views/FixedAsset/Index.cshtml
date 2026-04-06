@@ -74,9 +74,9 @@
 
         function loadList() {
             editFixedAssetNo='';
-            // $.get(baseURL +'Vendor/VendorList', function (data) {
-            //     $("#tabContent").html(data);
-            // });
+            $.get(baseURL +'FixedAsset/FixedAssetList', function (data) {
+                $("#tabContent").html(data);
+            });
         }
 
         function loadDetails() {
