@@ -226,7 +226,7 @@
                             Post Code<span class="required-star">*</span>
                         </label>
                         <div class="col-12 col-sm-8">
-                           
+
                             <select asp-for="PostCode" class="form-select" asp-items="@(new SelectList(Model.CustomerDropDownModel.PostCode, "Code", "Name"))" disabled>
                                 <option value="">--Select--</option>
                             </select>
@@ -584,9 +584,9 @@
                             <th class="d-none">Customer No</th>
                             <th>Brand Code<span class="required-star">*</span></th>
                             <th>Customer Category Code<span class="required-star">*</span></th>
-                           
+
                             <th>Customer Discount Group<span class="required-star">*</span></th>
-                           
+
                             <th>Sales Person Code<span class="required-star">*</span></th>
                             <th>Allocation</th>
                             <th>HO Sales Person<span class="required-star">*</span></th>
@@ -619,14 +619,14 @@
                                                value="@item.CustomerCategoryCode" class="form-control" disabled />
                                     </td>
 
-                                    
+
 
                                     <td>
                                         <input type="text" name="CustomerBrandEditList[@i].CustomerDiscountGroup"
                                                value="@item.CustomerDiscountGroup" class="form-control" disabled />
                                     </td>
 
-                                   
+
 
                                     <td>
                                         <input type="text" name="CustomerBrandEditList[@i].SalesPersonCode"
@@ -713,7 +713,7 @@
                     <div class="row mt-2">
                         <label class="col-12 col-sm-4 col-form-label">Location</label>
                         <div class="col-12 col-sm-8">
-                           
+
                             <select asp-for="LocationCode"
                                     asp-items="@(new SelectList(Model.CustomerDropDownModel.Locations, "Code", "Name"))"
                                     class="form-select" disabled>
@@ -764,7 +764,7 @@
 
 
 
-                   
+
                 </div>
 
                 <!-- Column 3 -->
@@ -1247,6 +1247,17 @@
 
         <div class="action-buttons">
             <button type="button" class="btn btn-primary" id="btnSaveCustomerMaster" @(Model.Division == 1 ? "disabled" : "")>Save</button>
+
+            @if (Model.Blocked == 3)
+            {
+                <button type="button"
+                        class="btn btn-danger"
+                        data-customer="@Model.CustomerCode"
+                        id="btnCustomerUnBlockToggle"
+                        onclick="toggleCustomerUnBlock(this)">
+                    Unblock
+                </button>
+            }
         </div>
     </div>
 </form>

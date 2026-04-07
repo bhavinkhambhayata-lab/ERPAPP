@@ -516,5 +516,28 @@ namespace ERPAPP.Controllers
                 return Json(new { success = false, message = ex.Message });
             }
         }
+
+
+        [HttpPost]
+        public async Task<IActionResult> CustomerUnblock(string customerCode)
+        {
+            try
+            {
+                var customerUnBlock = await _customerRepository.CustomerUnblock(customerCode);
+
+                if (customerUnBlock)
+                {
+                    return Json(new { success = true, message = "Customer Un-blocked Successfully." });
+                }
+                else
+                {
+                    return Json(new { success = false, message = "something went wrong!" });
+                }
+            }
+            catch (Exception ex)
+            {
+                return Json(new { success = false, message = ex.Message });
+            }
+        }
     }
 }

@@ -432,3 +432,31 @@ function handlePriceListCode() {
         }
     }
 }
+function toggleCustomerUnBlock(btn) {
+
+    var customerCode = btn.getAttribute("data-customer");
+
+    if (!confirm("Are you sure you want to unblock this customer?")) {
+        return; // ❌ cancel
+    }
+
+    $.ajax({
+        url: '/Customer/CustomerUnblock',
+        type: 'POST',
+        data: {
+            customerCode: customerCode
+        },
+        success: function (res) {
+            
+            if (res.success) {
+
+                showToast(res.message,"success",3000);
+
+                btn.style.display = "none";
+
+            } else {
+                alert(res.message || "Something went wrong!");
+            }
+        }
+    });
+}

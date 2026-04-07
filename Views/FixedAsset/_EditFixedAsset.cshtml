@@ -386,8 +386,17 @@
 
         <!-- BUTTONS -->
         <div class="text-center mt-3">
-           @*  <button type="button" class="btn btn-primary" id="btnSaveFixedAssetMaster">Save & Create In ERP</button> *@
-           @*  <button type="reset" class="btn btn-secondary">Reset</button> *@
+            <button type="button" class="btn btn-secondary" id="btnBackFixedAssetListPage" onclick="backFixedAssetListPage()">Back</button>
+            @if (Model.Blocked == 1)
+            {
+                <button type="button"
+                        class="btn btn-danger"
+                        data-fixed-asset="@Model.CompanyCode"
+                        id="btnFixedAssetUnBlockToggle"
+                        onclick="toggleFixedAssetUnBlock(this)">
+                    Unblock
+                </button>
+            }
         </div>
 
     </div>

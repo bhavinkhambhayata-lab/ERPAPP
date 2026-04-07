@@ -38,5 +38,7 @@ namespace ERPAPP.Interfaces
 
         Task<bool> CheckCustomerGSTRegistrationAlreadyExists(string GstRegistrationNo);
 
+        Task<bool> CustomerUnblock(string customerNo);
+
     }
 }

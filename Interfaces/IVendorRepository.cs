@@ -21,5 +21,7 @@ namespace ERPAPP.Interfaces
         Task<GetVendorEditData> GetVendorEditData(string companyCode);
 
         Task<VendorEditDropDownModel> GetVendorEditDropDownData();
+
+        Task<bool> VendorUnblock(string vendorNo);
     }
 }

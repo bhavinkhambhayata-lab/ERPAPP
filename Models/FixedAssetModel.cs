@@ -172,6 +172,8 @@ namespace ERPAPP.Models
         public int LoginRowID { get; set; }
         public string? GSTGroupCode { get; set; }
         public string? HSNSACCode { get; set; }
+
+        public int Blocked { get; set; } = 0;
     }
 
     public class GetFixedAssetEditData : FixedAssetEditModel

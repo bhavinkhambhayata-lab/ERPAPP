@@ -382,6 +382,8 @@ namespace ERPAPP.Repository
                 model.GSTGroupCode = row["GSTGroupCode"]?.ToString();
                 model.HSNSACCode = row["HSNSACCode"]?.ToString();
 
+                model.Blocked = Convert.ToInt32(row["Blocked"]);
+
                 // ===== DIVISION =====
                 model.DivisionStr = row["Division"]?.ToString();
 
@@ -513,6 +515,20 @@ namespace ERPAPP.Repository
 
            
             return await Task.FromResult(model);
+        }
+
+        public async Task<bool> FixedAssetUnblock(string fixedAssetNo)
+        {
+            SqlParameter[] param =
+             {
+                new SqlParameter("@CompanyCode", fixedAssetNo)
+            };
+
+            object result = _db.ExecuteScalar("FixedAsset_ChangeUnBlocked", param);
+
+            int rowsAffected = (result != null) ? Convert.ToInt32(result) : 0;
+
+            return rowsAffected > 0;
         }
     }
 }

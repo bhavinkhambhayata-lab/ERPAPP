@@ -859,6 +859,8 @@ namespace ERPAPP.Models
         public int? ShippingAddressType { get; set; }
         public int? ShipToGSTCustomerType { get; set; }
 
+        public int Blocked { get; set; } = 0;
+
         // ================= BRAND LIST =================
 
         public List<CustomerBrandWiseEditModel> CustomerBrandEditList { get; set; } = new();

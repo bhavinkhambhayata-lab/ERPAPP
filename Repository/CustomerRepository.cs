@@ -1385,6 +1385,8 @@ namespace ERPAPP.Repository
                 model.ShippingAddressType = row["ShipToAddressType"] as int?;
                 model.ShipToGSTCustomerType = row["ShipToGSTCustomerType"] as int?;
 
+                model.Blocked = Convert.ToInt32(row["Blocked"]);
+
             }
 
             // ================= BRAND LIST =================
@@ -1982,6 +1984,20 @@ namespace ERPAPP.Repository
             {
                 return Task.FromResult(false);
             }
+        }
+
+        public async Task<bool> CustomerUnblock(string customerNo)
+        {
+            SqlParameter[] param =
+            {
+                new SqlParameter("@CompanyCode", customerNo)
+            };
+
+            object result = _db.ExecuteScalar("Customer_ChangeUnBlocked", param);
+
+            int rowsAffected = (result != null) ? Convert.ToInt32(result) : 0;
+
+            return rowsAffected > 0;
         }
     }
 }

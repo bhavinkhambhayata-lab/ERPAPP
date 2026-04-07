@@ -557,6 +557,8 @@ namespace ERPAPP.Repository
                 model.SurchargeOverlook = row["SurchargeOverlook"] != DBNull.Value && Convert.ToBoolean(row["SurchargeOverlook"]);
 
                 model.CompanyCode = row["CompanyCode"]?.ToString();
+
+                model.Blocked = Convert.ToInt32(row["Blocked"]);
             }
 
             var editDropDownData = await GetVendorEditDropDownData();
@@ -718,6 +720,20 @@ namespace ERPAPP.Repository
 
 
             return await Task.FromResult(dropDown);
+        }
+
+        public async Task<bool> VendorUnblock(string vendorNo)
+        {
+            SqlParameter[] param =
+             {
+                new SqlParameter("@CompanyCode", vendorNo)
+            };
+
+            object result = _db.ExecuteScalar("Vendor_ChangeUnBlocked", param);
+
+            int rowsAffected = (result != null) ? Convert.ToInt32(result) : 0;
+
+            return rowsAffected > 0;
         }
 
         #endregion

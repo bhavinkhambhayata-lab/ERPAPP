@@ -18,5 +18,7 @@ namespace ERPAPP.Interfaces
         Task<GetFixedAssetEditData> GetFixedAssetEditData(string fixedAssetNo);
 
         Task<GetFixedAssetEditData> GetFixedAssetEditDropDownData();
+
+        Task<bool> FixedAssetUnblock(string fixedAssetNo);
     }
 }

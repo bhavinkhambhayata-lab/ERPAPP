@@ -202,5 +202,28 @@ namespace ERPAPP.Controllers
 
             return PartialView("_EditFixedAsset", data);
         }
+
+
+        [HttpPost]
+        public async Task<IActionResult> FixedAssetUnblock(string fixedAssetCode)
+        {
+            try
+            {
+                var fixedAssetUnBlock = await _fixedAssetRepository.FixedAssetUnblock(fixedAssetCode);
+
+                if (fixedAssetUnBlock)
+                {
+                    return Json(new { success = true, message = "Fixed Asset Un-blocked Successfully." });
+                }
+                else
+                {
+                    return Json(new { success = false, message = "something went wrong!" });
+                }
+            }
+            catch (Exception ex)
+            {
+                return Json(new { success = false, message = ex.Message });
+            }
+        }
     }
 }

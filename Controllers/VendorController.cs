@@ -283,5 +283,27 @@ namespace ERPAPP.Controllers
             var model = await _vendorRepository.GetVendorEditData(vendorCode);
             return PartialView("_EditVendor", model);
         }
+
+        [HttpPost]
+        public async Task<IActionResult> VendorUnblock(string vendorCode)
+        {
+            try
+            {
+                var vendorUnBlock = await _vendorRepository.VendorUnblock(vendorCode);
+
+                if (vendorUnBlock)
+                {
+                    return Json(new { success = true, message = "Vendor Un-blocked Successfully." });
+                }
+                else
+                {
+                    return Json(new { success = false, message = "something went wrong!" });
+                }
+            }
+            catch (Exception ex)
+            {
+                return Json(new { success = false, message = ex.Message });
+            }
+        }
     }
 }

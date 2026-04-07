@@ -461,6 +461,8 @@ namespace ERPAPP.Models
 
         public bool ThresholdOverlook { get; set; }
         public bool SurchargeOverlook { get; set; }
+
+        public int Blocked { get; set; } = 0;
     }
 
     public class GetVendorEditData : VendorsEditModel
