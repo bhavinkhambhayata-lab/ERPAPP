@@ -334,7 +334,7 @@
             <!-- DEPRECIATION SECTION -->
             <div class="row">
 
-                <div class="col-3">
+                <div class="col-2">
                     <label>Depreciation Method<span class="required-star">*</span></label>
                     <select asp-for="DepreciationMethod"
                             asp-items="@(new SelectList(Model.DropDownData.DepreciationMethodList, "Code", "Name"))"
@@ -362,16 +362,12 @@
                     <span asp-validation-for="DepreciationStartingDate" class="text-danger"></span>
                 </div>
 
-                <div class="col-3">
+                <div class="col-2">
                     <label>Installation Date</label>
                     <input asp-for="InstallationDate" type="text" class="form-control fixed-asset-datepicker" />
                     <span asp-validation-for="InstallationDate" class="text-danger"></span>
                 </div>
-
-            </div>
-
-            <div class="row mt-2">
-                <div class="col-3">
+                <div class="col-2">
                     <label>Depreciation Book Code</label>
                     <select asp-for="DepreciationBookCode"
                             asp-items="@(new SelectList(Model.DropDownData.DepreciationBookCode, "Code", "Name"))"
