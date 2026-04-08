@@ -272,6 +272,16 @@
 
         if (!isDateValid) return;
 
+
+        var gstNo = $("#GSTRegNo").val();
+
+        if (checkVendorGSTExists(gstNo)) {
+
+            showToast("GST already exists!", "danger", 4000);
+            return;
+        }
+
+
         $.ajax({
             url: baseURL + 'Vendor/SaveVendorMaster',
             type: 'POST',
@@ -415,4 +425,23 @@ function validateEmailField() {
     }
 
     return true;
+}
+function checkVendorGSTExists(gstNo) {
+
+    var isExists = false;
+
+    $.ajax({
+        url: baseURL + 'Vendor/CheckVendorGSTRegistrationAlreadyExists',
+        type: 'GET',
+        data: { gstRegistrationNo: gstNo },
+        async: false, // ⚠️ important (sync call)
+        success: function (res) {
+            isExists = res.data; // true / false
+        },
+        error: function () {
+            isExists = false;
+        }
+    });
+
+    return isExists;
 }

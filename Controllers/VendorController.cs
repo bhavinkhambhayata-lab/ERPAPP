@@ -305,5 +305,22 @@ namespace ERPAPP.Controllers
                 return Json(new { success = false, message = ex.Message });
             }
         }
+
+
+        [HttpGet]
+        public async Task<IActionResult> CheckVendorGSTRegistrationAlreadyExists(string gstRegistrationNo)
+        {
+            try
+            {
+                var isExists = await _vendorRepository
+                    .CheckVendorGSTRegistrationAlreadyExists(gstRegistrationNo);
+
+                return Json(new { success = true, data = isExists });
+            }
+            catch (Exception ex)
+            {
+                return Json(new { success = false, message = ex.Message });
+            }
+        }
     }
 }

@@ -736,6 +736,28 @@ namespace ERPAPP.Repository
             return rowsAffected > 0;
         }
 
+        public Task<bool> CheckVendorGSTRegistrationAlreadyExists(string GstRegistrationNo)
+        {
+            try
+            {
+                SqlParameter[] param = new SqlParameter[]
+                {
+             new SqlParameter("@GSTRegistrationNo", GstRegistrationNo)
+                };
+
+                var result = _db.ExecuteScalar(
+                    "Vendor_CheckGSTRegistrationNoAlreadyExist",
+                    param
+                );
+
+                return Task.FromResult(Convert.ToInt32(result) == 1);
+            }
+            catch (Exception)
+            {
+                return Task.FromResult(false);
+            }
+        }
+
         #endregion
     }
 }

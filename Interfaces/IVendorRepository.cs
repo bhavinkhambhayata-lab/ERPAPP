@@ -23,5 +23,7 @@ namespace ERPAPP.Interfaces
         Task<VendorEditDropDownModel> GetVendorEditDropDownData();
 
         Task<bool> VendorUnblock(string vendorNo);
+
+        Task<bool> CheckVendorGSTRegistrationAlreadyExists(string GstRegistrationNo);
     }
 }
