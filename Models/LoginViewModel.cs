@@ -22,6 +22,10 @@ namespace ERPAPP.Models
 
         public int UserRowId { get; set; }
         public string UserName { get; set; } = string.Empty;
+
+        public bool CustomerDetailsMasterEntryTransferPermission { get; set; } = false;
+        public bool VendorDetailsMasterEntryTransferPermission { get; set; } = false;
+        public bool FADetailsMasterEntryTransferPermission { get; set; } = false;
     }
 
     public class MenuPermissionModel

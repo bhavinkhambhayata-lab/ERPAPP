@@ -49,7 +49,10 @@ namespace ERPAPP.Repository
                         Nav2009_CustomerDetails_FormDisplay,
                         Nav2009_VendorDetails_FormDiaplsy,
                         Nav2009_FixedAssetDetails_FormDisplay,
-                        Nav2009_Item_FormDisplay
+                        Nav2009_Item_FormDisplay,
+                        Nav2009_CustomerDetails_MasterEntryTransferPermission,
+                        Nav2009_VendorDetails_MasterEntryTransferPermission, 
+                        Nav2009_FixedAssetDetails_MasterEntryTransferPermission
                              FROM HRMS.dbo.Master_UserMaster WHERE RowId = @RowId";
 
             DataTable menuDt = _db.GetDataTable(menuQuery, menuParam, false);
@@ -68,6 +71,10 @@ namespace ERPAPP.Repository
                     FADetails = Convert.ToBoolean(row["Nav2009_FixedAssetDetails_FormDisplay"]),
                     ItemMaster = Convert.ToBoolean(row["Nav2009_Item_FormDisplay"])
                 };
+
+                result.CustomerDetailsMasterEntryTransferPermission = Convert.ToBoolean(row["Nav2009_CustomerDetails_MasterEntryTransferPermission"]);
+                result.VendorDetailsMasterEntryTransferPermission = Convert.ToBoolean(row["Nav2009_VendorDetails_MasterEntryTransferPermission"]);
+                result.FADetailsMasterEntryTransferPermission = Convert.ToBoolean(row["Nav2009_FixedAssetDetails_MasterEntryTransferPermission"]);
             }
 
             return result;

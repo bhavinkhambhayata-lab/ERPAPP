@@ -4,6 +4,7 @@
 
 @{
     ViewData["Title"] = "Edit Fixed Asset Details";
+    bool IsFixedAssetMasterCompanyPermission = (Context.Session.GetString("IsFixedAssetMasterCompanyPermission") ?? "false") == "true";
 }
 
 <script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
@@ -135,7 +136,7 @@
                 <!-- LEFT SIDE -->
                 <div class="col-6">
 
-                   
+
 
                     <div class="row mt-2">
                         <label class="col-4 col-form-label">Division<span class="required-star">*</span></label>
@@ -387,7 +388,7 @@
         <!-- BUTTONS -->
         <div class="text-center mt-3">
             <button type="button" class="btn btn-secondary" id="btnBackFixedAssetListPage" onclick="backFixedAssetListPage()">Back</button>
-            @if (Model.Blocked == 1)
+            @if (Model.Blocked == 1 && IsFixedAssetMasterCompanyPermission == true)
             {
                 <button type="button"
                         class="btn btn-danger"

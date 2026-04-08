@@ -39,6 +39,9 @@ namespace ERPAPP.Controllers
             {
                 HttpContext.Session.SetInt32("UserRowId", result.UserRowId);
                 HttpContext.Session.SetString("UserName", result.UserName);
+                HttpContext.Session.SetString("IsCustomerMasterCompanyPermission", result.CustomerDetailsMasterEntryTransferPermission.ToString().ToLower());
+                HttpContext.Session.SetString("IsVendorMasterCompanyPermission", result.CustomerDetailsMasterEntryTransferPermission.ToString().ToLower());
+                HttpContext.Session.SetString("IsFixedAssetMasterCompanyPermission", result.CustomerDetailsMasterEntryTransferPermission.ToString().ToLower());
                 HttpContext.Session.SetString("MenuPermission",JsonSerializer.Serialize(result.MenuList));
 
                 TempData["ToastMessage"] = result.Message;

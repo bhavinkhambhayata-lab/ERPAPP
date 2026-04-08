@@ -3,6 +3,8 @@
 @using static ERPAPP.Helper.Enums
 @{
     ViewData["Title"] = "Edit Customer Details";
+
+    bool IsCustomerMasterCompanyPermission = (Context.Session.GetString("IsCustomerMasterCompanyPermission") ?? "false") == "true";
 }
 
 <script src="~/lib/jquery/dist/jquery.min.js" asp-append-version="true"></script>
@@ -1248,7 +1250,7 @@
         <div class="action-buttons">
             <button type="button" class="btn btn-primary" id="btnSaveCustomerMaster" @(Model.Division == 1 ? "disabled" : "")>Save</button>
 
-            @if (Model.Blocked == 3)
+            @if (Model.Blocked == 3 && IsCustomerMasterCompanyPermission == true)
             {
                 <button type="button"
                         class="btn btn-danger"

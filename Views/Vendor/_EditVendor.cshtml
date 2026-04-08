@@ -4,6 +4,7 @@
 
 @{
     ViewData["Title"] = "Vendor Details";
+    bool IsVendorMasterCompanyPermission = (Context.Session.GetString("IsVendorMasterCompanyPermission") ?? "false") == "true";
 }
 
 <script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
@@ -169,7 +170,7 @@
                             <select asp-for="PostCode" class="form-select" asp-items="@(new SelectList(Model.DropDownData.PostCode, "Code", "Name"))" disabled>
                                 <option value="">--Select--</option>
                             </select>
-                           
+
                             <span asp-validation-for="PostCode" class="text-danger"></span>
                         </div>
                     </div>
@@ -199,7 +200,7 @@
                         </div>
                     </div>
 
-                   
+
 
 
 
@@ -282,7 +283,7 @@
                             <span asp-validation-for="MobileNo" class="text-danger"></span>
                         </div>
                     </div>
-                    
+
 
                 </div>
 
@@ -301,7 +302,7 @@
                         </div>
                     </div>
 
-                    
+
                 </div>
                 <div class="col-4">
                     <div class="row mt-2">
@@ -365,7 +366,7 @@
                     </div>
                 </div>
 
-               
+
 
             </div>
         </fieldset>
@@ -377,7 +378,7 @@
             <div class="row">
 
                 <div class="col-4">
-                   
+
 
                     <div class="row mt-2">
                         <label class="col-4 col-form-label">Vendor Category<span class="required-star">*</span></label>
@@ -390,8 +391,8 @@
                             <span asp-validation-for="VendorCategory" class="text-danger"></span>
                         </div>
                     </div>
-                   
-                   
+
+
                 </div>
                 <div class="col-4">
 
@@ -458,7 +459,7 @@
                     </div>
                 </div>
                 <div class="col-4">
-                   
+
                     <div class="row mt-2">
                         <label class="col-4 col-form-label">Fixed Due Date</label>
                         <div class="col-8">
@@ -523,7 +524,7 @@
                         </div>
                     </div>
 
-                    
+
 
 
                 </div>
@@ -650,7 +651,7 @@
                 </div>
 
                 <div class="col-4">
-                   
+
                     <div class="row mt-2">
                         <label class="col-4 col-form-label">Subcontractor</label>
                         <div class="col-8">
@@ -685,7 +686,7 @@
         <!-- BUTTONS -->
         <div class="text-center mt-3">
             <button type="button" class="btn btn-secondary" id="btnBackVendorListPage" onclick="backVendorListPage()">Back</button>
-            @if (Model.Blocked == 2)
+            @if (Model.Blocked == 2 && IsVendorMasterCompanyPermission == true)
             {
                 <button type="button"
                         class="btn btn-danger"
