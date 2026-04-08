@@ -58,7 +58,7 @@ namespace ERPAPP.Controllers
             }
 
             // ================= EMAIL =================
-            if (model.EmailNotAvailable)
+            if (!model.EmailNotAvailable) // ✅ Only validate when NOT checked
             {
                 if (string.IsNullOrWhiteSpace(model.Email))
                 {
@@ -69,15 +69,12 @@ namespace ERPAPP.Controllers
                     if (model.Email.ToLower().Contains("italiagroup.in"))
                         ModelState.AddModelError("Email", "italiagroup.in emails are not allowed");
 
-                    if (!string.IsNullOrWhiteSpace(model.Email))
-                    {
-                        var emails = model.Email.Split(',');
+                    var emails = model.Email.Split(',');
 
-                        if (emails.Any(e =>
-                            !Regex.IsMatch(e.Trim(), @"^[^@\s]+@[^@\s]+\.[^@\s]+$")))
-                        {
-                            ModelState.AddModelError("Email", "Invalid email format");
-                        }
+                    if (emails.Any(e =>
+                        !Regex.IsMatch(e.Trim(), @"^[^@\s]+@[^@\s]+\.[^@\s]+$")))
+                    {
+                        ModelState.AddModelError("Email", "Invalid email format");
                     }
                 }
             }

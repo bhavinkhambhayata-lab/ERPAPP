@@ -74,28 +74,21 @@
     $("#EmailNotAvailable").change(function () {
 
         if ($(this).is(":checked")) {
-            $("#Email").attr("required", true);
-            $("#emailStar").show();
-        } else {
+
+            $("#Email").prop("disabled", true).val('');
             $("#Email").removeAttr("required");
+
             $("#emailStar").hide();
             $('[data-valmsg-for="Email"]').text('');
+
+        } else {
+
+            $("#Email").prop("disabled", false);
+            $("#Email").attr("required", true);
+            $("#emailStar").show();
         }
 
         validateEmailField();
-    });
-
-    $('#Email').on('input', function () {
-        var emailValue = $(this).val().trim();
-
-        if (emailValue !== "") {
-            $('#EmailNotAvailable').prop('checked', true);
-        } else {
-            $('#EmailNotAvailable').prop('checked', false);
-        }
-
-        $('#EmailNotAvailable').change(); // sync UI
-        validateEmailField(); // 🔥 live validation
     });
 
     //Empty city clears related fields
@@ -193,16 +186,26 @@
 
             if (selectedText === "Unregistred") {
 
+                // Existing logic
                 $("#AggregateTurnover").prop("selectedIndex", 2);
-                $("#GSTReturnFrequency").prop("selectedIndex", -1);
+                $("#GSTReturnFrequency").prop("selectedIndex", 0);
+
+                // ✅ Disable fields
+                $("#GSTRegNo").prop("disabled", true).val('');
+                $("#ARN").prop("disabled", true).val('');
+                $("#GSTReturnFrequency").prop("disabled", true);
 
             } else {
 
+                // Existing logic
                 $("#AggregateTurnover").prop("selectedIndex", 1);
 
+                // ✅ Enable fields
+                $("#GSTRegNo").prop("disabled", false);
+                $("#ARN").prop("disabled", false);
+                $("#GSTReturnFrequency").prop("disabled", false);
             }
         }
-
     });
 
     $('#btnSaveVendorMaster').click(function () {
@@ -222,12 +225,17 @@
         formData.append("VendorPostingGroup", $('#VendorPostingGroup').val());
         formData.append("GenBusPostingGroup", $('#GenBusPostingGroup').val());
 
+        formData.append("Email", $("#Email").val());
+        formData.append("GSTRegNo", $("#GSTRegNo").val());
+        formData.append("ARN", $("#ARN").val());
+        formData.append("GSTReturnFrequency", $("#GSTReturnFrequency").val());
+
         // 👉 Email + Checkbox validation
         var vendorEmail = $('#Email').val().trim();
         var isCheckedEmailNoAvailable = $('#EmailNotAvailable').is(':checked');
 
-        // ❌ Required when checkbox checked
-        if (isCheckedEmailNoAvailable && vendorEmail === "") {
+        // ✅ Required only when checkbox NOT checked
+        if (!isCheckedEmailNoAvailable && vendorEmail === "") {
             $('[data-valmsg-for="Email"]').text("Email is required");
             $('#Email').focus();
             return;
@@ -395,32 +403,34 @@ function handleVendorGenBusPostingGroup() {
 }
 
 function validateEmailField() {
+
     var email = $('#Email').val().trim();
     var isChecked = $('#EmailNotAvailable').is(':checked');
     var errorSpan = $('[data-valmsg-for="Email"]');
 
-    errorSpan.text(''); // clear old error
+    errorSpan.text('');
 
     if (isChecked) {
+        return true;
+    }
 
-        if (email === "") {
-            errorSpan.text("Email is required");
+    if (email === "") {
+        errorSpan.text("Email is required");
+        return false;
+    }
+
+    if (email.toLowerCase().includes("italiagroup.in")) {
+        errorSpan.text("italiagroup.in emails are not allowed");
+        return false;
+    }
+
+    var emails = email.split(',');
+    var regex = /^[^@\s]+@[^@\s]+\.[^@\s]+$/;
+
+    for (var i = 0; i < emails.length; i++) {
+        if (!regex.test(emails[i].trim())) {
+            errorSpan.text("Invalid email format");
             return false;
-        }
-
-        if (email.toLowerCase().includes("italiagroup.in")) {
-            errorSpan.text("italiagroup.in emails are not allowed");
-            return false;
-        }
-
-        var emails = email.split(',');
-        var regex = /^[^@\s]+@[^@\s]+\.[^@\s]+$/;
-
-        for (var i = 0; i < emails.length; i++) {
-            if (!regex.test(emails[i].trim())) {
-                errorSpan.text("Invalid email format");
-                return false;
-            }
         }
     }
 
