@@ -7,8 +7,148 @@
         width: '100%'
     });
 
+    $("#Name").keyup(function () {
+
+        var searchText = $(this).val();
+
+        if (searchText.length < 2) {
+            $("#vendorSearchResult").html("");
+            return;
+        }
+
+        $.ajax({
+            url: baseURL + 'Vendor/SearchVendor',
+            type: 'GET',
+            data: { searchVendor: searchText },
+            success: function (data) {
+
+                var html = "";
+
+                $.each(data, function (i, item) {
+
+                    html += "<a href='#' class='list-group-item list-group-item-action' data-no='"
+                        + item.code + "'>" + item.name + "</a>";
+                });
+
+                $("#vendorSearchResult").html(html);
+            },
+            error: function (err) {
+                console.log("Error:", err);
+            }
+        });
+
+    });
+
+    $(document).on("click", "#vendorSearchResult a", function (e) {
+
+        e.preventDefault();
+
+        var masterCode = $(this).data("no");
+
+        $("#Name").val($(this).text());
+        $("#MasterCode").val(masterCode);
+        $("#vendorSearchResult").html("");
+
+        // 🔥 Call API
+        $.ajax({
+            url: baseURL + "Vendor/GetVendorMasterDataWithMasterCode",
+            type: "GET",
+            data: { masterCode: masterCode },
+            success: function (response) {
+
+                if (!response.success) {
+                    showToast(response.message, "danger", 4000);
+                    return;
+                }
+
+                var data = response.data;
+
+                // OPTIONAL
+                loadCustomerAddressData(data.cityCode, data.postCode);
+
+                // ================= BASIC =================
+                $("#MasterCode").val(data.masterCode);
+
+                $("#Name").val(data.name || '');
+                $("#Address").val(data.address || '');
+                $("#Address2").val(data.address2 || '');
+
+                $("#CityCode").val(data.cityCode || '');
+                $("#PostCode").val(data.postCode || '').trigger("change");
+                $("#StateCode").val(data.stateCode || '');
+                $("#CountryCode").val(data.countryCode || '').trigger("change");
+
+                // ================= CONTACT =================
+                $("#ContactPerson").val(data.contactPerson || '');
+                $("#MobileNo").val(data.mobileNo || '');
+                $("#PhoneNo").val(data.phoneNo || '');
+                $("#Email").val(data.email || '');
+
+                $("#EmailNotAvailable").prop("checked", data.emailNotAvailable === true || data.emailNotAvailable === "true").trigger("change");
+
+                $("#Website").val(data.website || '');
+
+                // ================= TAX =================
+                $("#PANNo").val(data.panNo || '');
+                //$("#CurrencyCode").val(data.currencyCode || '').trigger("change");
+
+                // ================= GST =================
+                $("#GSTVendorType").val(data.gstVendorType || '').trigger("change");
+                $("#GSTReturnFrequency").val(data.gstReturnFrequency || '').trigger("change");
+                $("#GSTRegNo").val(data.gstRegNo || '');
+                $("#ARN").val(data.arn || '');
+
+                // ================= BANK =================
+                $("#BankName").val(data.bankName || '');
+                $("#BankAccountNo").val(data.bankAccountNo || '');
+                $("#BranchName").val(data.branchName || '');
+                $("#IFSCCode").val(data.ifscCode || '');
+
+                // ================= BUSINESS =================
+                $("#VendorCategory").val(data.vendorCategory || '').trigger("change");
+                $("#BusinessCategory").val(data.businessCategory || '').trigger("change");
+
+                $("#RelatedParty").val(data.relatedParty === true || data.relatedParty === "true" ? "true" : "false");
+
+                $("#Subcontractor").val(data.subcontractor === true || data.subcontractor === "true" ? "true" : "false");
+
+                $("#PaymentTerms").val(data.paymentTerms || '').trigger("change");
+                $("#PaymentMethod").val(data.paymentMethod || '').trigger("change");
+                $("#PurchaserCode").val(data.purchaserCode || '').trigger("change");
+
+                // ================= POSTING =================
+                //$("#VATBusPostingGroup").val(data.vatBusPostingGroup || '').trigger("change");
+                //$("#GenBusPostingGroup").val(data.genBusPostingGroup || '').trigger("change");
+                //$("#VendorPostingGroup").val(data.vendorPostingGroup || '').trigger("change");
+
+                // ================= OTHER =================
+                $("#ApplicationMethod").val(data.applicationMethod || '').trigger("change");
+                $("#TaxLiable").val(data.taxLiable || '').trigger("change");
+                $("#Location").val(data.location || '').trigger("change");
+
+                // ================= MSME =================
+                $("#MSMEUAMNo").val(data.msmeuamNo || '');
+
+                // Date format (if needed)
+                $("#MSMEIntimationDate").val(editVendorFormatDateOrEmpty(data.msmeIntimationDate));
+                $("#MSMEEffectiveDate").val(editVendorFormatDateOrEmpty(data.msmeEffectiveDate || ''));
+
+                // ================= EXTRA =================
+                $("#VendorLocation").val(data.vendorLocation || '').trigger("change");
+                $("#GSTNotToHold").val(data.gstNotToHold ?? '').trigger("change");
+                $("#FixedDueDate").val(data.fixedDueDate ?? '').trigger("change");
+                //$("#AggregateTurnover").val(data.aggregateTurnover || '').trigger("change");
+
+            },
+            error: function () {
+                alert("Error loading vendor data.");
+            }
+        });
+
+    });
+
     $('.vendor-datepicker').datepicker({
-        dateFormat: "dd/mm/yy", 
+        dateFormat: "dd/mm/yy",
         changeMonth: true,
         changeYear: true,
 
@@ -21,7 +161,7 @@
         }
     });
 
-   
+
     $('.vendor-datepicker').on('blur', function () {
 
         var input = $(this);
@@ -139,7 +279,7 @@
             $.get(baseURL + "Vendor/GetCityDetail",
                 { city: ui.item.value },
                 function (data) {
-                    
+
                     if (data) {
                         $("#CityCode").val(data.city);
                         $("#CountryCode").val(data.countryCode || '').trigger('change');;
@@ -209,7 +349,7 @@
     });
 
     $('#btnSaveVendorMaster').click(function () {
-        
+
         var form = $('#vendorForm');
 
         if (!form.valid()) return;
@@ -338,11 +478,11 @@
             }
         });
     });
-    
+
     $('#ApplicationMethod').val('1');
 });
 function handleVendorCurrency() {
-    
+
     var country = $('#CountryCode').val();
     var currency = $('#CurrencyCode');
 
@@ -454,4 +594,18 @@ function checkVendorGSTExists(gstNo) {
     });
 
     return isExists;
+}
+function editVendorFormatDateOrEmpty(date) {
+    if (!date) return '';
+
+    var d = new Date(date);
+
+    // Invalid or SQL min date (1753)
+    if (isNaN(d) || d.getFullYear() === 1753) return '';
+
+    var day = String(d.getDate()).padStart(2, '0');
+    var month = String(d.getMonth() + 1).padStart(2, '0');
+    var year = d.getFullYear();
+
+    return day + '/' + month + '/' + year;
 }

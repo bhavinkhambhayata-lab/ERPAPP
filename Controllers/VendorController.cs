@@ -224,7 +224,7 @@ namespace ERPAPP.Controllers
                         success = false,
                         message = "something went wrong!."
                     });
-                }      
+                }
             }
             catch
             {
@@ -318,6 +318,39 @@ namespace ERPAPP.Controllers
             {
                 return Json(new { success = false, message = ex.Message });
             }
+        }
+
+
+        public async Task<IActionResult> SearchVendor(string searchVendor)
+        {
+            var results = await _vendorRepository.SearchVendor(searchVendor);
+            return Json(results);
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> GetVendorMasterDataWithMasterCode(string masterCode)
+        {
+            //bool exists = await .CheckCustomerEntryAlreadyExists(masterCode, division);
+
+            //if (exists)
+            //{
+            //    return Json(new
+            //    {
+            //        success = false,
+            //        message = "Customer already exists in this division."
+            //    });
+            //}
+
+            var data = await _vendorRepository.GetVendorMasterDataWithMasterCode(masterCode);
+
+            if (data == null)
+                return NotFound();
+
+            return Json(new
+            {
+                success = true,
+                data = data
+            });
         }
     }
 }

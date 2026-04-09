@@ -25,5 +25,9 @@ namespace ERPAPP.Interfaces
         Task<bool> VendorUnblock(string vendorNo);
 
         Task<bool> CheckVendorGSTRegistrationAlreadyExists(string GstRegistrationNo);
+
+        Task<List<GetVendorSearchModel>> SearchVendor(string searchVendor);
+
+        Task<VendorsEditModel?> GetVendorMasterDataWithMasterCode(string masterCode);
     }
 }

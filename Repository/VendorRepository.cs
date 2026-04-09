@@ -758,6 +758,118 @@ namespace ERPAPP.Repository
             }
         }
 
+        public async Task<List<GetVendorSearchModel>> SearchVendor(string searchVendor)
+        {
+            SqlParameter[] param = { new SqlParameter("@SearchName", searchVendor) };
+
+            DataTable dt = _db.GetDataTable("GetVendorMasterDataWithName", param);
+
+            List<GetVendorSearchModel> list = new List<GetVendorSearchModel>();
+
+            if (dt != null)
+            {
+                foreach (DataRow row in dt.Rows)
+                {
+                    list.Add(new GetVendorSearchModel
+                    {
+                        Code = row["Code"].ToString(),
+                        Name = row["Name"].ToString()
+                    });
+                }
+            }
+
+            return list;
+        }
+
+        public async Task<VendorsEditModel?> GetVendorMasterDataWithMasterCode(string masterCode)
+        {
+            try
+            {
+                if (string.IsNullOrWhiteSpace(masterCode))
+                    return null;
+
+                SqlParameter[] param = {
+                new SqlParameter("@MasterCode", masterCode.Trim())
+            };
+
+                DataTable dt = _db.GetDataTable("GetVendorMasterDetailsWithMasterCode", param);
+
+                if (dt == null || dt.Rows.Count == 0)
+                    return null;
+
+                DataRow row = dt.Rows[0]; // 🔥 only one record
+
+                var model = new VendorsEditModel
+                {
+                    Name = row["Name"]?.ToString() ?? "",
+                    MasterCode = row["MasterCode"]?.ToString() ?? "",
+                    Address = row["Address"]?.ToString() ?? "",
+                    Address2 = row["Address2"]?.ToString() ?? "",
+                    CityCode = row["CityCode"]?.ToString() ?? "",
+                    PostCode = row["PostCode"]?.ToString() ?? "",
+                    StateCode = row["StateCode"]?.ToString() ?? "",
+                    CountryCode = row["CountryCode"]?.ToString() ?? "",
+
+                    VendorLocation = row["VendorLocation"]?.ToString(),
+                    GSTNotToHold = row["GSTNotToHold"] != DBNull.Value ? Convert.ToInt32(row["GSTNotToHold"]) : (int?)null,
+                    FixedDueDate = row["FixedDueDate"] != DBNull.Value ? Convert.ToInt32(row["FixedDueDate"]) : (int?)null,
+                    AggregateTurnover = row["AggregateTurnover"] != DBNull.Value ? Convert.ToInt32(row["AggregateTurnover"]) : (int?)null,
+
+                    ContactPerson = row["ContactPerson"]?.ToString() ?? "",
+                    MobileNo = row["MobileNo"]?.ToString() ?? "",
+                    PhoneNo = row["PhoneNo"]?.ToString(),
+                    Email = row["Email"]?.ToString(),
+                    Website = row["Website"]?.ToString(),
+
+                    PANNo = row["PANNo"]?.ToString(),
+                    CurrencyCode = row["CurrencyCode"]?.ToString(),
+
+                    GSTVendorType = row["GSTVendorType"] != DBNull.Value ? Convert.ToInt32(row["GSTVendorType"]) : 0,
+                    GSTReturnFrequency = row["GSTReturnFrequency"] != DBNull.Value ? Convert.ToInt32(row["GSTReturnFrequency"]) : (int?)null,
+                    GSTRegNo = row["GSTRegNo"]?.ToString(),
+                    ARN = row["ARN"]?.ToString(),
+
+                    BankName = row["BankName"]?.ToString(),
+                    BankAccountNo = row["BankAccountNo"]?.ToString(),
+                    BranchName = row["BranchName"]?.ToString(),
+                    IFSCCode = row["IFSCCode"]?.ToString(),
+
+                    VendorCategory = row["VendorCategory"]?.ToString() ?? "",
+                    BusinessCategory = row["BusinessCategory"] != DBNull.Value ? Convert.ToInt32(row["BusinessCategory"]) : (int?)null,
+                    RelatedParty = row["RelatedParty"] != DBNull.Value ? Convert.ToBoolean(row["RelatedParty"]) : (bool?)null,
+                    Subcontractor = row["Subcontractor"] != DBNull.Value ? Convert.ToBoolean(row["Subcontractor"]) : (bool?)null,
+
+                    PaymentTerms = row["PaymentTerms"]?.ToString() ?? "",
+                    PaymentMethod = row["PaymentMethod"]?.ToString(),
+                    PurchaserCode = row["PurchaserCode"]?.ToString() ?? "",
+
+                    VATBusPostingGroup = row["VATBusPostingGroup"]?.ToString(),
+                    GenBusPostingGroup = row["GenBusPostingGroup"]?.ToString() ?? "",
+                    VendorPostingGroup = row["VendorPostingGroup"]?.ToString() ?? "",
+
+                    ApplicationMethod = row["ApplicationMethod"] != DBNull.Value ? Convert.ToInt32(row["ApplicationMethod"]) : 0,
+                    TaxLiable = row["TaxLiable"] != DBNull.Value ? Convert.ToInt32(row["TaxLiable"]) : 0,
+
+                    Location = row["Location"]?.ToString(),
+
+                    MSMEUAMNo = row["MSMEUAMNo"]?.ToString(),
+                    MSMEIntimationDate = row["MSMEIntimationDate"] != DBNull.Value ? Convert.ToDateTime(row["MSMEIntimationDate"]) : (DateTime?)null,
+                    MSMEEffectiveDate = row["MSMEEffectiveDate"] != DBNull.Value ? Convert.ToDateTime(row["MSMEEffectiveDate"]) : (DateTime?)null,
+
+                    EmailNotAvailable = row["Email"] == DBNull.Value
+                    || string.IsNullOrWhiteSpace(row["Email"].ToString()),
+                    
+                    Blocked = row["Blocked"] != DBNull.Value ? Convert.ToInt32(row["Blocked"]) : 0
+                };
+
+                return await Task.FromResult(model);
+            }
+            catch(Exception e)
+            {
+                return new VendorsEditModel { };
+            }
+        }
+
         #endregion
     }
 }

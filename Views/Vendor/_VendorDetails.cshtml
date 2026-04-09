@@ -136,10 +136,17 @@
                 <div class="col-4">
 
                     <div class="row mt-2">
-                        <label class="col-4 col-form-label">Name<span class="required-star">*</span></label>
-                        <div class="col-8">
-                            <input asp-for="Name" class="form-control" />
+                        <label class="col-4 col-form-label">
+                            Name<span class="required-star">*</span>
+                        </label>
+                        <div class="col-8 position-relative">
+                            <input asp-for="Name" class="form-control" autocomplete="off" />
                             <span asp-validation-for="Name" class="text-danger"></span>
+
+                            <div id="vendorSearchResult"
+                                 class="list-group position-absolute w-100"
+                                 style="z-index:800;max-height:250px;overflow-y:auto;">
+                            </div>
                         </div>
                     </div>
 

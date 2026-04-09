@@ -339,7 +339,7 @@ namespace ERPAPP.Models
         [RegularExpression(@"^(\+?[\d\-]+)(,\+?[\d\-]+)*$", ErrorMessage = "Invalid mobile phone number")]
         public string MobileNo { get; set; } = string.Empty;
 
-        
+
         [StringLength(30)]
         [RegularExpression(@"^(\+?[\d\-]+)(,\+?[\d\-]+)*$", ErrorMessage = "Invalid phone number")]
         public string? PhoneNo { get; set; } = string.Empty;
@@ -470,4 +470,6 @@ namespace ERPAPP.Models
         public VendorEditDropDownModel DropDownData { get; set; } = new();
     }
 
+
+    public class GetVendorSearchModel : BaseDropDown { }
 }
