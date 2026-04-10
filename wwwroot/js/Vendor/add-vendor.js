@@ -13,7 +13,7 @@
 
         if (searchText.length < 2) {
 
-            $('#vendorForm')[0].reset();
+            //$('#vendorForm')[0].reset();
 
             $("#vendorSearchResult").html("");
             return;
@@ -531,7 +531,7 @@
         });
     });
 
-    $('#ApplicationMethod').val('1');
+    $('#ApplicationMethod').val('0');
 });
 
 function handleVendorCurrency() {
