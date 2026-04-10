@@ -1,6 +1,7 @@
 ﻿using ERPAPP.Helper;
 using ERPAPP.Interfaces;
 using ERPAPP.Models;
+using ERPAPP.Repository;
 using Microsoft.AspNetCore.Mvc;
 using System.Text.RegularExpressions;
 using static ERPAPP.Helper.Enums;
@@ -538,6 +539,20 @@ namespace ERPAPP.Controllers
             {
                 return Json(new { success = false, message = ex.Message });
             }
+        }
+
+        [HttpGet]
+        public async Task<JsonResult> GetCountryList(string searchcountry)
+        {
+            var result = await _customerRepository.GetCustomerCountryList(searchcountry);
+            return Json(result);
+        }
+
+        [HttpGet]
+        public async Task<JsonResult> GetPostCodeListWithSearch(string city, string search)
+        {
+            var result = await _customerRepository.GetCustomerPostCodeListWithSearch(city, search);
+            return Json(result);
         }
     }
 }

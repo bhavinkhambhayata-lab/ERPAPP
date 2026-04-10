@@ -446,7 +446,7 @@ namespace ERPAPP.Repository
 
                         City = row["City"]?.ToString(),
                         Postcode = row["Postcode"]?.ToString(),
-                        //StateCode = row["StateCode"]?.ToString(),
+                        StateCode = row["StateCode"]?.ToString(),
                         CountryCode = row["CountryCode"]?.ToString(),
                         Region = row["Region"]?.ToString(),
                         Zone = row["Zone"]?.ToString(),
@@ -1998,6 +1998,55 @@ namespace ERPAPP.Repository
             int rowsAffected = (result != null) ? Convert.ToInt32(result) : 0;
 
             return rowsAffected > 0;
+        }
+
+        public async Task<List<CountryModel>> GetCustomerCountryList(string country)
+        {
+            SqlParameter[] parameters =
+           {
+                new SqlParameter("@Type","Country"),
+                new SqlParameter("@Search",(object?)country ?? DBNull.Value)
+            };
+
+            DataTable dt = _db.GetDataTable("GetCustomer_Address", parameters);
+
+            List<CountryModel> list = new();
+
+            foreach (DataRow row in dt.Rows)
+            {
+                list.Add(new CountryModel
+                {
+                    Code = row["Code"].ToString(),
+                    Name = row["Name"].ToString()
+                });
+            }
+
+            return list;
+        }
+
+        public async Task<List<PostCodeModel>> GetCustomerPostCodeListWithSearch(string city, string searchpostcode)
+        {
+            SqlParameter[] parameters =
+            {
+                new SqlParameter("@Type","PostCodeWithSearch"),
+                new SqlParameter("@City",(object?)city ?? DBNull.Value),
+                new SqlParameter("@Search",(object?)searchpostcode ?? DBNull.Value)
+            };
+
+            DataTable dt = _db.GetDataTable("GetCustomer_Address", parameters);
+
+            List<PostCodeModel> list = new();
+
+            foreach (DataRow row in dt.Rows)
+            {
+                list.Add(new PostCodeModel
+                {
+                    Code = row["Code"].ToString(),
+                    Name = row["Name"].ToString()
+                });
+            }
+
+            return list;
         }
     }
 }

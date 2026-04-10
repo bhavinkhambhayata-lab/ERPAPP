@@ -40,5 +40,8 @@ namespace ERPAPP.Interfaces
 
         Task<bool> CustomerUnblock(string customerNo);
 
+        Task<List<CountryModel>> GetCustomerCountryList(string country);
+        Task<List<PostCodeModel>> GetCustomerPostCodeListWithSearch(string city, string searchpostcode);
+
     }
 }
