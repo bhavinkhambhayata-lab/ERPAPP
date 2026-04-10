@@ -29,5 +29,8 @@ namespace ERPAPP.Interfaces
         Task<List<GetVendorSearchModel>> SearchVendor(string searchVendor);
 
         Task<VendorsEditModel?> GetVendorMasterDataWithMasterCode(string masterCode);
+
+        Task<List<VendorCountryModel>> GetVendorCountryList(string country);
+        Task<List<VendorPostCodeModel>> GetPostCodeListWithSearch(string city,string searchpostcode);
     }
 }

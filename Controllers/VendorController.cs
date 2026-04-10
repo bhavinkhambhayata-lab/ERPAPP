@@ -352,5 +352,20 @@ namespace ERPAPP.Controllers
                 data = data
             });
         }
+
+
+        [HttpGet]
+        public async Task<JsonResult> GetCountryList(string searchcountry)
+        {
+            var result = await _vendorRepository.GetVendorCountryList(searchcountry);
+            return Json(result);
+        }
+
+        [HttpGet]
+        public async Task<JsonResult> GetPostCodeListWithSearch(string city,string search)
+        {
+            var result = await _vendorRepository.GetPostCodeListWithSearch(city, search);
+            return Json(result);
+        }
     }
 }

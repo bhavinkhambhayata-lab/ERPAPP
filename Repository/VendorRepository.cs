@@ -3,6 +3,7 @@ using ERPAPP.Interfaces;
 using ERPAPP.Models;
 using Microsoft.Data.SqlClient;
 using System.Data;
+using System.Diagnostics.Metrics;
 using static ERPAPP.Helper.Enums;
 using static ERPAPP.Models.VendorsModel;
 
@@ -869,6 +870,57 @@ namespace ERPAPP.Repository
                 return new VendorsEditModel { };
             }
         }
+
+        public async Task<List<VendorCountryModel>> GetVendorCountryList(string country)
+        {
+            SqlParameter[] parameters =
+            {
+                new SqlParameter("@Type","Country"),
+                new SqlParameter("@Search",(object?)country ?? DBNull.Value)
+            };
+
+            DataTable dt = _db.GetDataTable("GetCustomer_Address", parameters);
+
+            List<VendorCountryModel> list = new();
+
+            foreach (DataRow row in dt.Rows)
+            {
+                list.Add(new VendorCountryModel
+                {
+                    Code = row["Code"].ToString(),
+                    Name = row["Name"].ToString()
+                });
+            }
+
+            return list;
+        }
+
+        public async Task<List<VendorPostCodeModel>> GetPostCodeListWithSearch(string city, string searchpostcode)
+        {
+            SqlParameter[] parameters =
+             {
+                new SqlParameter("@Type","PostCodeWithSearch"),
+                new SqlParameter("@City",(object?)city ?? DBNull.Value),
+                new SqlParameter("@Search",(object?)searchpostcode ?? DBNull.Value)
+            };
+
+            DataTable dt = _db.GetDataTable("GetCustomer_Address", parameters);
+
+            List<VendorPostCodeModel> list = new();
+
+            foreach (DataRow row in dt.Rows)
+            {
+                list.Add(new VendorPostCodeModel
+                {
+                    Code = row["Code"].ToString(),
+                    Name = row["Name"].ToString()
+                });
+            }
+
+            return list;
+        }
+
+
 
         #endregion
     }

@@ -81,7 +81,7 @@
         height: 60px;
     }
 
-    
+
     /* --------------Drop Down Related changes-----------------*/
     .select2-container--bootstrap-5 .select2-selection {
         height: 32px !important;
@@ -93,13 +93,13 @@
         align-items: center;
     }
 
-    
+
     .select2-container--bootstrap-5 .select2-selection__rendered {
         line-height: 20px !important;
         padding-left: 0 !important;
     }
 
-   
+
     .select2-container--bootstrap-5 .select2-selection__arrow {
         height: 100%;
         right: 10px;
@@ -183,13 +183,7 @@
                     <div class="row mt-2">
                         <label class="col-4 col-form-label">City<span class="required-star">*</span></label>
                         <div class="col-8">
-                            <input type="text"
-                                   asp-for="CityCode"
-                                   class="form-control" />
-
-                            <input type="hidden"
-                                   asp-for="CityCode" />
-
+                            <input type="text" asp-for="CityCode" class="form-control" />
                             <span asp-validation-for="CityCode" class="text-danger"></span>
                         </div>
                     </div>
@@ -197,9 +191,7 @@
                     <div class="row mt-2">
                         <label class="col-4 col-form-label">Post Code<span class="required-star">*</span></label>
                         <div class="col-8">
-                            <select asp-for="PostCode" class="form-select searchable-dropdown">
-                                <option value="">--Select--</option>
-                            </select>
+                            <input type="text" asp-for="PostCode" class="form-control" />
                             <span asp-validation-for="PostCode" class="text-danger"></span>
                         </div>
                     </div>
@@ -219,12 +211,7 @@
                     <div class="row mt-2">
                         <label class="col-4 col-form-label">Country<span class="required-star">*</span></label>
                         <div class="col-8">
-                            <select asp-for="CountryCode"
-                                    asp-items="@(new SelectList(Model.DropDownData.Countries, "Code", "Name"))"
-                                    class="form-select searchable-dropdown">
-                                <option value="">--Select--</option>
-                            </select>
-
+                            <input type="text" asp-for="CountryCode" class="form-control" />
                             <span asp-validation-for="CountryCode" class="text-danger"></span>
                         </div>
                     </div>
@@ -392,7 +379,7 @@
                     </div>
                 </div>
 
-                
+
 
             </div>
         </fieldset>
@@ -404,7 +391,7 @@
             <div class="row">
 
                 <div class="col-4">
-                    
+
                     <div class="row mt-2">
                         <label class="col-4 col-form-label">Vendor Category<span class="required-star">*</span></label>
                         <div class="col-8">
@@ -416,8 +403,6 @@
                             <span asp-validation-for="VendorCategory" class="text-danger"></span>
                         </div>
                     </div>
-                   
-                   
                 </div>
                 <div class="col-4">
 
@@ -427,7 +412,7 @@
 
                             <select asp-for="PurchaserCode"
                                     asp-items="@(new SelectList(Model.DropDownData.VendorPurchasers, "Code", "Name"))"
-                                    class="form-select searchable-dropdown">
+                                    class="form-select">
                                 <option value="">--Select--</option>
                             </select>
                             <span asp-validation-for="PurchaserCode" class="text-danger"></span>
@@ -484,7 +469,7 @@
                         </div>
                     </div>
 
-                    
+
                 </div>
                 <div class="col-4">
                     <div class="row mt-2">
@@ -625,9 +610,9 @@
                         </div>
                     </div>
 
-                   
 
-                   
+
+
                 </div>
 
 
@@ -657,7 +642,7 @@
                         </div>
                     </div>
 
-                   
+
 
                     <div class="row mt-2">
                         <label class="col-4 col-form-label">GST Reg No</label>

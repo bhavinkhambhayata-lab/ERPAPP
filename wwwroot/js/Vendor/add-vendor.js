@@ -12,6 +12,9 @@
         var searchText = $(this).val();
 
         if (searchText.length < 2) {
+
+            $('#vendorForm')[0].reset();
+
             $("#vendorSearchResult").html("");
             return;
         }
@@ -62,9 +65,6 @@
                 }
 
                 var data = response.data;
-
-                // OPTIONAL
-                loadCustomerAddressData(data.cityCode, data.postCode);
 
                 // ================= BASIC =================
                 $("#MasterCode").val(data.masterCode);
@@ -236,12 +236,13 @@
 
         if ($(this).val().trim() === "") {
 
+            // 🔥 Clear City hidden
+            $("#CityCode").val('');
+            $("#PostCode").val('');
+
             $("#CountryCode").val('');
             $("#StateCode").val('');
-            $("#PostCode").empty().append('<option value="">--Select--</option>');
-
         }
-
     });
 
     // CITY AUTOCOMPLETE
@@ -268,8 +269,6 @@
 
         select: function (event, ui) {
 
-
-
             // 🔥 CLEAR OLD DATA
             $("#CountryCode").val('');
             $("#StateCode").val('');
@@ -284,24 +283,10 @@
                         $("#CityCode").val(data.city);
                         $("#CountryCode").val(data.countryCode || '').trigger('change');;
                         $("#StateCode").val(data.stateCode || '');
+
+                        
+
                     }
-
-                });
-
-            // POSTCODE LIST
-            $.get(baseURL + "Vendor/GetPostCodeList",
-                { city: ui.item.value },
-                function (data) {
-
-                    $("#PostCode").empty().append('<option value="">--Select--</option>');
-
-                    $.each(data, function (i, item) {
-
-                        $("#PostCode").append(
-                            '<option value="' + item.code + '">' + item.name + '</option>'
-                        );
-
-                    });
 
                 });
 
@@ -310,6 +295,73 @@
 
     });
 
+    $("#PostCode").autocomplete({
+
+        source: function (request, response) {
+
+            $.ajax({
+                url: baseURL + "Vendor/GetPostCodeListWithSearch",
+                type: "GET",
+                dataType: "json",
+                data: {
+                    city: $('#CityCode').val(),
+                    search: request.term   // 🔥 search text
+                },
+                success: function (data) {
+
+                    response($.map(data, function (item) {
+                        return {
+                            label: item.name,   // show in dropdown
+                            value: item.name,   // set in textbox
+                            code: item.code     // hidden field mate
+                        };
+                    }));
+
+                }
+            });
+
+        },
+
+        minLength: 1,
+
+        select: function (event, ui) {
+
+            $("#PostCode").val(ui.item.code);
+
+            return false;
+        }
+    });
+
+    $("#CountryCode").autocomplete({
+        source: function (request, response) {
+
+            $.get(baseURL + "Vendor/GetCountryList", {
+                searchcountry: request.term   // 🔥 Name પરથી search
+            }, function (data) {
+
+                response($.map(data, function (item) {
+                    return {
+                        label: item.name,   // display → "Code - Name"
+                        value: item.code    // textbox માં → Code set થશે
+                    };
+                }));
+
+            });
+        },
+
+        minLength: 1,
+
+        select: function (event, ui) {
+
+            // 🔥 textbox માં Code set થશે
+            $("#CountryCode").val(ui.item.value);
+
+            // 🔥 change event manually trigger
+            $("#CountryCode").trigger("change");
+
+            return false;
+        }
+    });
 
     $('#CountryCode').on('change', function () {
 
@@ -481,6 +533,7 @@
 
     $('#ApplicationMethod').val('1');
 });
+
 function handleVendorCurrency() {
 
     var country = $('#CountryCode').val();
