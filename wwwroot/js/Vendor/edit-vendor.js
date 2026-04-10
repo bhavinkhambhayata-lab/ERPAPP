@@ -15,7 +15,7 @@ function toggleVendorUnBlock(btn) {
     }
 
     $.ajax({
-        url: '/Vendor/VendorUnblock',
+        url: baseURL + 'Vendor/VendorUnblock',
         type: 'POST',
         data: {
             vendorCode: vendorCode

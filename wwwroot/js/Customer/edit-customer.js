@@ -21,7 +21,7 @@
     });
 
     $(document).on("change", ".brand", function () {
-        
+
         var current = $(this);
 
         var currentText = current.find("option:selected").text().trim();
@@ -124,7 +124,7 @@
                 if (res.success) {
                     showToast(res.message, "success", 4000);
                     $('#listBtn').click();
-                    
+
                 } else {
                     showToast(res.message, "danger", 4000);
                 }
@@ -441,16 +441,16 @@ function toggleCustomerUnBlock(btn) {
     }
 
     $.ajax({
-        url: '/Customer/CustomerUnblock',
+        url: baseURL + 'Customer/CustomerUnblock',
         type: 'POST',
         data: {
             customerCode: customerCode
         },
         success: function (res) {
-            
+
             if (res.success) {
 
-                showToast(res.message,"success",3000);
+                showToast(res.message, "success", 3000);
 
                 btn.style.display = "none";
 

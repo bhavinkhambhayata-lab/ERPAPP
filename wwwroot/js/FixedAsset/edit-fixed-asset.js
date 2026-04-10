@@ -18,7 +18,7 @@ function toggleFixedAssetUnBlock(btn) {
     }
 
     $.ajax({
-        url: '/FixedAsset/FixedAssetUnblock',
+        url: baseURL + 'FixedAsset/FixedAssetUnblock',
         type: 'POST',
         data: {
             fixedAssetCode: fixedAssetCode
