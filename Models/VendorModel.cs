@@ -53,14 +53,12 @@ namespace ERPAPP.Models
 
         // ================= CONTACT =================
 
-        [Required(ErrorMessage = "Contact is required")]
         [StringLength(100)]
-        public string ContactPerson { get; set; } = string.Empty;
+        public string? ContactPerson { get; set; } = string.Empty;
 
-        [Required(ErrorMessage = "Mobile Phone No is required")]
         [StringLength(30)]
         [RegularExpression(@"^(\+?[\d\-]+)(,\+?[\d\-]+)*$", ErrorMessage = "Invalid mobile phone number")]
-        public string MobileNo { get; set; } = string.Empty;
+        public string? MobileNo { get; set; } = string.Empty;
 
         [StringLength(30)]
         [RegularExpression(@"^(\+?[\d\-]+)(,\+?[\d\-]+)*$", ErrorMessage = "Invalid phone number")]
@@ -330,14 +328,12 @@ namespace ERPAPP.Models
 
         // ================= CONTACT =================
 
-        [Required(ErrorMessage = "Contact is required")]
         [StringLength(100)]
-        public string ContactPerson { get; set; } = string.Empty;
+        public string? ContactPerson { get; set; } = string.Empty;
 
-        [Required(ErrorMessage = "Mobile Phone No is required")]
         [StringLength(30)]
         [RegularExpression(@"^(\+?[\d\-]+)(,\+?[\d\-]+)*$", ErrorMessage = "Invalid mobile phone number")]
-        public string MobileNo { get; set; } = string.Empty;
+        public string? MobileNo { get; set; } = string.Empty;
 
 
         [StringLength(30)]
