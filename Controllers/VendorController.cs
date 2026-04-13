@@ -308,7 +308,7 @@ namespace ERPAPP.Controllers
                         else if (emailSendData.EmpRowID == "1482")
                             division = "TILE";
 
-                        await _emailRepository.SendMailVendorBlock(division, Convert.ToInt32(displayRowId), vendorName, vendorCode);
+                        await _emailRepository.SendMailVendorBlock(division, Convert.ToInt32(displayRowId), vendorCode, vendorName);
                     }
 
                     return Json(new { success = true, message = "Vendor Un-blocked Successfully." });

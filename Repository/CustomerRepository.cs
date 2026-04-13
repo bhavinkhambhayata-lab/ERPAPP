@@ -1443,11 +1443,13 @@ namespace ERPAPP.Repository
                 }
             }
 
-            if (model.DivisionCode == "MOSAIC")
+            var divisionCode = model.DivisionCode?.Trim().ToUpper();
+
+            if (divisionCode == "MOSAIC")
             {
                 model.Division = 2;
             }
-            else if (model.DivisionCode == "TILE")
+            else if (divisionCode == "TILE")
             {
                 model.Division = 1;
             }
