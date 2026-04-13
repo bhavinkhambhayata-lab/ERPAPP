@@ -189,7 +189,7 @@ namespace ERPAPP.Controllers
             // GST TYPE BASED VALIDATION
             // =========================
 
-            if (model.GSTCustomerType == 1 || model.GSTCustomerType == 2 || model.GSTCustomerType == 3)  //Registered  // Composite // SEZ
+            if (model.GSTCustomerType == 1 || model.GSTCustomerType == 7)  //Registered  // Composite // SEZ
             {
                 if (string.IsNullOrWhiteSpace(model.GSTRegistrationNo) && string.IsNullOrWhiteSpace(model.ARNNo))
                 {

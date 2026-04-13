@@ -124,7 +124,7 @@
                 $("#PostCode").val(data.postcode).prop("disabled", true);
                 $("#StateCode").val(data.stateCode).prop("disabled", true);
                 
-                $("#CountryCode").val(data.countryCode).prop("disabled", true);
+                $("#CountryCode").val(data.countryCode).prop("disabled", true).trigger("change");
                 $("#Region").val(data.region).prop("disabled", true);
                 $("#Zone").val(data.zone).prop("disabled", true);
 
@@ -147,22 +147,22 @@
                 $("#GSTRegistrationNo").val(data.gstRegistrationNo).prop("disabled", true);
                 $("#GSTRegistrationType").val(data.gstRegistrationType).prop("disabled", true);
                 $("#GSTCustomerType").val(data.gstCustomerType).prop("disabled", true);
-                $("#CustomerType").val(data.customerType).prop("disabled", true);
+                //$("#CustomerType").val(data.customerType).prop("disabled", true);
                 
-                $("#CommissionVendorNo").val(data.commissionVendorNo).prop("disabled", true);
-                $("#CommissionType").val(data.commissionType).prop("disabled", true);
+                //$("#CommissionVendorNo").val(data.commissionVendorNo).prop("disabled", true);
+                //$("#CommissionType").val(data.commissionType).prop("disabled", true);
                 
-                $("#CreditLimit").val(data.creditLimit).prop("disabled", true);
-                $("#ApplicationMethod").val(data.applicationMethod).prop("disabled", true);
-                $("#PaymentTermsCode").val(data.paymentTermsCode).prop("disabled", true);
-                $("#PaymentMethodCode").val(data.paymentMethodCode).prop("disabled", true);
+                //$("#CreditLimit").val(data.creditLimit);
+                //$("#ApplicationMethod").val(data.applicationMethod).prop("disabled", true);
+                //$("#PaymentTermsCode").val(data.paymentTermsCode);
+                //$("#PaymentMethodCode").val(data.paymentMethodCode);
 
-                $("#CustomerPostingGroup").val(data.customerPostingGroup).prop("disabled", true);
-                $("#GenBusPostingGroup").val(data.genBusPostingGroup).prop("disabled", true);
-                $("#CurrencyCode").val(data.currency).prop("disabled", true);
+                //$("#CustomerPostingGroup").val(data.customerPostingGroup).prop("disabled", true);
+                //$("#GenBusPostingGroup").val(data.genBusPostingGroup).prop("disabled", true);
+                //$("#CurrencyCode").val(data.currency);
 
-                $("#BusinessCategory").val(data.businessCategory || '').prop("disabled", true);
-                $("#MSMEUAMNo").val(data.msmeuamNo).prop("disabled", true);
+                //$("#BusinessCategory").val(data.businessCategory).prop("disabled", true);
+                //$("#MSMEUAMNo").val(data.msmeuamNo).prop("disabled", true);
 
                 //$("#ParentCustomerCode").val(data.parentCustomerCode).prop("disabled", true);
                 //$("#PriceListCode").val(data.priceListCode).prop("disabled", true);
@@ -911,6 +911,8 @@
             $("#ShippingContactPerson").val($("#ContactPerson").val()).prop("disabled", true);
 
             $("#ShippingLocationCode").val($('#LocationCode').val()).prop("disabled", true);
+            
+            $("#ShippingPostalCode").val($("#PostCode").val()).prop("disabled", true);
 
             //loadCustomerShippingAddressData($("#ShippingCity").val());
             
@@ -978,6 +980,10 @@
             let mobile = $("#MobileNo").val();
             if (mobile) {
                 mobile = mobile.split(',')[0].trim();
+
+                if (mobile.startsWith('+91')) {
+                    mobile = mobile.substring(3).trim();
+                }
             }
 
             $("#EInvEmail").val(email);
