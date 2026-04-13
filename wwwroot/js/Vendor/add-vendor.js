@@ -103,7 +103,7 @@
                 $("#BankAccountNo").val(data.bankAccountNo || '').prop("disabled", true);
                 $("#BranchName").val(data.branchName || '').prop("disabled", true);
                 $("#IFSCCode").val(data.ifscCode || '').prop("disabled", true);
-
+                
                 // ================= BUSINESS =================
                 $("#VendorCategory").val(data.vendorCategory || '').trigger("change");
                 $("#BusinessCategory").val(data.businessCategory || '').trigger("change").prop("disabled", true);
@@ -123,7 +123,7 @@
 
                 // ================= OTHER =================
                 $("#ApplicationMethod").val(data.applicationMethod || '').trigger("change");
-                $("#TaxLiable").val(data.taxLiable || '').trigger("change");
+                $("#TaxLiable").val('0').trigger("change");
                 $("#Location").val(data.location || '').trigger("change");
 
                 // ================= MSME =================
