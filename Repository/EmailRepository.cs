@@ -346,37 +346,36 @@ namespace ERPAPP.Repository
         {
             SqlParameter[] parameters = new SqlParameter[]
             {
-                new SqlParameter("@Division", (object?)division ?? DBNull.Value),
-                new SqlParameter("@DisplayNo", displayNo)
+        new SqlParameter("@Division", (object?)division ?? DBNull.Value),
+        new SqlParameter("@DisplayNo", displayNo)
             };
 
             DataSet ds = _db.GetDataSet("Customer_CustomerUnblockReplayMailList", parameters);
 
-            // ❌ Direct return if second table nathi
-            if (ds == null || ds.Tables.Count < 2)
+            // Safety check
+            if (ds == null || ds.Tables.Count == 0)
                 return new List<MailListDto>();
 
-            // ✅ ONLY second result set
-            DataTable dt = ds.Tables[1];
+            DataTable dt = ds.Tables[0];
 
             if (dt.Rows.Count == 0)
                 return new List<MailListDto>();
 
-            // ✅ TO
-            var toMail = dt.AsEnumerable()
+            // TO (single)
+            string toMail = dt.AsEnumerable()
                 .Select(r => r["TOMailID"]?.ToString()?.Trim().TrimEnd(','))
                 .FirstOrDefault();
 
-            // ✅ CC
-            var ccMail = string.Join(",",
+            // CC (multiple combine)
+            string ccMail = string.Join(",",
                 dt.AsEnumerable()
                   .Select(r => r["CCMailID"]?.ToString()?.Trim().TrimEnd(','))
                   .Where(x => !string.IsNullOrWhiteSpace(x))
                   .Distinct()
             );
 
-            // ✅ BCC
-            var bccMail = dt.AsEnumerable()
+            // BCC (single)
+            string bccMail = dt.AsEnumerable()
                 .Select(r => r["BCCMailID"]?.ToString()?.Trim().TrimEnd(','))
                 .FirstOrDefault();
 
