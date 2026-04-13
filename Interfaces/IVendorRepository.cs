@@ -7,7 +7,7 @@ namespace ERPAPP.Interfaces
     {
         Task<int> GetVendorTransferNewNo();
         Task<GetVendorAddData> GetVendorAddData();
-        Task<bool> InsertVendor(VendorsModel model);
+        Task<bool> InsertVendor(VendorsModel model,string userName);
 
         Task<List<GetVendorListModel>> GetVendorList(string searchVendor);
 
@@ -22,7 +22,7 @@ namespace ERPAPP.Interfaces
 
         Task<VendorEditDropDownModel> GetVendorEditDropDownData();
 
-        Task<bool> VendorUnblock(string vendorNo);
+        Task<bool> VendorUnblock(string vendorNo, string displayRowId, int userRowID);
 
         Task<bool> CheckVendorGSTRegistrationAlreadyExists(string GstRegistrationNo);
 

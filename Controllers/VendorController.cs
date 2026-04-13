@@ -2,6 +2,7 @@
 using ERPAPP.Models;
 using ERPAPP.Repository;
 using Microsoft.AspNetCore.Mvc;
+using System.Reflection;
 using System.Text.RegularExpressions;
 
 namespace ERPAPP.Controllers
@@ -10,10 +11,12 @@ namespace ERPAPP.Controllers
     {
 
         private readonly IVendorRepository _vendorRepository;
+        private readonly IEmailRepository _emailRepository;
 
-        public VendorController(IVendorRepository vendorRepository)
+        public VendorController(IVendorRepository vendorRepository, IEmailRepository emailRepository)
         {
             _vendorRepository = vendorRepository;
+            _emailRepository = emailRepository;
         }
 
         public IActionResult Index()
@@ -207,7 +210,9 @@ namespace ERPAPP.Controllers
 
             try
             {
-                var insertResult = await _vendorRepository.InsertVendor(model);
+                var userName = HttpContext.Session.GetString("UserName");
+
+                var insertResult = await _vendorRepository.InsertVendor(model, userName ?? "");
 
                 if (insertResult)
                 {
@@ -282,14 +287,30 @@ namespace ERPAPP.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> VendorUnblock(string vendorCode)
+        public async Task<IActionResult> VendorUnblock(string vendorCode, string displayRowId, string vendorName, string locationName)
         {
             try
             {
-                var vendorUnBlock = await _vendorRepository.VendorUnblock(vendorCode);
+                int userRowId = HttpContext.Session.GetInt32("UserRowId") ?? 0;
+
+                var vendorUnBlock = await _vendorRepository.VendorUnblock(vendorCode, displayRowId, userRowId);
 
                 if (vendorUnBlock)
                 {
+                    var emailSendData = _emailRepository.GetVendorSendEmailDetailByLocationCode(locationName);
+
+                    if (emailSendData != null)
+                    {
+                        string division = "";
+
+                        if (emailSendData.EmpRowID == "335")
+                            division = "MOSAIC";
+                        else if (emailSendData.EmpRowID == "1482")
+                            division = "TILE";
+
+                        await _emailRepository.SendMailVendorBlock(division, Convert.ToInt32(displayRowId), vendorName, vendorCode);
+                    }
+
                     return Json(new { success = true, message = "Vendor Un-blocked Successfully." });
                 }
                 else
@@ -362,7 +383,7 @@ namespace ERPAPP.Controllers
         }
 
         [HttpGet]
-        public async Task<JsonResult> GetPostCodeListWithSearch(string city,string search)
+        public async Task<JsonResult> GetPostCodeListWithSearch(string city, string search)
         {
             var result = await _vendorRepository.GetPostCodeListWithSearch(city, search);
             return Json(result);

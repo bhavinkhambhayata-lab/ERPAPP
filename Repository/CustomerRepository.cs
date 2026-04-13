@@ -10,10 +10,12 @@ namespace ERPAPP.Repository
     public class CustomerRepository : ICustomerRepository
     {
         private readonly DbHelper _db;
+        private readonly IEmailRepository _emailRepository;
 
-        public CustomerRepository(DbHelper db)
+        public CustomerRepository(DbHelper db, IEmailRepository emailRepository)
         {
             _db = db;
+            _emailRepository = emailRepository;
         }
 
         public async Task<bool> CheckCustomerInMasterAndBrand(string masterCode, int brandId)
@@ -912,6 +914,16 @@ namespace ERPAPP.Repository
                 if (!string.IsNullOrEmpty(customerNo) &&
                     (customerNo.StartsWith("TD") || customerNo.StartsWith("MD")))
                 {
+                    if (model.DivisionCode != null && !string.IsNullOrEmpty(model.Email))
+                    {
+                        var emailSend = await _emailRepository.SendMailCustomerUnBlock(model.DivisionCode, new CustomerEmailItemDto
+                        {
+                            Name = model.Name ?? "",
+                            Division = model.DivisionCode,
+                            MailID = model.Email ?? ""
+                        });
+                    }
+
                     result = true;
                 }
                 else
@@ -1986,11 +1998,13 @@ namespace ERPAPP.Repository
             }
         }
 
-        public async Task<bool> CustomerUnblock(string customerNo)
+        public async Task<bool> CustomerUnblock(string customerNo,string displayRowId,int loginRowId)
         {
             SqlParameter[] param =
             {
-                new SqlParameter("@CompanyCode", customerNo)
+                new SqlParameter("@CompanyCode", customerNo),
+                new SqlParameter("@LoginRowId", loginRowId),
+                new SqlParameter("@DisplayRowID", displayRowId)
             };
 
             object result = _db.ExecuteScalar("Customer_ChangeUnBlocked", param);

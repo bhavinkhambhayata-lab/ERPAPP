@@ -444,7 +444,10 @@ function toggleCustomerUnBlock(btn) {
         url: baseURL + 'Customer/CustomerUnblock',
         type: 'POST',
         data: {
-            customerCode: customerCode
+            customerCode: customerCode,
+            displayRowId: $("#DisplayNo").text(),
+            customerName: $("#Name").val(),
+            division: $("#Division option:selected").text()
         },
         success: function (res) {
 

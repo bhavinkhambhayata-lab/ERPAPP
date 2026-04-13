@@ -324,6 +324,119 @@
             </div>
         </fieldset>
 
+        <!-- ================= Tax ================= -->
+        <fieldset>
+            <legend>Tax</legend>
+
+            <div class="row">
+                <div class="col-4">
+                    <div class="row mt-2">
+                        <label class="col-4 col-form-label">Tax Liable<span class="required-star">*</span></label>
+                        <div class="col-8">
+                            <select asp-for="TaxLiable" class="form-select" disabled>
+                                <option value="">--Select--</option>
+                                <option value="1">Yes</option>
+                                <option value="0">No</option>
+                            </select>
+                            <span asp-validation-for="TaxLiable" class="text-danger"></span>
+                        </div>
+                    </div>
+
+                    <div class="row mt-2">
+                        <label class="col-4 col-form-label">PAN No</label>
+                        <div class="col-8">
+                            <input asp-for="PANNo" class="form-control" disabled />
+                            <span asp-validation-for="PANNo" class="text-danger"></span>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="col-4">
+                    <div class="row mt-2">
+                        <label class="col-4 col-form-label">GST Vendor Type<span class="required-star">*</span></label>
+                        <div class="col-8">
+                            <select asp-for="GSTVendorType"
+                                    asp-items="@(new SelectList(Model.DropDownData.VendorGSTVendorTypes, "Code", "Name"))"
+                                    class="form-select" disabled>
+                                <option value="">--Select--</option>
+                            </select>
+                            <span asp-validation-for="GSTVendorType" class="text-danger"></span>
+                        </div>
+                    </div>
+
+                    <div class="row mt-2">
+                        <label class="col-4 col-form-label">Aggregate Turnover</label>
+                        <div class="col-8">
+                            <select asp-for="AggregateTurnover"
+                                    asp-items="@(new SelectList(Model.DropDownData.VendorAggregateTurnover, "Code", "Name"))"
+                                    class="form-select" disabled>
+                                <option value="">--Select--</option>
+                            </select>
+                            <span asp-validation-for="AggregateTurnover" class="text-danger"></span>
+                        </div>
+                    </div>
+
+                    <div class="row mt-2">
+                        <label class="col-4 col-form-label">GST Reg No</label>
+                        <div class="col-8">
+                            <input asp-for="GSTRegNo" class="form-control" disabled />
+                            <span asp-validation-for="GSTRegNo" class="text-danger"></span>
+                        </div>
+                    </div>
+
+                    <div class="row mt-2">
+                        <label class="col-4 col-form-label">ARN</label>
+                        <div class="col-8">
+                            <input asp-for="ARN" class="form-control" disabled />
+                            <span asp-validation-for="ARN" class="text-danger"></span>
+                        </div>
+                    </div>
+
+                    <div class="row mt-2">
+                        <label class="col-4 col-form-label">GST Return Frequency</label>
+                        <div class="col-8">
+                            <select asp-for="GSTReturnFrequency"
+                                    asp-items="@(new SelectList(Model.DropDownData.VendorGSTReturnFrequencies, "Code", "Name"))"
+                                    class="form-select" disabled>
+                                <option value="">--Select--</option>
+                            </select>
+                            <span asp-validation-for="GSTReturnFrequency" class="text-danger"></span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-4">
+
+                    <div class="row mt-2">
+                        <label class="col-4 col-form-label">Subcontractor</label>
+                        <div class="col-8">
+                            <select asp-for="Subcontractor" class="form-select" disabled>
+                                <option value="">--Select--</option>
+                                <option value="true">Yes</option>
+                                <option value="false">No</option>
+                            </select>
+                            <span asp-validation-for="Subcontractor" class="text-danger"></span>
+                        </div>
+                    </div>
+
+                    <div class="row mt-2">
+                        <label class="col-4 col-form-label">Vendor Location</label>
+                        <div class="col-8">
+
+                            <select asp-for="VendorLocation"
+                                    asp-items="@(new SelectList(Model.DropDownData.VendorLocations, "Code", "Name"))"
+                                    class="form-select" disabled>
+                                <option value="">--Select--</option>
+                            </select>
+                            <span asp-validation-for="VendorLocation" class="text-danger"></span>
+
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </fieldset>
+
         <!-- ================= Bank Details ================= -->
         <fieldset>
             <legend>Bank Details</legend>
@@ -569,118 +682,7 @@
             </div>
         </fieldset>
 
-        <!-- ================= Tax ================= -->
-        <fieldset>
-            <legend>Tax</legend>
-
-            <div class="row">
-                <div class="col-4">
-                    <div class="row mt-2">
-                        <label class="col-4 col-form-label">Tax Liable<span class="required-star">*</span></label>
-                        <div class="col-8">
-                            <select asp-for="TaxLiable" class="form-select" disabled>
-                                <option value="">--Select--</option>
-                                <option value="1">Yes</option>
-                                <option value="0">No</option>
-                            </select>
-                            <span asp-validation-for="TaxLiable" class="text-danger"></span>
-                        </div>
-                    </div>
-
-                    <div class="row mt-2">
-                        <label class="col-4 col-form-label">PAN No</label>
-                        <div class="col-8">
-                            <input asp-for="PANNo" class="form-control" disabled />
-                            <span asp-validation-for="PANNo" class="text-danger"></span>
-                        </div>
-                    </div>
-
-                </div>
-                <div class="col-4">
-                    <div class="row mt-2">
-                        <label class="col-4 col-form-label">GST Vendor Type<span class="required-star">*</span></label>
-                        <div class="col-8">
-                            <select asp-for="GSTVendorType"
-                                    asp-items="@(new SelectList(Model.DropDownData.VendorGSTVendorTypes, "Code", "Name"))"
-                                    class="form-select" disabled>
-                                <option value="">--Select--</option>
-                            </select>
-                            <span asp-validation-for="GSTVendorType" class="text-danger"></span>
-                        </div>
-                    </div>
-
-                    <div class="row mt-2">
-                        <label class="col-4 col-form-label">Aggregate Turnover</label>
-                        <div class="col-8">
-                            <select asp-for="AggregateTurnover"
-                                    asp-items="@(new SelectList(Model.DropDownData.VendorAggregateTurnover, "Code", "Name"))"
-                                    class="form-select" disabled>
-                                <option value="">--Select--</option>
-                            </select>
-                            <span asp-validation-for="AggregateTurnover" class="text-danger"></span>
-                        </div>
-                    </div>
-
-                    <div class="row mt-2">
-                        <label class="col-4 col-form-label">GST Reg No</label>
-                        <div class="col-8">
-                            <input asp-for="GSTRegNo" class="form-control" disabled />
-                            <span asp-validation-for="GSTRegNo" class="text-danger"></span>
-                        </div>
-                    </div>
-
-                    <div class="row mt-2">
-                        <label class="col-4 col-form-label">ARN</label>
-                        <div class="col-8">
-                            <input asp-for="ARN" class="form-control" disabled />
-                            <span asp-validation-for="ARN" class="text-danger"></span>
-                        </div>
-                    </div>
-
-                    <div class="row mt-2">
-                        <label class="col-4 col-form-label">GST Return Frequency</label>
-                        <div class="col-8">
-                            <select asp-for="GSTReturnFrequency"
-                                    asp-items="@(new SelectList(Model.DropDownData.VendorGSTReturnFrequencies, "Code", "Name"))"
-                                    class="form-select" disabled>
-                                <option value="">--Select--</option>
-                            </select>
-                            <span asp-validation-for="GSTReturnFrequency" class="text-danger"></span>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-4">
-
-                    <div class="row mt-2">
-                        <label class="col-4 col-form-label">Subcontractor</label>
-                        <div class="col-8">
-                            <select asp-for="Subcontractor" class="form-select" disabled>
-                                <option value="">--Select--</option>
-                                <option value="true">Yes</option>
-                                <option value="false">No</option>
-                            </select>
-                            <span asp-validation-for="Subcontractor" class="text-danger"></span>
-                        </div>
-                    </div>
-
-                    <div class="row mt-2">
-                        <label class="col-4 col-form-label">Vendor Location</label>
-                        <div class="col-8">
-
-                            <select asp-for="VendorLocation"
-                                    asp-items="@(new SelectList(Model.DropDownData.VendorLocations, "Code", "Name"))"
-                                    class="form-select" disabled>
-                                <option value="">--Select--</option>
-                            </select>
-                            <span asp-validation-for="VendorLocation" class="text-danger"></span>
-
-                        </div>
-                    </div>
-                </div>
-
-            </div>
-        </fieldset>
+       
 
 
         <!-- BUTTONS -->

@@ -912,7 +912,7 @@
 
             $("#ShippingLocationCode").val($('#LocationCode').val()).prop("disabled", true);
 
-            loadCustomerShippingAddressData($("#ShippingCity").val());
+            //loadCustomerShippingAddressData($("#ShippingCity").val());
             
         } else {
 

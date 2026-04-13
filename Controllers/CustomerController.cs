@@ -13,10 +13,12 @@ namespace ERPAPP.Controllers
     {
 
         private readonly ICustomerRepository _customerRepository;
+        private readonly IEmailRepository _emailRepository;
 
-        public CustomerController(ICustomerRepository customerRepository)
+        public CustomerController(ICustomerRepository customerRepository, IEmailRepository emailRepository)
         {
             _customerRepository = customerRepository;
+            _emailRepository = emailRepository;
         }
 
         public async Task<IActionResult> Index()
@@ -520,14 +522,18 @@ namespace ERPAPP.Controllers
 
 
         [HttpPost]
-        public async Task<IActionResult> CustomerUnblock(string customerCode)
+        public async Task<IActionResult> CustomerUnblock(string customerCode, string displayRowId, string customerName, string division)
         {
             try
             {
-                var customerUnBlock = await _customerRepository.CustomerUnblock(customerCode);
+                int userRowId = HttpContext.Session.GetInt32("UserRowId") ?? 0;
+
+                var customerUnBlock = await _customerRepository.CustomerUnblock(customerCode, displayRowId, userRowId);
 
                 if (customerUnBlock)
                 {
+                    var sendEmail = _emailRepository.SendMailCustomerBlock(division, Convert.ToInt32(displayRowId), customerCode, customerName);
+
                     return Json(new { success = true, message = "Customer Un-blocked Successfully." });
                 }
                 else

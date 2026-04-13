@@ -38,7 +38,7 @@ namespace ERPAPP.Interfaces
 
         Task<bool> CheckCustomerGSTRegistrationAlreadyExists(string GstRegistrationNo);
 
-        Task<bool> CustomerUnblock(string customerNo);
+        Task<bool> CustomerUnblock(string customerNo,string displayRowId,int loginRowId);
 
         Task<List<CountryModel>> GetCustomerCountryList(string country);
         Task<List<PostCodeModel>> GetCustomerPostCodeListWithSearch(string city, string searchpostcode);

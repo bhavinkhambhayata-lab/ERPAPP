@@ -12,10 +12,12 @@ namespace ERPAPP.Repository
     public class VendorRepository : IVendorRepository
     {
         private readonly DbHelper _db;
+        private readonly IEmailRepository _emailRepository;
 
-        public VendorRepository(DbHelper db)
+        public VendorRepository(DbHelper db, IEmailRepository emailRepository)
         {
             _db = db;
+            _emailRepository = emailRepository;
         }
 
         public async Task<int> GetVendorTransferNewNo()
@@ -225,7 +227,7 @@ namespace ERPAPP.Repository
             }
         }
 
-        public async Task<bool> InsertVendor(VendorsModel model)
+        public async Task<bool> InsertVendor(VendorsModel model,string userName)
         {
             try
             {
@@ -336,6 +338,37 @@ namespace ERPAPP.Repository
 
                 if (!string.IsNullOrEmpty(vendorNo) && vendorNo.StartsWith("ICV"))
                 {
+                    if (!string.IsNullOrEmpty(model.Location))
+                    {
+                        var emailSendData = _emailRepository.GetVendorSendEmailDetailByLocationCode(model.Location);
+
+                        if (emailSendData != null)
+                        {
+                            string division = "";
+
+                            if (emailSendData.EmpRowID == "335")
+                                division = "MOSAIC";
+                            else if (emailSendData.EmpRowID == "1482")
+                                division = "TILE";
+
+                            var emailDetails = new VendorEmailItemDto
+                            {
+                                VendorName = model.Name,
+                                VendorCategory = model.VendorCategory,
+                                SrNo = 1,
+                                PaymentMethod = model.PaymentMethod,
+                                PaymentTerm = model.PaymentTerms,
+                                PurchaseCode = model.PurchaserCode,
+                                RequestedBy = userName,
+                                MailID = "softwarecare@italiagroup.in"
+                            };
+
+                            await _emailRepository.SendMailVendorUnBlock(division, emailDetails);
+                        }
+                    }
+
+
+
                     result = true;
                 }
                 else
@@ -723,11 +756,13 @@ namespace ERPAPP.Repository
             return await Task.FromResult(dropDown);
         }
 
-        public async Task<bool> VendorUnblock(string vendorNo)
+        public async Task<bool> VendorUnblock(string vendorNo, string displayRowId, int loginRowID)
         {
             SqlParameter[] param =
              {
-                new SqlParameter("@CompanyCode", vendorNo)
+                new SqlParameter("@CompanyCode", vendorNo),
+                new SqlParameter("@LoginRowId", loginRowID),
+                new SqlParameter("@DisplayRowID", displayRowId)
             };
 
             object result = _db.ExecuteScalar("Vendor_ChangeUnBlocked", param);
@@ -859,13 +894,13 @@ namespace ERPAPP.Repository
 
                     EmailNotAvailable = row["Email"] == DBNull.Value
                     || string.IsNullOrWhiteSpace(row["Email"].ToString()),
-                    
+
                     Blocked = row["Blocked"] != DBNull.Value ? Convert.ToInt32(row["Blocked"]) : 0
                 };
 
                 return await Task.FromResult(model);
             }
-            catch(Exception e)
+            catch (Exception e)
             {
                 return new VendorsEditModel { };
             }

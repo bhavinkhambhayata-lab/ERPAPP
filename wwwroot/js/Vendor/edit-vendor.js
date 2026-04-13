@@ -18,7 +18,10 @@ function toggleVendorUnBlock(btn) {
         url: baseURL + 'Vendor/VendorUnblock',
         type: 'POST',
         data: {
-            vendorCode: vendorCode
+            vendorCode: vendorCode,
+            displayRowId: $("#DisplayNo").text(),
+            vendorName: $("#Name").val(),
+            locationName: $("#Location").val()
         },
         success: function (res) {
 

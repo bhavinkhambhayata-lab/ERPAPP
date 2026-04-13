@@ -69,27 +69,27 @@
                 // ================= BASIC =================
                 $("#MasterCode").val(data.masterCode);
 
-                $("#Name").val(data.name || '');
-                $("#Address").val(data.address || '');
-                $("#Address2").val(data.address2 || '');
+                $("#Name").val(data.name || '').prop("disabled", true);
+                $("#Address").val(data.address || '').prop("disabled", true);
+                $("#Address2").val(data.address2 || '').prop("disabled", true);
 
-                $("#CityCode").val(data.cityCode || '');
-                $("#PostCode").val(data.postCode || '').trigger("change");
-                $("#StateCode").val(data.stateCode || '');
-                $("#CountryCode").val(data.countryCode || '').trigger("change");
+                $("#CityCode").val(data.cityCode || '').prop("disabled", true);
+                $("#PostCode").val(data.postCode || '').trigger("change").prop("disabled", true);
+                $("#StateCode").val(data.stateCode || '').prop("disabled", true);
+                $("#CountryCode").val(data.countryCode || '').trigger("change").prop("disabled", true);
 
                 // ================= CONTACT =================
-                $("#ContactPerson").val(data.contactPerson || '');
-                $("#MobileNo").val(data.mobileNo || '');
-                $("#PhoneNo").val(data.phoneNo || '');
-                $("#Email").val(data.email || '');
+                $("#ContactPerson").val(data.contactPerson || '').prop("disabled", true);
+                $("#MobileNo").val(data.mobileNo || '').prop("disabled", true);
+                $("#PhoneNo").val(data.phoneNo || '').prop("disabled", true);
+                $("#Email").val(data.email || '').prop("disabled", true);
 
-                $("#EmailNotAvailable").prop("checked", data.emailNotAvailable === true || data.emailNotAvailable === "true").trigger("change");
+                $("#EmailNotAvailable").prop("checked", data.emailNotAvailable === true || data.emailNotAvailable === "true").trigger("change").prop("disabled", true);
 
-                $("#Website").val(data.website || '');
+                $("#Website").val(data.website || '').prop("disabled", true);
 
                 // ================= TAX =================
-                $("#PANNo").val(data.panNo || '');
+                $("#PANNo").val(data.panNo || '').prop("disabled", true);
                 //$("#CurrencyCode").val(data.currencyCode || '').trigger("change");
 
                 // ================= GST =================
@@ -99,14 +99,14 @@
                 $("#ARN").val(data.arn || '');
 
                 // ================= BANK =================
-                $("#BankName").val(data.bankName || '');
-                $("#BankAccountNo").val(data.bankAccountNo || '');
-                $("#BranchName").val(data.branchName || '');
-                $("#IFSCCode").val(data.ifscCode || '');
+                $("#BankName").val(data.bankName || '').prop("disabled", true);
+                $("#BankAccountNo").val(data.bankAccountNo || '').prop("disabled", true);
+                $("#BranchName").val(data.branchName || '').prop("disabled", true);
+                $("#IFSCCode").val(data.ifscCode || '').prop("disabled", true);
 
                 // ================= BUSINESS =================
                 $("#VendorCategory").val(data.vendorCategory || '').trigger("change");
-                $("#BusinessCategory").val(data.businessCategory || '').trigger("change");
+                $("#BusinessCategory").val(data.businessCategory || '').trigger("change").prop("disabled", true);
 
                 $("#RelatedParty").val(data.relatedParty === true || data.relatedParty === "true" ? "true" : "false");
 
@@ -407,6 +407,26 @@
         if (!form.valid()) return;
 
         var formData = new FormData(form[0]);
+
+        formData.append("Name", $("#Name").val());
+        formData.append("Address", $("#Address").val());
+        formData.append("Address2", $("#Address2").val());
+        formData.append("CityCode", $("#CityCode").val());
+        formData.append("PostCode", $("#PostCode").val());
+        formData.append("CountryCode", $("#CountryCode").val());
+        formData.append("ContactPerson", $("#ContactPerson").val());
+        formData.append("MobileNo", $("#MobileNo").val());
+        formData.append("PhoneNo", $("#PhoneNo").val());
+        formData.append("Email", $("#Email").val());
+        formData.append("EmailNotAvailable", $("#EmailNotAvailable").is(":checked"));
+        formData.append("Website", $("#Website").val());
+        formData.append("PANNo", $("#PANNo").val());
+        formData.append("BankName", $("#BankName").val());
+        formData.append("BankAccountNo", $("#BankAccountNo").val());
+        formData.append("BranchName", $("#BranchName").val());
+        formData.append("IFSCCode", $("#IFSCCode").val());
+        formData.append("BusinessCategory", $("#BusinessCategory").val());
+
 
         // disabled fields
         formData.append("AggregateTurnover", $('#AggregateTurnover').val());
