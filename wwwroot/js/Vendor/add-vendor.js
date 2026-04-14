@@ -418,7 +418,7 @@
         formData.append("MobileNo", $("#MobileNo").val());
         formData.append("PhoneNo", $("#PhoneNo").val());
         formData.append("Email", $("#Email").val());
-        formData.append("EmailNotAvailable", $("#EmailNotAvailable").is(":checked"));
+        formData.set("EmailNotAvailable", $("#EmailNotAvailable").is(":checked"));
         formData.append("Website", $("#Website").val());
         formData.append("PANNo", $("#PANNo").val());
         formData.append("BankName", $("#BankName").val());
