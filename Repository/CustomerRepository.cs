@@ -914,13 +914,14 @@ namespace ERPAPP.Repository
                 if (!string.IsNullOrEmpty(customerNo) &&
                     (customerNo.StartsWith("TD") || customerNo.StartsWith("MD")))
                 {
-                    if (model.DivisionCode != null && !string.IsNullOrEmpty(model.Email))
+                    if (model.DivisionCode != null)
                     {
                         var emailSend = await _emailRepository.SendMailCustomerUnBlock(model.DivisionCode, new CustomerEmailItemDto
                         {
                             Name = model.Name ?? "",
                             Division = model.DivisionCode,
-                            MailID = model.Email ?? ""
+                            MailID = "softwarecare@italiagroup.in",
+                            CustomerCode = customerNo
                         });
                     }
 

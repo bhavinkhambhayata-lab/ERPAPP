@@ -15,6 +15,8 @@
     {
         public int SrNo { get; set; }
         public string Name { get; set; }
+
+        public string CustomerCode { get; set; }
         public string Division { get; set; }
         public string MailID { get; set; } // From Mail
     }
@@ -25,6 +27,7 @@
 
         public string RequestedBy { get; set; }
         public string? VendorName { get; set; }
+        public string? VendorCode { get; set; }
         public string? VendorCategory { get; set; }
         public string MailID { get; set; } // From Mail
         public string? PurchaseCode { get; set; }

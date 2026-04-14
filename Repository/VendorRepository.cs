@@ -360,7 +360,8 @@ namespace ERPAPP.Repository
                                 PaymentTerm = model.PaymentTerms,
                                 PurchaseCode = model.PurchaserCode,
                                 RequestedBy = userName,
-                                MailID = "softwarecare@italiagroup.in"
+                                MailID = "softwarecare@italiagroup.in",
+                                VendorCode = vendorNo
                             };
 
                             await _emailRepository.SendMailVendorUnBlock(division, emailDetails);

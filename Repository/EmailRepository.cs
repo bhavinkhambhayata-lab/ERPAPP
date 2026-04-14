@@ -160,10 +160,11 @@ namespace ERPAPP.Repository
             body.Append("Customer Unblock Request Details:<br/><br/>");
 
             body.Append("<table border='1' cellpadding='5' cellspacing='0' style='border-collapse:collapse;'>");
-            body.Append("<tr bgcolor='#d3d3d3'><th>Name</th><th>Division</th></tr>");
+            body.Append("<tr bgcolor='#d3d3d3'><th>Name</th><th>Vendor Code</th><th>Division</th></tr>");
 
             body.Append("<tr>");
             body.Append($"<td>{item.Name}</td>");
+            body.Append($"<td>{item.CustomerCode}</td>");
             body.Append($"<td>{item.Division}</td>");
             body.Append("</tr>");
 
@@ -313,6 +314,7 @@ namespace ERPAPP.Repository
             body.Append("<th>SrNo</th>");
             body.Append("<th>Requested By</th>");
             body.Append("<th>Vendor Name</th>");
+            body.Append("<th>Vendor Code</th>");
             body.Append("<th>Vendor Category</th>");
             body.Append("<th>Purchaser Code/Name</th>");
             body.Append("<th>Payment Terms</th>");
@@ -324,6 +326,7 @@ namespace ERPAPP.Repository
             body.Append($"<td>{item.SrNo}</td>");
             body.Append($"<td>{item.RequestedBy}</td>");
             body.Append($"<td>{item.VendorName}</td>");
+            body.Append($"<td>{item.VendorCode}</td>");
             body.Append($"<td>{item.VendorCategory}</td>");
             body.Append($"<td>{item.PurchaseCode}</td>");
             body.Append($"<td>{item.PaymentTerm}</td>");
