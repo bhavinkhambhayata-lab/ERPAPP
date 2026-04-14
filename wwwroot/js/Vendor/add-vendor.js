@@ -418,7 +418,7 @@
         formData.append("MobileNo", $("#MobileNo").val());
         formData.append("PhoneNo", $("#PhoneNo").val());
         formData.append("Email", $("#Email").val());
-        formData.append("EmailNotAvailable", $("#EmailNotAvailable").is(":checked") ? "true" : "false");
+        formData.append("EmailNotAvailable", $("#EmailNotAvailable").is(":checked"));
         formData.append("Website", $("#Website").val());
         formData.append("PANNo", $("#PANNo").val());
         formData.append("BankName", $("#BankName").val());
@@ -616,7 +616,7 @@ function handleVendorGenBusPostingGroup() {
 }
 
 function validateEmailField() {
-
+    debugger
     var email = $('#Email').val().trim();
     var isChecked = $('#EmailNotAvailable').is(':checked');
     var errorSpan = $('[data-valmsg-for="Email"]');
