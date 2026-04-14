@@ -981,9 +981,7 @@
             if (mobile) {
                 mobile = mobile.split(',')[0].trim();
 
-                if (mobile.startsWith('+91')) {
-                    mobile = mobile.substring(3).trim();
-                }
+                mobile = mobile.replace(/\D/g, '');
             }
 
             $("#EInvEmail").val(email);

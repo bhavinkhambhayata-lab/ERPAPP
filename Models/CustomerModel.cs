@@ -128,7 +128,7 @@ namespace ERPAPP.Models
 
         [Required(ErrorMessage = "E-Invoice Phone is required")]
         [StringLength(30)]
-        [RegularExpression(@"^[6-9][0-9]{9}$", ErrorMessage = "Invalid phone number")]
+        [RegularExpression(@"^[0-9]{1,20}$", ErrorMessage = "Invalid phone number")]
         public string EInvPhoneNo { get; set; } = string.Empty;
 
         [Required(ErrorMessage = "E-Invoice Email is required")]
@@ -762,7 +762,7 @@ namespace ERPAPP.Models
 
         [Required(ErrorMessage = "E-Invoice Phone is required")]
         [StringLength(30)]
-        [RegularExpression(@"^[6-9][0-9]{9}$", ErrorMessage = "Invalid phone number")]
+        [RegularExpression(@"^[0-9]{1,20}$", ErrorMessage = "Invalid phone number")]
         public string EInvPhoneNo { get; set; } = string.Empty;
 
         [Required(ErrorMessage = "E-Invoice Email is required")]
