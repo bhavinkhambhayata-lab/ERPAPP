@@ -388,5 +388,12 @@ namespace ERPAPP.Controllers
             var result = await _vendorRepository.GetPostCodeListWithSearch(city, search);
             return Json(result);
         }
+
+        [HttpGet]
+        public async Task<JsonResult> GetAssessCodeWithPlace(string Place)
+        {
+            var result = await _vendorRepository.GetAssessCodeWithPlace(Place);
+            return Json(result);
+        }
     }
 }

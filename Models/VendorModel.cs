@@ -161,6 +161,9 @@ namespace ERPAPP.Models
         [StringLength(10)]
         public string? Location { get; set; }
 
+        [StringLength(10)]
+        public string? AssesseeCode { get; set; }
+
         // ================= MSME =================
 
         [StringLength(50)]
@@ -436,6 +439,9 @@ namespace ERPAPP.Models
         [StringLength(10)]
         public string? Location { get; set; }
 
+        [StringLength(10)]
+        public string? AssesseeCode { get; set; }
+
         // ================= MSME =================
 
         [StringLength(50)]
@@ -468,4 +474,6 @@ namespace ERPAPP.Models
 
 
     public class GetVendorSearchModel : BaseDropDown { }
+
+    public class GetAssessCodeWithPlaceModel : BaseDropDown { }
 }

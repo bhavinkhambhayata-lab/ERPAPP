@@ -227,7 +227,7 @@ namespace ERPAPP.Repository
             }
         }
 
-        public async Task<bool> InsertVendor(VendorsModel model,string userName)
+        public async Task<bool> InsertVendor(VendorsModel model, string userName)
         {
             try
             {
@@ -329,7 +329,8 @@ namespace ERPAPP.Repository
             new SqlParameter("@ThresholdOverlook", model.ThresholdOverlook),
             new SqlParameter("@SurchargeOverlook", model.SurchargeOverlook),
 
-             new SqlParameter("@EmailIdAvailable", model.EmailNotAvailable ? 1 : 0)
+             new SqlParameter("@EmailIdAvailable", model.EmailNotAvailable ? 1 : 0),
+             new SqlParameter("@AssesseeCode", model.AssesseeCode ?? "")
         };
 
                 var vendorObj = _db.ExecuteScalar("Vendor_InsertDataWithMasterAndCompnayData", param);
@@ -594,6 +595,8 @@ namespace ERPAPP.Repository
                 model.CompanyCode = row["CompanyCode"]?.ToString();
 
                 model.Blocked = Convert.ToInt32(row["Blocked"]);
+
+                model.AssesseeCode = row["AssesseeCode"]?.ToString();
             }
 
             var editDropDownData = await GetVendorEditDropDownData();
@@ -954,6 +957,29 @@ namespace ERPAPP.Repository
             }
 
             return list;
+        }
+
+        public async Task<GetAssessCodeWithPlaceModel> GetAssessCodeWithPlace(string Place)
+        {
+            SqlParameter[] parameters =
+                {
+                    new SqlParameter("@Place", (object?)Place ?? DBNull.Value)
+                };
+
+            DataTable dt = _db.GetDataTable("GetAssessCodeWithPlace", parameters);
+
+            List<GetAssessCodeWithPlaceModel> list = new();
+
+            foreach (DataRow row in dt.Rows)
+            {
+                list.Add(new GetAssessCodeWithPlaceModel
+                {
+                    Code = row["Code"].ToString(),
+                    Name = row["Name"].ToString()
+                });
+            }
+
+            return list.First();
         }
 
 

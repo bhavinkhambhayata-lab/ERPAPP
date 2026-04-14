@@ -225,6 +225,10 @@ namespace ERPAPP.Models
         public int? ShippingAddressType { get; set; }
         public int? ShipToGSTCustomerType { get; set; }
 
+
+        [StringLength(10)]
+        public string? AssesseeCode { get; set; }
+
         // ================= BRAND LIST =================
 
         public List<CustomerBrandWiseAddModel> CustomerBrandAddList { get; set; } = new();
@@ -860,6 +864,9 @@ namespace ERPAPP.Models
         public int? ShipToGSTCustomerType { get; set; }
 
         public int Blocked { get; set; } = 0;
+        
+        [StringLength(10)]
+        public string? AssesseeCode { get; set; }
 
         // ================= BRAND LIST =================
 
@@ -882,4 +889,5 @@ namespace ERPAPP.Models
     {
         public List<CustomerBrandWiseEditModel> CustomerBrandEditList { get; set; } = new();
     }
+
 }

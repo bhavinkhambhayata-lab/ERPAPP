@@ -32,5 +32,10 @@ namespace ERPAPP.Interfaces
 
         Task<List<VendorCountryModel>> GetVendorCountryList(string country);
         Task<List<VendorPostCodeModel>> GetPostCodeListWithSearch(string city,string searchpostcode);
+
+        Task<GetAssessCodeWithPlaceModel> GetAssessCodeWithPlace(string Place);
+
+
+
     }
 }

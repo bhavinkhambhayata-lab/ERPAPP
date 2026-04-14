@@ -897,6 +897,8 @@ namespace ERPAPP.Repository
                         new SqlParameter("@ShipToAddressType", model.ShippingAddressType ?? 0),
                         new SqlParameter("@ShipToGSTCustomerType", model.ShipToGSTCustomerType ?? 0),
 
+                        new SqlParameter("@AssesseeCode", model.AssesseeCode ?? ""),
+
                         // ⭐ TABLE VALUED PARAMETER
                         new SqlParameter
                         {
@@ -1399,6 +1401,8 @@ namespace ERPAPP.Repository
                 model.ShipToGSTCustomerType = row["ShipToGSTCustomerType"] as int?;
 
                 model.Blocked = Convert.ToInt32(row["Blocked"]);
+
+                model.AssesseeCode = row["AssesseeCode"]?.ToString();
 
             }
 
@@ -2064,6 +2068,29 @@ namespace ERPAPP.Repository
             }
 
             return list;
+        }
+
+        public async Task<GetAssessCodeWithPlaceModel> GetAssessCodeWithPlace(string Place)
+        {
+            SqlParameter[] parameters =
+               {
+                    new SqlParameter("@Place", (object?)Place ?? DBNull.Value)
+                };
+
+            DataTable dt = _db.GetDataTable("GetAssessCodeWithPlace", parameters);
+
+            List<GetAssessCodeWithPlaceModel> list = new();
+
+            foreach (DataRow row in dt.Rows)
+            {
+                list.Add(new GetAssessCodeWithPlaceModel
+                {
+                    Code = row["Code"].ToString(),
+                    Name = row["Name"].ToString()
+                });
+            }
+
+            return list.First();
         }
     }
 }

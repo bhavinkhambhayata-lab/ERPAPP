@@ -1074,6 +1074,14 @@
                     </div>
 
                     <div class="row mt-2">
+                        <label class="col-4 col-form-label">Assessee Code</label>
+                        <div class="col-8">
+                            <input asp-for="AssesseeCode" class="form-control" disabled />
+                            <span asp-validation-for="AssesseeCode" class="text-danger"></span>
+                        </div>
+                    </div>
+
+                    <div class="row mt-2">
                         <label class="col-12 col-sm-4 col-form-label">Business Category</label>
                         <div class="col-12 col-sm-8">
                             <select asp-for="BusinessCategory"

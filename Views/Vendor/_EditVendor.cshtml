@@ -244,7 +244,9 @@
                     <div class="row mt-2">
                         <label class="col-4 col-form-label">MSME Intimation Date</label>
                         <div class="col-8">
-                            <input type="text" asp-for="MSMEIntimationDate" class="form-control vendor-datepicker" value="@(Model.MSMEIntimationDate?.ToString("dd/MM/yyyy"))" disabled />
+                            <input type="text" asp-for="MSMEIntimationDate" class="form-control vendor-datepicker" 
+                            value="@(Model.MSMEIntimationDate.HasValue && Model.MSMEIntimationDate.Value != new DateTime(1753, 1, 1)
+                                                    ? Model.MSMEIntimationDate.Value.ToString("dd/MM/yyyy") : "")" disabled />
                             <span asp-validation-for="MSMEIntimationDate" class="text-danger"></span>
                         </div>
                     </div>
@@ -252,7 +254,9 @@
                     <div class="row mt-2">
                         <label class="col-4 col-form-label">MSME Effective Date</label>
                         <div class="col-8">
-                            <input type="text" asp-for="MSMEEffectiveDate" class="form-control vendor-datepicker" value="@(Model.MSMEEffectiveDate?.ToString("dd/MM/yyyy"))" disabled />
+                            <input type="text" asp-for="MSMEEffectiveDate" class="form-control vendor-datepicker" 
+                                    value="@(Model.MSMEEffectiveDate.HasValue && Model.MSMEEffectiveDate.Value != new DateTime(1753, 1, 1)
+                                                     ? Model.MSMEEffectiveDate.Value.ToString("dd/MM/yyyy"): "")" disabled />
                             <span asp-validation-for="MSMEEffectiveDate" class="text-danger "></span>
                         </div>
                     </div>
@@ -347,6 +351,14 @@
                         <div class="col-8">
                             <input asp-for="PANNo" class="form-control" disabled />
                             <span asp-validation-for="PANNo" class="text-danger"></span>
+                        </div>
+                    </div>
+
+                    <div class="row mt-2">
+                        <label class="col-4 col-form-label">Assessee Code</label>
+                        <div class="col-8">
+                            <input asp-for="AssesseeCode" class="form-control" disabled />
+                            <span asp-validation-for="AssesseeCode" class="text-danger"></span>
                         </div>
                     </div>
 

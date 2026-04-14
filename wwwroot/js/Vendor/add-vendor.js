@@ -552,6 +552,39 @@
     });
 
     $('#ApplicationMethod').val('0');
+
+    $('#PANNo').on('keyup', function () {
+
+        var panNo = $(this).val().toUpperCase();
+        
+        var panRegex = /^[A-Z]{5}[0-9]{4}[A-Z]$/;
+
+        if (panNo.length === 10) {
+
+            if (!panRegex.test(panNo)) {
+                $("#AssesseeCode").val('');
+                return;
+            }
+
+            var place = panNo.substring(3, 4);
+
+            $.ajax({
+                url: baseURL + 'Vendor/GetAssessCodeWithPlace',
+                type: 'GET',
+                data: { Place: place },
+                success: function (res) {
+                    if (res) {
+                        $("#AssesseeCode").val(res.code);
+                    } else {
+                        $("#AssesseeCode").val('');
+                    }
+                }
+            });
+        }
+        else {
+            $("#AssesseeCode").val('');
+        }
+    });
 });
 
 function handleVendorCurrency() {
