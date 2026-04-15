@@ -87,9 +87,10 @@
                 $("#EmailNotAvailable").prop("checked", data.emailNotAvailable === true || data.emailNotAvailable === "true").trigger("change").prop("disabled", true);
 
                 $("#Website").val(data.website || '').prop("disabled", true);
-
+               
                 // ================= TAX =================
                 $("#PANNo").val(data.panNo || '').prop("disabled", true);
+                handleVendorPANChange(data.panNo);
                 //$("#CurrencyCode").val(data.currencyCode || '').trigger("change");
 
                 // ================= GST =================
@@ -554,36 +555,7 @@
     $('#ApplicationMethod').val('0');
 
     $('#PANNo').on('keyup', function () {
-
-        var panNo = $(this).val().toUpperCase();
-        
-        var panRegex = /^[A-Z]{5}[0-9]{4}[A-Z]$/;
-
-        if (panNo.length === 10) {
-
-            if (!panRegex.test(panNo)) {
-                $("#AssesseeCode").val('');
-                return;
-            }
-
-            var place = panNo.substring(3, 4);
-
-            $.ajax({
-                url: baseURL + 'Vendor/GetAssessCodeWithPlace',
-                type: 'GET',
-                data: { Place: place },
-                success: function (res) {
-                    if (res) {
-                        $("#AssesseeCode").val(res.code);
-                    } else {
-                        $("#AssesseeCode").val('');
-                    }
-                }
-            });
-        }
-        else {
-            $("#AssesseeCode").val('');
-        }
+        handleVendorPANChange($(this).val());
     });
 });
 
@@ -714,4 +686,28 @@ function editVendorFormatDateOrEmpty(date) {
     var year = d.getFullYear();
 
     return day + '/' + month + '/' + year;
+}
+function handleVendorPANChange(panNo) {
+
+    panNo = panNo.toUpperCase();
+    $("#PANNo").val(panNo);
+
+    var panRegex = /^[A-Z]{5}[0-9]{4}[A-Z]$/;
+
+    if (panNo.length === 10 && panRegex.test(panNo)) {
+
+        var place = panNo.substring(3, 4);
+
+        $.ajax({
+            url: baseURL + 'Vendor/GetAssessCodeWithPlace',
+            type: 'GET',
+            data: { Place: place },
+            success: function (res) {
+                $("#AssesseeCode").val(res?.code || '');
+            }
+        });
+
+    } else {
+        $("#AssesseeCode").val('');
+    }
 }

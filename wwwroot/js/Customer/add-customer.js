@@ -138,7 +138,8 @@
 
                 $("#Website").val(data.website_Homepage).prop("disabled", true);
 
-                $("#PANNo").val(data.panno).prop("disabled", true).trigger("change");
+                $("#PANNo").val(data.panno).prop("disabled", true);
+                handleCustomerPANChange(data.panno);
                 $("#BankName").val(data.bankName).prop("disabled", true);
                 $("#BankAccountNo").val(data.bankAccountNo).prop("disabled", true);
                 $("#BranchName").val(data.branchName).prop("disabled", true);
@@ -1003,35 +1004,7 @@
 
     $('#PANNo').on('keyup', function () {
 
-        var panNo = $(this).val().toUpperCase();
-
-        var panRegex = /^[A-Z]{5}[0-9]{4}[A-Z]$/;
-
-        if (panNo.length === 10) {
-
-            if (!panRegex.test(panNo)) {
-                $("#AssesseeCode").val('');
-                return;
-            }
-
-            var place = panNo.substring(3, 4);
-
-            $.ajax({
-                url: baseURL + 'Customer/GetAssessCodeWithPlace',
-                type: 'GET',
-                data: { Place: place },
-                success: function (res) {
-                    if (res) {
-                        $("#AssesseeCode").val(res.code);
-                    } else {
-                        $("#AssesseeCode").val('');
-                    }
-                }
-            });
-        }
-        else {
-            $("#AssesseeCode").val('');
-        }
+        handleCustomerPANChange($(this).val());
     });
 });
 
@@ -1564,4 +1537,31 @@ function checkCustomerGSTExists(gstNo) {
     });
 
     return isExists;
+}
+function handleCustomerPANChange(panNo) {
+
+    panNo = (panNo || '').toUpperCase();
+    $("#PANNo").val(panNo); // optional: UI ma set
+
+    var panRegex = /^[A-Z]{5}[0-9]{4}[A-Z]$/;
+
+    if (panNo.length === 10 && panRegex.test(panNo)) {
+
+        var place = panNo.substring(3, 4);
+
+        $.ajax({
+            url: baseURL + 'Customer/GetAssessCodeWithPlace',
+            type: 'GET',
+            data: { Place: place },
+            success: function (res) {
+                $("#AssesseeCode").val(res?.code || '');
+            },
+            error: function () {
+                $("#AssesseeCode").val('');
+            }
+        });
+
+    } else {
+        $("#AssesseeCode").val('');
+    }
 }
