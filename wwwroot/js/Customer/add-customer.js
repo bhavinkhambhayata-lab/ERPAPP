@@ -385,6 +385,7 @@
         formData.set("EInvPhoneNo", $("#EInvPhoneNo").val());
         formData.set("Website", $("#Website").val());
         formData.set("PANNo", $("#PANNo").val());
+        formData.set("AssesseeCode", $("#AssesseeCode").val());
         formData.set("BankName", $("#BankName").val());
         formData.set("BankAccountNo", $("#BankAccountNo").val());
         formData.set("BranchName", $("#BranchName").val());

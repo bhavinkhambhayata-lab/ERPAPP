@@ -422,6 +422,7 @@
         formData.set("EmailNotAvailable", $("#EmailNotAvailable").is(":checked"));
         formData.append("Website", $("#Website").val());
         formData.append("PANNo", $("#PANNo").val());
+        formData.append("AssesseeCode", $("#AssesseeCode").val());
         formData.append("BankName", $("#BankName").val());
         formData.append("BankAccountNo", $("#BankAccountNo").val());
         formData.append("BranchName", $("#BranchName").val());
