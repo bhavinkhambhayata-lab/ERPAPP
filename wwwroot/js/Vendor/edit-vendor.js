@@ -3,6 +3,7 @@
 
 function backVendorListPage() {
     editVendorNo = '';
+    editVendorBlock = '0';
     $('#listBtn').click();
 }
 

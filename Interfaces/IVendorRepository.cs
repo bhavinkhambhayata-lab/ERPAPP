@@ -35,7 +35,9 @@ namespace ERPAPP.Interfaces
 
         Task<GetAssessCodeWithPlaceModel> GetAssessCodeWithPlace(string Place);
 
+        Task<GetVendorUnBlockEditData> GetVendorUnBlockEditData(string companyCode);
+        Task<VendorUnBlockEditDropDownModel> GetVendorUnBlockEditDropDownData();
 
-
+        Task<bool> UpdateVendor(VendorsUnBlockEditModel model, string userName);
     }
 }

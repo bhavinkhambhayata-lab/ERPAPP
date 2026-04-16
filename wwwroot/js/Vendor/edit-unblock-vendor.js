@@ -1,154 +1,5 @@
 ﻿$(document).ready(function () {
 
-    $('.searchable-dropdown').select2({
-        theme: "bootstrap-5",   // 🔥 IMPORTANT
-        placeholder: "--Select--",
-        allowClear: true,
-        width: '100%'
-    });
-
-    $("#Name").keyup(function () {
-
-        var searchText = $(this).val();
-
-        if (searchText.length < 2) {
-
-            //$('#vendorForm')[0].reset();
-
-            $("#vendorSearchResult").html("");
-            return;
-        }
-
-        $.ajax({
-            url: baseURL + 'Vendor/SearchVendor',
-            type: 'GET',
-            data: { searchVendor: searchText },
-            success: function (data) {
-
-                var html = "";
-
-                $.each(data, function (i, item) {
-
-                    html += "<a href='#' class='list-group-item list-group-item-action' data-no='"
-                        + item.code + "'>" + item.name + "</a>";
-                });
-
-                $("#vendorSearchResult").html(html);
-            },
-            error: function (err) {
-                console.log("Error:", err);
-            }
-        });
-
-    });
-
-    $(document).on("click", "#vendorSearchResult a", function (e) {
-
-        e.preventDefault();
-
-        var masterCode = $(this).data("no");
-
-        $("#Name").val($(this).text());
-        $("#MasterCode").val(masterCode);
-        $("#vendorSearchResult").html("");
-
-        // 🔥 Call API
-        $.ajax({
-            url: baseURL + "Vendor/GetVendorMasterDataWithMasterCode",
-            type: "GET",
-            data: { masterCode: masterCode },
-            success: function (response) {
-
-                if (!response.success) {
-                    showToast(response.message, "danger", 4000);
-                    return;
-                }
-
-                var data = response.data;
-
-                $("#IsAlreadyCreatedMaster").val("1");
-                // ================= BASIC =================
-                $("#MasterCode").val(data.masterCode);
-
-                $("#Name").val(data.name || '').prop("disabled", true);
-                $("#Address").val(data.address || '').prop("disabled", true);
-                $("#Address2").val(data.address2 || '').prop("disabled", true);
-
-                $("#CityCode").val(data.cityCode || '').prop("disabled", true);
-                $("#PostCode").val(data.postCode || '').trigger("change").prop("disabled", true);
-                $("#StateCode").val(data.stateCode || '').prop("disabled", true);
-                $("#CountryCode").val(data.countryCode || '').trigger("change").prop("disabled", true);
-
-                // ================= CONTACT =================
-                $("#ContactPerson").val(data.contactPerson || '').prop("disabled", true);
-                $("#MobileNo").val(data.mobileNo || '').prop("disabled", true);
-                $("#PhoneNo").val(data.phoneNo || '').prop("disabled", true);
-                $("#Email").val(data.email || '').prop("disabled", true);
-
-                $("#EmailNotAvailable").prop("checked", data.emailNotAvailable === true || data.emailNotAvailable === "true").trigger("change").prop("disabled", true);
-
-                $("#Website").val(data.website || '').prop("disabled", true);
-               
-                // ================= TAX =================
-                $("#PANNo").val(data.panNo || '').prop("disabled", true);
-                handleVendorPANChange(data.panNo);
-                //$("#CurrencyCode").val(data.currencyCode || '').trigger("change");
-
-                // ================= GST =================
-                $("#GSTVendorType").val(data.gstVendorType || '').trigger("change");
-                $("#GSTReturnFrequency").val(data.gstReturnFrequency || '').trigger("change");
-                $("#GSTRegNo").val(data.gstRegNo || '');
-                $("#ARN").val(data.arn || '');
-
-                // ================= BANK =================
-                $("#BankName").val(data.bankName || '').prop("disabled", true);
-                $("#BankAccountNo").val(data.bankAccountNo || '').prop("disabled", true);
-                $("#BranchName").val(data.branchName || '').prop("disabled", true);
-                $("#IFSCCode").val(data.ifscCode || '').prop("disabled", true);
-                
-                // ================= BUSINESS =================
-                $("#VendorCategory").val(data.vendorCategory || '').trigger("change");
-                $("#BusinessCategory").val(data.businessCategory || '').trigger("change").prop("disabled", true);
-
-                $("#RelatedParty").val(data.relatedParty === true || data.relatedParty === "true" ? "true" : "false");
-
-                $("#Subcontractor").val(data.subcontractor === true || data.subcontractor === "true" ? "true" : "false");
-
-                $("#PaymentTerms").val(data.paymentTerms || '').trigger("change");
-                $("#PaymentMethod").val(data.paymentMethod || '').trigger("change");
-                $("#PurchaserCode").val(data.purchaserCode || '').trigger("change");
-
-                // ================= POSTING =================
-                //$("#VATBusPostingGroup").val(data.vatBusPostingGroup || '').trigger("change");
-                //$("#GenBusPostingGroup").val(data.genBusPostingGroup || '').trigger("change");
-                //$("#VendorPostingGroup").val(data.vendorPostingGroup || '').trigger("change");
-
-                // ================= OTHER =================
-                $("#ApplicationMethod").val(data.applicationMethod || '').trigger("change");
-                $("#TaxLiable").val('0').trigger("change");
-                $("#Location").val(data.location || '').trigger("change");
-
-                // ================= MSME =================
-                $("#MSMEUAMNo").val(data.msmeuamNo || '');
-
-                // Date format (if needed)
-                $("#MSMEIntimationDate").val(editVendorFormatDateOrEmpty(data.msmeIntimationDate));
-                $("#MSMEEffectiveDate").val(editVendorFormatDateOrEmpty(data.msmeEffectiveDate || ''));
-
-                // ================= EXTRA =================
-                $("#VendorLocation").val(data.vendorLocation || '').trigger("change");
-                $("#GSTNotToHold").val(data.gstNotToHold ?? '').trigger("change");
-                $("#FixedDueDate").val(data.fixedDueDate ?? '').trigger("change");
-                //$("#AggregateTurnover").val(data.aggregateTurnover || '').trigger("change");
-
-            },
-            error: function () {
-                alert("Error loading vendor data.");
-            }
-        });
-
-    });
-
     $('.vendor-datepicker').datepicker({
         dateFormat: "dd/mm/yy",
         changeMonth: true,
@@ -162,7 +13,6 @@
             clearError(input);
         }
     });
-
 
     $('.vendor-datepicker').on('blur', function () {
 
@@ -286,7 +136,7 @@
                         $("#CountryCode").val(data.countryCode || '').trigger('change');;
                         $("#StateCode").val(data.stateCode || '');
 
-                        
+
 
                     }
 
@@ -402,9 +252,9 @@
         }
     });
 
-    $('#btnSaveVendorMaster').click(function () {
+    $('#btnUpdateVendorMaster').click(function () {
 
-        var form = $('#vendorForm');
+        var form = $('#vendorUnBlockEditForm');
 
         if (!form.valid()) return;
 
@@ -436,6 +286,7 @@
         formData.append("StateCode", $('#StateCode').val());
         formData.append("DisplayNo", $('#DisplayNo').text());
         formData.append("MasterCode", $('#MasterCode').val());
+        formData.append("CompanyCode", $('#CompanyCode').val());
         formData.append("CurrencyCode", $('#CurrencyCode').val());
         formData.append("VendorPostingGroup", $('#VendorPostingGroup').val());
         formData.append("GenBusPostingGroup", $('#GenBusPostingGroup').val());
@@ -446,6 +297,13 @@
         formData.append("GSTReturnFrequency", $("#GSTReturnFrequency").val());
 
         formData.append("IsAlreadyCreatedMaster", $("#IsAlreadyCreatedMaster").val());
+
+        formData.append("MSMEUAMNo", $("#MSMEUAMNo").val());
+        formData.append("MSMEEffectiveDate", $("#MSMEEffectiveDate").val());
+        formData.append("MSMEIntimationDate", $("#MSMEIntimationDate").val());
+
+        formData.append("GSTVendorType", $("#GSTVendorType").val());
+       
 
         // 👉 Email + Checkbox validation
         var vendorEmail = $('#Email').val().trim();
@@ -498,17 +356,17 @@
         if (!isDateValid) return;
 
 
-        var gstNo = $("#GSTRegNo").val();
+        //var gstNo = $("#GSTRegNo").val();
 
-        if (checkVendorGSTExists(gstNo)) {
+        //if (checkVendorGSTExists(gstNo)) {
 
-            showToast("GST already exists!", "danger", 4000);
-            return;
-        }
+        //    showToast("GST already exists!", "danger", 4000);
+        //    return;
+        //}
 
 
         $.ajax({
-            url: baseURL + 'Vendor/SaveVendorMaster',
+            url: baseURL + 'Vendor/UpdateVendorMaster',
             type: 'POST',
             data: formData,
             processData: false,
@@ -519,9 +377,9 @@
                 if (response.success) {
 
                     //alert(response.message);
-                    showToast("Vendor Inserted Successfully.", "success", 4000);
+                    showToast("Vendor Updated Successfully.", "success", 4000);
 
-                    $('#vendorForm')[0].reset();
+                    $('#vendorUnBlockEditForm')[0].reset();
 
                     $('.text-danger').text('');
 
@@ -556,11 +414,18 @@
         });
     });
 
-    $('#ApplicationMethod').val('0');
+    //$('#ApplicationMethod').val('0');
 
     $('#PANNo').on('keyup', function () {
         handleVendorPANChange($(this).val());
     });
+    handleVendorPANChange($("#PANNo").val());
+
+    $("#EmailNotAvailable").trigger("change");
+    $('#CountryCode').trigger('change');
+    $('#GSTVendorType').trigger('change');
+
+    loadVendorNonEditableFields();
 });
 
 function handleVendorCurrency() {
@@ -625,7 +490,7 @@ function handleVendorGenBusPostingGroup() {
 }
 
 function validateEmailField() {
-    debugger
+    
     var email = $('#Email').val().trim();
     var isChecked = $('#EmailNotAvailable').is(':checked');
     var errorSpan = $('[data-valmsg-for="Email"]');
@@ -713,5 +578,55 @@ function handleVendorPANChange(panNo) {
 
     } else {
         $("#AssesseeCode").val('');
+    }
+}
+
+function loadVendorNonEditableFields() {
+    //Static
+    //$("#IsAlreadyCreatedMaster").val("0");
+    var isAlreadyCreatedMaster = $("#IsAlreadyCreatedMaster").val();
+
+    if (isAlreadyCreatedMaster == "1") {
+
+        // BASIC
+        $("#Name").prop("disabled", true);
+        $("#Address").prop("disabled", true);
+        $("#Address2").prop("disabled", true);
+        $("#CityCode").prop("disabled", true);
+        $("#PostCode").prop("disabled", true);
+        $("#StateCode").prop("disabled", true);
+        $("#CountryCode").prop("disabled", true);
+
+        $("#BusinessCategory").prop("disabled", true);
+
+        // MSME
+        $("#MSMEUAMNo").prop("disabled", true);
+        $("#MSMEEffectiveDate").prop("disabled", true);
+        $("#MSMEIntimationDate").prop("disabled", true);
+
+        // CONTACT
+        $("#ContactPerson").prop("disabled", true);
+        $("#MobileNo").prop("disabled", true);
+        $("#EmailNotAvailable").prop("disabled", true);
+        $("#Email").prop("disabled", true);
+        $("#PhoneNo").prop("disabled", true);
+        $("#Website").prop("disabled", true);
+
+        // TAX
+        $("#PANNo").prop("disabled", true);
+        $("#AssesseeCode").prop("disabled", true);
+
+        // GST
+        $("#GSTVendorType").prop("disabled", true);
+        $("#AggregateTurnover").prop("disabled", true);
+        $("#GSTRegNo").prop("disabled", true);
+        $("#ARN").prop("disabled", true);
+        $("#GSTReturnFrequency").prop("disabled", true);
+
+        // BANK
+        $("#BankName").prop("disabled", true);
+        $("#BankAccountNo").prop("disabled", true);
+        $("#BranchName").prop("disabled", true);
+        $("#IFSCCode").prop("disabled", true);
     }
 }

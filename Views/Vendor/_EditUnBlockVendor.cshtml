@@ -1,15 +1,16 @@
-﻿@model GetVendorAddData
+﻿@model GetVendorUnBlockEditData
 @using Microsoft.AspNetCore.Mvc.Rendering
 
 
 @{
-    ViewData["Title"] = "Vendor Details";
+    ViewData["Title"] = "Edit UnBlock Vendor Details";
+    bool IsVendorMasterCompanyPermission = (Context.Session.GetString("IsVendorMasterCompanyPermission") ?? "false") == "true";
 }
 
 <script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
 <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
 
-<script src="~/js/vendor/add-vendor.js" asp-append-version="true"></script>
+<script src="~/js/vendor/edit-unblock-vendor.js" asp-append-version="true"></script>
 
 <style>
     body {
@@ -81,49 +82,20 @@
         height: 60px;
     }
 
-
-    /* --------------Drop Down Related changes-----------------*/
-    .select2-container--bootstrap-5 .select2-selection {
-        height: 32px !important;
-        min-height: 32px;
-        padding: 0.25rem 0.75rem;
-        border: 1px solid #ced4da;
-        border-radius: 0.375rem;
-        display: flex;
-        align-items: center;
-    }
-
-
-    .select2-container--bootstrap-5 .select2-selection__rendered {
-        line-height: 20px !important;
-        padding-left: 0 !important;
-    }
-
-
-    .select2-container--bootstrap-5 .select2-selection__arrow {
-        height: 100%;
-        right: 10px;
-    }
-
-    .select2-container {
-        width: 100% !important;
-    }
-    /* ----------------------------------------------------------- */
-
 </style>
 
-<form id="vendorForm" method="post">
+<form id="vendorUnBlockEditForm" method="post">
 
     <!-- HEADER -->
     <div class="topbar d-flex justify-content-between align-items-center">
         <div class="fw-bold">
-            Vendor Details
+            Edit UnBlock Vendor Details
         </div>
 
         <div class="fw-bold">
             Row Unique ID : <span class="fw-semibold" id="DisplayNo">@Model.DisplayNo</span>
         </div>
-        <input type="hidden" id="IsAlreadyCreatedMaster" />
+        <input type="hidden" id="IsAlreadyCreatedMaster" value="@Model.IsAlreadyCreatedMaster" />
     </div>
 
     <div class="container-fluid mt-3">
@@ -135,19 +107,17 @@
 
                 <!-- LEFT -->
                 <div class="col-4">
-
                     <div class="row mt-2">
-                        <label class="col-4 col-form-label">
-                            Name<span class="required-star">*</span>
-                        </label>
-                        <div class="col-8 position-relative">
-                            <input asp-for="Name" class="form-control" autocomplete="off" />
+                        <label class="col-4 col-form-label">Company Code</label>
+                        <div class="col-8">
+                            <input asp-for="CompanyCode" class="form-control" disabled />
+                        </div>
+                    </div>
+                    <div class="row mt-2">
+                        <label class="col-4 col-form-label">Name<span class="required-star">*</span></label>
+                        <div class="col-8">
+                            <input asp-for="Name" class="form-control" />
                             <span asp-validation-for="Name" class="text-danger"></span>
-
-                            <div id="vendorSearchResult"
-                                 class="list-group position-absolute w-100"
-                                 style="z-index:800;max-height:250px;overflow-y:auto;">
-                            </div>
                         </div>
                     </div>
 
@@ -257,7 +227,9 @@
                     <div class="row mt-2">
                         <label class="col-4 col-form-label">MSME Intimation Date</label>
                         <div class="col-8">
-                            <input type="text" asp-for="MSMEIntimationDate" class="form-control vendor-datepicker" />
+                            <input type="text" asp-for="MSMEIntimationDate" class="form-control vendor-datepicker"
+                                   value="@(Model.MSMEIntimationDate.HasValue && Model.MSMEIntimationDate.Value != new DateTime(1753, 1, 1)
+                                                                                       ? Model.MSMEIntimationDate.Value.ToString("dd/MM/yyyy") : "")" />
                             <span asp-validation-for="MSMEIntimationDate" class="text-danger"></span>
                         </div>
                     </div>
@@ -265,7 +237,9 @@
                     <div class="row mt-2">
                         <label class="col-4 col-form-label">MSME Effective Date</label>
                         <div class="col-8">
-                            <input type="text" asp-for="MSMEEffectiveDate" class="form-control vendor-datepicker" />
+                            <input type="text" asp-for="MSMEEffectiveDate" class="form-control vendor-datepicker"
+                                   value="@(Model.MSMEEffectiveDate.HasValue && Model.MSMEEffectiveDate.Value != new DateTime(1753, 1, 1)
+                                                                                        ? Model.MSMEEffectiveDate.Value.ToString("dd/MM/yyyy") : "")" />
                             <span asp-validation-for="MSMEEffectiveDate" class="text-danger "></span>
                         </div>
                     </div>
@@ -308,7 +282,7 @@
                         </div>
                     </div>
                     <div class="row mt-2">
-                        <label class="col-4 col-form-label vendor-email">Email<span id="emailStar" class="required-star">*</span></label>
+                        <label class="col-4 col-form-label vendor-email">Email<span id="emailStar" class="required-star" style="display:none;">*</span></label>
                         <div class="col-8">
                             <input asp-for="Email" class="form-control" />
                             <span asp-validation-for="Email" class="text-danger"></span>
@@ -317,7 +291,6 @@
 
 
                 </div>
-
                 <div class="col-4">
                     <div class="row mt-2">
                         <label class="col-4 col-form-label">Phone No</label>
@@ -343,11 +316,7 @@
             <legend>Tax</legend>
 
             <div class="row">
-
-
-
                 <div class="col-4">
-
                     <div class="row mt-2">
                         <label class="col-4 col-form-label">Tax Liable<span class="required-star">*</span></label>
                         <div class="col-8">
@@ -375,8 +344,8 @@
                             <span asp-validation-for="AssesseeCode" class="text-danger"></span>
                         </div>
                     </div>
-                </div>
 
+                </div>
                 <div class="col-4">
                     <div class="row mt-2">
                         <label class="col-4 col-form-label">GST Vendor Type<span class="required-star">*</span></label>
@@ -402,8 +371,6 @@
                         </div>
                     </div>
 
-
-
                     <div class="row mt-2">
                         <label class="col-4 col-form-label">GST Reg No</label>
                         <div class="col-8">
@@ -425,7 +392,7 @@
                         <div class="col-8">
                             <select asp-for="GSTReturnFrequency"
                                     asp-items="@(new SelectList(Model.DropDownData.VendorGSTReturnFrequencies, "Code", "Name"))"
-                                    class="form-select">
+                                    class="form-select" disabled>
                                 <option value="">--Select--</option>
                             </select>
                             <span asp-validation-for="GSTReturnFrequency" class="text-danger"></span>
@@ -434,6 +401,7 @@
                 </div>
 
                 <div class="col-4">
+
                     <div class="row mt-2">
                         <label class="col-4 col-form-label">Subcontractor</label>
                         <div class="col-8">
@@ -445,6 +413,7 @@
                             <span asp-validation-for="Subcontractor" class="text-danger"></span>
                         </div>
                     </div>
+
                     <div class="row mt-2">
                         <label class="col-4 col-form-label">Vendor Location</label>
                         <div class="col-8">
@@ -518,6 +487,7 @@
 
                 <div class="col-4">
 
+
                     <div class="row mt-2">
                         <label class="col-4 col-form-label">Vendor Category<span class="required-star">*</span></label>
                         <div class="col-8">
@@ -529,6 +499,8 @@
                             <span asp-validation-for="VendorCategory" class="text-danger"></span>
                         </div>
                     </div>
+
+
                 </div>
                 <div class="col-4">
 
@@ -582,7 +554,6 @@
                             <span asp-validation-for="PaymentTerms" class="text-danger"></span>
                         </div>
                     </div>
-
                     <div class="row mt-2">
                         <label class="col-4 col-form-label">Payment Method</label>
                         <div class="col-8">
@@ -594,10 +565,9 @@
                             <span asp-validation-for="PaymentMethod" class="text-danger"></span>
                         </div>
                     </div>
-
-
                 </div>
                 <div class="col-4">
+
                     <div class="row mt-2">
                         <label class="col-4 col-form-label">Fixed Due Date</label>
                         <div class="col-8">
@@ -609,6 +579,7 @@
                             <span asp-validation-for="FixedDueDate" class="text-danger"></span>
                         </div>
                     </div>
+
                     <div class="row mt-2">
                         <label class="col-4 col-form-label">GST Not To Hold</label>
                         <div class="col-8 pt-2">
@@ -661,6 +632,9 @@
                         </div>
                     </div>
 
+
+
+
                 </div>
 
                 <div class="col-4">
@@ -687,9 +661,7 @@
                         </div>
                     </div>
                 </div>
-
                 <div class="col-4">
-
                     <div class="row mt-2">
                         <label class="col-4 col-form-label">VAT Bus Posting Group</label>
                         <div class="col-8">
@@ -701,7 +673,6 @@
                             <span asp-validation-for="VATBusPostingGroup" class="text-danger"></span>
                         </div>
                     </div>
-
                 </div>
             </div>
         </fieldset>
@@ -711,8 +682,18 @@
 
         <!-- BUTTONS -->
         <div class="text-center mt-3">
-            <button type="button" class="btn btn-primary" id="btnSaveVendorMaster">Save & Create In ERP</button>
-            <button type="reset" class="btn btn-secondary">Reset</button>
+            <button type="button" class="btn btn-secondary" id="btnBackVendorListPage" onclick="backVendorListPage()">Back</button>
+            <button type="button" class="btn btn-primary" id="btnUpdateVendorMaster">Update In ERP</button>
+            @if (Model.Blocked == 2 && IsVendorMasterCompanyPermission == true)
+            {
+                <button type="button"
+                        class="btn btn-danger"
+                        data-vendor="@Model.CompanyCode"
+                        id="btnVendorUnBlockToggle"
+                        onclick="toggleVendorUnBlock(this)">
+                    Unblock
+                </button>
+            }
         </div>
 
     </div>

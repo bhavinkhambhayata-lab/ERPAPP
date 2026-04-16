@@ -150,6 +150,10 @@
     #tblVendor td:nth-child(1) {
         text-align: center;
     }
+
+    .hide-column {
+        display: none;
+    }
 </style>
 
 <div class="container-fluid mt-3">
@@ -188,6 +192,7 @@
                     <th>Master Code</th>
                     <th>Company Code</th>
                     <th>Created By</th>
+                    <th class="hide-column">Blocked</th>
                 </tr>
             </thead>
             <tbody></tbody>
@@ -221,7 +226,9 @@
 
         
         if (vendorNo) {
+            
             editVendorNo = vendorNo;
+            editVendorBlock = data[9]; // Blocked status (hidden column)
             $('#detailsBtn').click();
         }
     });
@@ -263,6 +270,7 @@
                                     <td>${item.masterCode ?? ''}</td>
                                     <td>${item.companyCode ?? ''}</td>
                                     <td>${item.createdBy ?? ''}</td>
+                                    <td class="hide-column">${item.blocked ?? ''}</td>
                                    
                                  </tr>`;
                     });
