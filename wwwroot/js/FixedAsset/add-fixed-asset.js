@@ -190,4 +190,6 @@
 
     });
 
+    $('#DepreciationMethod').val('0').trigger("change")
+    $("#DepreciationBookCode").val("COMPANY")
 });
