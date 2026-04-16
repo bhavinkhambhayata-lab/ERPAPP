@@ -129,11 +129,11 @@
                 $("#Location").val(data.location || '').trigger("change");
 
                 // ================= MSME =================
-                $("#MSMEUAMNo").val(data.msmeuamNo || '');
+                $("#MSMEUAMNo").val(data.msmeuamNo || '').prop("disabled", true);
 
                 // Date format (if needed)
-                $("#MSMEIntimationDate").val(editVendorFormatDateOrEmpty(data.msmeIntimationDate));
-                $("#MSMEEffectiveDate").val(editVendorFormatDateOrEmpty(data.msmeEffectiveDate || ''));
+                $("#MSMEIntimationDate").val(editVendorFormatDateOrEmpty(data.msmeIntimationDate)).prop("disabled", true);
+                $("#MSMEEffectiveDate").val(editVendorFormatDateOrEmpty(data.msmeEffectiveDate || '')).prop("disabled", true);
 
                 // ================= EXTRA =================
                 $("#VendorLocation").val(data.vendorLocation || '').trigger("change");
@@ -444,6 +444,10 @@
         formData.append("GSTRegNo", $("#GSTRegNo").val());
         formData.append("ARN", $("#ARN").val());
         formData.append("GSTReturnFrequency", $("#GSTReturnFrequency").val());
+
+        formData.append("MSMEUAMNo", $("#MSMEUAMNo").val());
+        formData.append("MSMEIntimationDate", $("#MSMEIntimationDate").val());
+        formData.append("MSMEEffectiveDate", $("#MSMEEffectiveDate").val());
 
         formData.append("IsAlreadyCreatedMaster", $("#IsAlreadyCreatedMaster").val());
 
