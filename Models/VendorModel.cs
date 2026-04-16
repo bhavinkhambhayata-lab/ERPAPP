@@ -20,9 +20,8 @@ namespace ERPAPP.Models
         [StringLength(100)]
         public string Address { get; set; } = string.Empty;
 
-        [Required(ErrorMessage = "Address 2 is required")]
         [StringLength(50)]
-        public string Address2 { get; set; } = string.Empty;
+        public string? Address2 { get; set; } = string.Empty;
 
         [Required(ErrorMessage = "City is required")]
         [StringLength(30)]
@@ -301,9 +300,8 @@ namespace ERPAPP.Models
         [StringLength(100)]
         public string Address { get; set; } = string.Empty;
 
-        [Required(ErrorMessage = "Address 2 is required")]
         [StringLength(50)]
-        public string Address2 { get; set; } = string.Empty;
+        public string? Address2 { get; set; } = string.Empty;
 
         [Required(ErrorMessage = "City is required")]
         [StringLength(30)]
@@ -501,9 +499,8 @@ namespace ERPAPP.Models
         [StringLength(100)]
         public string Address { get; set; } = string.Empty;
 
-        [Required(ErrorMessage = "Address 2 is required")]
         [StringLength(50)]
-        public string Address2 { get; set; } = string.Empty;
+        public string? Address2 { get; set; } = string.Empty;
 
         [Required(ErrorMessage = "City is required")]
         [StringLength(30)]
