@@ -243,12 +243,20 @@ namespace ERPAPP.Repository
                         new SqlParameter("@DepreciationBookCode", (object?)model.DepreciationBookCode ?? DBNull.Value),
                         new SqlParameter("@DepreciationMethod", model.DepreciationMethod ?? 0),
 
-                        new SqlParameter("@DepreciationStartingDate", (object?)model.DepreciationStartingDate ?? DBNull.Value),
+                      new SqlParameter("@DepreciationStartingDate",
+                        model.DepreciationStartingDate == null || model.DepreciationStartingDate <= new DateTime(1753, 1, 1)
+                        ? new DateTime(1753, 1, 1)
+                        : model.DepreciationStartingDate
+                    ),
 
                         new SqlParameter("@StraightLinePercent", model.StraightLinePercent ?? 0),
                         new SqlParameter("@DecliningBalancePercent", model.DecliningBalancePercent ?? 0),
 
-                        new SqlParameter("@InstallationDate", (object?)model.InstallationDate ?? DBNull.Value),
+                        new SqlParameter("@InstallationDate",
+                            model.InstallationDate == null || model.InstallationDate <= new DateTime(1753, 1, 1)
+                            ? new DateTime(1753, 1, 1)
+                            : model.InstallationDate
+                        ),
 
                         new SqlParameter("@MasterCode", (object?)model.MasterCode ?? DBNull.Value),
                         new SqlParameter("@CompanyCode", (object?)model.CompanyCode ?? DBNull.Value),

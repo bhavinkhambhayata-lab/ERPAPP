@@ -282,7 +282,7 @@
                         </div>
                     </div>
 
-                    <div class="row mt-2">
+                   @*  <div class="row mt-2">
                         <label class="col-5 col-form-label">Excise Accounting Type</label>
                         <div class="col-7">
                             <select asp-for="ExciseAccountingType"
@@ -304,7 +304,7 @@
                             </select>
                             <span asp-validation-for="TaxGroupCode" class="text-danger"></span>
                         </div>
-                    </div>
+                    </div> *@
 
                     <div class="row mt-2">
                         <label class="col-5 col-form-label">GST Group Code</label>
@@ -363,13 +363,21 @@
 
                 <div class="col-2">
                     <label>Depreciation Start Date</label>
-                    <input asp-for="DepreciationStartingDate" type="text" class="form-control fixed-asset-datepicker" value="@(Model.DepreciationStartingDate?.ToString("dd/MM/yy"))" />
+                    <input asp-for="DepreciationStartingDate" type="text"
+                           class="form-control fixed-asset-datepicker"
+                           value="@(Model.DepreciationStartingDate.HasValue && Model.DepreciationStartingDate.Value != new DateTime(1753, 1, 1)
+                                           ? Model.DepreciationStartingDate.Value.ToString("dd/MM/yy")
+                                           : "")" />
                     <span asp-validation-for="DepreciationStartingDate" class="text-danger"></span>
                 </div>
 
                 <div class="col-2">
                     <label>Installation Date</label>
-                    <input asp-for="InstallationDate" type="text" class="form-control fixed-asset-datepicker" value="@(Model.InstallationDate?.ToString("dd/MM/yy"))" />
+                    <input asp-for="InstallationDate" type="text"
+                           class="form-control fixed-asset-datepicker"
+                           value="@(Model.InstallationDate.HasValue && Model.InstallationDate.Value != new DateTime(1753, 1, 1)
+                                           ? Model.InstallationDate.Value.ToString("dd/MM/yy")
+                                           : "")" />
                     <span asp-validation-for="InstallationDate" class="text-danger"></span>
                 </div>
                 <div class="col-2">
