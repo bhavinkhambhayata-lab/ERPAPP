@@ -1358,8 +1358,8 @@ namespace ERPAPP.Repository
               new SqlParameter("@IsAlreadyCreatedMaster", model.IsAlreadyCreatedMaster)
         };
 
-                //var vendorObj = _db.ExecuteScalar("Vendor_UpdateData", param);
-                var vendorObj = "ICV0001";
+                var vendorObj = _db.ExecuteScalar("Vendor_UpdateData", param);
+                //var vendorObj = "ICV0001";
 
                 string vendorNo = vendorObj?.ToString();
 
