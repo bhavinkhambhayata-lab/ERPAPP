@@ -279,7 +279,7 @@ namespace ERPAPP.Repository
                 new SqlParameter("@Division", (object?)division ?? DBNull.Value)
             };
 
-            DataTable dt = _db.GetDataTable("Vendor_VendorUnblockRequestMailListNew", parameters);
+            DataTable dt = _db.GetDataTable("Vendor_VendorUnblockResuestMailListNew", parameters);
 
             List<MailListDto> list = new List<MailListDto>();
 
