@@ -127,6 +127,14 @@ namespace ERPAPP.Repository
                     Code = e.GetDisplayName().ToString(),
                     Name = e.GetDisplayName().ToString()
                 }).ToList();
+
+            dropDown.GSTCreditList = Enum.GetValues(typeof(FixedAssetGSTCredit))
+               .Cast<FixedAssetGSTCredit>()
+               .Select(e => new FixedAssetGSTCreditModel
+               {
+                   Code = ((int)e).ToString(),
+                   Name = e.GetDisplayName().ToString()
+               }).ToList();
             #endregion
 
 
@@ -265,7 +273,8 @@ namespace ERPAPP.Repository
 
                         new SqlParameter("@GSTGroupCode", (object?)model.GSTGroupCode ?? DBNull.Value),
                         new SqlParameter("@HSNSACCode", (object?)model.HSNSACCode ?? DBNull.Value),
-                       
+                        new SqlParameter("@GSTCredit", model.GSTCredit ?? 0),
+
                     };
 
                 // ================= EXECUTE =================
@@ -333,8 +342,8 @@ namespace ERPAPP.Repository
 
         public async Task<GetFixedAssetEditData> GetFixedAssetEditData(string fixedAssetNo)
         {
-                    SqlParameter[] param =
-             {
+            SqlParameter[] param =
+     {
                 new SqlParameter("@CompanyCode", fixedAssetNo)
             };
 
@@ -394,6 +403,8 @@ namespace ERPAPP.Repository
 
                 // ===== DIVISION =====
                 model.DivisionStr = row["Division"]?.ToString();
+
+                model.GSTCredit = row["GSTCredit"] != DBNull.Value ? Convert.ToInt32(row["GSTCredit"]) : 0;
 
                 if (model.DivisionStr == "MOSAIC")
                     model.Division = 2;
@@ -516,12 +527,20 @@ namespace ERPAPP.Repository
                     Code = e.GetDisplayName().ToString(),
                     Name = e.GetDisplayName().ToString()
                 }).ToList();
+
+            dropDown.GSTCreditList = Enum.GetValues(typeof(FixedAssetGSTCredit))
+              .Cast<FixedAssetGSTCredit>()
+              .Select(e => new FixedAssetGSTCreditModel
+              {
+                  Code = ((int)e).ToString(),
+                  Name = e.GetDisplayName().ToString()
+              }).ToList();
             #endregion
 
 
             model.DropDownData = dropDown;
 
-           
+
             return await Task.FromResult(model);
         }
 
@@ -537,6 +556,98 @@ namespace ERPAPP.Repository
             int rowsAffected = (result != null) ? Convert.ToInt32(result) : 0;
 
             return rowsAffected > 0;
+        }
+
+        public async Task<bool> UpdateFixedAssetData(FixedAssetEditModel model)
+        {
+            try
+            {
+                // ================= BUSINESS LOGIC =================
+
+                if (model.DepreciationMethod == 0) // Straight-Line
+                {
+                    model.DecliningBalancePercent = 0;
+                }
+                else if (model.DepreciationMethod == 1) // Declining-Balance
+                {
+                    model.StraightLinePercent = 0;
+                }
+
+                // ================= PARAMETERS =================
+
+                SqlParameter[] param =
+                {
+                        new SqlParameter("@LoginRowId", model.LoginRowID),
+                        new SqlParameter("@DisplayNo", model.DisplayNo),
+
+                        new SqlParameter("@FAClassCode", model.FAClassCode),
+                        new SqlParameter("@FASubclassCode", model.FASubclassCode),
+                        new SqlParameter("@Description", model.Description),
+                        new SqlParameter("@Description2", (object?)model.Description2 ?? DBNull.Value),
+                        new SqlParameter("@SerialNo", (object?)model.SerialNo ?? DBNull.Value),
+
+                        new SqlParameter("@MainAssetComponent", model.MainAssetComponent ?? 0),
+                        new SqlParameter("@ComponentOfMainAsset", (object?)model.ComponentOfMainAsset ?? DBNull.Value),
+
+                        new SqlParameter("@LocationCode", (object?)model.LocationCode ?? DBNull.Value),
+                        new SqlParameter("@FALocationCode", (object?)model.FALocationCode ?? DBNull.Value),
+
+                        new SqlParameter("@GenProdPostingGroup", model.GenProdPostingGroup),
+                        new SqlParameter("@FAPostingGroup", model.FAPostingGroup),
+
+                        new SqlParameter("@ExciseAccountingType", model.ExciseAccountingType ?? 0),
+
+                        new SqlParameter("@TaxGroupCode", (object?)model.TaxGroupCode ?? DBNull.Value),
+                        new SqlParameter("@VATProductPostingGroup", (object?)model.VATProductPostingGroup ?? DBNull.Value),
+
+                        new SqlParameter("@DepreciationBookCode", (object?)model.DepreciationBookCode ?? DBNull.Value),
+                        new SqlParameter("@DepreciationMethod", model.DepreciationMethod ?? 0),
+
+                      new SqlParameter("@DepreciationStartingDate",
+                        model.DepreciationStartingDate == null || model.DepreciationStartingDate <= new DateTime(1753, 1, 1)
+                        ? new DateTime(1753, 1, 1)
+                        : model.DepreciationStartingDate
+                    ),
+
+                        new SqlParameter("@StraightLinePercent", model.StraightLinePercent ?? 0),
+                        new SqlParameter("@DecliningBalancePercent", model.DecliningBalancePercent ?? 0),
+
+                        new SqlParameter("@InstallationDate",
+                            model.InstallationDate == null || model.InstallationDate <= new DateTime(1753, 1, 1)
+                            ? new DateTime(1753, 1, 1)
+                            : model.InstallationDate
+                        ),
+
+                        new SqlParameter("@MasterCode", (object?)model.MasterCode ?? DBNull.Value),
+                        new SqlParameter("@CompanyCode", (object?)model.CompanyCode ?? DBNull.Value),
+                         new SqlParameter("@DivisionStr", model.DivisionStr),
+                        new SqlParameter("@Division", model.Division),
+
+                        new SqlParameter("@GSTGroupCode", (object?)model.GSTGroupCode ?? DBNull.Value),
+                        new SqlParameter("@HSNSACCode", (object?)model.HSNSACCode ?? DBNull.Value),
+                        new SqlParameter("@GSTCredit", model.GSTCredit ?? 0),
+                    };
+
+                // ================= EXECUTE =================
+
+                var resultObj = _db.ExecuteScalar("FixedAsset_UpdateData", param);
+                //var resultObj = "AFA";
+
+                string resultValue = resultObj?.ToString();
+
+                // ================= RESULT CHECK =================
+
+                if (!string.IsNullOrEmpty(resultValue) && (resultValue.StartsWith("AFA") || resultValue.StartsWith("MFA") || resultValue.StartsWith("FA")))
+                {
+                    return true;
+                }
+
+                return false;
+            }
+            catch (Exception ex)
+            {
+                return false;
+            }
         }
     }
 }

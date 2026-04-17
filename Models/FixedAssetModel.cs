@@ -48,6 +48,7 @@ namespace ERPAPP.Models
         public int LoginRowID { get; set; }
         public string? GSTGroupCode { get; set; }
         public string? HSNSACCode { get; set; }
+        public int? GSTCredit { get; set; } = 0;
     }
 
     public class GetFixedAssetAddData : FixedAssetModel
@@ -70,6 +71,8 @@ namespace ERPAPP.Models
     public class FAHSNModel : BaseDropDown { }
     public class FixedAssetDivisionModel : BaseDropDown { }
 
+    public class FixedAssetGSTCreditModel : BaseDropDown { }
+
     public class FixedAssetComponetOfMainAssetModel : BaseDropDown { }
 
     public class FixedAssetDropDownModel
@@ -88,6 +91,7 @@ namespace ERPAPP.Models
         public List<ExciseAccountingTypeModel> ExciseAccountingTypeList { get; set; } = new();
         public List<DepreciationBookCodeModel> DepreciationBookCode { get; set; } = new();
         public List<FixedAssetDivisionModel> FixedAssetDivision { get; set; } = new();
+        public List<FixedAssetGSTCreditModel> GSTCreditList { get; set; } = new();
     }
 
     public class GetFixedAssetListModel
@@ -123,6 +127,8 @@ namespace ERPAPP.Models
         public List<FixedAssetDivisionModel> FixedAssetDivision { get; set; } = new();
         public List<FixedAssetComponetOfMainAssetModel> ComponentOfMainAssetList { get; set; } = new();
         public List<FAHSNModel> FAHSNList { get; set; } = new();
+
+        public List<FixedAssetGSTCreditModel> GSTCreditList { get; set; } = new();
     }
 
 
@@ -174,6 +180,8 @@ namespace ERPAPP.Models
         public string? HSNSACCode { get; set; }
 
         public int Blocked { get; set; } = 0;
+
+        public int? GSTCredit { get; set; } = 0;
     }
 
     public class GetFixedAssetEditData : FixedAssetEditModel

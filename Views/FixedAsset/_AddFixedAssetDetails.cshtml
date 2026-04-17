@@ -148,13 +148,6 @@
                     </div>
 
                     <div class="row mt-2">
-                        <label class="col-4 col-form-label">Master Code</label>
-                        <div class="col-8">
-                            <input asp-for="MasterCode" class="form-control" disabled />
-                        </div>
-                    </div>
-
-                    <div class="row mt-2">
                         <label class="col-4 col-form-label">FA Class Code<span class="required-star">*</span></label>
                         <div class="col-8">
                             <select asp-for="FAClassCode"
@@ -278,6 +271,17 @@
                         </div>
                     </div>
 
+                    <div class="row mt-2">
+                        <label class="col-5 col-form-label">GST Credit</label>
+                        <div class="col-7">
+                            <select asp-for="GSTCredit"
+                                    asp-items="@(new SelectList(Model.DropDownData.GSTCreditList, "Code", "Name"))"
+                                    class="form-select">
+                                <option value="">--Select--</option>
+                            </select>
+                            <span asp-validation-for="GSTCredit" class="text-danger"></span>
+                        </div>
+                    </div>
                     @* <div class="row mt-2">
                         <label class="col-5 col-form-label">Excise Accounting Type</label>
                         <div class="col-7">

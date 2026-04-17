@@ -177,6 +177,15 @@ namespace ERPAPP.Helper
             [Display(Name = "INCOME TAX")]
             INCOMETAX = 2
         }
+
+        public enum  FixedAssetGSTCredit
+        {
+            [Display(Name = "Availment")]
+            Availment = 1,
+
+            [Display(Name = "Non-Availment")]
+            NonAvailment = 2
+        }
         #endregion
     }
 }

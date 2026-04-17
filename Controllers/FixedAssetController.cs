@@ -225,5 +225,100 @@ namespace ERPAPP.Controllers
                 return Json(new { success = false, message = ex.Message });
             }
         }
+
+
+        public async Task<IActionResult> UpdateFixedAssetMaster(FixedAssetEditModel model)
+        {
+            model.LoginRowID = Convert.ToInt16(HttpContext.Session.GetInt32("UserRowId").ToString());
+
+            if (model.FAClassCode == null || model.FAClassCode == "")
+                ModelState.AddModelError("FAClassCode", "FA Class Code is required");
+
+            if (model.FASubclassCode == null || model.FASubclassCode == "")
+                ModelState.AddModelError("FASubClassCode", "FA Subclass Code is required");
+
+            if (string.IsNullOrWhiteSpace(model.Description))
+                ModelState.AddModelError("Description", "Description is required");
+
+            if (string.IsNullOrWhiteSpace(model.GenProdPostingGroup))
+                ModelState.AddModelError("GenProdPostingGroup", "Gen Prod Posting Group is required");
+
+            if (string.IsNullOrWhiteSpace(model.FAPostingGroup))
+                ModelState.AddModelError("FAPostingGroup", "FA Posting Group is required");
+
+            if (!model.DepreciationMethod.HasValue)
+            {
+                ModelState.AddModelError("DepreciationMethod", "Depreciation Method is required");
+            }
+
+
+            // 🔢 Numeric + Range Validation
+            if (model.DepreciationMethod == 0) // Straight Line
+            {
+                if (model.StraightLinePercent != null)
+                {
+                    if (model.StraightLinePercent < 0 || model.StraightLinePercent > 100)
+                    {
+                        ModelState.AddModelError("StraightLinePercent", "Straight-Line % must be between 0 to 100");
+                    }
+                }
+            }
+
+            if (model.DepreciationMethod == 1 || model.DepreciationMethod == 2)
+            {
+                if (model.DecliningBalancePercent != null)
+                {
+                    if (model.DecliningBalancePercent < 0 || model.DecliningBalancePercent > 100)
+                    {
+                        ModelState.AddModelError("DecliningBalancePercent", "Declining Balance % must be between 0 to 100");
+                    }
+                }
+            }
+
+            if (!ModelState.IsValid)
+            {
+                return Json(new
+                {
+                    success = false,
+                    message = "Validation failed",
+                    errors = ModelState
+                                .Where(x => x.Value.Errors.Count > 0)
+                                .ToDictionary(
+                                    k => k.Key,
+                                    v => v.Value.Errors.Select(e => e.ErrorMessage).ToArray()
+                                )
+                });
+            }
+
+            try
+            {
+                var updateResult = await _fixedAssetRepository.UpdateFixedAssetData(model);
+
+                if (updateResult)
+                {
+                    return Json(new
+                    {
+                        success = true,
+                        message = "Fixed Asset updated successfully."
+                    });
+                }
+                else
+                {
+                    return Json(new
+                    {
+                        success = false,
+                        message = "something went wrong!."
+                    });
+                }
+            }
+            catch
+            {
+                return Json(new
+                {
+                    success = false,
+                    message = "Something went wrong while saving."
+                });
+            }
+        }
     }
 }

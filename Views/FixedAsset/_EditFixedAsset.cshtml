@@ -124,6 +124,7 @@
         <div class="fw-bold">
             Row Unique ID : <span class="fw-semibold" id="DisplayNo">@Model.DisplayNo</span>
         </div>
+        <input type="hidden" id="Blocked" value="@Model.Blocked" />
     </div>
 
     <div class="container-fluid mt-3">
@@ -143,7 +144,7 @@
                         <div class="col-8">
                             <select asp-for="Division"
                                     asp-items="@(new SelectList(Model.DropDownData.FixedAssetDivision, "Code", "Name"))"
-                                    class="form-select">
+                                    class="form-select" disabled>
                                 <option value="">--Select--</option>
                             </select>
                             <span asp-validation-for="Division" class="text-danger"></span>
@@ -281,8 +282,18 @@
                             <span asp-validation-for="GenProdPostingGroup" class="text-danger"></span>
                         </div>
                     </div>
-
-                   @*  <div class="row mt-2">
+                    <div class="row mt-2">
+                        <label class="col-5 col-form-label">GST Credit</label>
+                        <div class="col-7">
+                            <select asp-for="GSTCredit"
+                                    asp-items="@(new SelectList(Model.DropDownData.GSTCreditList, "Code", "Name"))"
+                                    class="form-select">
+                                <option value="">--Select--</option>
+                            </select>
+                            <span asp-validation-for="GSTCredit" class="text-danger"></span>
+                        </div>
+                    </div>
+                    @*  <div class="row mt-2">
                         <label class="col-5 col-form-label">Excise Accounting Type</label>
                         <div class="col-7">
                             <select asp-for="ExciseAccountingType"
@@ -366,8 +377,8 @@
                     <input asp-for="DepreciationStartingDate" type="text"
                            class="form-control fixed-asset-datepicker"
                            value="@(Model.DepreciationStartingDate.HasValue && Model.DepreciationStartingDate.Value != new DateTime(1753, 1, 1)
-                                           ? Model.DepreciationStartingDate.Value.ToString("dd/MM/yy")
-                                           : "")" />
+                                                                      ? Model.DepreciationStartingDate.Value.ToString("dd/MM/yy")
+                                                                      : "")" />
                     <span asp-validation-for="DepreciationStartingDate" class="text-danger"></span>
                 </div>
 
@@ -376,8 +387,8 @@
                     <input asp-for="InstallationDate" type="text"
                            class="form-control fixed-asset-datepicker"
                            value="@(Model.InstallationDate.HasValue && Model.InstallationDate.Value != new DateTime(1753, 1, 1)
-                                           ? Model.InstallationDate.Value.ToString("dd/MM/yy")
-                                           : "")" />
+                                                                      ? Model.InstallationDate.Value.ToString("dd/MM/yy")
+                                                                      : "")" />
                     <span asp-validation-for="InstallationDate" class="text-danger"></span>
                 </div>
                 <div class="col-2">
@@ -396,6 +407,7 @@
         <!-- BUTTONS -->
         <div class="text-center mt-3">
             <button type="button" class="btn btn-secondary" id="btnBackFixedAssetListPage" onclick="backFixedAssetListPage()">Back</button>
+            <button type="button" class="btn btn-primary" id="btnUpdateFixedAssetMaster">Update In ERP</button>
             @if (Model.Blocked == 1 && IsFixedAssetMasterCompanyPermission == true)
             {
                 <button type="button"

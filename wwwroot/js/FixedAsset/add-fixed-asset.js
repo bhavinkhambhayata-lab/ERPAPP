@@ -86,6 +86,8 @@
         formData.append("MasterCode", $('#MasterCode').val());
         formData.append("Division", $("#Division").val());
         formData.append("DivisionStr", $('#Division option:selected').text());
+        formData.append("StraightLinePercent", $("#StraightLinePercent").val());
+        formData.append("DecliningBalancePercent", $("#DecliningBalancePercent").val());
 
         $.ajax({
             url: baseURL + 'FixedAsset/SaveFixedAssetMaster',
