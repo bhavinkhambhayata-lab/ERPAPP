@@ -113,7 +113,7 @@ namespace ERPAPP.Models
         [StringLength(20)]
         public string? BankAccountNo { get; set; }
 
-        [RegularExpression(@"^[A-Z]{4}0[A-Z0-9]{6}$", ErrorMessage = "Invalid IFSC code")]
+        //[RegularExpression(@"^[A-Z]{4}0[A-Z0-9]{6}$", ErrorMessage = "Invalid IFSC code")]
         [StringLength(20)]
         public string? IFSCCode { get; set; }
 
@@ -749,7 +749,7 @@ namespace ERPAPP.Models
         [StringLength(20)]
         public string? BankAccountNo { get; set; }
 
-        [RegularExpression(@"^[A-Z]{4}0[A-Z0-9]{6}$", ErrorMessage = "Invalid IFSC code")]
+        //[RegularExpression(@"^[A-Z]{4}0[A-Z0-9]{6}$", ErrorMessage = "Invalid IFSC code")]
         [StringLength(20)]
         public string? IFSCCode { get; set; }
 
