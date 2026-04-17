@@ -69,7 +69,7 @@ namespace ERPAPP.Repository
                     return false;
 
                 // ✅ FROM MAIL
-                string fromMail = approvalItem.MailID;
+                string fromMail = "softwarecare@italiagroup.in";
 
                 if (string.IsNullOrWhiteSpace(fromMail))
                     return false;
@@ -160,7 +160,7 @@ namespace ERPAPP.Repository
             body.Append("Customer Unblock Request Details:<br/><br/>");
 
             body.Append("<table border='1' cellpadding='5' cellspacing='0' style='border-collapse:collapse;'>");
-            body.Append("<tr bgcolor='#d3d3d3'><th>Name</th><th>Vendor Code</th><th>Division</th></tr>");
+            body.Append("<tr bgcolor='#d3d3d3'><th>Name</th><th>Customer Code</th><th>Division</th></tr>");
 
             body.Append("<tr>");
             body.Append($"<td>{item.Name}</td>");
@@ -195,7 +195,7 @@ namespace ERPAPP.Repository
                     return false;
 
                 // ✅ FROM MAIL
-                string fromMail = approvalData.MailID;
+                string fromMail = "softwarecare@italiagroup.in";
 
                 if (string.IsNullOrWhiteSpace(fromMail))
                     return false;
@@ -279,7 +279,7 @@ namespace ERPAPP.Repository
                 new SqlParameter("@Division", (object?)division ?? DBNull.Value)
             };
 
-            DataTable dt = _db.GetDataTable("Vendor_VendorUnblockRequestMailListNew", parameters);
+            DataTable dt = _db.GetDataTable("Vendor_VendorUnblockResuestMailListNew", parameters);
 
             List<MailListDto> list = new List<MailListDto>();
 
@@ -447,7 +447,7 @@ namespace ERPAPP.Repository
                 var mail = new MailMessage
                 {
                     From = new MailAddress(fromMail),
-                    Subject = "Customer Block Request", // 🔥 change subject
+                    Subject = "Customer UnBlock Successfully", // 🔥 change subject
                     Body = CustomerBlockBuildBody(customerName, customerCode),
                     IsBodyHtml = true
                 };
@@ -492,7 +492,7 @@ namespace ERPAPP.Repository
             body.Append("Dear Sir/Madam,<br/><br/>");
 
             body.Append("The #CustomerName# ( #CustomerCode# ) customer has been successfully unblocked. <br/><br/>").Replace("#CustomerName#", customerName).Replace("#CustomerCode#", customerCode);
-            body.Append("Please verify the same in D365 (Navision).<br/><br/>");
+            body.Append("Please verify the same in D365.<br/><br/>");
 
             body.Append("<br/><br/>");
             body.Append(GetSignature());
@@ -648,7 +648,7 @@ namespace ERPAPP.Repository
             body.Append("Dear Sir/Madam,<br/><br/>");
 
             body.Append("The #VendorName# ( #VendorCode# ) vendor has been successfully unblocked. <br/><br/>").Replace("#VendorName#", vendorName).Replace("#VendorCode#", vendorCode);
-            body.Append("Please verify the same in D365 (Navision).<br/><br/>");
+            body.Append("Please verify the same in D365.<br/><br/>");
 
             body.Append(GetSignature());
             body.Append("<br/><br/>Note: Please do not reply to this email.");

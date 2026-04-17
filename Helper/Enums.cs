@@ -86,8 +86,8 @@ namespace ERPAPP.Helper
 
         public enum VendorGSTReturnFrequencyEnum
         {
-            Quarterly = 1,
-            Monthly = 2
+            Monthly = 1,
+            Quarterly = 2
         }
 
         public enum VendorTypeEnum

@@ -406,9 +406,11 @@ namespace ERPAPP.Repository
 
                 model.GSTCredit = row["GSTCredit"] != DBNull.Value ? Convert.ToInt32(row["GSTCredit"]) : 0;
 
-                if (model.DivisionStr == "MOSAIC")
+                var divisionCode = model.DivisionStr?.Trim().ToUpper();
+
+                if (divisionCode == "MOSAIC")
                     model.Division = 2;
-                else if (model.DivisionStr == "TILE")
+                else if (divisionCode == "TILE")
                     model.Division = 1;
                 else
                     model.Division = 3;
