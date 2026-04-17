@@ -492,7 +492,7 @@ namespace ERPAPP.Repository
             body.Append("Dear Sir/Madam,<br/><br/>");
 
             body.Append("The #CustomerName# ( #CustomerCode# ) customer has been successfully unblocked. <br/><br/>").Replace("#CustomerName#", customerName).Replace("#CustomerCode#", customerCode);
-            body.Append("Please verify the same in D365 (Navision).<br/><br/>");
+            body.Append("Please verify the same in D365.<br/><br/>");
 
             body.Append("<br/><br/>");
             body.Append(GetSignature());
@@ -648,7 +648,7 @@ namespace ERPAPP.Repository
             body.Append("Dear Sir/Madam,<br/><br/>");
 
             body.Append("The #VendorName# ( #VendorCode# ) vendor has been successfully unblocked. <br/><br/>").Replace("#VendorName#", vendorName).Replace("#VendorCode#", vendorCode);
-            body.Append("Please verify the same in D365 (Navision).<br/><br/>");
+            body.Append("Please verify the same in D365.<br/><br/>");
 
             body.Append(GetSignature());
             body.Append("<br/><br/>Note: Please do not reply to this email.");
