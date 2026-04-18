@@ -10,10 +10,12 @@ namespace ERPAPP.Controllers
     {
 
         private readonly IFixedAssetRepository _fixedAssetRepository;
+        private readonly IEmailRepository _emailRepository;
 
-        public FixedAssetController(IFixedAssetRepository fixedAssetRepository)
+        public FixedAssetController(IFixedAssetRepository fixedAssetRepository, IEmailRepository emailRepository)
         {
             _fixedAssetRepository = fixedAssetRepository;
+            _emailRepository = emailRepository;
         }
 
         public IActionResult Index()
@@ -194,8 +196,8 @@ namespace ERPAPP.Controllers
             {
                 data.DropDownData.ComponentOfMainAssetList = await _fixedAssetRepository.GetFixedAssetComponentWithDivision(data.DivisionStr);
             }
-            
-            if(data.GSTGroupCode != null)
+
+            if (data.GSTGroupCode != null)
             {
                 data.DropDownData.FAHSNList = await _fixedAssetRepository.GetFixedAssetHSNDataWithGSTGroupCode(data.GSTGroupCode);
             }
@@ -205,7 +207,7 @@ namespace ERPAPP.Controllers
 
 
         [HttpPost]
-        public async Task<IActionResult> FixedAssetUnblock(string fixedAssetCode)
+        public async Task<IActionResult> FixedAssetUnblock(string fixedAssetCode, int displayNo, string fixedAssetDescription)
         {
             try
             {
@@ -213,6 +215,7 @@ namespace ERPAPP.Controllers
 
                 if (fixedAssetUnBlock)
                 {
+                    var sendEmail = await _emailRepository.SendMailFixedAssetBlock(displayNo, fixedAssetCode, fixedAssetDescription);
                     return Json(new { success = true, message = "Fixed Asset Un-blocked Successfully." });
                 }
                 else

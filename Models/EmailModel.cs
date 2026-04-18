@@ -40,4 +40,12 @@
         public string Code { get; set; }
         public string EmpRowID { get; set; }
     }
+
+    public class FixedAssetEmailItem
+    {
+        public int SrNo { get; set; }
+        public string? Description { get; set; } = null;
+        public string? FixedAssetNo { get; set; } = null;
+        public string? Division { get; set; } = null;
+    }
 }

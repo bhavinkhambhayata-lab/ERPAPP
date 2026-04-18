@@ -11,10 +11,12 @@ namespace ERPAPP.Repository
     public class FixedAssetRepository : IFixedAssetRepository
     {
         private readonly DbHelper _db;
+        private readonly IEmailRepository _emailRepository;
 
-        public FixedAssetRepository(DbHelper db)
+        public FixedAssetRepository(DbHelper db, IEmailRepository emailRepository)
         {
             _db = db;
+            _emailRepository = emailRepository;
         }
 
         public async Task<GetFixedAssetAddData> GetFixedAssetAddData()
@@ -287,6 +289,15 @@ namespace ERPAPP.Repository
 
                 if (!string.IsNullOrEmpty(resultValue) && (resultValue.StartsWith("AFA") || resultValue.StartsWith("MFA") || resultValue.StartsWith("FA")))
                 {
+
+                    var sendEmail = await _emailRepository.SendMailFixedAssetUnBlock(new FixedAssetEmailItem
+                    {
+                        SrNo = 1,
+                        Description = model.Description,
+                        FixedAssetNo = resultValue,
+                        Division = model.DivisionStr
+                    });
+
                     return true;
                 }
 

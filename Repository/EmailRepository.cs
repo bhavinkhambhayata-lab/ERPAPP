@@ -685,5 +685,311 @@ namespace ERPAPP.Repository
                 EmpRowID = row["EmpRowID"]?.ToString()
             };
         }
+
+        public async Task<bool> SendMailFixedAssetUnBlock(FixedAssetEmailItem model)
+        {
+            try
+            {
+                // ✅ Validation
+                if (model == null)
+                    return false;
+
+                var mailList = GetMailFixedAssetUnBlockList();
+
+                if (mailList == null || mailList.Count == 0)
+                    return false;
+
+                // ✅ FROM MAIL
+                string fromMail = "softwarecare@italiagroup.in";
+
+                if (string.IsNullOrWhiteSpace(fromMail))
+                    return false;
+
+                // ✅ COLLECT EMAILS
+                List<string> toEmails = new List<string>();
+                List<string> ccEmails = new List<string>();
+
+                foreach (var item in mailList)
+                {
+                    if (!string.IsNullOrWhiteSpace(item.TOMailID))
+                        toEmails.AddRange(item.TOMailID.Split(','));
+
+                    if (!string.IsNullOrWhiteSpace(item.CCMailID))
+                        ccEmails.AddRange(item.CCMailID.Split(','));
+                }
+
+                // ✅ CLEAN EMAIL LIST
+                toEmails = toEmails
+                    .Where(x => !string.IsNullOrWhiteSpace(x))
+                    .Select(x => x.Trim())
+                    .Distinct()
+                    .ToList();
+
+                ccEmails = ccEmails
+                    .Where(x => !string.IsNullOrWhiteSpace(x))
+                    .Select(x => x.Trim())
+                    .Distinct()
+                    .ToList();
+
+                // ⚠️ At least one TO required
+                if (toEmails.Count == 0)
+                    return false;
+
+                // ✅ CREATE MAIL
+                var mail = new MailMessage
+                {
+                    From = new MailAddress(fromMail),
+                    Subject = "Fixed Asset Unblock Request",
+                    Body = FixedAssetUnBlockBuildBody(model),
+                    IsBodyHtml = true
+                };
+
+                // ✅ ADD TO
+                foreach (var email in toEmails)
+                {
+                    mail.To.Add(new MailAddress(email));
+                }
+
+                // ✅ ADD CC
+                foreach (var email in ccEmails)
+                {
+                    mail.CC.Add(new MailAddress(email));
+                }
+
+                // ✅ SMTP CONFIG
+                var smtp = new SmtpClient(_smtpServer)
+                {
+                    Port = _port,
+                    Credentials = new NetworkCredential(_username, _password),
+                    EnableSsl = true,
+                    UseDefaultCredentials = false
+                };
+
+                // ✅ SEND MAIL
+                await smtp.SendMailAsync(mail);
+
+                return true;
+            }
+            catch (Exception ex)
+            {
+                return false;
+            }
+        }
+
+        public List<MailListDto> GetMailFixedAssetUnBlockList()
+        {
+            DataTable dt = _db.GetDataTable("FixedAsset_UnblockRequestMailList", null);
+
+            List<MailListDto> list = new List<MailListDto>();
+
+            foreach (DataRow row in dt.Rows)
+            {
+                list.Add(new MailListDto
+                {
+                    TOMailID = row["TOMailID"]?.ToString(),
+                    CCMailID = row["CCMailID"]?.ToString()
+                });
+            }
+
+            return list;
+        }
+
+        private string FixedAssetUnBlockBuildBody(FixedAssetEmailItem item)
+        {
+            if (item == null)
+                return "No data available";
+
+            StringBuilder body = new StringBuilder();
+
+            body.Append("Dear Sir/Madam,<br/><br/>");
+            body.Append("Kindly process the Fixed Asset unblock request.<br/><br/>");
+            body.Append("Please log in to the ERP application and take the necessary action.<br/><br/>");
+
+            body.Append("Fixed Asset Unblock Request Details:<br/><br/>");
+
+            body.Append("<table border='1' cellpadding='5' cellspacing='0' style='border-collapse:collapse;'>");
+
+            // ✅ Header
+            body.Append("<tr bgcolor='Gray'>");
+            body.Append("<th>SrNo</th>");
+            body.Append("<th>Description</th>");
+            body.Append("<th>Fixed Asset No</th>");
+            body.Append("<th>Division</th>");
+            body.Append("</tr>");
+
+            // ✅ Single Row
+            body.Append("<tr bgcolor='White'>");
+            body.Append($"<td>{item.SrNo}</td>");
+            body.Append($"<td>{item.Description}</td>");
+            body.Append($"<td>{item.FixedAssetNo}</td>");
+            body.Append($"<td>{item.Division}</td>");
+            body.Append("</tr>");
+
+            body.Append("</table>");
+
+            body.Append("<br/><br/>");
+            body.Append(GetSignature());
+            body.Append("<br/>Note: Please do not reply to this mail.");
+
+            return body.ToString();
+        }
+
+        public List<MailListDto> GetMailFixedAssetBlockList(int displayNo)
+        {
+
+            SqlParameter[] parameters = new SqlParameter[]
+             {
+                new SqlParameter("@DisplayNo", displayNo)
+             };
+
+            DataSet ds = _db.GetDataSet("FixedAsset_UnblockReplayMailList", parameters);
+
+            // Safety check
+            if (ds == null || ds.Tables.Count == 0)
+                return new List<MailListDto>();
+
+            DataTable dt = ds.Tables[0];
+
+            if (dt.Rows.Count == 0)
+                return new List<MailListDto>();
+
+            // TO (single)
+            string toMail = dt.AsEnumerable()
+                .Select(r => r["TOMailID"]?.ToString()?.Trim().TrimEnd(','))
+                .FirstOrDefault();
+
+            // CC (multiple combine)
+            string ccMail = string.Join(",",
+                dt.AsEnumerable()
+                  .Select(r => r["CCMailID"]?.ToString()?.Trim().TrimEnd(','))
+                  .Where(x => !string.IsNullOrWhiteSpace(x))
+                  .Distinct()
+            );
+
+            // BCC (single)
+            string bccMail = dt.AsEnumerable()
+                .Select(r => r["BCCMailID"]?.ToString()?.Trim().TrimEnd(','))
+                .FirstOrDefault();
+
+            return new List<MailListDto>
+    {
+        new MailListDto
+        {
+            TOMailID = toMail,
+            CCMailID = ccMail,
+            BCCMailID = bccMail
+        }
+    };
+        }
+
+        public async Task<bool> SendMailFixedAssetBlock(int displayNo, string fixedAssetCode, string fixedDescription)
+        {
+            try
+            {
+                var mailList = GetMailFixedAssetBlockList(displayNo);
+
+                if (mailList == null || mailList.Count == 0)
+                    return false;
+
+                string fromMail = "softwarecare@italiagroup.in";
+
+                if (string.IsNullOrWhiteSpace(fromMail))
+                    return false;
+
+                List<string> toEmails = new List<string>();
+                List<string> ccEmails = new List<string>();
+                List<string> bccEmails = new List<string>();
+
+                foreach (var data in mailList)
+                {
+                    if (!string.IsNullOrWhiteSpace(data.TOMailID))
+                        toEmails.AddRange(data.TOMailID.Split(','));
+
+                    if (!string.IsNullOrWhiteSpace(data.CCMailID))
+                        ccEmails.AddRange(data.CCMailID.Split(','));
+
+                    if (!string.IsNullOrWhiteSpace(data.BCCMailID))   // 👈 add this
+                        bccEmails.AddRange(data.BCCMailID.Split(','));
+                }
+
+                toEmails = toEmails
+                    .Where(x => !string.IsNullOrWhiteSpace(x))
+                    .Select(x => x.Trim())
+                    .Distinct()
+                    .ToList();
+
+                ccEmails = ccEmails
+                    .Where(x => !string.IsNullOrWhiteSpace(x))
+                    .Select(x => x.Trim())
+                    .Distinct()
+                    .ToList();
+
+                bccEmails = bccEmails
+                    .Where(x => !string.IsNullOrWhiteSpace(x))
+                    .Select(x => x.Trim())
+                    .Distinct()
+                    .ToList();
+
+                if (toEmails.Count == 0)
+                    return false;
+
+                var mail = new MailMessage
+                {
+                    From = new MailAddress(fromMail),
+                    Subject = "Fixed Asset UnBlock Successfully",
+                    Body = FixedAssetBlockBuildBody(fixedAssetCode, fixedDescription),
+                    IsBodyHtml = true
+                };
+
+                foreach (var email in toEmails)
+                {
+                    mail.To.Add(new MailAddress(email));
+                }
+
+                foreach (var email in ccEmails)
+                {
+                    mail.CC.Add(new MailAddress(email));
+                }
+
+                foreach (var email in bccEmails)
+                {
+                    mail.Bcc.Add(new MailAddress(email));
+                }
+
+                var smtp = new SmtpClient(_smtpServer)
+                {
+                    Port = _port,
+                    Credentials = new NetworkCredential(_username, _password),
+                    EnableSsl = true,
+                    UseDefaultCredentials = false
+                };
+
+                await smtp.SendMailAsync(mail);
+
+                return true;
+            }
+            catch (Exception ex)
+            {
+                return false;
+            }
+        }
+
+        private string FixedAssetBlockBuildBody(string fixedAssetNo, string fixedAssetDescription)
+        {
+            StringBuilder body = new StringBuilder();
+
+            body.Append("Dear Sir/Madam,<br/><br/>");
+
+            body.Append("The #FADescription# ( #FAAssetNo# ) fixed asset has been successfully unblocked. <br/><br/>")
+                .Replace("#FADescription#", fixedAssetDescription)
+                .Replace("#FAAssetNo#", fixedAssetNo);
+
+            body.Append("Please verify the same in D365.<br/><br/>");
+
+            body.Append(GetSignature());
+            body.Append("<br/><br/>Note: Please do not reply to this email.");
+
+            return body.ToString();
+        }
     }
 }

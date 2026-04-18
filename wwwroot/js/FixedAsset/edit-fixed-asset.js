@@ -202,7 +202,9 @@ function toggleFixedAssetUnBlock(btn) {
         url: baseURL + 'FixedAsset/FixedAssetUnblock',
         type: 'POST',
         data: {
-            fixedAssetCode: fixedAssetCode
+            fixedAssetCode: fixedAssetCode,
+            displayNo: $('#DisplayNo').text(),
+            fixedAssetDescription: $('#Description').val()
         },
         success: function (res) {
 
