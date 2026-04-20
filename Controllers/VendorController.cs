@@ -297,19 +297,19 @@ namespace ERPAPP.Controllers
 
                 if (vendorUnBlock)
                 {
+                    string division = "";
+
                     var emailSendData = _emailRepository.GetVendorSendEmailDetailByLocationCode(locationName);
 
                     if (emailSendData != null)
                     {
-                        string division = "";
-
                         if (emailSendData.EmpRowID == "335")
                             division = "MOSAIC";
                         else if (emailSendData.EmpRowID == "1482")
                             division = "TILE";
-
-                        await _emailRepository.SendMailVendorBlock(division, Convert.ToInt32(displayRowId), vendorCode, vendorName);
                     }
+
+                    await _emailRepository.SendMailVendorBlock(division, Convert.ToInt32(displayRowId), vendorCode, vendorName);
 
                     return Json(new { success = true, message = "Vendor Un-blocked Successfully." });
                 }
