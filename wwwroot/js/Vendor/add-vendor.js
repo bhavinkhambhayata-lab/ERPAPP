@@ -623,13 +623,13 @@ function handleVendorGenBusPostingGroup() {
         genBusPostingGroup.val("DOMESTIC");
         genBusPostingGroup.prop("disabled", true);
     } else {
-        genBusPostingGroup.val("EXPORT");
+        genBusPostingGroup.val("IMPORT");
         genBusPostingGroup.prop("disabled", true);
     }
 }
 
 function validateEmailField() {
-    debugger
+    
     var email = $('#Email').val().trim();
     var isChecked = $('#EmailNotAvailable').is(':checked');
     var errorSpan = $('[data-valmsg-for="Email"]');

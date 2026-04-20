@@ -484,7 +484,7 @@ function handleVendorGenBusPostingGroup() {
         genBusPostingGroup.val("DOMESTIC");
         genBusPostingGroup.prop("disabled", true);
     } else {
-        genBusPostingGroup.val("EXPORT");
+        genBusPostingGroup.val("IMPORT");
         genBusPostingGroup.prop("disabled", true);
     }
 }
