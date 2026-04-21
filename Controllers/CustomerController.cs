@@ -418,7 +418,9 @@ namespace ERPAPP.Controllers
 
             try
             {
-                var insertResult = await _customerRepository.InsertCustomer(model);
+                var userName = HttpContext.Session.GetString("UserName") ?? "";
+
+                var insertResult = await _customerRepository.InsertCustomer(model, userName);
 
                 if (insertResult)
                 {

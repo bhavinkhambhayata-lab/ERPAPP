@@ -4,11 +4,11 @@ namespace ERPAPP.Interfaces
 {
     public interface IEmailRepository
     {
-        List<MailListDto> GetMailCustomerUnBlockList(string division);
-        Task<bool> SendMailCustomerUnBlock(string division, CustomerEmailItemDto approvalData);
+        List<MailListDto> GetMailCustomerUnBlockList(string division, int displayNo);
+        Task<bool> SendMailCustomerUnBlock(string division, CustomerEmailItemDto approvalData,int displayNo);
 
-        List<MailListDto> GetMailVendorUnBlockList(string division);
-        Task<bool> SendMailVendorUnBlock(string division, VendorEmailItemDto approvalData);
+        List<MailListDto> GetMailVendorUnBlockList(string division, int displayNo);
+        Task<bool> SendMailVendorUnBlock(string division, VendorEmailItemDto approvalData,int displayNo);
 
 
 

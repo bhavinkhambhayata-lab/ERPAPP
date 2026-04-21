@@ -749,7 +749,7 @@ namespace ERPAPP.Repository
             return model;
         }
 
-        public async Task<bool> InsertCustomer(CustomerModel model)
+        public async Task<bool> InsertCustomer(CustomerModel model, string userName)
         {
             try
             {
@@ -922,11 +922,13 @@ namespace ERPAPP.Repository
                     {
                         var emailSend = await _emailRepository.SendMailCustomerUnBlock(model.DivisionCode, new CustomerEmailItemDto
                         {
+                            SrNo = 1,
                             Name = model.Name ?? "",
+                            RequestedBy = userName,
                             Division = model.DivisionCode,
                             MailID = "softwarecare@italiagroup.in",
                             CustomerCode = customerNo
-                        });
+                        }, model.DisplayNo);
                     }
 
                     result = true;
