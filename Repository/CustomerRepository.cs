@@ -2450,10 +2450,10 @@ namespace ERPAPP.Repository
                             TypeName = "dbo.CustomerBrandType",
                             Value = dtBrand
                         }
-    };
+                        };
 
-                //var customerNoObj = _db.ExecuteScalar("Customer_UpdateData", param);
-                var customerNoObj = "";
+                var customerNoObj = _db.ExecuteScalar("Customer_UpdateData", param);
+                //var customerNoObj = "";
 
                 string customerNo = customerNoObj?.ToString();
 
