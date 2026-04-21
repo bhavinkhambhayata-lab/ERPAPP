@@ -32,11 +32,12 @@ namespace ERPAPP.Repository
         }
 
         #region Customer Unblock Send Email
-        public List<MailListDto> GetMailCustomerUnBlockList(string division)
+        public List<MailListDto> GetMailCustomerUnBlockList(string division, int displayNo)
         {
             SqlParameter[] parameters = new SqlParameter[]
             {
-                new SqlParameter("@Division", (object?)division ?? DBNull.Value)
+                new SqlParameter("@Division", (object?)division ?? DBNull.Value),
+                new SqlParameter("@DisplayNo", (object?)displayNo ?? DBNull.Value)
             };
 
             DataTable dt = _db.GetDataTable("Customer_CustomerUnblockResuestMailListNew", parameters);
@@ -55,7 +56,7 @@ namespace ERPAPP.Repository
             return list;
         }
 
-        public async Task<bool> SendMailCustomerUnBlock(string division, CustomerEmailItemDto approvalItem)
+        public async Task<bool> SendMailCustomerUnBlock(string division, CustomerEmailItemDto approvalItem, int displayNo)
         {
             try
             {
@@ -63,7 +64,7 @@ namespace ERPAPP.Repository
                 if (approvalItem == null)
                     return false;
 
-                var mailList = GetMailCustomerUnBlockList(division);
+                var mailList = GetMailCustomerUnBlockList(division, displayNo);
 
                 if (mailList == null || mailList.Count == 0)
                     return false;
@@ -77,6 +78,7 @@ namespace ERPAPP.Repository
                 // ✅ COLLECT EMAILS
                 List<string> toEmails = new List<string>();
                 List<string> ccEmails = new List<string>();
+                List<string> bccEmails = new List<string>();
 
                 foreach (var item in mailList)
                 {
@@ -85,6 +87,9 @@ namespace ERPAPP.Repository
 
                     if (!string.IsNullOrWhiteSpace(item.CCMailID))
                         ccEmails.AddRange(item.CCMailID.Split(','));
+
+                    if (!string.IsNullOrWhiteSpace(item.BCCMailID))
+                        bccEmails.AddRange(item.BCCMailID.Split(','));
                 }
 
                 // ✅ CLEAN EMAIL LIST
@@ -95,6 +100,12 @@ namespace ERPAPP.Repository
                     .ToList();
 
                 ccEmails = ccEmails
+                    .Where(x => !string.IsNullOrWhiteSpace(x))
+                    .Select(x => x.Trim())
+                    .Distinct()
+                    .ToList();
+
+                bccEmails = bccEmails
                     .Where(x => !string.IsNullOrWhiteSpace(x))
                     .Select(x => x.Trim())
                     .Distinct()
@@ -123,6 +134,12 @@ namespace ERPAPP.Repository
                 foreach (var email in ccEmails)
                 {
                     mail.CC.Add(new MailAddress(email));
+                }
+
+                // ✅ ADD BCC
+                foreach (var email in bccEmails)
+                {
+                    mail.Bcc.Add(new MailAddress(email));
                 }
 
                 // ✅ SMTP CONFIG
@@ -160,9 +177,11 @@ namespace ERPAPP.Repository
             body.Append("Customer Unblock Request Details:<br/><br/>");
 
             body.Append("<table border='1' cellpadding='5' cellspacing='0' style='border-collapse:collapse;'>");
-            body.Append("<tr bgcolor='#d3d3d3'><th>Name</th><th>Customer Code</th><th>Division</th></tr>");
+            body.Append("<tr bgcolor='#d3d3d3'><th>SrNo</th><th>Requested By</th><th>Customer Name</th><th>Customer Code</th><th>Division</th></tr>");
 
             body.Append("<tr>");
+            body.Append($"<td>{item.SrNo}</td>");
+            body.Append($"<td>{item.RequestedBy}</td>");
             body.Append($"<td>{item.Name}</td>");
             body.Append($"<td>{item.CustomerCode}</td>");
             body.Append($"<td>{item.Division}</td>");
@@ -181,7 +200,7 @@ namespace ERPAPP.Repository
 
         #region Vendor Unblock Send Email
 
-        public async Task<bool> SendMailVendorUnBlock(string division, VendorEmailItemDto approvalData)
+        public async Task<bool> SendMailVendorUnBlock(string division, VendorEmailItemDto approvalData, int displayNo)
         {
             try
             {
@@ -189,7 +208,7 @@ namespace ERPAPP.Repository
                 if (approvalData == null)
                     return false;
 
-                var mailList = GetMailVendorUnBlockList(division);
+                var mailList = GetMailVendorUnBlockList(division, displayNo);
 
                 if (mailList == null || mailList.Count == 0)
                     return false;
@@ -203,6 +222,7 @@ namespace ERPAPP.Repository
                 // ✅ COLLECT EMAILS
                 List<string> toEmails = new List<string>();
                 List<string> ccEmails = new List<string>();
+                List<string> bccEmails = new List<string>();
 
                 foreach (var item in mailList)
                 {
@@ -211,6 +231,9 @@ namespace ERPAPP.Repository
 
                     if (!string.IsNullOrWhiteSpace(item.CCMailID))
                         ccEmails.AddRange(item.CCMailID.Split(','));
+
+                    if (!string.IsNullOrWhiteSpace(item.BCCMailID))
+                        bccEmails.AddRange(item.BCCMailID.Split(','));
                 }
 
                 // ✅ CLEAN EMAIL LIST
@@ -221,6 +244,12 @@ namespace ERPAPP.Repository
                     .ToList();
 
                 ccEmails = ccEmails
+                    .Where(x => !string.IsNullOrWhiteSpace(x))
+                    .Select(x => x.Trim())
+                    .Distinct()
+                    .ToList();
+
+                bccEmails = bccEmails
                     .Where(x => !string.IsNullOrWhiteSpace(x))
                     .Select(x => x.Trim())
                     .Distinct()
@@ -251,6 +280,12 @@ namespace ERPAPP.Repository
                     mail.CC.Add(new MailAddress(email));
                 }
 
+                // ✅ ADD BCC
+                foreach (var email in bccEmails)
+                {
+                    mail.Bcc.Add(new MailAddress(email));
+                }
+
                 // ✅ SMTP CONFIG
                 var smtp = new SmtpClient(_smtpServer)
                 {
@@ -272,11 +307,12 @@ namespace ERPAPP.Repository
             }
         }
 
-        public List<MailListDto> GetMailVendorUnBlockList(string division)
+        public List<MailListDto> GetMailVendorUnBlockList(string division, int displayNo)
         {
             SqlParameter[] parameters = new SqlParameter[]
             {
-                new SqlParameter("@Division", (object?)division ?? DBNull.Value)
+                new SqlParameter("@Division", (object?)division ?? DBNull.Value),
+                new SqlParameter("@DisplayNo", (object?)displayNo ?? DBNull.Value)
             };
 
             DataTable dt = _db.GetDataTable("Vendor_VendorUnblockResuestMailListNew", parameters);

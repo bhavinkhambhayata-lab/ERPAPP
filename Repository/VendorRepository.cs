@@ -367,7 +367,7 @@ namespace ERPAPP.Repository
                         VendorCode = vendorNo
                     };
 
-                    await _emailRepository.SendMailVendorUnBlock(division, emailDetails);
+                    await _emailRepository.SendMailVendorUnBlock(division, emailDetails, model.DisplayNo);
 
                     result = true;
                 }

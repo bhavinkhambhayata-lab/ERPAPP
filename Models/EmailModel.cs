@@ -14,6 +14,7 @@
     public class CustomerEmailItemDto
     {
         public int SrNo { get; set; }
+        public string? RequestedBy { get; set; }
         public string? Name { get; set; }
 
         public string? CustomerCode { get; set; }

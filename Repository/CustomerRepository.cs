@@ -461,7 +461,7 @@ namespace ERPAPP.Repository
                         E_Inv_PhoneNo = row["E_Inv_PhoneNo"]?.ToString(),
 
                         Website_Homepage = row["WebsiteHomepage"]?.ToString(),
-                        
+
                         BankName = row["BankName"]?.ToString(),
                         BankAccountNo = row["BankAccountNo"]?.ToString(),
                         BranchName = row["BranchName"]?.ToString(),
@@ -478,12 +478,12 @@ namespace ERPAPP.Repository
                         GenBusPostingGroup = row["GenBusPostingGroup"]?.ToString(),
                         Currency = row["Currency"]?.ToString(),
                         PANNO = row["PANNO"]?.ToString(),
-                        BusinessCategory= row["BusinessCategory"]?.ToString(),
+                        BusinessCategory = row["BusinessCategory"]?.ToString(),
                         MSMEUAMNo = row["MSMEUAMNo"]?.ToString(),
                         CreditLimit = row["CreditLimit"] != DBNull.Value ? Convert.ToDecimal(row["CreditLimit"]) : (decimal?)null
                     };
 
-                    
+
                     if (row["GSTRegistrationType"] != DBNull.Value)
                         model.GSTRegistrationType = Convert.ToInt32(row["GSTRegistrationType"]);
 
@@ -749,7 +749,7 @@ namespace ERPAPP.Repository
             return model;
         }
 
-        public async Task<bool> InsertCustomer(CustomerModel model)
+        public async Task<bool> InsertCustomer(CustomerModel model, string userName)
         {
             try
             {
@@ -920,11 +920,13 @@ namespace ERPAPP.Repository
                     {
                         var emailSend = await _emailRepository.SendMailCustomerUnBlock(model.DivisionCode, new CustomerEmailItemDto
                         {
+                            SrNo = 1,
                             Name = model.Name ?? "",
+                            RequestedBy = userName,
                             Division = model.DivisionCode,
                             MailID = "softwarecare@italiagroup.in",
                             CustomerCode = customerNo
-                        });
+                        }, model.DisplayNo);
                     }
 
                     result = true;
@@ -1977,7 +1979,7 @@ namespace ERPAPP.Repository
 
                 return Convert.ToInt32(result) == 1;
             }
-            catch(Exception e)
+            catch (Exception e)
             {
                 return false;
             }
@@ -2005,7 +2007,7 @@ namespace ERPAPP.Repository
             }
         }
 
-        public async Task<bool> CustomerUnblock(string customerNo,string displayRowId,int loginRowId)
+        public async Task<bool> CustomerUnblock(string customerNo, string displayRowId, int loginRowId)
         {
             SqlParameter[] param =
             {

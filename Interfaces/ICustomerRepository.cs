@@ -18,7 +18,7 @@ namespace ERPAPP.Interfaces
 
         Task<CustomerBrandWiseModel> GetCustomerBrandWiseDropdown(int divisionRowId);
 
-        Task<bool> InsertCustomer(CustomerModel model);
+        Task<bool> InsertCustomer(CustomerModel model,string userName);
 
         List<LocationModel> GetLocationListByDivisionCode(int divisionCode);
 
