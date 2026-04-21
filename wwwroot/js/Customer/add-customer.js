@@ -1544,9 +1544,9 @@ function handleCustomerPANChange(panNo) {
     panNo = (panNo || '').toUpperCase();
     $("#PANNo").val(panNo); // optional: UI ma set
 
-    var panRegex = /^[A-Z]{5}[0-9]{4}[A-Z]$/;
+    //var panRegex = /^[A-Z]{5}[0-9]{4}[A-Z]$/;
 
-    if (panNo.length === 10 && panRegex.test(panNo)) {
+    if (panNo.length === 10 /*&& panRegex.test(panNo)*/) {
 
         var place = panNo.substring(3, 4);
 
