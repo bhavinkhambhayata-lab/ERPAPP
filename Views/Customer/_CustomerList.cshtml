@@ -150,6 +150,10 @@
     #tblCustomer td:nth-child(1) {
         text-align: center;
     }
+
+    .hide-column {
+        display: none;
+    }
 </style>
 
 <div class="container-fluid mt-3">
@@ -191,6 +195,7 @@
                     <th>Company Code</th>
                     <th>Created By</th>
                     <th>Master Code In Company</th>
+                    <th class="hide-column">Blocked</th>
                 </tr>
             </thead>
             <tbody></tbody>
@@ -221,9 +226,11 @@
 
         // 👇 CustomerNo (tame je key field use karo cho)
         var customerNo = data[9]; // CompanyCode OR jo biju hoy to change karo
+        var customerBlocked = data[12]; // Blocked column
 
         if (customerNo) {
             editCustomerNo = customerNo;
+            editCustomerBlock = customerBlocked;
             $('#detailsBtn').click();
         }
     });
@@ -266,6 +273,7 @@
                                     <td>${item.companyCode ?? ''}</td>
                                     <td>${item.createdBy ?? ''}</td>
                                     <td>${item.masterCodeInCompany ?? ''}</td>
+                                    <td class="hide-column">${item.blocked ?? ''}</td>
                                  </tr>`;
                     });
 

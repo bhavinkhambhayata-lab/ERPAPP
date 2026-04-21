@@ -1,64 +1,5 @@
 ﻿$(document).ready(function () {
 
-    $('.searchable-dropdown').select2({
-        theme: "bootstrap-5",   // 🔥 IMPORTANT
-        placeholder: "--Select--",
-        allowClear: true,
-        width: '100%'
-    });
-
-    $("#Name").keyup(function () {
-
-        var searchText = $(this).val();
-
-        if (searchText.length < 2) {
-            $("#customerSearchResult").html("");
-            return;
-        }
-
-        var divisionId = $("#Division").val();
-
-        if (!divisionId || divisionId === "0") {
-          
-            showToast("Please select first division", "danger", 4000);
-            return;
-        }
-
-        $.ajax({
-            url: baseURL + 'Customer/SearchCustomer',
-            type: 'GET',
-            data: { searchText: searchText },
-            success: function (data) {
-
-                var html = "";
-
-                $.each(data, function (i, item) {
-
-                    html += "<a href='#' class='list-group-item list-group-item-action' data-no='"
-                        + item.no + "'>" + item.name + "</a>";
-                });
-
-                $("#customerSearchResult").html(html);
-            },
-            error: function (err) {
-                console.log("Error:", err);
-            }
-        });
-
-    });
-
-    $("#MasterCode").on("keyup", function (e) {
-
-        var masterCode = $(this).val().trim();
-
-        if (masterCode === "") return;
-
-        // Enter press
-        if (e.key === "Enter") {
-            GetCustomerDataWithMasterCode(masterCode);
-        }
-    });
-
     $(document).on("focus", ".dlr-datepicker", function () {
 
         if (!$(this).hasClass("hasDatepicker")) {
@@ -76,115 +17,6 @@
             });
 
         }
-
-    });
-
-
-    $(document).on("click", "#customerSearchResult a", function (e) {
-
-        e.preventDefault();
-
-        var masterCode = $(this).data("no");
-
-        var divisionId = $("#Division").val();
-        var divisionText = $("#Division option:selected").text();
-
-        if (!divisionId || divisionId === "0") {
-            showToast("Please select first division", "danger", 4000);
-            return;
-        }
-
-        $("#Name").val($(this).text());
-        $("#MasterCode").val(masterCode);
-        $("#customerSearchResult").html("");
-
-        // 🔥 Call API
-        $.ajax({
-            url: baseURL + "Customer/GetCustomerMasterData",
-            type: "GET",
-            data: { masterCode: masterCode, division: divisionText },
-            success: function (response) {
-
-                if (typeof response === "string") {
-
-                    $("#tabContent").html(response);
-                    $("#Division").val(divisionId);
-                    return;
-                }
-                
-                if (!response.success) {
-                    //showToast(response.message, "danger", 4000);
-                    showToast('Internal Server Error', "danger", 4000);
-                    //$("#SaveBtn").prop("disabled", true);
-                    return;
-                }
-
-                var data = response.data;
-
-                //loadCustomerAddressData(data.city, data.postcode)
-
-                $("#IsAlreadyCreatedMaster").val("1");
-                $('#Division').prop("disabled", true);
-                $("#Name").val(data.name).prop("disabled", true);
-                $("#Address").val(data.address).prop("disabled", true);
-                $("#Address2").val(data.address2).prop("disabled", true);
-
-                $("#CityCode").val(data.city).prop("disabled", true);
-                $("#PostCode").val(data.postcode).prop("disabled", true);
-                $("#StateCode").val(data.stateCode).prop("disabled", true);
-                
-                $("#CountryCode").val(data.countryCode).prop("disabled", true).trigger("change");
-                $("#Region").val(data.region).prop("disabled", true);
-                $("#Zone").val(data.zone).prop("disabled", true);
-
-                $("#ContactPerson").val(data.contactPerson).prop("disabled", true);
-                $("#MobileNo").val(data.mobileNo).prop("disabled", true);
-                $("#PhoneNo").val(data.phoneNo).prop("disabled", true);
-
-                $("#Email").val(data.eMail).prop("disabled", true);
-                $("#EInvEmail").val(data.e_Inv_E_Mail).prop("disabled", true);
-                $("#EInvPhoneNo").val(data.e_Inv_PhoneNo).prop("disabled", true);
-
-                $("#Website").val(data.website_Homepage).prop("disabled", true);
-
-                $("#PANNo").val(data.panno).prop("disabled", true);
-                handleCustomerPANChange(data.panno);
-                $("#BankName").val(data.bankName).prop("disabled", true);
-                $("#BankAccountNo").val(data.bankAccountNo).prop("disabled", true);
-                $("#BranchName").val(data.branchName).prop("disabled", true);
-                $("#IFSCCode").val(data.ifsCode).prop("disabled", true);
-
-                $("#GSTRegistrationNo").val(data.gstRegistrationNo).prop("disabled", true);
-                $("#GSTRegistrationType").val(data.gstRegistrationType).prop("disabled", true);
-                $("#GSTCustomerType").val(data.gstCustomerType).prop("disabled", true);
-
-                $("#CustomerType").val(data.customerType).prop("disabled", true);
-                $("#BusinessCategory").val(data.businessCategory).prop("disabled", true);
-                $("#MSMEUAMNo").val(data.msmeuamNo).prop("disabled", true);
-                
-                //$("#CommissionVendorNo").val(data.commissionVendorNo).prop("disabled", true);
-                //$("#CommissionType").val(data.commissionType).prop("disabled", true);
-                
-                //$("#CreditLimit").val(data.creditLimit);
-                //$("#ApplicationMethod").val(data.applicationMethod).prop("disabled", true);
-                //$("#PaymentTermsCode").val(data.paymentTermsCode);
-                //$("#PaymentMethodCode").val(data.paymentMethodCode);
-
-                //$("#CustomerPostingGroup").val(data.customerPostingGroup).prop("disabled", true);
-                //$("#GenBusPostingGroup").val(data.genBusPostingGroup).prop("disabled", true);
-                //$("#CurrencyCode").val(data.currency);
-
-                //$("#ParentCustomerCode").val(data.parentCustomerCode).prop("disabled", true);
-                //$("#PriceListCode").val(data.priceListCode).prop("disabled", true);
-                //$("#PromoCode").val(data.promoCode).prop("disabled", true);
-                //$("#ChargesGroup").val(data.chargesGroup).prop("disabled", true);
-
-                
-            },
-            error: function () {
-                alert("Error loading customer data.");
-            }
-        });
 
     });
 
@@ -288,7 +120,6 @@
         }
     });
 
-
     // POSTCODE CHANGE
     $("#PostCode").change(function () {
 
@@ -344,9 +175,9 @@
         }
     });
 
-    $('#btnSaveCustomerMaster').click(function () {
+    $('#btnUpdateCustomerMaster').click(function () {
 
-        var form = $('#customerForm');
+        var form = $('#editcustomerUnBlockForm');
 
         if (!form.valid()) return;
 
@@ -364,13 +195,14 @@
 
         // disabled fields
         formData.append("DisplayNo", $('#DisplayNo').text());
+        formData.append("CustomerCode", $('#CustomerCode').val());
         formData.append("MasterCode", $('#MasterCode').val());
         formData.append("StateCode", $('#StateCode').val());
         formData.append("Region", $('#Region').val());
         formData.append("Zone", $('#Zone').val());
         formData.append("BillToCustomer", $('#BillToCustomer').val());
         formData.append("DivisionCode", $('#Division option:selected').text());
-        
+
         formData.append("CurrencyCode", $('#CurrencyCode').val());
         formData.append("CustomerPostingGroup", $('#CustomerPostingGroup').val());
         formData.append("GenBusPostingGroup", $('#GenBusPostingGroup').val());
@@ -478,52 +310,53 @@
         // ===== Brand List =====
         $('#brandTable tbody tr').each(function (index) {
 
-            formData.append(`CustomerBrandAddList[${index}].CustomerNo`,
+            formData.append(`CustomerBrandEditList[${index}].CustomerNo`,
                 $(this).find('[name*="CustomerNo"]').val());
 
-            formData.append(`CustomerBrandAddList[${index}].BrandCode`,
+            formData.append(`CustomerBrandEditList[${index}].BrandCode`,
                 $(this).find('[name*="BrandCode"] option:selected').text());
 
-            formData.append(`CustomerBrandAddList[${index}].CustomerCategoryCode`,
+            formData.append(`CustomerBrandEditList[${index}].CustomerCategoryCode`,
                 $(this).find('[name*="CustomerCategoryCode"]').val());
 
-            formData.append(`CustomerBrandAddList[${index}].TradeSecurityAmount`,
+            formData.append(`CustomerBrandEditList[${index}].TradeSecurityAmount`,
                 $(this).find('[name*="TradeSecurityAmount"]').val());
 
-            formData.append(`CustomerBrandAddList[${index}].CustomerDiscountGroup`,
+            formData.append(`CustomerBrandEditList[${index}].CustomerDiscountGroup`,
                 $(this).find('[name*="CustomerDiscountGroup"]').val());
 
-            formData.append(`CustomerBrandAddList[${index}].DealerClassification`,
+            formData.append(`CustomerBrandEditList[${index}].DealerClassification`,
                 $(this).find('[name*="DealerClassification"]').val());
 
-            formData.append(`CustomerBrandAddList[${index}].SalesPersonCode`,
+            formData.append(`CustomerBrandEditList[${index}].SalesPersonCode`,
                 $(this).find('[name*="SalesPersonCode"]').val());
 
-            formData.append(`CustomerBrandAddList[${index}].Allocation`,
+            formData.append(`CustomerBrandEditList[${index}].Allocation`,
                 $(this).find('[name*="Allocation"]').val());
 
-            formData.append(`CustomerBrandAddList[${index}].HOSalesPerson`,
+            formData.append(`CustomerBrandEditList[${index}].HOSalesPerson`,
                 $(this).find('[name*="HOSalesPerson"]').val());
 
-            formData.append(`CustomerBrandAddList[${index}].DLRAppointmentDate`,
+            formData.append(`CustomerBrandEditList[${index}].DLRAppointmentDate`,
                 $(this).find('[name*="DLRAppointmentDate"]').val());
 
-            formData.append(`CustomerBrandAddList[${index}].DLRTerminationDate`,
+            formData.append(`CustomerBrandEditList[${index}].DLRTerminationDate`,
                 $(this).find('[name*="DLRTerminationDate"]').val());
 
         });
 
-        var gstNo = $("#GSTRegistrationNo").val();
+        //var gstNo = $("#GSTRegistrationNo").val();
 
-        if (checkCustomerGSTExists(gstNo)) {
+        //if (checkCustomerGSTExists(gstNo)) {
 
-            showToast("GST already exists!", "danger", 4000);
-            return;
-        }
+        //    showToast("GST already exists!", "danger", 4000);
+        //    return;
+        //}
 
+        
 
         $.ajax({
-            url: baseURL + 'Customer/SaveCustomerMaster',
+            url: baseURL + 'Customer/UpdateCustomerMaster',
             type: 'POST',
             data: formData,
             processData: false,
@@ -534,9 +367,9 @@
                 if (response.success) {
 
                     //alert(response.message);
-                    showToast("Customer Inserted Successfully.", "success", 4000);
+                    showToast("Customer Updated Successfully.", "success", 4000);
 
-                    $('#customerForm')[0].reset();
+                    $('#editcustomerUnBlockForm')[0].reset();
 
                     $('.text-danger').text('');
 
@@ -705,73 +538,26 @@
 
         var selectedValue = $(this).val();
         var selectedText = $(this).find("option:selected").text();
-        var isDuplicate = false;
 
-        $('#brandTable tbody .brand').not(this).each(function () {
+        if (!selectedValue) return;
 
-            if ($(this).val() === selectedValue && selectedValue !== "") {
-                isDuplicate = true;
-            }
+        // 👉 Step 1: Get ALL values (enabled + disabled)
+        var allBrands = $('#brandTable tbody .brand').map(function () {
 
-        });
+            // fallback for disabled / readonly UI
+            return $(this).val() || $(this).find("option:selected").text().trim();
 
-        if (isDuplicate) {
+        }).get().filter(v => v !== "");
 
-            showToast("'" + selectedText + "' dimension is already added. Please select a different dimension.", "danger", 4000);
+        // 👉 Step 2: count duplicate
+        var count = allBrands.filter(v => v === selectedValue).length;
 
-            $(this).val(""); // reset dropdown
+        if (count > 1) {
+
+            showToast("'" + selectedText + "' brand already added.", "danger", 4000);
+
+            $(this).val(""); // reset current
         }
-
-    });
-
-    $("#btnFetchPortal").click(function () {
-
-        var value = $("#PortalRowId").val().trim();
-        var pattern = /^(ZZ\d+|\d+)$/i;
-
-        // Empty check
-        if (value === "") {
-            $("#PortalRowIdError").text("");
-
-            // Clear all fields
-            $('#Division').val('').trigger('change');
-            $("#Name").val("");
-            $("#Address").val("");
-            $("#Address2").val("");
-
-            $("#CityCode").val("").trigger('change');
-            $("#PostCode").val("");
-            $("#StateCode").val("");
-            $("#CountryCode").val("");
-            $("#Region").val("");
-            $("#Zone").val("");
-
-            $("#ContactPerson").val("");
-            $("#Website").val("");
-            $("#MobileNo").val("");
-            $("#PhoneNo").val("");
-            $("#Email").val("");
-
-            $("#CustomerType").val("");
-            $("#PANNo").val("");
-            $("#GSTRegistrationNo").val("");
-            $("#GSTRegistrationType").val("");
-
-            $("#ARNNo").val("");
-
-            return;
-        }
-
-        // Validation
-        if (!pattern.test(value)) {
-            $("#PortalRowIdError").text("Enter ZZ with digits or only digits.");
-            return;
-        } else {
-            $("#PortalRowIdError").text("");
-        }
-
-        // API Call
-        GetCustomerDataWithPortalRowId(value);
 
     });
 
@@ -914,7 +700,7 @@
             $("#ShippingAddress").val($("#Address").val()).prop("disabled", true);
             $("#ShippingAddress2").val($("#Address2").val()).prop("disabled", true);
             $("#ShippingCity").val($("#CityCode").val()).prop("disabled", true);
-          
+
             $("#ShippingState").val($("#StateCode").val()).prop("disabled", true);
             $("#ShippingCountry").val($("#CountryCode").val()).prop("disabled", true);
 
@@ -923,11 +709,11 @@
             $("#ShippingContactPerson").val($("#ContactPerson").val()).prop("disabled", true);
 
             $("#ShippingLocationCode").val($('#LocationCode').val()).prop("disabled", true);
-            
+
             $("#ShippingPostalCode").val($("#PostCode").val()).prop("disabled", true);
 
             //loadCustomerShippingAddressData($("#ShippingCity").val());
-            
+
         } else {
 
             // ================= Clear =================
@@ -1017,6 +803,29 @@
 
         handleCustomerPANChange($(this).val());
     });
+
+    var country = $('#CountryCode').val();
+    $("#CountryCode").val(country).trigger('change');
+
+    var email = $("#Email").val();
+    var einvEmail = $("#EInvEmail").val();
+
+    var firstEmail = "";
+
+    if (email) {
+        firstEmail = email.split(",")[0].trim();
+    }
+
+    $("#sameAsContact").prop("checked",
+        firstEmail.toLowerCase() === einvEmail.trim().toLowerCase()
+    );
+
+    var custname = ($("#Name").val() || "").trim().toLowerCase();
+    var shippingName = ($("#ShippingName").val() || "").trim().toLowerCase();
+
+    $("#chkSameAsGeneral").prop("checked", custname === shippingName);
+
+    handleCustomerPANChange($("#PANNo").val());
 });
 
 
@@ -1269,91 +1078,6 @@ function validateBrandTable() {
     return isValid;
 }
 
-function GetCustomerDataWithPortalRowId(value) {
-
-
-    var portalRowId = value.replace(/^zz/i, '');
-
-    if (!portalRowId) {
-        $("#PortalRowIdError").text("Please enter Portal Row Id");
-        return;
-    }
-
-    $("#PortalRowIdError").text("");
-
-    $.ajax({
-        url: baseURL + 'Customer/GetCustomerDataWithPortalRowId',
-        type: 'GET',
-        data: { portalRowId: portalRowId },
-        success: function (res) {
-
-            if (!res.success) {
-                $("#PortalRowIdError").text(res.message);
-                return;
-            }
-
-            var data = res.result;
-
-            //$("#MasterCode").val(data.masterCode);
-
-            //First Default Select MOSAIC because that is getting bella 
-            $('#Division').val('2').trigger('change').addClass("portal-bind-data");;
-
-            $("#Name").val(data.name).addClass("portal-bind-data");;
-            $("#Address").val(data.address).addClass("portal-bind-data");;
-            $("#Address2").val(data.address2).addClass("portal-bind-data");;
-            $("#CityCode").val(data.cityCode).addClass("portal-bind-data");;
-
-            //loadCustomerAddressData(data.cityCode, data.postCode);
-
-            $("#PostCode").val(data.postCode).addClass("portal-bind-data");;
-            $("#StateCode").val(data.stateCode).addClass("portal-bind-data");;
-            $("#CountryCode").val(data.countryCode).trigger('change').addClass("portal-bind-data");;
-
-            $("#Region").val(data.region).addClass("portal-bind-data");;
-            $("#Zone").val(data.zone).addClass("portal-bind-data");;
-
-            if (data.contactPerson) {
-                $("#ContactPerson").val(data.contactPerson).addClass("portal-bind-data");
-            }
-
-            if (data.mobileNo) {
-                $("#MobileNo").val(data.mobileNo).addClass("portal-bind-data");
-            }
-
-            if (data.phoneNo) {
-                $("#PhoneNo").val(data.phoneNo).addClass("portal-bind-data");
-            }
-
-            $("#Email").val(data.email).addClass("portal-bind-data");
-            $("#Website").val(data.website).addClass("portal-bind-data");
-
-            $("#CustomerType").val(data.customerType).addClass("portal-bind-data");
-
-            if (data.panNo) {
-                $("#PANNo").val(data.panNo).addClass("portal-bind-data");
-            }
-
-            if (data.gstRegistrationNo) {
-                $("#GSTRegistrationNo").val(data.gstRegistrationNo).addClass("portal-bind-data");
-            }
-
-            if (data.gstRegistrationType) {
-                $("#GSTRegistrationType").val(data.gstRegistrationType).addClass("portal-bind-data");
-            }
-
-            if (data.arnNo) {
-                $("#ARNNo").val(data.arnNo).addClass("portal-bind-data");
-            }
-
-        },
-        error: function () {
-
-        }
-    });
-
-}
-
 function GetCustomerDataWithMasterCode(masterCode) {
 
     $.ajax({
@@ -1505,7 +1229,7 @@ function handleGenBusPostingGroup() {
 }
 
 function handlePriceListCode() {
-    
+
     var country = $('#CountryCode').val();
     var division = $('#Division option:selected').text();
     var priceListCode = $('#PriceListCode');
@@ -1575,4 +1299,36 @@ function handleCustomerPANChange(panNo) {
     } else {
         $("#AssesseeCode").val('');
     }
+}
+
+function toggleCustomerUnBlock(btn) {
+
+    var customerCode = btn.getAttribute("data-customer");
+
+    if (!confirm("Are you sure you want to unblock this customer?")) {
+        return; // ❌ cancel
+    }
+
+    $.ajax({
+        url: baseURL + 'Customer/CustomerUnblock',
+        type: 'POST',
+        data: {
+            customerCode: customerCode,
+            displayRowId: $("#DisplayNo").text(),
+            customerName: $("#Name").val(),
+            division: $("#Division option:selected").text()
+        },
+        success: function (res) {
+
+            if (res.success) {
+
+                showToast(res.message, "success", 3000);
+
+                btn.style.display = "none";
+
+            } else {
+                alert(res.message || "Something went wrong!");
+            }
+        }
+    });
 }

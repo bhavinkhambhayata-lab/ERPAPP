@@ -228,6 +228,8 @@ namespace ERPAPP.Models
         [StringLength(10)]
         public string? AssesseeCode { get; set; }
 
+        public int? IsAlreadyCreatedMaster { get; set; } = 0;
+
         // ================= BRAND LIST =================
 
         public List<CustomerBrandWiseAddModel> CustomerBrandAddList { get; set; } = new();
@@ -604,6 +606,8 @@ namespace ERPAPP.Models
         public string? Division { get; set; }
 
         public string? CreatedBy { get; set; }
+
+        public int Blocked { get; set; } = 0;
     }
 
     //Edit Customer Model
@@ -865,6 +869,8 @@ namespace ERPAPP.Models
         [StringLength(10)]
         public string? AssesseeCode { get; set; }
 
+        public int? IsAlreadyCreatedMaster { get; set; } = 0;
+
         // ================= BRAND LIST =================
 
         public List<CustomerBrandWiseEditModel> CustomerBrandEditList { get; set; } = new();
@@ -887,4 +893,254 @@ namespace ERPAPP.Models
         public List<CustomerBrandWiseEditModel> CustomerBrandEditList { get; set; } = new();
     }
 
+
+    //UnBlock Edit Customer Model
+
+    public class GetCustomerUnBlockEditModel : CustomerUnBlockEditModel
+    {
+        public CustomerDropDownModel CustomerDropDownModel { get; set; } = new();
+
+        public CustomerBrandWiseModel customerBrandWiseModel { get; set; } = new CustomerBrandWiseModel();
+    }
+
+    public class CustomerUnBlockEditModel
+    {
+        public string? LoginRowId { get; set; }
+        public int PortalRowId { get; set; }
+        public int DisplayNo { get; set; }
+
+        public string? CustomerCode { get; set; }
+
+        // ================= GENERAL DETAILS =================
+
+        [Required(ErrorMessage = "Division is required")]
+        public int? Division { get; set; }
+        public string? DivisionCode { get; set; }
+        public string? MasterCode { get; set; }
+
+        [Required(ErrorMessage = "Name is required")]
+        [StringLength(100)]
+        public string Name { get; set; } = string.Empty;
+
+        [Required(ErrorMessage = "Address is required")]
+        [StringLength(100)]
+        public string Address { get; set; } = string.Empty;
+
+        [StringLength(50)]
+        public string? Address2 { get; set; } = string.Empty;
+
+
+        [Required(ErrorMessage = "City is required")]
+        [StringLength(30)]
+        public string CityCode { get; set; } = string.Empty;
+
+
+        [Required(ErrorMessage = "Post Code is required")]
+        [StringLength(20)]
+        public string PostCode { get; set; } = string.Empty;
+
+        public string? PostCodeStr { get; set; } = string.Empty;
+
+        [StringLength(10)]
+        public string? StateCode { get; set; }
+
+
+        [Required(ErrorMessage = "Country is required")]
+        [StringLength(10)]
+        public string CountryCode { get; set; } = string.Empty;
+
+
+        [Required(ErrorMessage = "Region is required")]
+        [StringLength(20)]
+        public string Region { get; set; } = string.Empty;
+
+
+        [Required(ErrorMessage = "Zone is required")]
+        [StringLength(20)]
+        public string Zone { get; set; } = string.Empty;
+
+        public decimal? CreditLimit { get; set; } = 0;
+        public string? PriceListCode { get; set; }
+        public string? PromoCode { get; set; }
+        public string? ChargesGroup { get; set; }
+
+
+        // ================= CONTACT =================
+
+        [Required(ErrorMessage = "Contact Person is required")]
+        [StringLength(50)]
+        public string ContactPerson { get; set; } = string.Empty;
+
+        [Required(ErrorMessage = "Mobile No is required")]
+        [RegularExpression(@"^(\+?[\d\-]+)(,\+?[\d\-]+)*$",
+    ErrorMessage = "Invalid mobile number")]
+        [StringLength(30)]
+        public string MobileNo { get; set; } = string.Empty;
+
+        [StringLength(30)]
+        [RegularExpression(@"^(\+?[\d\-]+)(,\+?[\d\-]+)*$",
+    ErrorMessage = "Invalid phone number")]
+        public string? PhoneNo { get; set; }
+
+        [Required(ErrorMessage = "Email is required")]
+        //[EmailAddress(ErrorMessage = "Invalid email address")]
+        [StringLength(80)]
+        public string Email { get; set; } = string.Empty;
+
+        [StringLength(80)]
+        public string? Website { get; set; }
+
+
+        // ================= MARKETING =================
+
+        public int? CustomerType { get; set; }
+        public string? ParentCustomerCode { get; set; }
+        public string? VendorCode { get; set; }
+
+        public string? CommissionVendorNo { get; set; }
+        public int? CommissionType { get; set; }
+        public int? Commission { get; set; }
+
+        [StringLength(50)]
+        public string? BankName { get; set; }
+
+        [StringLength(100)]
+        public string? BranchName { get; set; }
+
+        [RegularExpression(@"^[0-9]{9,18}$", ErrorMessage = "Invalid bank account number")]
+        [StringLength(20)]
+        public string? BankAccountNo { get; set; }
+
+        //[RegularExpression(@"^[A-Z]{4}0[A-Z0-9]{6}$", ErrorMessage = "Invalid IFSC code")]
+        [StringLength(20)]
+        public string? IFSCCode { get; set; }
+
+
+        // ================= INVOICING =================
+
+        public string? BillToCustomer { get; set; }
+        public string? LocationCode { get; set; }
+        public string? CustomerPostingGroup { get; set; }
+        public string? GenBusPostingGroup { get; set; }
+
+        [Required(ErrorMessage = "E-Invoice Phone is required")]
+        [StringLength(30)]
+        [RegularExpression(@"^[0-9]{1,20}$", ErrorMessage = "Invalid phone number")]
+        public string EInvPhoneNo { get; set; } = string.Empty;
+
+        [Required(ErrorMessage = "E-Invoice Email is required")]
+        [StringLength(80)]
+        [EmailAddress(ErrorMessage = "Invalid email")]
+        public string EInvEmail { get; set; } = string.Empty;
+
+        public string? CurrencyCode { get; set; }
+
+        // ================= PAYMENTS =================
+
+        public int? ApplicationMethod { get; set; }
+        public string? PaymentTermsCode { get; set; }
+        public string? PaymentMethodCode { get; set; }
+
+        // ================= TAX =================
+
+        [RegularExpression(@"^[A-Z]{5}[0-9]{4}[A-Z]$", ErrorMessage = "Invalid PAN format")]
+        [StringLength(10, MinimumLength = 10)]
+        public string? PANNo { get; set; }
+
+        public int? GSTRegistrationType { get; set; }
+
+        [RegularExpression(@"^[0-9]{2}[A-Z]{5}[0-9]{4}[A-Z][1-9A-Z]Z[0-9A-Z]$", ErrorMessage = "Invalid GSTIN format")]
+        [StringLength(15, MinimumLength = 15)]
+        public string? GSTRegistrationNo { get; set; }
+
+        public int? GSTCustomerType { get; set; }
+
+        [RegularExpression(@"^[A-Z]{2}[0-9]{12}[A-Z]{1}$", ErrorMessage = "Invalid ARN format")]
+        [StringLength(15, MinimumLength = 15)]
+        public string? ARNNo { get; set; }
+
+        public int? BusinessCategory { get; set; }
+        public string? MSMEUAMNo { get; set; }
+
+
+        // ================= NOD / NOC =================
+
+        public bool IsNodNocCreation { get; set; }
+        public string? NODAccessCode { get; set; }
+        public string? NODNOC { get; set; }
+        public string? ConcessionalCode { get; set; }
+        public bool ThresholdOverlook { get; set; }
+        public bool SurchargeOverlook { get; set; }
+
+        // ===================Shipping Details=================
+        public string? ShippingCode { get; set; }
+
+        [StringLength(100)]
+        public string? ShippingName { get; set; }
+
+        [StringLength(100)]
+        public string? ShippingAddress { get; set; }
+
+        [StringLength(50)]
+        public string? ShippingAddress2 { get; set; }
+
+        [StringLength(30)]
+        public string? ShippingCity { get; set; }
+
+        [StringLength(20)]
+        public string? ShippingPostalCode { get; set; }
+
+        [StringLength(30)]
+        public string? ShippingCountry { get; set; }
+
+        [StringLength(30)]
+        public string? ShippingPhoneNo { get; set; }
+
+        [StringLength(100)]
+        public string? ShippingContactPerson { get; set; }
+
+        // New Fields
+        [StringLength(80)]
+        public string? ShippingEmail { get; set; }
+
+        [StringLength(10)]
+        public string? ShippingLocationCode { get; set; }
+
+        [StringLength(10)]
+        public string? ShippingMethodCode { get; set; }
+
+        [StringLength(10)]
+        public string? ShippingAgentCode { get; set; }
+
+        [StringLength(10)]
+        public string? ShippingAgentServiceCode { get; set; }
+        public string? ShippingState { get; set; }
+
+        [RegularExpression(@"^[0-9]{2}[A-Z]{5}[0-9]{4}[A-Z][1-9A-Z]Z[0-9A-Z]$", ErrorMessage = "Invalid GSTIN format")]
+        [StringLength(15, MinimumLength = 15)]
+        public string? ShippingGSTRegistrationNo { get; set; }
+        public int? ShippingAddressType { get; set; }
+        public int? ShipToGSTCustomerType { get; set; }
+
+        public int Blocked { get; set; } = 0;
+
+        [StringLength(10)]
+        public string? AssesseeCode { get; set; }
+
+        public int? IsAlreadyCreatedMaster { get; set; } = 0;
+
+        // ================= BRAND LIST =================
+
+        public List<CustomerBrandWiseEditModel> CustomerBrandEditList { get; set; } = new();
+    }
+
+
+    public class CustomerAlreadyExistModel
+    {
+        public bool IsExist { get; set; }
+        public string? CustomerNo { get; set; }
+        public string? Name { get; set; }
+
+        public string? Division { get; set; }
+    }
 }

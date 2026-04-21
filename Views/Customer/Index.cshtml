@@ -36,6 +36,7 @@
 
 <script>
     var editCustomerNo='';
+     var editCustomerBlock='0';
         $(document).ready(function () {
 
         // Default load
@@ -46,7 +47,9 @@
         });
 
         $("#detailsBtn").click(function () {
-            if(editCustomerNo!='')
+            
+            //editCustomerBlock="3";
+            if(editCustomerNo!='' && editCustomerBlock == "0")
             {
                  $.ajax({
                             url: baseURL + 'Customer/GetCustomerEditData',
@@ -60,6 +63,20 @@
                             }
                         });
             }
+             else if(editCustomerNo!='' && editCustomerBlock == "3")
+             {
+                 $.ajax({
+                            url: baseURL + 'Customer/GetCustomerUnBlockEditData',
+                            type: 'GET',
+                            data: { customerNo: editCustomerNo },
+                            success: function (response) {
+                                $('#tabContent').html(response);
+                            },
+                            error: function () {
+                                alert('Error loading customer details');
+                            }
+                        });
+             }
             else
             {
                 loadDetails();
@@ -68,6 +85,7 @@
 
         function loadList() {
             editCustomerNo='';
+            editCustomerBlock='0';
             $.get(baseURL +'Customer/CustomerList', function (data) {
                 $("#tabContent").html(data);
             });
@@ -75,6 +93,7 @@
 
         function loadDetails() {
             editCustomerNo='';
+            editCustomerBlock='0';
             $.get(baseURL +'Customer/AddEditCustomer', function (data) {
                 $("#tabContent").html(data);
             });

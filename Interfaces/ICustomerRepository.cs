@@ -45,5 +45,11 @@ namespace ERPAPP.Interfaces
 
         Task<GetAssessCodeWithPlaceModel> GetAssessCodeWithPlace(string Place);
 
+        Task<GetCustomerUnBlockEditModel> GetCustomerUnBlockEditData(string customerNo);
+
+        Task<bool> UpdateCustomer(CustomerUnBlockEditModel model);
+
+        Task<CustomerAlreadyExistModel> GetCustomerAlreadyExistDetails(string masterCode);
+
     }
 }
