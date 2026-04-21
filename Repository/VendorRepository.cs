@@ -342,37 +342,32 @@ namespace ERPAPP.Repository
 
                 if (!string.IsNullOrEmpty(vendorNo) && vendorNo.StartsWith("ICV"))
                 {
-                    if (!string.IsNullOrEmpty(model.Location))
+                    string division = "";
+
+                    var emailSendData = _emailRepository.GetVendorSendEmailDetailByLocationCode(model.Location ?? "");
+
+                    if (emailSendData != null)
                     {
-                        var emailSendData = _emailRepository.GetVendorSendEmailDetailByLocationCode(model.Location);
-
-                        if (emailSendData != null)
-                        {
-                            string division = "";
-
-                            if (emailSendData.EmpRowID == "335")
-                                division = "MOSAIC";
-                            else if (emailSendData.EmpRowID == "1482")
-                                division = "TILE";
-
-                            var emailDetails = new VendorEmailItemDto
-                            {
-                                VendorName = model.Name,
-                                VendorCategory = model.VendorCategory,
-                                SrNo = 1,
-                                PaymentMethod = model.PaymentMethod,
-                                PaymentTerm = model.PaymentTerms,
-                                PurchaseCode = model.PurchaserCode,
-                                RequestedBy = userName,
-                                MailID = "softwarecare@italiagroup.in",
-                                VendorCode = vendorNo
-                            };
-
-                            await _emailRepository.SendMailVendorUnBlock(division, emailDetails);
-                        }
+                        if (emailSendData.EmpRowID == "335")
+                            division = "MOSAIC";
+                        else if (emailSendData.EmpRowID == "1482")
+                            division = "TILE";
                     }
 
+                    var emailDetails = new VendorEmailItemDto
+                    {
+                        VendorName = model.Name,
+                        VendorCategory = model.VendorCategory,
+                        SrNo = 1,
+                        PaymentMethod = model.PaymentMethod,
+                        PaymentTerm = model.PaymentTerms,
+                        PurchaseCode = model.PurchaserCode,
+                        RequestedBy = userName,
+                        MailID = "softwarecare@italiagroup.in",
+                        VendorCode = vendorNo
+                    };
 
+                    await _emailRepository.SendMailVendorUnBlock(division, emailDetails);
 
                     result = true;
                 }

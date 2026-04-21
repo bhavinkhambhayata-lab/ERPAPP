@@ -623,13 +623,13 @@ function handleVendorGenBusPostingGroup() {
         genBusPostingGroup.val("DOMESTIC");
         genBusPostingGroup.prop("disabled", true);
     } else {
-        genBusPostingGroup.val("EXPORT");
+        genBusPostingGroup.val("IMPORT");
         genBusPostingGroup.prop("disabled", true);
     }
 }
 
 function validateEmailField() {
-    debugger
+    
     var email = $('#Email').val().trim();
     var isChecked = $('#EmailNotAvailable').is(':checked');
     var errorSpan = $('[data-valmsg-for="Email"]');
@@ -700,9 +700,9 @@ function handleVendorPANChange(panNo) {
     panNo = panNo.toUpperCase();
     $("#PANNo").val(panNo);
 
-    var panRegex = /^[A-Z]{5}[0-9]{4}[A-Z]$/;
+    //var panRegex = /^[A-Z]{5}[0-9]{4}[A-Z]$/;
 
-    if (panNo.length === 10 && panRegex.test(panNo)) {
+    if (panNo.length === 10 /*&& panRegex.test(panNo)*/) {
 
         var place = panNo.substring(3, 4);
 
