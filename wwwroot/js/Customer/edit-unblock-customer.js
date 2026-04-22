@@ -369,9 +369,9 @@
                     //alert(response.message);
                     showToast("Customer Updated Successfully.", "success", 4000);
 
-                    $('#editcustomerUnBlockForm')[0].reset();
+                    $('#listBtn').click();
 
-                    $('.text-danger').text('');
+                    //$('.text-danger').text('');
 
                 }
                 else {

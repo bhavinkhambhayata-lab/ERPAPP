@@ -379,9 +379,9 @@
                     //alert(response.message);
                     showToast("Vendor Updated Successfully.", "success", 4000);
 
-                    $('#vendorUnBlockEditForm')[0].reset();
+                    $('#listBtn').click();
 
-                    $('.text-danger').text('');
+                    //$('.text-danger').text('');
 
                 }
                 else {

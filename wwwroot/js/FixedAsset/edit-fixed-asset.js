@@ -145,11 +145,11 @@
                 if (response.success) {
 
                     //alert(response.message);
-                    showToast("Fixed Asset updated Successfully.", "success", 4000);
+                    showToast("Fixed Asset Updated Successfully.", "success", 4000);
 
-                    $('#editFixedAssetForm')[0].reset();
+                    $('#listBtn').click();
 
-                    $('.text-danger').text('');
+                    //$('.text-danger').text('');
 
                 }
                 else {
