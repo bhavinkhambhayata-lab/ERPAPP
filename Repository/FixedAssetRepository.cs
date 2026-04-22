@@ -208,7 +208,7 @@ namespace ERPAPP.Repository
             return list;
         }
 
-        public async Task<bool> InsertFixedAssetData(FixedAssetModel model)
+        public async Task<bool> InsertFixedAssetData(FixedAssetModel model,string userName)
         {
             try
             {
@@ -293,10 +293,11 @@ namespace ERPAPP.Repository
                     var sendEmail = await _emailRepository.SendMailFixedAssetUnBlock(new FixedAssetEmailItem
                     {
                         SrNo = 1,
+                        RequestedBy = userName,
                         Description = model.Description,
                         FixedAssetNo = resultValue,
                         Division = model.DivisionStr
-                    });
+                    }, model.DisplayNo);
 
                     return true;
                 }

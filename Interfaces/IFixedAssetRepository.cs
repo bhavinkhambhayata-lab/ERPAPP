@@ -11,7 +11,7 @@ namespace ERPAPP.Interfaces
 
         Task<List<FixedAssetComponetOfMainAssetModel>> GetFixedAssetComponentWithDivision(string division);
 
-        Task<bool> InsertFixedAssetData(FixedAssetModel model);
+        Task<bool> InsertFixedAssetData(FixedAssetModel model,string userName);
 
         Task<List<GetFixedAssetListModel>> GetFixedAssetList(string searchDescription);
 

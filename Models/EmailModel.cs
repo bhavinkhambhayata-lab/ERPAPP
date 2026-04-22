@@ -45,6 +45,8 @@
     public class FixedAssetEmailItem
     {
         public int SrNo { get; set; }
+
+        public string? RequestedBy { get; set; } = null;
         public string? Description { get; set; } = null;
         public string? FixedAssetNo { get; set; } = null;
         public string? Division { get; set; } = null;

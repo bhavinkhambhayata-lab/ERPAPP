@@ -114,7 +114,9 @@ namespace ERPAPP.Controllers
 
             try
             {
-                var insertResult = await _fixedAssetRepository.InsertFixedAssetData(model);
+                var userName = HttpContext.Session.GetString("UserName");
+
+                var insertResult = await _fixedAssetRepository.InsertFixedAssetData(model, userName);
 
                 if (insertResult)
                 {

@@ -22,9 +22,9 @@ namespace ERPAPP.Interfaces
 
         VendorLocationEmail GetVendorSendEmailDetailByLocationCode(string code);
 
-        Task<bool> SendMailFixedAssetUnBlock(FixedAssetEmailItem model);
+        Task<bool> SendMailFixedAssetUnBlock(FixedAssetEmailItem model, int displayNo);
 
-        List<MailListDto> GetMailFixedAssetUnBlockList();
+        List<MailListDto> GetMailFixedAssetUnBlockList(int displayNo);
 
         List<MailListDto> GetMailFixedAssetBlockList(int displayNo);
 

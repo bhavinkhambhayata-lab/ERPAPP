@@ -6,6 +6,7 @@ using System.Data;
 using System.Net;
 using System.Net.Mail;
 using System.Text;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace ERPAPP.Repository
 {
@@ -724,7 +725,7 @@ namespace ERPAPP.Repository
             };
         }
 
-        public async Task<bool> SendMailFixedAssetUnBlock(FixedAssetEmailItem model)
+        public async Task<bool> SendMailFixedAssetUnBlock(FixedAssetEmailItem model, int displayNo)
         {
             try
             {
@@ -732,7 +733,7 @@ namespace ERPAPP.Repository
                 if (model == null)
                     return false;
 
-                var mailList = GetMailFixedAssetUnBlockList();
+                var mailList = GetMailFixedAssetUnBlockList(displayNo);
 
                 if (mailList == null || mailList.Count == 0)
                     return false;
@@ -746,6 +747,7 @@ namespace ERPAPP.Repository
                 // ✅ COLLECT EMAILS
                 List<string> toEmails = new List<string>();
                 List<string> ccEmails = new List<string>();
+                List<string> bccEmails = new List<string>();
 
                 foreach (var item in mailList)
                 {
@@ -754,6 +756,9 @@ namespace ERPAPP.Repository
 
                     if (!string.IsNullOrWhiteSpace(item.CCMailID))
                         ccEmails.AddRange(item.CCMailID.Split(','));
+
+                    if (!string.IsNullOrWhiteSpace(item.BCCMailID))   // 👈 add this
+                        bccEmails.AddRange(item.BCCMailID.Split(','));
                 }
 
                 // ✅ CLEAN EMAIL LIST
@@ -764,6 +769,12 @@ namespace ERPAPP.Repository
                     .ToList();
 
                 ccEmails = ccEmails
+                    .Where(x => !string.IsNullOrWhiteSpace(x))
+                    .Select(x => x.Trim())
+                    .Distinct()
+                    .ToList();
+
+                bccEmails = bccEmails
                     .Where(x => !string.IsNullOrWhiteSpace(x))
                     .Select(x => x.Trim())
                     .Distinct()
@@ -794,6 +805,11 @@ namespace ERPAPP.Repository
                     mail.CC.Add(new MailAddress(email));
                 }
 
+                foreach (var email in bccEmails)
+                {
+                    mail.Bcc.Add(new MailAddress(email));
+                }
+
                 // ✅ SMTP CONFIG
                 var smtp = new SmtpClient(_smtpServer)
                 {
@@ -814,9 +830,14 @@ namespace ERPAPP.Repository
             }
         }
 
-        public List<MailListDto> GetMailFixedAssetUnBlockList()
+        public List<MailListDto> GetMailFixedAssetUnBlockList(int displayNo)
         {
-            DataTable dt = _db.GetDataTable("FixedAsset_UnblockRequestMailList", null);
+            SqlParameter[] parameters = new SqlParameter[]
+            {
+                new SqlParameter("@DisplayNo", displayNo)
+            };
+
+            DataTable dt = _db.GetDataTable("FixedAsset_UnblockRequestMailList", parameters);
 
             List<MailListDto> list = new List<MailListDto>();
 
@@ -825,7 +846,8 @@ namespace ERPAPP.Repository
                 list.Add(new MailListDto
                 {
                     TOMailID = row["TOMailID"]?.ToString(),
-                    CCMailID = row["CCMailID"]?.ToString()
+                    CCMailID = row["CCMailID"]?.ToString(),
+                    BCCMailID = row["BCCMailID"]?.ToString()
                 });
             }
 
@@ -850,6 +872,7 @@ namespace ERPAPP.Repository
             // ✅ Header
             body.Append("<tr bgcolor='Gray'>");
             body.Append("<th>SrNo</th>");
+            body.Append("<th>Requested By</th>");
             body.Append("<th>Description</th>");
             body.Append("<th>Fixed Asset No</th>");
             body.Append("<th>Division</th>");
@@ -858,6 +881,7 @@ namespace ERPAPP.Repository
             // ✅ Single Row
             body.Append("<tr bgcolor='White'>");
             body.Append($"<td>{item.SrNo}</td>");
+            body.Append($"<td>{item.RequestedBy}</td>");
             body.Append($"<td>{item.Description}</td>");
             body.Append($"<td>{item.FixedAssetNo}</td>");
             body.Append($"<td>{item.Division}</td>");
