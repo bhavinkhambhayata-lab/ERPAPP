@@ -49,7 +49,8 @@ namespace ERPAPP.Repository
                 list.Add(new MailListDto
                 {
                     TOMailID = row["TOMailID"]?.ToString(),
-                    CCMailID = row["CCMailID"]?.ToString()
+                    CCMailID = row["CCMailID"]?.ToString(),
+                    BCCMailID = row["BCCMailID"]?.ToString()
                 });
             }
 
@@ -324,7 +325,8 @@ namespace ERPAPP.Repository
                 list.Add(new MailListDto
                 {
                     TOMailID = row["TOMailID"]?.ToString(),
-                    CCMailID = row["CCMailID"]?.ToString()
+                    CCMailID = row["CCMailID"]?.ToString(),
+                    BCCMailID = row["BCCMailID"]?.ToString()
                 });
             }
 
