@@ -788,7 +788,7 @@ namespace ERPAPP.Repository
                     }
                 }
 
-                model.Name = System.Globalization.CultureInfo.CurrentCulture.TextInfo.ToTitleCase(model.Name.ToLower());
+                model.Name = System.Globalization.CultureInfo.CurrentCulture.TextInfo.ToTitleCase(model.Name.ToLower().Trim());
                 model.Address = System.Globalization.CultureInfo.CurrentCulture.TextInfo.ToTitleCase(model.Address.ToLower());
                 if (!string.IsNullOrWhiteSpace(model.Address2))
                 {
@@ -2340,7 +2340,7 @@ namespace ERPAPP.Repository
                     }
                 }
 
-                model.Name = System.Globalization.CultureInfo.CurrentCulture.TextInfo.ToTitleCase(model.Name.ToLower());
+                model.Name = System.Globalization.CultureInfo.CurrentCulture.TextInfo.ToTitleCase(model.Name.ToLower().Trim());
                 model.Address = System.Globalization.CultureInfo.CurrentCulture.TextInfo.ToTitleCase(model.Address.ToLower());
                 if (!string.IsNullOrWhiteSpace(model.Address2))
                 {
