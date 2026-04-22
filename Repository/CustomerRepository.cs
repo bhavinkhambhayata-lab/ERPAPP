@@ -788,6 +788,17 @@ namespace ERPAPP.Repository
                     }
                 }
 
+                model.Name = System.Globalization.CultureInfo.CurrentCulture.TextInfo.ToTitleCase(model.Name.ToLower());
+                model.Address = System.Globalization.CultureInfo.CurrentCulture.TextInfo.ToTitleCase(model.Address.ToLower());
+                if (!string.IsNullOrWhiteSpace(model.Address2))
+                {
+                    model.Address2 = System.Globalization.CultureInfo.CurrentCulture.TextInfo.ToTitleCase(model.Address2.ToLower());
+                }
+                if (!string.IsNullOrWhiteSpace(model.ContactPerson))
+                {
+                    model.ContactPerson = System.Globalization.CultureInfo.CurrentCulture.TextInfo.ToTitleCase(model.ContactPerson.ToLower());
+                }
+
                 SqlParameter[] param =
                 {
                         // ================= SYSTEM =================
@@ -2327,6 +2338,17 @@ namespace ERPAPP.Repository
                             brand.DLRTerminationDate ?? new DateTime(1753, 1, 1)
                         );
                     }
+                }
+
+                model.Name = System.Globalization.CultureInfo.CurrentCulture.TextInfo.ToTitleCase(model.Name.ToLower());
+                model.Address = System.Globalization.CultureInfo.CurrentCulture.TextInfo.ToTitleCase(model.Address.ToLower());
+                if (!string.IsNullOrWhiteSpace(model.Address2))
+                {
+                    model.Address2 = System.Globalization.CultureInfo.CurrentCulture.TextInfo.ToTitleCase(model.Address2.ToLower());
+                }
+                if (!string.IsNullOrWhiteSpace(model.ContactPerson))
+                {
+                    model.ContactPerson = System.Globalization.CultureInfo.CurrentCulture.TextInfo.ToTitleCase(model.ContactPerson.ToLower());
                 }
 
                 SqlParameter[] param =
