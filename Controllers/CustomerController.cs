@@ -695,7 +695,7 @@ namespace ERPAPP.Controllers
 
                 if (customerUnBlock)
                 {
-                    var sendEmail = _emailRepository.SendMailCustomerBlock(division, Convert.ToInt32(displayRowId), customerCode, customerName);
+                    var sendEmail = await _emailRepository.SendMailCustomerBlock(division, Convert.ToInt32(displayRowId), customerCode, customerName);
 
                     return Json(new { success = true, message = "Customer Un-blocked Successfully." });
                 }
