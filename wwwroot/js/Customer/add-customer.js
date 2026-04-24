@@ -123,7 +123,7 @@
                 }
 
                 var data = response.data;
-
+               
                 //loadCustomerAddressData(data.city, data.postcode)
 
                 $("#IsAlreadyCreatedMaster").val("1");
@@ -158,12 +158,12 @@
                 $("#IFSCCode").val(data.ifsCode).prop("disabled", true);
 
                 $("#GSTRegistrationNo").val(data.gstRegistrationNo).prop("disabled", true);
-                $("#GSTRegistrationType").val(data.gstRegistrationType).prop("disabled", true);
-                $("#GSTCustomerType").val(data.gstCustomerType).prop("disabled", true);
-
-                $("#CustomerType").val(data.customerType).prop("disabled", true);
-                $("#BusinessCategory").val(data.businessCategory).prop("disabled", true);
-                $("#MSMEUAMNo").val(data.msmeuamNo).prop("disabled", true);
+                $("#GSTRegistrationType").val(data.gstRegistrationType == 0 ? '0' : data.gstRegistrationType).prop("disabled", true);
+                $("#GSTCustomerType").val(data.gstCustomerType == 0 ? '' : data.gstCustomerType).prop("disabled", true);
+                
+                $("#CustomerType").val(data.customerType == 0 ? '' : data.customerType).prop("disabled", true);
+                $("#BusinessCategory").val(data.businessCategory == 0 ? '' : data.businessCategory).prop("disabled", true);
+                $("#MSMEUAMNo").val(data.msmeuamNo || '').prop("disabled", true);
                 
                 //$("#CommissionVendorNo").val(data.commissionVendorNo).prop("disabled", true);
                 //$("#CommissionType").val(data.commissionType).prop("disabled", true);
