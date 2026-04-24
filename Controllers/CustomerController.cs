@@ -657,7 +657,7 @@ namespace ERPAPP.Controllers
                 }
                 else
                 {
-                    return Json(new { success = false, message = "No new brand added (already exists)!" });
+                    return Json(new { success = false, message = "something went wrong!" });
                 }
             }
             catch (Exception ex)

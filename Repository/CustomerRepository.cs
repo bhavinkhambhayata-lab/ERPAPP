@@ -1980,7 +1980,7 @@ namespace ERPAPP.Repository
 
                 var result = _db.ExecuteScalar("Customer_EditBrandWiseDataWithCustomerCode", param);
 
-                return result != null;
+                return result != null && Convert.ToInt32(result) == 1;
             }
             catch (Exception ex)
             {
