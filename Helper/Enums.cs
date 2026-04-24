@@ -18,8 +18,8 @@ namespace ERPAPP.Helper
 
         public enum ApplicationMethod
         {
-            Manual = 1,
-            ApplyToOldest = 2
+            Manual = 0,
+            ApplyToOldest = 1
         }
 
         public enum DealerClassification

@@ -1390,12 +1390,12 @@ namespace ERPAPP.Repository
                 model.MSMEUAMNo = row["MSMEUAMNo"]?.ToString();
 
                 // ===== NOD/NOC =====
-                model.IsNodNocCreation = row["IsNODNOC_Creation"] != DBNull.Value && Convert.ToBoolean(row["IsNODNOC_Creation"]);
-                model.NODAccessCode = row["NOD_AccessCode"]?.ToString();
-                model.NODNOC = row["NOD_NODNOC"]?.ToString();
-                model.ConcessionalCode = row["NOD_ConcessionalCode"]?.ToString();
-                model.ThresholdOverlook = row["NOD_ThresholdOverlook"] != DBNull.Value && Convert.ToBoolean(row["NOD_ThresholdOverlook"]);
-                model.SurchargeOverlook = row["NOD_SurchargeOverlook"] != DBNull.Value && Convert.ToBoolean(row["NOD_SurchargeOverlook"]);
+                //model.IsNodNocCreation = row["IsNODNOC_Creation"] != DBNull.Value && Convert.ToBoolean(row["IsNODNOC_Creation"]);
+                //model.NODAccessCode = row["NOD_AccessCode"]?.ToString();
+                //model.NODNOC = row["NOD_NODNOC"]?.ToString();
+                //model.ConcessionalCode = row["NOD_ConcessionalCode"]?.ToString();
+                //model.ThresholdOverlook = row["NOD_ThresholdOverlook"] != DBNull.Value && Convert.ToBoolean(row["NOD_ThresholdOverlook"]);
+                //model.SurchargeOverlook = row["NOD_SurchargeOverlook"] != DBNull.Value && Convert.ToBoolean(row["NOD_SurchargeOverlook"]);
 
                 // ===== SHIPPING =====
                 model.ShippingCode = row["ShipToCode"]?.ToString();
@@ -1496,6 +1496,15 @@ namespace ERPAPP.Repository
                     Code = x.Code,
                     Name = x.Name
                 }).ToList();
+            }
+
+            if (!string.IsNullOrWhiteSpace(model.PANNo))
+            {
+                var place = model.PANNo.Substring(3, 1);
+
+                var assCode = await GetAssessCodeWithPlace(place);
+
+                model.AssesseeCode = assCode.Name;
             }
 
             return model;
@@ -2190,12 +2199,12 @@ namespace ERPAPP.Repository
                 model.MSMEUAMNo = row["MSMEUAMNo"]?.ToString();
 
                 // ===== NOD/NOC =====
-                model.IsNodNocCreation = row["IsNODNOC_Creation"] != DBNull.Value && Convert.ToBoolean(row["IsNODNOC_Creation"]);
-                model.NODAccessCode = row["NOD_AccessCode"]?.ToString();
-                model.NODNOC = row["NOD_NODNOC"]?.ToString();
-                model.ConcessionalCode = row["NOD_ConcessionalCode"]?.ToString();
-                model.ThresholdOverlook = row["NOD_ThresholdOverlook"] != DBNull.Value && Convert.ToBoolean(row["NOD_ThresholdOverlook"]);
-                model.SurchargeOverlook = row["NOD_SurchargeOverlook"] != DBNull.Value && Convert.ToBoolean(row["NOD_SurchargeOverlook"]);
+                //model.IsNodNocCreation = row["IsNODNOC_Creation"] != DBNull.Value && Convert.ToBoolean(row["IsNODNOC_Creation"]);
+                //model.NODAccessCode = row["NOD_AccessCode"]?.ToString();
+                //model.NODNOC = row["NOD_NODNOC"]?.ToString();
+                //model.ConcessionalCode = row["NOD_ConcessionalCode"]?.ToString();
+                //model.ThresholdOverlook = row["NOD_ThresholdOverlook"] != DBNull.Value && Convert.ToBoolean(row["NOD_ThresholdOverlook"]);
+                //model.SurchargeOverlook = row["NOD_SurchargeOverlook"] != DBNull.Value && Convert.ToBoolean(row["NOD_SurchargeOverlook"]);
 
                 // ===== SHIPPING =====
                 model.ShippingCode = row["ShipToCode"]?.ToString();
@@ -2297,6 +2306,15 @@ namespace ERPAPP.Repository
             //        Name = x.Name
             //    }).ToList();
             //}
+
+            if (model.PANNo != null)
+            {
+                var place = model.PANNo.Substring(3, 1);
+
+                var assCode = await GetAssessCodeWithPlace(place);
+
+                model.AssesseeCode = assCode.Name;
+            }
 
             return model;
         }

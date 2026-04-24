@@ -1022,12 +1022,7 @@
                         </div>
                     </div>
 
-                    <div class="row mt-2">
-                        <label class="col-12 col-sm-4 col-form-label">GST No</label>
-                        <div class="col-12 col-sm-8">
-                            <input asp-for="ShippingGSTRegistrationNo" class="form-control" disabled />
-                        </div>
-                    </div>
+                    
                 </div>
 
 
@@ -1037,7 +1032,7 @@
 
 
                     <div class="row mt-2">
-                        <label class="col-12 col-sm-4 col-form-label">GST Customer Type</label>
+                        <label class="col-12 col-sm-4 col-form-label">Shipping GST Cust Type</label>
                         <div class="col-12 col-sm-8">
                             @* <input asp-for="ShipToGSTCustomerType" class="form-control" /> *@
 
@@ -1049,7 +1044,12 @@
                             <span asp-validation-for="ShipToGSTCustomerType" class="text-danger"></span>
                         </div>
                     </div>
-
+                    <div class="row mt-2">
+                        <label class="col-12 col-sm-4 col-form-label">Shipping GST Reg No</label>
+                        <div class="col-12 col-sm-8">
+                            <input asp-for="ShippingGSTRegistrationNo" class="form-control" disabled />
+                        </div>
+                    </div>
                 </div>
 
             </div>

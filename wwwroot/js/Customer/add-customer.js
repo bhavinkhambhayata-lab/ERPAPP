@@ -1021,7 +1021,7 @@
 
 
     $('#ShippingAddressType').val('1');
-    $('#ApplicationMethod').val('1');
+    $('#ApplicationMethod').val('0');
 
     $('#PANNo').on('keyup', function () {
 

@@ -58,7 +58,7 @@ namespace ERPAPP.Controllers
         {
             var companyCode = await _customerRepository.GetCustomerAlreadyExistDetails(masterCode);
 
-            if (companyCode != null && companyCode.CustomerNo != null && companyCode.Division == division)
+            if (companyCode != null && companyCode.CustomerNo != null && companyCode.Division != null && companyCode.Division.ToLower() == division.ToLower())
             {
                 var customerEditData = await _customerRepository.GetCustomerEditData(companyCode.CustomerNo);
                 if (customerEditData == null || string.IsNullOrEmpty(customerEditData.Name))
@@ -89,38 +89,38 @@ namespace ERPAPP.Controllers
                     }).ToList();
                 }
 
-                customerEditData.CustomerBrandEditList.ForEach(x =>
-                {
-                    if (!string.IsNullOrWhiteSpace(x.DealerClassification))
-                    {
-                        switch (x.DealerClassification.Trim())
-                        {
-                            case "1":
-                                x.DealerClassification = "A";
-                                break;
+                //customerEditData.CustomerBrandEditList.ForEach(x =>
+                //{
+                //    if (!string.IsNullOrWhiteSpace(x.DealerClassification))
+                //    {
+                //        switch (x.DealerClassification.Trim())
+                //        {
+                //            case "1":
+                //                x.DealerClassification = "A";
+                //                break;
 
-                            case "2":
-                                x.DealerClassification = "B";
-                                break;
+                //            case "2":
+                //                x.DealerClassification = "B";
+                //                break;
 
-                            case "3":
-                                x.DealerClassification = "C";
-                                break;
+                //            case "3":
+                //                x.DealerClassification = "C";
+                //                break;
 
-                            case "4":
-                                x.DealerClassification = "D";
-                                break;
+                //            case "4":
+                //                x.DealerClassification = "D";
+                //                break;
 
-                            default:
-                                x.DealerClassification = null;
-                                break;
-                        }
-                    }
-                    else
-                    {
-                        x.DealerClassification = null;
-                    }
-                });
+                //            default:
+                //                x.DealerClassification = null;
+                //                break;
+                //        }
+                //    }
+                //    else
+                //    {
+                //        x.DealerClassification = null;
+                //    }
+                //});
 
                 var masterData = await _customerRepository.GetCustomerMaster(masterCode);
                 if (masterData != null)
@@ -552,38 +552,38 @@ namespace ERPAPP.Controllers
                 }).ToList();
             }
 
-            data.CustomerBrandEditList.ForEach(x =>
-            {
-                if (!string.IsNullOrWhiteSpace(x.DealerClassification))
-                {
-                    switch (x.DealerClassification.Trim())
-                    {
-                        case "1":
-                            x.DealerClassification = "A";
-                            break;
+            //data.CustomerBrandEditList.ForEach(x =>
+            //{
+            //    if (!string.IsNullOrWhiteSpace(x.DealerClassification))
+            //    {
+            //        switch (x.DealerClassification.Trim())
+            //        {
+            //            case "1":
+            //                x.DealerClassification = "A";
+            //                break;
 
-                        case "2":
-                            x.DealerClassification = "B";
-                            break;
+            //            case "2":
+            //                x.DealerClassification = "B";
+            //                break;
 
-                        case "3":
-                            x.DealerClassification = "C";
-                            break;
+            //            case "3":
+            //                x.DealerClassification = "C";
+            //                break;
 
-                        case "4":
-                            x.DealerClassification = "D";
-                            break;
+            //            case "4":
+            //                x.DealerClassification = "D";
+            //                break;
 
-                        default:
-                            x.DealerClassification = null;
-                            break;
-                    }
-                }
-                else
-                {
-                    x.DealerClassification = null;
-                }
-            });
+            //            default:
+            //                x.DealerClassification = null;
+            //                break;
+            //        }
+            //    }
+            //    else
+            //    {
+            //        x.DealerClassification = null;
+            //    }
+            //});
 
             if (data.MasterCode != null)
             {
