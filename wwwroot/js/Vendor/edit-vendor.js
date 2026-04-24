@@ -15,6 +15,8 @@ function toggleVendorUnBlock(btn) {
         return; // ❌ cancel
     }
 
+    showLoader();
+
     $.ajax({
         url: baseURL + 'Vendor/VendorUnblock',
         type: 'POST',
@@ -27,12 +29,13 @@ function toggleVendorUnBlock(btn) {
         success: function (res) {
 
             if (res.success) {
-
+                hideLoader();
                 showToast(res.message, "success", 3000);
 
                 btn.style.display = "none";
 
             } else {
+                hideLoader();
                 alert(res.message || "Something went wrong!");
             }
         }

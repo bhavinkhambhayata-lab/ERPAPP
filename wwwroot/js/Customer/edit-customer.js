@@ -114,6 +114,7 @@
             list.push(item);
         });
 
+        showLoader();
 
         $.ajax({
             url: baseURL + 'Customer/EditCustomerDetailsBrandWiseDataOnly',
@@ -122,12 +123,19 @@
             data: JSON.stringify(list),
             success: function (res) {
                 if (res.success) {
+                    hideLoader();
                     showToast(res.message, "success", 4000);
                     $('#listBtn').click();
-
+                    
                 } else {
+                    hideLoader();
                     showToast(res.message, "danger", 4000);
+                   
                 }
+            },
+            error: function () {
+                hideLoader();
+                alert("Error saving customer data.");
             }
         });
 
@@ -440,6 +448,8 @@ function toggleCustomerUnBlock(btn) {
         return; // ❌ cancel
     }
 
+    showLoader();
+
     $.ajax({
         url: baseURL + 'Customer/CustomerUnblock',
         type: 'POST',
@@ -452,14 +462,20 @@ function toggleCustomerUnBlock(btn) {
         success: function (res) {
 
             if (res.success) {
-
+                hideLoader();
                 showToast(res.message, "success", 3000);
 
                 btn.style.display = "none";
+                
 
             } else {
+                hideLoader();
                 alert(res.message || "Something went wrong!");
             }
+        },
+        error: function () {
+            hideLoader();
+            alert("Error unblocking customer.");
         }
     });
 }

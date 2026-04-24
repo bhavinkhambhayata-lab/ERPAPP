@@ -98,6 +98,8 @@
         $("#MasterCode").val(masterCode);
         $("#customerSearchResult").html("");
 
+        showLoader();
+
         // 🔥 Call API
         $.ajax({
             url: baseURL + "Customer/GetCustomerMasterData",
@@ -106,13 +108,14 @@
             success: function (response) {
 
                 if (typeof response === "string") {
-
+                    hideLoader();
                     $("#tabContent").html(response);
                     $("#Division").val(divisionId);
                     return;
                 }
                 
                 if (!response.success) {
+                    hideLoader();
                     //showToast(response.message, "danger", 4000);
                     showToast('Internal Server Error', "danger", 4000);
                     //$("#SaveBtn").prop("disabled", true);
@@ -178,10 +181,11 @@
                 //$("#PriceListCode").val(data.priceListCode).prop("disabled", true);
                 //$("#PromoCode").val(data.promoCode).prop("disabled", true);
                 //$("#ChargesGroup").val(data.chargesGroup).prop("disabled", true);
-
+                hideLoader();
                 
             },
             error: function () {
+                hideLoader();
                 alert("Error loading customer data.");
             }
         });
@@ -521,6 +525,7 @@
             return;
         }
 
+        showLoader();
 
         $.ajax({
             url: baseURL + 'Customer/SaveCustomerMaster',
@@ -533,12 +538,15 @@
 
                 if (response.success) {
 
+                    hideLoader();
                     //alert(response.message);
                     showToast("Customer Inserted Successfully.", "success", 4000);
 
                     $('#customerForm')[0].reset();
 
                     $('.text-danger').text('');
+
+                   
 
                 }
                 else {
@@ -559,10 +567,12 @@
 
                         });
 
+                        hideLoader();
+
                     } else {
-
+                        hideLoader();
                         alert(response.message);
-
+                       
                     }
 
                 }
@@ -1280,7 +1290,7 @@ function GetCustomerDataWithPortalRowId(value) {
     }
 
     $("#PortalRowIdError").text("");
-
+        showLoader();
     $.ajax({
         url: baseURL + 'Customer/GetCustomerDataWithPortalRowId',
         type: 'GET',
@@ -1288,6 +1298,7 @@ function GetCustomerDataWithPortalRowId(value) {
         success: function (res) {
 
             if (!res.success) {
+                hideLoader();
                 $("#PortalRowIdError").text(res.message);
                 return;
             }
@@ -1345,17 +1356,18 @@ function GetCustomerDataWithPortalRowId(value) {
             if (data.arnNo) {
                 $("#ARNNo").val(data.arnNo).addClass("portal-bind-data");
             }
-
+            hideLoader();
         },
         error: function () {
-
+            hideLoader();
         }
     });
 
 }
 
 function GetCustomerDataWithMasterCode(masterCode) {
-
+    
+    showLoader();
     $.ajax({
         url: baseURL + 'Customer/GetCustomerDataWithMasterCode',
         type: 'GET',
@@ -1364,6 +1376,7 @@ function GetCustomerDataWithMasterCode(masterCode) {
         success: function (res) {
 
             if (!res.success) {
+                hideLoader();
                 showToast(res.message, "warning", 4000);
                 return;
             }
@@ -1407,12 +1420,14 @@ function GetCustomerDataWithMasterCode(masterCode) {
             $("#CustomerType").val(data.customerType);
 
             $("#Allocation").val(data.allocation);
+
+            hideLoader();
         },
 
         error: function () {
-
+            hideLoader();
             showToast("Error loading customer data.", "danger", 4000);
-
+            
         }
     });
 

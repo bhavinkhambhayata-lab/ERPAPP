@@ -353,7 +353,7 @@
         //    return;
         //}
 
-        
+        showLoader();
 
         $.ajax({
             url: baseURL + 'Customer/UpdateCustomerMaster',
@@ -365,13 +365,14 @@
             success: function (response) {
 
                 if (response.success) {
-
+                    hideLoader();
                     //alert(response.message);
                     showToast("Customer Updated Successfully.", "success", 4000);
 
                     $('#listBtn').click();
 
                     //$('.text-danger').text('');
+                  
 
                 }
                 else {
@@ -391,11 +392,13 @@
                             }
 
                         });
+                        hideLoader();
 
                     } else {
 
                         alert(response.message);
 
+                        hideLoader();
                     }
 
                 }
@@ -1079,6 +1082,8 @@ function validateBrandTable() {
 }
 
 function GetCustomerDataWithMasterCode(masterCode) {
+    
+    showLoader();
 
     $.ajax({
         url: baseURL + 'Customer/GetCustomerDataWithMasterCode',
@@ -1088,6 +1093,7 @@ function GetCustomerDataWithMasterCode(masterCode) {
         success: function (res) {
 
             if (!res.success) {
+                hideLoader();
                 showToast(res.message, "warning", 4000);
                 return;
             }
@@ -1131,10 +1137,13 @@ function GetCustomerDataWithMasterCode(masterCode) {
             $("#CustomerType").val(data.customerType);
 
             $("#Allocation").val(data.allocation);
+
+            hideLoader();
         },
 
         error: function () {
 
+            hideLoader();
             showToast("Error loading customer data.", "danger", 4000);
 
         }
@@ -1309,6 +1318,8 @@ function toggleCustomerUnBlock(btn) {
         return; // ❌ cancel
     }
 
+        showLoader();
+
     $.ajax({
         url: baseURL + 'Customer/CustomerUnblock',
         type: 'POST',
@@ -1321,13 +1332,16 @@ function toggleCustomerUnBlock(btn) {
         success: function (res) {
 
             if (res.success) {
-
+                hideLoader();
                 showToast(res.message, "success", 3000);
 
                 btn.style.display = "none";
+                
 
             } else {
+                hideLoader();
                 alert(res.message || "Something went wrong!");
+                
             }
         }
     });

@@ -52,6 +52,8 @@
         $("#MasterCode").val(masterCode);
         $("#vendorSearchResult").html("");
 
+        showLoader();
+
         // 🔥 Call API
         $.ajax({
             url: baseURL + "Vendor/GetVendorMasterDataWithMasterCode",
@@ -140,6 +142,9 @@
                 $("#GSTNotToHold").val(data.gstNotToHold ?? '').trigger("change");
                 $("#FixedDueDate").val(data.fixedDueDate ?? '').trigger("change");
                 //$("#AggregateTurnover").val(data.aggregateTurnover || '').trigger("change");
+
+
+                hideLoader();
 
             },
             error: function () {
@@ -511,6 +516,8 @@
         }
 
 
+        showLoader();
+
         $.ajax({
             url: baseURL + 'Vendor/SaveVendorMaster',
             type: 'POST',
@@ -528,6 +535,8 @@
                     $('#vendorForm')[0].reset();
 
                     $('.text-danger').text('');
+
+                    hideLoader();
 
                 }
                 else {
@@ -548,9 +557,12 @@
 
                         });
 
+                        hideLoader();
+
                     } else {
 
                         alert(response.message);
+                        hideLoader();
 
                     }
 

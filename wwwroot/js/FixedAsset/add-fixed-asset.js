@@ -89,6 +89,8 @@
         formData.append("StraightLinePercent", $("#StraightLinePercent").val());
         formData.append("DecliningBalancePercent", $("#DecliningBalancePercent").val());
 
+        showLoader();
+
         $.ajax({
             url: baseURL + 'FixedAsset/SaveFixedAssetMaster',
             type: 'POST',
@@ -99,7 +101,7 @@
             success: function (response) {
 
                 if (response.success) {
-
+                    hideLoader();
                     //alert(response.message);
                     showToast("Fixed Asset Inserted Successfully.", "success", 4000);
 
@@ -126,10 +128,13 @@
 
                         });
 
+                        hideLoader();
+
                     } else {
 
+                        hideLoader();
                         alert(response.message);
-
+                        
                     }
 
                 }
@@ -139,7 +144,7 @@
     });
 
     $('#MainAssetComponent').change(function () {
-        debugger
+        
         var division = $('#Division').val();
         var divisionText = $('#Division option:selected').text();
 

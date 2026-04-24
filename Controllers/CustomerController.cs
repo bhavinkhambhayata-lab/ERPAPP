@@ -21,10 +21,10 @@ namespace ERPAPP.Controllers
             _emailRepository = emailRepository;
         }
 
-        //public async Task<IActionResult> Index()
-        //{
-        //    return View();
-        //}
+        public async Task<IActionResult> Index()
+        {
+            return View();
+        }
 
 
 

@@ -133,6 +133,8 @@
         formData.append("StraightLinePercent", $("#StraightLinePercent").val());
         formData.append("DecliningBalancePercent", $("#DecliningBalancePercent").val());
 
+        showLoader();
+
         $.ajax({
             url: baseURL + 'FixedAsset/UpdateFixedAssetMaster',
             type: 'POST',
@@ -144,12 +146,14 @@
 
                 if (response.success) {
 
+                    hideLoader();
                     //alert(response.message);
                     showToast("Fixed Asset Updated Successfully.", "success", 4000);
 
                     $('#listBtn').click();
 
                     //$('.text-danger').text('');
+                   
 
                 }
                 else {
@@ -169,11 +173,12 @@
                             }
 
                         });
+                        hideLoader();
 
                     } else {
-
+                        hideLoader();
                         alert(response.message);
-
+                       
                     }
 
                 }
@@ -198,6 +203,8 @@ function toggleFixedAssetUnBlock(btn) {
         return; // ❌ cancel
     }
 
+    showLoader();
+
     $.ajax({
         url: baseURL + 'FixedAsset/FixedAssetUnblock',
         type: 'POST',
@@ -210,12 +217,16 @@ function toggleFixedAssetUnBlock(btn) {
 
             if (res.success) {
 
+                hideLoader();
                 showToast(res.message, "success", 3000);
 
                 btn.style.display = "none";
 
+               
+
             } else {
                 alert(res.message || "Something went wrong!");
+                hideLoader();
             }
         }
     });

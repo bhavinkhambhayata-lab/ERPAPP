@@ -364,6 +364,7 @@
         //    return;
         //}
 
+        showLoader();
 
         $.ajax({
             url: baseURL + 'Vendor/UpdateVendorMaster',
@@ -376,12 +377,16 @@
 
                 if (response.success) {
 
+                    hideLoader();
+
                     //alert(response.message);
                     showToast("Vendor Updated Successfully.", "success", 4000);
 
                     $('#listBtn').click();
 
                     //$('.text-danger').text('');
+
+                    
 
                 }
                 else {
@@ -402,10 +407,12 @@
 
                         });
 
+                        hideLoader();
+
                     } else {
 
                         alert(response.message);
-
+                        hideLoader();
                     }
 
                 }
@@ -639,6 +646,8 @@ function toggleVendorUnBlock(btn) {
         return; // ❌ cancel
     }
 
+    showLoader();
+
     $.ajax({
         url: baseURL + 'Vendor/VendorUnblock',
         type: 'POST',
@@ -652,9 +661,12 @@ function toggleVendorUnBlock(btn) {
 
             if (res.success) {
 
+                hideLoader();
                 showToast(res.message, "success", 3000);
 
                 btn.style.display = "none";
+
+                
 
             } else {
                 alert(res.message || "Something went wrong!");
