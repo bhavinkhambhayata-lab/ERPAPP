@@ -662,7 +662,7 @@ function validateEmailField() {
         return false;
     }
 
-    var emails = email.split(',');
+    var emails = email.split(';');
     var regex = /^[^@\s]+@[^@\s]+\.[^@\s]+$/;
 
     for (var i = 0; i < emails.length; i++) {

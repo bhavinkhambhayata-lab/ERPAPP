@@ -995,7 +995,7 @@
             // Email
             let email = $("#Email").val();
             if (email) {
-                email = email.split(',')[0].trim();
+                email = email.split(';')[0].trim();
             }
 
             // Mobile

@@ -72,7 +72,7 @@ namespace ERPAPP.Controllers
                     if (model.Email.ToLower().Contains("italiagroup.in"))
                         ModelState.AddModelError("Email", "italiagroup.in emails are not allowed");
 
-                    var emails = model.Email.Split(',');
+                    var emails = model.Email.Split(';');
 
                     if (emails.Any(e =>
                         !Regex.IsMatch(e.Trim(), @"^[^@\s]+@[^@\s]+\.[^@\s]+$")))
@@ -441,7 +441,7 @@ namespace ERPAPP.Controllers
                     if (model.Email.ToLower().Contains("italiagroup.in"))
                         ModelState.AddModelError("Email", "italiagroup.in emails are not allowed");
 
-                    var emails = model.Email.Split(',');
+                    var emails = model.Email.Split(';');
 
                     if (emails.Any(e =>
                         !Regex.IsMatch(e.Trim(), @"^[^@\s]+@[^@\s]+\.[^@\s]+$")))

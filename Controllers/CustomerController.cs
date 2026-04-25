@@ -236,7 +236,7 @@ namespace ERPAPP.Controllers
 
             if (!string.IsNullOrWhiteSpace(model.Email))
             {
-                var emails = model.Email.Split(',');
+                var emails = model.Email.Split(';');
 
                 if (emails.Any(e =>
                     !Regex.IsMatch(e.Trim(), @"^[^@\s]+@[^@\s]+\.[^@\s]+$")))
@@ -817,7 +817,7 @@ namespace ERPAPP.Controllers
 
             if (!string.IsNullOrWhiteSpace(model.Email))
             {
-                var emails = model.Email.Split(',');
+                var emails = model.Email.Split(';');
 
                 if (emails.Any(e =>
                     !Regex.IsMatch(e.Trim(), @"^[^@\s]+@[^@\s]+\.[^@\s]+$")))

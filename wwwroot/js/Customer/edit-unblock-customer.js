@@ -774,7 +774,7 @@
             // Email
             let email = $("#Email").val();
             if (email) {
-                email = email.split(',')[0].trim();
+                email = email.split(';')[0].trim();
             }
 
             // Mobile
@@ -816,7 +816,7 @@
     var firstEmail = "";
 
     if (email) {
-        firstEmail = email.split(",")[0].trim();
+        firstEmail = email.split(";")[0].trim();
     }
 
     $("#sameAsContact").prop("checked",
