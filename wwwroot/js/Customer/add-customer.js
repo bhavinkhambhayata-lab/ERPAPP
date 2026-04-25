@@ -1059,14 +1059,14 @@ function addBrandRow() {
         success: function (data) {
 
             // 🔥 Dimension count store
-            maxBrandCount = data.dimensionList.length;
+            //maxBrandCount = data.dimensionList.length;
 
-            var currentRows = $('#brandTable tbody tr').length;
+            //var currentRows = $('#brandTable tbody tr').length;
 
-            if (currentRows >= maxBrandCount) {
-                showToast("You cannot add more brands for this division.", "danger", 4000);
-                return;
-            }
+            //if (currentRows >= maxBrandCount) {
+            //    showToast("You cannot add more brands for this division.", "danger", 4000);
+            //    return;
+            //}
 
             createBrandRow(data);
 
