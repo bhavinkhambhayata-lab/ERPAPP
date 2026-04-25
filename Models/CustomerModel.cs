@@ -74,13 +74,13 @@ namespace ERPAPP.Models
         public string ContactPerson { get; set; } = string.Empty;
 
         [Required(ErrorMessage = "Mobile No is required")]
-        [RegularExpression(@"^(\+?[\d\-]+)(,\+?[\d\-]+)*$",
+        [RegularExpression(@"^(\+?[\d\-]+)(\/\+?[\d\-]+)*$",
     ErrorMessage = "Invalid mobile number")]
         [StringLength(30)]
         public string MobileNo { get; set; } = string.Empty;
 
         [StringLength(30)]
-        [RegularExpression(@"^(\+?[\d\-]+)(,\+?[\d\-]+)*$",
+        [RegularExpression(@"^(\+?[\d\-]+)(\/\+?[\d\-]+)*$",
     ErrorMessage = "Invalid mobile number")]
         public string? PhoneNo { get; set; }
 
@@ -714,13 +714,13 @@ namespace ERPAPP.Models
         public string ContactPerson { get; set; } = string.Empty;
 
         [Required(ErrorMessage = "Mobile No is required")]
-        [RegularExpression(@"^(\+?[\d\-]+)(,\+?[\d\-]+)*$",
+        [RegularExpression(@"^(\+?[\d\-]+)(\/\+?[\d\-]+)*$",
     ErrorMessage = "Invalid mobile number")]
         [StringLength(30)]
         public string MobileNo { get; set; } = string.Empty;
 
         [StringLength(30)]
-        [RegularExpression(@"^(\+?[\d\-]+)(,\+?[\d\-]+)*$",
+        [RegularExpression(@"^(\+?[\d\-]+)(\/\+?[\d\-]+)*$",
     ErrorMessage = "Invalid phone number")]
         public string? PhoneNo { get; set; }
 
@@ -972,13 +972,13 @@ namespace ERPAPP.Models
         public string ContactPerson { get; set; } = string.Empty;
 
         [Required(ErrorMessage = "Mobile No is required")]
-        [RegularExpression(@"^(\+?[\d\-]+)(,\+?[\d\-]+)*$",
+        [RegularExpression(@"^(\+?[\d\-]+)(\/\+?[\d\-]+)*$",
     ErrorMessage = "Invalid mobile number")]
         [StringLength(30)]
         public string MobileNo { get; set; } = string.Empty;
 
         [StringLength(30)]
-        [RegularExpression(@"^(\+?[\d\-]+)(,\+?[\d\-]+)*$",
+        [RegularExpression(@"^(\+?[\d\-]+)(\/\+?[\d\-]+)*$",
     ErrorMessage = "Invalid phone number")]
         public string? PhoneNo { get; set; }
 

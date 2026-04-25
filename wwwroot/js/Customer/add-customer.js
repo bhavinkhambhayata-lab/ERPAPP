@@ -1001,7 +1001,7 @@
             // Mobile
             let mobile = $("#MobileNo").val();
             if (mobile) {
-                mobile = mobile.split(',')[0].trim();
+                mobile = mobile.split('/')[0].trim();
 
                 mobile = mobile.replace(/\D/g, '');
             }

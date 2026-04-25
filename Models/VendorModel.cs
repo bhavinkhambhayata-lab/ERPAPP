@@ -56,11 +56,11 @@ namespace ERPAPP.Models
         public string? ContactPerson { get; set; } = string.Empty;
 
         [StringLength(30)]
-        [RegularExpression(@"^(\+?[\d\-]+)(,\+?[\d\-]+)*$", ErrorMessage = "Invalid mobile phone number")]
+        [RegularExpression(@"^(\+?[\d\-]+)(\/\+?[\d\-]+)*$", ErrorMessage = "Invalid mobile phone number")]
         public string? MobileNo { get; set; } = string.Empty;
 
         [StringLength(30)]
-        [RegularExpression(@"^(\+?[\d\-]+)(,\+?[\d\-]+)*$", ErrorMessage = "Invalid phone number")]
+        [RegularExpression(@"^(\+?[\d\-]+)(\/\+?[\d\-]+)*$", ErrorMessage = "Invalid phone number")]
         public string? PhoneNo { get; set; } = string.Empty;
 
         [StringLength(80)]
@@ -336,12 +336,12 @@ namespace ERPAPP.Models
         public string? ContactPerson { get; set; } = string.Empty;
 
         [StringLength(30)]
-        [RegularExpression(@"^(\+?[\d\-]+)(,\+?[\d\-]+)*$", ErrorMessage = "Invalid mobile phone number")]
+        [RegularExpression(@"^(\+?[\d\-]+)(\/\+?[\d\-]+)*$", ErrorMessage = "Invalid mobile phone number")]
         public string? MobileNo { get; set; } = string.Empty;
 
 
         [StringLength(30)]
-        [RegularExpression(@"^(\+?[\d\-]+)(,\+?[\d\-]+)*$", ErrorMessage = "Invalid phone number")]
+        [RegularExpression(@"^(\+?[\d\-]+)(\/\+?[\d\-]+)*$", ErrorMessage = "Invalid phone number")]
         public string? PhoneNo { get; set; } = string.Empty;
 
         [StringLength(80)]
@@ -535,12 +535,12 @@ namespace ERPAPP.Models
         public string? ContactPerson { get; set; } = string.Empty;
 
         [StringLength(30)]
-        [RegularExpression(@"^(\+?[\d\-]+)(,\+?[\d\-]+)*$", ErrorMessage = "Invalid mobile phone number")]
+        [RegularExpression(@"^(\+?[\d\-]+)(\/\+?[\d\-]+)*$", ErrorMessage = "Invalid mobile phone number")]
         public string? MobileNo { get; set; } = string.Empty;
 
 
         [StringLength(30)]
-        [RegularExpression(@"^(\+?[\d\-]+)(,\+?[\d\-]+)*$", ErrorMessage = "Invalid phone number")]
+        [RegularExpression(@"^(\+?[\d\-]+)(\/\+?[\d\-]+)*$", ErrorMessage = "Invalid phone number")]
         public string? PhoneNo { get; set; } = string.Empty;
 
         [StringLength(80)]
