@@ -829,6 +829,8 @@
     $("#chkSameAsGeneral").prop("checked", custname === shippingName);
 
     handleCustomerPANChange($("#PANNo").val());
+
+    DisableAllFieldCreatedAllMasterData();
 });
 
 
@@ -1345,4 +1347,38 @@ function toggleCustomerUnBlock(btn) {
             }
         }
     });
+}
+function DisableAllFieldCreatedAllMasterData() {
+
+    if ($('#IsAlreadyCreatedMaster').val() == "1") {
+        $('#Name').prop('disabled', true);
+        $('#Address').prop('disabled', true);
+        $('#Address2').prop('disabled', true);
+        $('#CityCode').prop('disabled', true);
+        $('#PostCode').prop('disabled', true);
+        $('#CountryCode').prop('disabled', true);
+        $('#PhoneNo').prop('disabled', true);
+        $('#MobileNo').prop('disabled', true);
+        $('#Email').prop('disabled', true);
+        $('#ContactPerson').prop('disabled', true);
+        $('#Website').prop('disabled', true);
+        $('#CustomerType').prop('disabled', true);
+        $('#BankName').prop('disabled', true);
+        $('#BankAccountNo').prop('disabled', true);
+        $('#BranchName').prop('disabled', true);
+        $('#IFSCCode').prop('disabled', true);
+        $('#Region').prop('disabled', true);
+        $('#BusinessCategory').prop('disabled', true);
+        $('#MSMEUAMNo').prop('disabled', true);
+        $('#GSTRegistrationNo').prop('disabled', true);
+        $('#GSTRegistrationType').prop('disabled', true);
+        $('#GSTCustomerType').prop('disabled', true);
+        $('#ARNNo').prop('disabled', true);
+        $('#PANNo').prop('disabled', true);
+        $('#StateCode').prop('disabled', true);
+        $('#EInvEmail').prop('disabled', true);
+        $('#EInvPhoneNo').prop('disabled', true);
+        $('#Zone').prop('disabled', true);
+        $('#AssesseeCode').prop('disabled', true);
+    }
 }
