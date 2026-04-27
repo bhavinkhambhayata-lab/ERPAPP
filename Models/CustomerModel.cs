@@ -1043,7 +1043,7 @@ namespace ERPAPP.Models
 
         // ================= TAX =================
 
-        [RegularExpression(@"^[A-Z]{5}[0-9]{4}[A-Z]$", ErrorMessage = "Invalid PAN format")]
+        //[RegularExpression(@"^[A-Z]{5}[0-9]{4}[A-Z]$", ErrorMessage = "Invalid PAN format")]
         [StringLength(10, MinimumLength = 10)]
         public string? PANNo { get; set; }
 

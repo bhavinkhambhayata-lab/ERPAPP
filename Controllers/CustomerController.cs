@@ -895,11 +895,11 @@ namespace ERPAPP.Controllers
                 {
                     ModelState.AddModelError("PANNo", "Length of PAN No. Must be 10");
                 }
-                else if (!System.Text.RegularExpressions.Regex
-                    .IsMatch(model.PANNo, @"^[A-Z]{5}[0-9]{4}[A-Z]$"))
-                {
-                    ModelState.AddModelError("PANNo", "Invalid PAN No.");
-                }
+                //else if (!System.Text.RegularExpressions.Regex
+                //    .IsMatch(model.PANNo, @"^[A-Z]{5}[0-9]{4}[A-Z]$"))
+                //{
+                //    ModelState.AddModelError("PANNo", "Invalid PAN No.");
+                //}
             }
 
             // =========================
