@@ -188,6 +188,13 @@
     });
 
     editFixedAssetBlockDisableForm();
+
+    var blockedVal = $("#Blocked").val();
+
+    if (blockedVal == "1") {
+        var depreciationMethod = $('#DepreciationMethod').val();
+        $('#DepreciationMethod').val(depreciationMethod).trigger("change");
+    }
 })
 
 function backFixedAssetListPage() {
