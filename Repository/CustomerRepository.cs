@@ -2307,7 +2307,7 @@ namespace ERPAPP.Repository
             //    }).ToList();
             //}
 
-            if (model.PANNo != null)
+            if (model.PANNo != null && !string.IsNullOrWhiteSpace(model.PANNo))
             {
                 var place = model.PANNo.Substring(3, 1);
 
