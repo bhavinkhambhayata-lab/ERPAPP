@@ -19,7 +19,7 @@
         var divisionId = $("#Division").val();
 
         if (!divisionId || divisionId === "0") {
-          
+
             showToast("Please select first division", "danger", 4000);
             return;
         }
@@ -113,7 +113,7 @@
                     $("#Division").val(divisionId);
                     return;
                 }
-                
+
                 if (!response.success) {
                     hideLoader();
                     //showToast(response.message, "danger", 4000);
@@ -123,7 +123,7 @@
                 }
 
                 var data = response.data;
-               
+
                 //loadCustomerAddressData(data.city, data.postcode)
 
                 $("#IsAlreadyCreatedMaster").val("1");
@@ -135,7 +135,7 @@
                 $("#CityCode").val(data.city).prop("disabled", true);
                 $("#PostCode").val(data.postcode).prop("disabled", true);
                 $("#StateCode").val(data.stateCode).prop("disabled", true);
-                
+
                 $("#CountryCode").val(data.countryCode).prop("disabled", true).trigger("change");
                 $("#Region").val(data.region).prop("disabled", true);
                 $("#Zone").val(data.zone).prop("disabled", true);
@@ -160,14 +160,14 @@
                 $("#GSTRegistrationNo").val(data.gstRegistrationNo).prop("disabled", true);
                 $("#GSTRegistrationType").val(data.gstRegistrationType == 0 ? '0' : data.gstRegistrationType).prop("disabled", true);
                 $("#GSTCustomerType").val(data.gstCustomerType == 0 ? '' : data.gstCustomerType).prop("disabled", true);
-                
+
                 $("#CustomerType").val(data.customerType == 0 ? '' : data.customerType).prop("disabled", true);
                 $("#BusinessCategory").val(data.businessCategory == 0 ? '' : data.businessCategory).prop("disabled", true);
                 $("#MSMEUAMNo").val(data.msmeuamNo || '').prop("disabled", true);
-                
+
                 //$("#CommissionVendorNo").val(data.commissionVendorNo).prop("disabled", true);
                 //$("#CommissionType").val(data.commissionType).prop("disabled", true);
-                
+
                 //$("#CreditLimit").val(data.creditLimit);
                 //$("#ApplicationMethod").val(data.applicationMethod).prop("disabled", true);
                 //$("#PaymentTermsCode").val(data.paymentTermsCode);
@@ -182,7 +182,7 @@
                 //$("#PromoCode").val(data.promoCode).prop("disabled", true);
                 //$("#ChargesGroup").val(data.chargesGroup).prop("disabled", true);
                 hideLoader();
-                
+
             },
             error: function () {
                 hideLoader();
@@ -374,7 +374,7 @@
         formData.append("Zone", $('#Zone').val());
         formData.append("BillToCustomer", $('#BillToCustomer').val());
         formData.append("DivisionCode", $('#Division option:selected').text());
-        
+
         formData.append("CurrencyCode", $('#CurrencyCode').val());
         formData.append("CustomerPostingGroup", $('#CustomerPostingGroup').val());
         formData.append("GenBusPostingGroup", $('#GenBusPostingGroup').val());
@@ -520,9 +520,10 @@
         var gstNo = $("#GSTRegistrationNo").val();
 
         if (checkCustomerGSTExists(gstNo)) {
-
-            showToast("GST already exists!", "danger", 4000);
-            return;
+            
+            if (!confirm("GST already exists! \nAre you sure you want to add this customer?")) {
+                return; // stop if user clicks Cancel
+            }
         }
 
         showLoader();
@@ -546,7 +547,7 @@
 
                     $('.text-danger').text('');
 
-                   
+
 
                 }
                 else {
@@ -572,7 +573,7 @@
                     } else {
                         hideLoader();
                         alert(response.message);
-                       
+
                     }
 
                 }
@@ -924,7 +925,7 @@
             $("#ShippingAddress").val($("#Address").val()).prop("disabled", true);
             $("#ShippingAddress2").val($("#Address2").val()).prop("disabled", true);
             $("#ShippingCity").val($("#CityCode").val()).prop("disabled", true);
-          
+
             $("#ShippingState").val($("#StateCode").val()).prop("disabled", true);
             $("#ShippingCountry").val($("#CountryCode").val()).prop("disabled", true);
 
@@ -933,11 +934,11 @@
             $("#ShippingContactPerson").val($("#ContactPerson").val()).prop("disabled", true);
 
             $("#ShippingLocationCode").val($('#LocationCode').val()).prop("disabled", true);
-            
+
             $("#ShippingPostalCode").val($("#PostCode").val()).prop("disabled", true);
 
             //loadCustomerShippingAddressData($("#ShippingCity").val());
-            
+
         } else {
 
             // ================= Clear =================
@@ -1290,7 +1291,7 @@ function GetCustomerDataWithPortalRowId(value) {
     }
 
     $("#PortalRowIdError").text("");
-        showLoader();
+    showLoader();
     $.ajax({
         url: baseURL + 'Customer/GetCustomerDataWithPortalRowId',
         type: 'GET',
@@ -1366,7 +1367,7 @@ function GetCustomerDataWithPortalRowId(value) {
 }
 
 function GetCustomerDataWithMasterCode(masterCode) {
-    
+
     showLoader();
     $.ajax({
         url: baseURL + 'Customer/GetCustomerDataWithMasterCode',
@@ -1427,7 +1428,7 @@ function GetCustomerDataWithMasterCode(masterCode) {
         error: function () {
             hideLoader();
             showToast("Error loading customer data.", "danger", 4000);
-            
+
         }
     });
 
@@ -1520,7 +1521,7 @@ function handleGenBusPostingGroup() {
 }
 
 function handlePriceListCode() {
-    
+
     var country = $('#CountryCode').val();
     var division = $('#Division option:selected').text();
     var priceListCode = $('#PriceListCode');
