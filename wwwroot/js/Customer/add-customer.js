@@ -543,11 +543,9 @@
                     //alert(response.message);
                     showToast("Customer Inserted Successfully.", "success", 4000);
 
-                    $('#customerForm')[0].reset();
-
-                    $('.text-danger').text('');
-
-
+                    $('#listBtn').click();
+                    //$('#customerForm')[0].reset();
+                    //$('.text-danger').text('');
 
                 }
                 else {

@@ -528,16 +528,14 @@
             success: function (response) {
 
                 if (response.success) {
-
+                    hideLoader();
                     //alert(response.message);
                     showToast("Vendor Inserted Successfully.", "success", 4000);
+                    $('#listBtn').click();
 
-                    $('#vendorForm')[0].reset();
-
-                    $('.text-danger').text('');
-
-                    hideLoader();
-
+                    //$('#vendorForm')[0].reset();
+                    //$('.text-danger').text('');
+                   
                 }
                 else {
 
