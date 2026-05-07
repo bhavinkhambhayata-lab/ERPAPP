@@ -98,7 +98,39 @@
             return $(this).find(".is-edit-cls").val() == "false";
         }).length === 0) {
 
-            showToast("Please add at least one Brand.", "danger", 4000);
+            showLoader();
+
+            $.ajax({
+                url: baseURL + 'Customer/EditSalesPersonCode',
+                type: 'POST',
+                data: {
+                    customerNo: $('#BillToCustomer').val(),
+                    salesPersonCode: $('#SalesPersonCode').val()
+                },
+                success: function (res) {
+
+                    hideLoader();
+
+                    if (res.success) {
+
+                        showToast(res.message, "success", 4000);
+                        $('#listBtn').click();
+
+                    } else {
+
+                        showToast(res.message, "danger", 4000);
+                    }
+                },
+                error: function () {
+
+                    hideLoader();
+                    showToast("Error updating Sales Person Code.", "danger", 4000);
+                }
+            });
+
+            return;
+
+            //showToast("Please add at least one Brand.", "danger", 4000);
             return;
         }
 

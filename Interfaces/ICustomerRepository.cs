@@ -51,5 +51,7 @@ namespace ERPAPP.Interfaces
 
         Task<CustomerAlreadyExistModel> GetCustomerAlreadyExistDetails(string masterCode);
 
+        Task<bool> EditSalesPersonCode(string customerNo, string salesPersonCode);
+
     }
 }

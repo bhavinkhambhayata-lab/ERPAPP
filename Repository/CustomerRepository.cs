@@ -2551,5 +2551,25 @@ namespace ERPAPP.Repository
                 return null;
             }
         }
+
+        public async Task<bool> EditSalesPersonCode(string customerNo, string salesPersonCode)
+        {
+            try
+            {
+                SqlParameter[] param =
+                {
+            new SqlParameter("@CustomerNo", customerNo),
+            new SqlParameter("@SalesPersonCode", salesPersonCode)
+        };
+
+                object result = _db.ExecuteScalar("Customer_EditSalesPersonCode", param);
+
+                return Convert.ToInt32(result) == 1;
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+        }
     }
 }

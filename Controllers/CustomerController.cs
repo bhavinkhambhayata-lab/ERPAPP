@@ -1027,5 +1027,37 @@ namespace ERPAPP.Controllers
                 });
             }
         }
+
+        [HttpPost]
+        public async Task<IActionResult> EditSalesPersonCode(string customerNo, string salesPersonCode)
+        {
+            try
+            {
+                bool result = await _customerRepository.EditSalesPersonCode(customerNo, salesPersonCode);
+
+                if (result)
+                {
+                    return Json(new
+                    {
+                        success = true,
+                        message = "Customer updated successfully."
+                    });
+                }
+
+                return Json(new
+                {
+                    success = false,
+                    message = "Failed to update Sales Person Code."
+                });
+            }
+            catch (Exception ex)
+            {
+                return Json(new
+                {
+                    success = false,
+                    message = ex.Message
+                });
+            }
+        }
     }
 }
