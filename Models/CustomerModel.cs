@@ -66,6 +66,8 @@ namespace ERPAPP.Models
         public string? PromoCode { get; set; }
         public string? ChargesGroup { get; set; }
 
+        [Required(ErrorMessage = "Sales Person Code is required")]
+        public string SalesPersonCode { get; set; } = string.Empty;
 
         // ================= CONTACT =================
 
@@ -706,6 +708,8 @@ namespace ERPAPP.Models
         public string? PromoCode { get; set; }
         public string? ChargesGroup { get; set; }
 
+        [Required(ErrorMessage = "Sales Person Code is required")]
+        public string SalesPersonCode { get; set; } = string.Empty;
 
         // ================= CONTACT =================
 
@@ -890,7 +894,8 @@ namespace ERPAPP.Models
 
     public class CustomerBrandEditRequest
     {
-        public List<CustomerBrandWiseEditModel> CustomerBrandEditList { get; set; } = new();
+        public List<CustomerBrandWiseEditModel> list { get; set; } = new();
+        public string SalesPersonCode { get; set; } = string.Empty;
     }
 
 
@@ -964,6 +969,8 @@ namespace ERPAPP.Models
         public string? PromoCode { get; set; }
         public string? ChargesGroup { get; set; }
 
+        [Required(ErrorMessage = "Sales Person Code is required")]
+        public string SalesPersonCode { get; set; } = string.Empty;
 
         // ================= CONTACT =================
 

@@ -79,6 +79,21 @@
 
         if (!validateBrandTable()) return;
 
+        var salesPersonCode = $('#SalesPersonCode').val() || "";
+
+        if (salesPersonCode == "") {
+
+            $("span[data-valmsg-for='SalesPersonCode']")
+                .text("Sales Person is required.");
+
+            return;
+        }
+        else {
+
+            $("span[data-valmsg-for='SalesPersonCode']")
+                .text("");
+        }
+
         if ($("#brandTable tbody tr").filter(function () {
             return $(this).find(".is-edit-cls").val() == "false";
         }).length === 0) {
@@ -120,7 +135,10 @@
             url: baseURL + 'Customer/EditCustomerDetailsBrandWiseDataOnly',
             type: 'POST',
             contentType: 'application/json',
-            data: JSON.stringify(list),
+            data: JSON.stringify({
+                list: list,
+                SalesPersonCode: $('#SalesPersonCode').val()
+            }),
             success: function (res) {
                 if (res.success) {
                     hideLoader();

@@ -640,16 +640,16 @@ namespace ERPAPP.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> EditCustomerDetailsBrandWiseDataOnly([FromBody] List<CustomerBrandWiseEditModel> model)
+        public async Task<IActionResult> EditCustomerDetailsBrandWiseDataOnly([FromBody] CustomerBrandEditRequest request)
         {
-            if (model == null || model.Count == 0)
+            if (request == null || request.list == null || request.list.Count == 0)
             {
                 return Json(new { success = false, message = "No brand data received!" });
             }
 
             try
             {
-                var result = await _customerRepository.EditCustomerBrandWiseOnly(model);
+                var result = await _customerRepository.EditCustomerBrandWiseOnly(request.list, request.SalesPersonCode);
 
                 if (result)
                 {

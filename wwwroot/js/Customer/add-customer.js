@@ -416,6 +416,7 @@
         formData.set("BusinessCategory", $("#BusinessCategory").val());
         formData.set("MSMEUAMNo", $("#MSMEUAMNo").val());
         formData.set("IsAlreadyCreatedMaster", $("#IsAlreadyCreatedMaster").val());
+        formData.set("SalesPersonCode", $("#SalesPersonCode").val());
         //----------------------------------------------------------------------
 
         var isCheckedShipp = $("#chkSameAsGeneral").is(":checked");
