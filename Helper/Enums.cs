@@ -178,7 +178,7 @@ namespace ERPAPP.Helper
             INCOMETAX = 2
         }
 
-        public enum  FixedAssetGSTCredit
+        public enum FixedAssetGSTCredit
         {
             [Display(Name = "Availment")]
             Availment = 1,
@@ -187,5 +187,76 @@ namespace ERPAPP.Helper
             NonAvailment = 2
         }
         #endregion
+
+        #region Item Module
+
+        public enum ItemMovementType
+        {
+            StdSKU = 1,
+            NonStdSKU = 2,
+            D0 = 3,
+            D1 = 4,
+            D2 = 5,
+            D3 = 6,
+            D4 = 7,
+            D5 = 8,
+            D6 = 9,
+            Obsolete = 10
+        }
+
+        public enum ItemTypeOfProduct
+        {
+            Tile = 1,
+            Mosaic = 2
+        }
+
+        public enum ItemManufacturingPolicy
+        {
+            [Display(Name = "Make-to-Stock")]
+            MakeToStock = 1,
+
+            [Display(Name = "Make-to-Order")]
+            MakeToOrder = 2
+        }
+
+        public enum ItemCostingMethod
+        {
+            [Display(Name = "FIFO")]
+            FIFO = 1,
+            [Display(Name = "LIFO")]
+            LIFO = 2,
+            [Display(Name = "Specific")]
+            Specific = 3,
+            [Display(Name = "Average")]
+            Average = 4,
+            [Display(Name = "Standard")]
+            Standard = 5
+        }
+
+        public enum ItemGSTCredit
+        {
+            [Display(Name = "Availment")]
+            Availment = 1,
+
+            [Display(Name = "Non-Availment")]
+            NonAvailment = 2
+        }
+
+        public enum ItemReplenishmentSystem
+        {
+            [Display(Name = "Purchase")]
+            Purchase = 1,
+
+            [Display(Name = "Prod. Order")]
+            ProdOrder = 2,
+
+            [Display(Name = "Assembly")]
+            Assembly = 3
+        }
+
+        #endregion
+
+
+
     }
 }
