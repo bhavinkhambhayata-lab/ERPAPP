@@ -243,6 +243,19 @@ namespace ERPAPP.Repository
                 });
             }
 
+            // 22 Item Grade List Point Wise
+            foreach (DataRow row in ds.Tables[22].Rows)
+            {
+                dropDown.ItemCategories.Add(new ItemCategoryModel
+                {
+                    Code = row["Code"].ToString(),
+                    Name = row["Name"].ToString(),
+                    GenProdPostingGroup = row["GenProdPostingGroup"].ToString(),
+                    CostingMethod = row["CostingMethod"].ToString(),
+                    InventoryPostingGroup = row["InventoryPostingGroup"].ToString()
+                });
+            }
+
             // ---------------- ENUMS ----------------
 
             // Movement Type

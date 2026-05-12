@@ -251,7 +251,31 @@
                         </div>
                     </div>
 
-                   
+                    <!-- Item Category -->
+                    <div class="row mt-2">
+                        <label class="col-12 col-sm-4 col-form-label">Item Category</label>
+                        <div class="col-12 col-sm-8">
+                            <select asp-for="ItemCategoryCode" class="form-select">
+
+                                <option value="">-- Select --</option>
+
+                                @if (Model.DropDownData.ItemCategories != null)
+                                {
+                                    foreach (var item in Model.DropDownData.ItemCategories)
+                                    {
+                                        <option value="@item.Code"
+                                                data-costingmethod="@item.CostingMethod"
+                                                data-inventorypostinggroup="@item.InventoryPostingGroup"
+                                                data-genprodpostinggroup="@item.GenProdPostingGroup">
+
+                                            @item.Name
+                                        </option>
+                                    }
+                                }
+                            </select>
+                            <span asp-validation-for="ItemCategoryCode" class="text-danger"></span>
+                        </div>
+                    </div>
 
                 </div>
 

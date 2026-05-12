@@ -277,6 +277,7 @@
             ReplenishmentSystem: $("#ReplenishmentSystem").val(),
             MovementType: $("#MovementType").val(),
             ReorderingPolicy: $("#ReorderingPolicy").val(),
+            ItemCategoryCode: $("#ItemCategoryCode").val(),
 
             // ---------------- Item Specification ----------------
             TypeOfProduct: $("#TypeOfProduct").val(),
@@ -338,13 +339,31 @@
         });
 
     });
+
+    $('#ItemCategoryCode').on('change', function () {
+
+        var selectedOption = $(this).find('option:selected');
+
+        if ($(this).val() != '') {
+
+            $('#CostingMethod').val(
+                selectedOption.data('costingmethod')
+            );
+
+            $('#InventoryPostingGroup').val(
+                selectedOption.data('inventorypostinggroup')
+            );
+
+            $('#GenProdPostingGroup').val(
+                selectedOption.data('genprodpostinggroup')
+            );
+
+        } else {
+
+            $('#CostingMethod').val('');
+            $('#InventoryPostingGroup').val('');
+            $('#GenProdPostingGroup').val('');
+        }
+    });
 });
 
-function GetFGItemCompanyLastNoUsedCompanyCode() {
-
-    return $.ajax({
-        url: baseURL+'FGItem/GetFGItemCompanyLastNoUsedCompanyCode',
-        type: 'GET'
-    });
-
-}

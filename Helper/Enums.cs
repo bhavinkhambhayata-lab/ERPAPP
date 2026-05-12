@@ -222,15 +222,15 @@ namespace ERPAPP.Helper
         public enum ItemCostingMethod
         {
             [Display(Name = "FIFO")]
-            FIFO = 1,
+            FIFO = 0,
             [Display(Name = "LIFO")]
-            LIFO = 2,
+            LIFO = 1,
             [Display(Name = "Specific")]
-            Specific = 3,
+            Specific = 2,
             [Display(Name = "Average")]
-            Average = 4,
+            Average = 3,
             [Display(Name = "Standard")]
-            Standard = 5
+            Standard = 4
         }
 
         public enum ItemGSTCredit

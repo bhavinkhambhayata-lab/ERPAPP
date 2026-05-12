@@ -93,6 +93,12 @@
 
     public class ItemReorderingPolicyEnumModel : BaseDropDown { }
 
+    public class ItemCategoryModel : BaseDropDown 
+    {
+        public string? GenProdPostingGroup { get; set; }
+        public string? InventoryPostingGroup { get; set; }
+        public string? CostingMethod { get; set; }
+    }
     public class ItemGradeModel : BaseDropDown { 
     
         public string? GradeLinkCode { get; set; }
@@ -135,6 +141,7 @@
         public List<ItemReorderingPolicyEnumModel> ReorderingPolicy { get; set; } = new();
 
         public List<ItemGradeModel> ItemGrades { get; set; } = new();
+        public List<ItemCategoryModel> ItemCategories { get; set; } = new();
     }
 
     public class GetFGItemAddModel : FGItemModel
