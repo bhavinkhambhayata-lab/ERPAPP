@@ -55,6 +55,11 @@
         public string? PurchUnitOfMeasure { get; set; }
         // ---------------- Tracking ----------------
         public string? ItemTrackingCode { get; set; }
+
+        public string? ReorderingPolicy { get; set; }
+
+        public List<FGItemGradeListDetails> GradeListDetails { get; set; } = new();
+
     }
 
     public class UnitOfMeasureModel : BaseDropDown { }
@@ -85,6 +90,8 @@
     public class ItemCostingMethodEnumModel : BaseDropDown { }
     public class ItemGSTCreditEnumModel : BaseDropDown { }
     public class ItemReplenishmentSystemEnumModel : BaseDropDown { }
+
+    public class ItemReorderingPolicyEnumModel : BaseDropDown { }
 
     public class ItemGradeModel : BaseDropDown { 
     
@@ -125,13 +132,14 @@
         public List<ItemGSTCreditEnumModel> GSTCredits { get; set; } = new();
         public List<ItemReplenishmentSystemEnumModel> ReplenishmentSystems { get; set; } = new();
 
+        public List<ItemReorderingPolicyEnumModel> ReorderingPolicy { get; set; } = new();
+
         public List<ItemGradeModel> ItemGrades { get; set; } = new();
     }
 
     public class GetFGItemAddModel : FGItemModel
     {
         public FGItemDropDownAddModel DropDownData { get; set; } = new();
-        public List<FGItemGradeListDetails> GradeListDetails { get; set; } = new();
     }
 
     public class FGItemGradeListDetails

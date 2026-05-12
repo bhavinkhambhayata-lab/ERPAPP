@@ -11,5 +11,9 @@ namespace ERPAPP.Interfaces
         Task<int> GetItemsTransferNewNo();
 
         Task<List<ProductionBOMHeaderModel>> GetItem_ChangeUnitOfMeasure(string baseUnitOfMeasure);
+
+        Task<bool> InsertFGItem(FGItemModel model);
+
+        Task<string> GetFGItemCompanyLastNoUsedCompanyCode();
     }
 }

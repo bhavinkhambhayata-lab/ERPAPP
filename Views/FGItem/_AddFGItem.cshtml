@@ -331,6 +331,31 @@
                             <span asp-validation-for="NetWeight" class="text-danger"></span>
                         </div>
                     </div>
+
+                    <!-- Movement -->
+                    <div class="row mt-2">
+                        <label class="col-12 col-sm-4 col-form-label">Movement</label>
+                        <div class="col-12 col-sm-8">
+                            <select asp-for="MovementType"
+                                    asp-items="@(new SelectList(Model.DropDownData.MovementTypes, "Code", "Name"))"
+                                    class="form-select">
+                                <option value="">-- Select --</option>
+                            </select>
+                            <span asp-validation-for="MovementType" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <!-- Reordering Policy -->
+                    <div class="row mt-2">
+                        <label class="col-12 col-sm-4 col-form-label">Reorderring Policy</label>
+                        <div class="col-12 col-sm-8">
+                            <select asp-for="ReorderingPolicy"
+                                    asp-items="@(new SelectList(Model.DropDownData.ReorderingPolicy, "Code", "Name"))"
+                                    class="form-select">
+                                <option value="">-- Select --</option>
+                            </select>
+                            <span asp-validation-for="ReorderingPolicy" class="text-danger"></span>
+                        </div>
+                    </div>
                 </div>
 
             </div>
@@ -343,11 +368,13 @@
             <div class="grade-container mb-2">
 
                 <!-- Grade List -->
-                <div class="row g-3">
+                <div class="row g-3" id="gradeListContainer">
 
                     @for (int i = 0; i < Model.DropDownData.ItemGrades.Count; i++)
                     {
-                        <div class="col-xl-2 col-lg-3 col-md-4 col-sm-6">
+                        var extraClass = i >= 6 ? "extra-grade d-none" : "";
+
+                        <div class="col-xl-2 col-lg-3 col-md-4 col-sm-6 @extraClass">
 
                             <label class="grade-card">
 
@@ -369,7 +396,23 @@
 
                 </div>
 
-                <!-- Button -->
+                <!-- More Button -->
+                @if (Model.DropDownData.ItemGrades.Count > 6)
+                {
+                    <div class="text-end mt-3">
+
+                        <button type="button"
+                                class="btn btn-outline-secondary btn-sm"
+                                id="btnShowMoreGrades">
+
+                            More Grade
+
+                        </button>
+
+                    </div>
+                }
+
+                <!-- Preview Button -->
                 <div class="text-end mt-4">
 
                     <button type="button"

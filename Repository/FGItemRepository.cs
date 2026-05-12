@@ -299,6 +299,15 @@ namespace ERPAPP.Repository
                     Name = e.GetDisplayName()
                 }).ToList();
 
+            // Reordeing Policy (Display Name)
+            dropDown.ReorderingPolicy = Enum.GetValues(typeof(ItemReorderingPolicy))
+                .Cast<ItemReorderingPolicy>()
+                .Select(e => new ItemReorderingPolicyEnumModel
+                {
+                    Code = ((int)e).ToString(),
+                    Name = e.GetDisplayName()
+                }).ToList();
+
             // ---------------- FINAL ----------------
             model.DropDownData = dropDown;
 
@@ -308,6 +317,19 @@ namespace ERPAPP.Repository
             return model;
         }
 
+        public async Task<string> GetFGItemCompanyLastNoUsedCompanyCode()
+        {
+            string newNo = "";
+
+            DataTable dt = _db.GetDataTable("GetFGItemCompanyLastNoUsedCompanyCode");
+
+            if (dt != null && dt.Rows.Count > 0)
+            {
+                newNo = Convert.ToString(dt.Rows[0]["NewFGItemCode"]);
+            }
+
+            return newNo ?? "";
+        }
 
         public async Task<List<FAHSNModel>> GetFixedAssetHSNDataWithGSTGroupCode(string gstGroupCode)
         {
@@ -363,6 +385,139 @@ namespace ERPAPP.Repository
                 }).ToList();
 
             return list;
+        }
+
+        public async Task<bool> InsertFGItem(FGItemModel model)
+        {
+            try
+            {
+                bool result = false;
+
+                // ============================================
+                // CREATE DATATABLE FOR GRADE LIST
+                // ============================================
+
+                DataTable dtGrade = new DataTable();
+
+                dtGrade.Columns.Add("GradeItemCode");
+                dtGrade.Columns.Add("Grade");
+                dtGrade.Columns.Add("GradeLinkCode");
+
+                if (model.GradeListDetails != null &&
+                    model.GradeListDetails.Count > 0)
+                {
+                    foreach (var item in model.GradeListDetails)
+                    {
+                        dtGrade.Rows.Add(
+                            item.GradeItemCode ?? "",
+                            item.Grade ?? "",
+                            item.GradeLinkCode ?? ""
+                        );
+                    }
+                }
+
+                // ============================================
+                // SQL PARAMETERS
+                // ============================================
+
+                SqlParameter[] param =
+                {
+                    // ================= GENERAL DETAILS =================
+
+                    new SqlParameter("@DisplayNo", model.DisplayNo),
+
+                    new SqlParameter("@CompanyCode", model.CompanyCode ?? ""),
+                    new SqlParameter("@Description", model.Description ?? ""),
+                    new SqlParameter("@Description2", model.Description2 ?? ""),
+
+                    new SqlParameter("@RoundingPrecision", model.RoundingPrecision ?? 0),
+                    new SqlParameter("@GrossWeight", model.GrossWeight ?? 0),
+                    new SqlParameter("@NetWeight", model.NetWeight ?? 0),
+
+                    new SqlParameter("@BaseUnitOfMeasure", model.BaseUnitOfMeasure ?? ""),
+                    new SqlParameter("@ItemCategoryCode", model.ItemCategoryCode ?? ""),
+                    new SqlParameter("@ProductGroupCode", model.ProductGroupCode ?? ""),
+                    new SqlParameter("@MovementType", model.MovementType ?? ""),
+                    new SqlParameter("@TypeOfProduct", model.TypeOfProduct ?? ""),
+
+                    // ================= ITEM SPECIFICATION =================
+
+                    new SqlParameter("@Category", model.Category ?? ""),
+                    new SqlParameter("@SizeOfTile", model.SizeOfTile ?? ""),
+                    new SqlParameter("@Brand", model.Brand ?? ""),
+                    new SqlParameter("@Collection", model.Collection ?? ""),
+                    new SqlParameter("@SurfaceFinishOrGlaze", model.SurfaceFinishOrGlaze ?? ""),
+                    new SqlParameter("@GlazeEffect", model.GlazeEffect ?? ""),
+                    new SqlParameter("@DesignColor", model.DesignColor ?? ""),
+                    new SqlParameter("@ColourFamily", model.ColourFamily ?? ""),
+                    new SqlParameter("@TypeOfTile", model.TypeOfTile ?? ""),
+                    new SqlParameter("@Packaging", model.Packaging ?? ""),
+
+                    new SqlParameter("@Grade", model.Grade ?? ""),
+                    new SqlParameter("@GradeLinkCode", model.GradeLinkCode ?? ""),
+
+                    new SqlParameter("@Thickness", model.Thickness ?? ""),
+                    new SqlParameter("@Body", model.Body ?? ""),
+                    new SqlParameter("@PLCollection", model.PLCollection ?? ""),
+                    new SqlParameter("@PLColours", model.PLColours ?? ""),
+
+                    // ================= MANUFACTURING =================
+
+                    new SqlParameter("@ManufacturingPolicy", model.ManufacturingPolicy ?? ""),
+                    new SqlParameter("@RoutingNo", model.RoutingNo ?? ""),
+                    new SqlParameter("@ProductionBOMNo", model.ProductionBOMNo ?? ""),
+
+                    // ================= COST & POSTING =================
+
+                    new SqlParameter("@CostingMethod", model.CostingMethod ?? ""),
+                    new SqlParameter("@GenProdPostingGroup", model.GenProdPostingGroup ?? ""),
+                    new SqlParameter("@VATProdPostingGroup", model.VATProdPostingGroup ?? ""),
+                    new SqlParameter("@InventoryPostingGroup", model.InventoryPostingGroup ?? ""),
+                    new SqlParameter("@GSTGroupCode", model.GSTGroupCode ?? ""),
+                    new SqlParameter("@GSTCredit", model.GSTCredit ?? ""),
+                    new SqlParameter("@HSNSACCode", model.HSNSACCode ?? ""),
+
+                    // ================= UNITS =================
+
+                    new SqlParameter("@SalesUnitOfMeasure", model.SalesUnitOfMeasure ?? ""),
+                    new SqlParameter("@ReplenishmentSystem", model.ReplenishmentSystem ?? ""),
+                    new SqlParameter("@PurchUnitOfMeasure", model.PurchUnitOfMeasure ?? ""),
+
+                    // ================= TRACKING =================
+
+                    new SqlParameter("@ItemTrackingCode", model.ItemTrackingCode ?? ""),
+                    new SqlParameter("@ReorderingPolicy", model.ReorderingPolicy ?? ""),
+
+                    // ================= GRADE LIST TABLE TYPE =================
+
+                    new SqlParameter
+                    {
+                        ParameterName = "@FGItemGrades",
+                        SqlDbType = SqlDbType.Structured,
+                        TypeName = "dbo.FGItemGradeType",
+                        Value = dtGrade
+                    }
+                };
+
+                // ============================================
+                // STORE PROCEDURE CALL
+                // ============================================
+
+                var itemNoObj = _db.ExecuteScalar("FGItem_InsertDataWithCompany", param);
+
+                string itemNo = itemNoObj?.ToString();
+
+                if (!string.IsNullOrWhiteSpace(itemNo))
+                {
+                    result = true;
+                }
+
+                return result;
+            }
+            catch (Exception)
+            {
+                return false;
+            }
         }
     }
 }

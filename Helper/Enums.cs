@@ -254,6 +254,21 @@ namespace ERPAPP.Helper
             Assembly = 3
         }
 
+        public enum ItemReorderingPolicy
+        {
+            [Display(Name = "Fixed Reorder Qty.")]
+            FixedReorderQty = 1,
+
+            [Display(Name = "Maximum Qty.")]
+            MaximumQty =2,
+
+            [Display(Name = "Order.")]
+            Order =3,
+
+            [Display(Name = "Lot-for-lot.")]
+            LotForLot = 4
+        }
+
         #endregion
 
 

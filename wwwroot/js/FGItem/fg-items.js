@@ -47,7 +47,7 @@
                 $("#ProductionBOMNo").append('<option value="">-- Select --</option>');
 
                 $.each(response, function (i, item) {
-                    
+
                     $("#ProductionBOMNo").append(
                         `<option value="${item.code}">${item.name}</option>`
                     );
@@ -79,8 +79,19 @@
             return;
         }
 
-        // Main Company Code
-        let itemCode = "FG1213";
+        let itemCode = "";
+
+        $.ajax({
+            url: baseURL + 'FGItem/GetFGItemCompanyLastNoUsedCompanyCode',
+            type: 'GET',
+            async: false,
+            success: function (response) {
+
+                itemCode = response;
+            }
+        });
+
+        debugger
 
         // Prefix + Number split
         let prefix = itemCode.match(/[A-Za-z]+/)[0];
@@ -190,12 +201,11 @@
                            <td>
                                 <input type="text"
                                        class="form-control"
-                                       value="${
-                                            commonGradeLinkCode.replace(
-                                                /\.\d+$/,
-                                                selectedGrades[i].gradeLinkCode
-                                            )
-                                        }" readonly />
+                                       value="${commonGradeLinkCode.replace(
+                /\.\d+$/,
+                selectedGrades[i].gradeLinkCode
+            )
+                }" readonly />
                             </td>
 
                         </tr>`;
@@ -204,4 +214,137 @@
         $("#grade-tbbody").html(tbody);
 
     });
+
+    $(document).ready(function () {
+
+        $("#btnShowMoreGrades").click(function () {
+
+            if ($(this).text().trim() == "More Grade") {
+
+                $(".extra-grade").removeClass("d-none");
+
+                $(this).text("Less Grade");
+
+            }
+            else {
+
+                $(".extra-grade").addClass("d-none");
+
+                $(this).text("More Grade");
+
+            }
+
+        });
+
+    });
+
+    $("#btnSaveFGItemMaster").on("click", function () {
+
+        // ---------------------------------------------
+        // Grade List Data
+        // ---------------------------------------------
+        let gradeList = [];
+
+        $("#grade-tbbody tr").each(function () {
+
+            gradeList.push({
+                ItemCode: $(this).find(".txt-itemcode").val(),
+                Grade: $(this).find(".txt-grade").val(),
+                GradeLinkCode: $(this).find(".txt-gradelinkcode").val()
+            });
+
+        });
+
+        // ---------------------------------------------
+        // Main Model Data
+        // ---------------------------------------------
+        let model = {
+
+            DisplayNo: $("#DisplayNo").text(),
+
+            // ---------------- General Details ----------------
+            Description: $("#Description").val(),
+            Description2: $("#Description2").val(),
+            RoundingPrecision: $("#RoundingPrecision").val(),
+            GrossWeight: $("#GrossWeight").val(),
+            NetWeight: $("#NetWeight").val(),
+
+            BaseUnitOfMeasure: $("#BaseUnitOfMeasure").val(),
+
+            ProductionBOMNo: $("#ProductionBOMNo").val(),
+            RoutingNo: $("#RoutingNo").val(),
+            ManufacturingPolicy: $("#ManufacturingPolicy").val(),
+            ReplenishmentSystem: $("#ReplenishmentSystem").val(),
+            MovementType: $("#MovementType").val(),
+            ReorderingPolicy: $("#ReorderingPolicy").val(),
+
+            // ---------------- Item Specification ----------------
+            TypeOfProduct: $("#TypeOfProduct").val(),
+            Category: $("#Category").val(),
+            SizeOfTile: $("#SizeOfTile").val(),
+            Brand: $("#Brand").val(),
+            Collection: $("#Collection").val(),
+            DesignColor: $("#DesignColor").val(),
+            ColourFamily: $("#ColourFamily").val(),
+            TypeOfTile: $("#TypeOfTile").val(),
+            Packaging: $("#Packaging").val(),
+            Thickness: $("#Thickness").val(),
+            Body: $("#Body").val(),
+            PLCollection: $("#PLCollection").val(),
+            PLColours: $("#PLColours").val(),
+
+            // ---------------- Cost & Posting ----------------
+            CostingMethod: $("#CostingMethod").val(),
+            GenProdPostingGroup: $("#GenProdPostingGroup").val(),
+            GSTGroupCode: $("#GSTGroupCode").val(),
+            HSNSACCode: $("#HSNSACCode").val(),
+            GSTCredit: $("#GSTCredit").val(),
+            InventoryPostingGroup: $("#InventoryPostingGroup").val(),
+
+            // ---------------- Grade List ----------------
+            GradeListDetails: gradeList
+        };
+
+        console.log(model);
+
+        // ---------------------------------------------
+        // AJAX CALL
+        // ---------------------------------------------
+        $.ajax({
+            url: "/FGItem/SaveFGItemMaster",
+            type: "POST",
+            contentType: "application/json",
+            data: JSON.stringify(model),
+
+            success: function (response) {
+
+                if (response.success) {
+
+                    toastr.success(response.message);
+
+                } else {
+
+                    toastr.error(response.message);
+                }
+
+            },
+
+            error: function (xhr) {
+
+                toastr.error("Something went wrong.");
+                console.log(xhr);
+
+            }
+        });
+
+    });
 });
+
+function GetFGItemCompanyLastNoUsedCompanyCode() {
+
+    return $.ajax({
+        url: baseURL+'FGItem/GetFGItemCompanyLastNoUsedCompanyCode',
+        type: 'GET'
+    });
+
+}
