@@ -32,7 +32,7 @@ namespace ERPAPP.Interfaces
 
         GetCustomerDivisionWiseDropDown GetCustomerDivisionWiseDropDown(string division);
 
-        Task<bool> EditCustomerBrandWiseOnly(List<CustomerBrandWiseEditModel> model);
+        Task<bool> EditCustomerBrandWiseOnly(List<CustomerBrandWiseEditModel> model,string SalesPersonCode);
 
         Task<bool> CheckCustomerEntryAlreadyExists(string masterCode, string dimension);
 
@@ -50,6 +50,8 @@ namespace ERPAPP.Interfaces
         Task<bool> UpdateCustomer(CustomerUnBlockEditModel model);
 
         Task<CustomerAlreadyExistModel> GetCustomerAlreadyExistDetails(string masterCode);
+
+        Task<bool> EditSalesPersonCode(string customerNo, string salesPersonCode);
 
     }
 }

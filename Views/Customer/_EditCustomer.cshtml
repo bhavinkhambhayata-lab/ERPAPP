@@ -371,6 +371,19 @@
                             <span asp-validation-for="ChargesGroup" class="text-danger"></span>
                         </div>
                     </div>
+
+                    <!-- Sales Person Code -->
+                    <div class="row mt-2">
+                        <label class="col-12 col-sm-4 col-form-label">Sales Person Code<span class="required-star">*</span></label>
+                        <div class="col-12 col-sm-8">
+                            <select asp-for="SalesPersonCode"
+                                    asp-items="@(new SelectList(Model.CustomerDropDownModel.SalesPersons, "Code", "Name"))"
+                                    class="form-select">
+                                <option value="">-- Select --</option>
+                            </select>
+                            <span asp-validation-for="SalesPersonCode" class="text-danger"></span>
+                        </div>
+                    </div>
                 </div>
 
             </div>
@@ -1256,7 +1269,7 @@
 
 
         <div class="action-buttons">
-            <button type="button" class="btn btn-primary" id="btnSaveCustomerMaster" @(Model.Division == 1 ? "disabled" : "")>Save</button>
+            <button type="button" class="btn btn-primary" id="btnSaveCustomerMaster">Save</button>
 
             @if (Model.Blocked == 3 && IsCustomerMasterCompanyPermission == true)
             {

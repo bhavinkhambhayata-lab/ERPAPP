@@ -79,11 +79,58 @@
 
         if (!validateBrandTable()) return;
 
+        var salesPersonCode = $('#SalesPersonCode').val() || "";
+
+        if (salesPersonCode == "") {
+
+            $("span[data-valmsg-for='SalesPersonCode']")
+                .text("Sales Person is required.");
+
+            return;
+        }
+        else {
+
+            $("span[data-valmsg-for='SalesPersonCode']")
+                .text("");
+        }
+
         if ($("#brandTable tbody tr").filter(function () {
             return $(this).find(".is-edit-cls").val() == "false";
         }).length === 0) {
 
-            showToast("Please add at least one Brand.", "danger", 4000);
+            showLoader();
+
+            $.ajax({
+                url: baseURL + 'Customer/EditSalesPersonCode',
+                type: 'POST',
+                data: {
+                    customerNo: $('#BillToCustomer').val(),
+                    salesPersonCode: $('#SalesPersonCode').val()
+                },
+                success: function (res) {
+
+                    hideLoader();
+
+                    if (res.success) {
+
+                        showToast(res.message, "success", 4000);
+                        $('#listBtn').click();
+
+                    } else {
+
+                        showToast(res.message, "danger", 4000);
+                    }
+                },
+                error: function () {
+
+                    hideLoader();
+                    showToast("Error updating Sales Person Code.", "danger", 4000);
+                }
+            });
+
+            return;
+
+            //showToast("Please add at least one Brand.", "danger", 4000);
             return;
         }
 
@@ -120,7 +167,10 @@
             url: baseURL + 'Customer/EditCustomerDetailsBrandWiseDataOnly',
             type: 'POST',
             contentType: 'application/json',
-            data: JSON.stringify(list),
+            data: JSON.stringify({
+                list: list,
+                SalesPersonCode: $('#SalesPersonCode').val()
+            }),
             success: function (res) {
                 if (res.success) {
                     hideLoader();

@@ -640,16 +640,16 @@ namespace ERPAPP.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> EditCustomerDetailsBrandWiseDataOnly([FromBody] List<CustomerBrandWiseEditModel> model)
+        public async Task<IActionResult> EditCustomerDetailsBrandWiseDataOnly([FromBody] CustomerBrandEditRequest request)
         {
-            if (model == null || model.Count == 0)
+            if (request == null || request.list == null || request.list.Count == 0)
             {
                 return Json(new { success = false, message = "No brand data received!" });
             }
 
             try
             {
-                var result = await _customerRepository.EditCustomerBrandWiseOnly(model);
+                var result = await _customerRepository.EditCustomerBrandWiseOnly(request.list, request.SalesPersonCode);
 
                 if (result)
                 {
@@ -1024,6 +1024,38 @@ namespace ERPAPP.Controllers
                 {
                     success = false,
                     message = "Something went wrong while saving."
+                });
+            }
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> EditSalesPersonCode(string customerNo, string salesPersonCode)
+        {
+            try
+            {
+                bool result = await _customerRepository.EditSalesPersonCode(customerNo, salesPersonCode);
+
+                if (result)
+                {
+                    return Json(new
+                    {
+                        success = true,
+                        message = "Customer updated successfully."
+                    });
+                }
+
+                return Json(new
+                {
+                    success = false,
+                    message = "Failed to update Sales Person Code."
+                });
+            }
+            catch (Exception ex)
+            {
+                return Json(new
+                {
+                    success = false,
+                    message = ex.Message
                 });
             }
         }

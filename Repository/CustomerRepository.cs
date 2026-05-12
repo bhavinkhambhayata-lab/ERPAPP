@@ -911,6 +911,7 @@ namespace ERPAPP.Repository
                         new SqlParameter("@AssesseeCode", model.AssesseeCode ?? ""),
 
                         new SqlParameter("@IsAlreadyCreatedMaster", model.IsAlreadyCreatedMaster),
+                        new SqlParameter("@SalesPersonCode", model.SalesPersonCode),//Harsh sir changes this field
 
                         // ⭐ TABLE VALUED PARAMETER
                         new SqlParameter
@@ -1423,6 +1424,7 @@ namespace ERPAPP.Repository
 
                 model.IsAlreadyCreatedMaster = row["IsAlreadyCreatedMaster"] != DBNull.Value ? Convert.ToInt32(row["IsAlreadyCreatedMaster"]) : 0;
 
+                model.SalesPersonCode = row["SalesPersonCode"]?.ToString();
             }
 
             // ================= BRAND LIST =================
@@ -1921,7 +1923,7 @@ namespace ERPAPP.Repository
             return dropDown;
         }
 
-        public async Task<bool> EditCustomerBrandWiseOnly(List<CustomerBrandWiseEditModel> model)
+        public async Task<bool> EditCustomerBrandWiseOnly(List<CustomerBrandWiseEditModel> model, string SalesPersonCode)
         {
             try
             {
@@ -1969,6 +1971,7 @@ namespace ERPAPP.Repository
                 var param = new SqlParameter[]
                             {
                             new SqlParameter("@CustomerNo", custNo),
+                            new SqlParameter("@SalesPersonCode", SalesPersonCode),
                             new SqlParameter
                             {
                                 ParameterName = "@CustomerBrands",
@@ -2232,6 +2235,8 @@ namespace ERPAPP.Repository
 
                 model.IsAlreadyCreatedMaster = row["IsAlreadyCreatedMaster"] != DBNull.Value ? Convert.ToInt32(row["IsAlreadyCreatedMaster"]) : 0;
 
+                model.SalesPersonCode = row["SalesPersonCode"]?.ToString();
+
             }
 
             // ================= BRAND LIST =================
@@ -2481,6 +2486,7 @@ namespace ERPAPP.Repository
                         new SqlParameter("@AssesseeCode", model.AssesseeCode ?? ""),
                         new SqlParameter("@CompanyCode", model.CustomerCode ?? ""),
                         new SqlParameter("@IsAlreadyCreatedMaster", model.IsAlreadyCreatedMaster ?? 0),
+                        new SqlParameter("@SalesPersonCode", model.SalesPersonCode),//Harsh sir changes this field
 
                         // ⭐ TABLE VALUED PARAMETER
                         new SqlParameter
@@ -2543,6 +2549,26 @@ namespace ERPAPP.Repository
             catch (Exception)
             {
                 return null;
+            }
+        }
+
+        public async Task<bool> EditSalesPersonCode(string customerNo, string salesPersonCode)
+        {
+            try
+            {
+                SqlParameter[] param =
+                {
+            new SqlParameter("@CustomerNo", customerNo),
+            new SqlParameter("@SalesPersonCode", salesPersonCode)
+        };
+
+                object result = _db.ExecuteScalar("Customer_EditSalesPersonCode", param);
+
+                return Convert.ToInt32(result) == 1;
+            }
+            catch (Exception)
+            {
+                return false;
             }
         }
     }
