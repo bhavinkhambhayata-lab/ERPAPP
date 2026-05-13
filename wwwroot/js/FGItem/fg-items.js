@@ -91,7 +91,7 @@
             }
         });
 
-        debugger
+        
 
         // Prefix + Number split
         let prefix = itemCode.match(/[A-Za-z]+/)[0];
@@ -312,7 +312,7 @@
         // AJAX CALL
         // ---------------------------------------------
         $.ajax({
-            url: "/FGItem/SaveFGItemMaster",
+            url: baseURL + "FGItem/SaveFGItemMaster",
             type: "POST",
             contentType: "application/json",
             data: JSON.stringify(model),
@@ -321,11 +321,10 @@
 
                 if (response.success) {
 
-                    toastr.success(response.message);
-
+                    showToast(response.message, "success", 4000);
                 } else {
 
-                    toastr.error(response.message);
+                    showToast(response.message, "danger", 4000);
                 }
 
             },
