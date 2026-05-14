@@ -74,6 +74,11 @@
         }
     });
 
+    if ($("#SalesPersonCode").val() != "") {
+        $("#SalesPersonCode").prop("disabled", true);   // Disable
+    } else {
+        $("#SalesPersonCode").prop("disabled", false);  // Enable
+    }
 
     $("#btnSaveCustomerMaster").click(function () {
 
@@ -98,40 +103,46 @@
             return $(this).find(".is-edit-cls").val() == "false";
         }).length === 0) {
 
-            showLoader();
+            if ($("#SalesPersonCode").is(":disabled")) {
+                showToast("Please add at least one Brand.", "danger", 4000);
+                return;
+            }
+            else {
+                showLoader();
 
-            $.ajax({
-                url: baseURL + 'Customer/EditSalesPersonCode',
-                type: 'POST',
-                data: {
-                    customerNo: $('#BillToCustomer').val(),
-                    salesPersonCode: $('#SalesPersonCode').val()
-                },
-                success: function (res) {
+                $.ajax({
+                    url: baseURL + 'Customer/EditSalesPersonCode',
+                    type: 'POST',
+                    data: {
+                        customerNo: $('#BillToCustomer').val(),
+                        salesPersonCode: $('#SalesPersonCode').val()
+                    },
+                    success: function (res) {
 
-                    hideLoader();
+                        hideLoader();
 
-                    if (res.success) {
+                        if (res.success) {
 
-                        showToast(res.message, "success", 4000);
-                        $('#listBtn').click();
+                            showToast(res.message, "success", 4000);
+                            $('#listBtn').click();
 
-                    } else {
+                        } else {
 
-                        showToast(res.message, "danger", 4000);
+                            showToast(res.message, "danger", 4000);
+                        }
+                    },
+                    error: function () {
+
+                        hideLoader();
+                        showToast("Error updating Sales Person Code.", "danger", 4000);
                     }
-                },
-                error: function () {
+                });
 
-                    hideLoader();
-                    showToast("Error updating Sales Person Code.", "danger", 4000);
-                }
-            });
+                return;
 
-            return;
-
-            //showToast("Please add at least one Brand.", "danger", 4000);
-            return;
+                //showToast("Please add at least one Brand.", "danger", 4000);
+                //return;
+            }
         }
 
         var list = [];

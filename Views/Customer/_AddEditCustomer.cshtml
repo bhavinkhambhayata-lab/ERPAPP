@@ -405,7 +405,7 @@
 
                     <!-- Sales Person Code -->
                     <div class="row mt-2">
-                        <label class="col-12 col-sm-4 col-form-label">Sales Person Code<span class="required-star">*</span></label>
+                        <label class="col-12 col-sm-4 col-form-label">Sales Person Code (Master)<span class="required-star">*</span></label>
                         <div class="col-12 col-sm-8">
                             <select asp-for="SalesPersonCode"
                                     asp-items="@(new SelectList(Model.CustomerDropDownModel.SalesPersons, "Code", "Name"))"
