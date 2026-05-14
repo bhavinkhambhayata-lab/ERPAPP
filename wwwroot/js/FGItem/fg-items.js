@@ -87,7 +87,7 @@
             async: false,
             success: function (response) {
 
-                itemCode = "FG32539";
+                itemCode = response;
             }
         });
 
