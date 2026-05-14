@@ -516,11 +516,11 @@ namespace ERPAPP.Repository
                 // STORE PROCEDURE CALL
                 // ============================================
 
-                var itemNoObj = _db.ExecuteScalar("FGItem_InsertDataWithCompany", param);
+                var itemNoObj = _db.ExecuteScalar("FGItems_InsertDataWithCompany", param);
 
                 string itemNo = itemNoObj?.ToString();
 
-                if (!string.IsNullOrWhiteSpace(itemNo))
+                if (!string.IsNullOrWhiteSpace(itemNo) && itemNo == "1")
                 {
                     result = true;
                 }

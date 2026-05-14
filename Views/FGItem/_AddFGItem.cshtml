@@ -544,6 +544,32 @@
                         </div>
                     </div>
 
+                    <!-- Surface Finish Glazes  -->
+                    <div class="row mt-2">
+                        <label class="col-12 col-sm-4 col-form-label">Surface Finish Or Glaze</label>
+                        <div class="col-12 col-sm-8">
+                            <select asp-for="SurfaceFinishOrGlaze"
+                                    asp-items="@(new SelectList(Model.DropDownData.SurfaceFinishGlazes, "Code", "Name"))"
+                                    class="form-select">
+                                <option value="">-- Select --</option>
+                            </select>
+                            <span asp-validation-for="SurfaceFinishOrGlaze" class="text-danger"></span>
+                        </div>
+                    </div>
+
+                    <!-- GlazeEffect  -->
+                    <div class="row mt-2">
+                        <label class="col-12 col-sm-4 col-form-label">Glaze Effect</label>
+                        <div class="col-12 col-sm-8">
+                            <select asp-for="GlazeEffect"
+                                    asp-items="@(new SelectList(Model.DropDownData.GlazeEffects, "Code", "Name"))"
+                                    class="form-select">
+                                <option value="">-- Select --</option>
+                            </select>
+                            <span asp-validation-for="GlazeEffect" class="text-danger"></span>
+                        </div>
+                    </div>
+
                     <!-- Design Color -->
                     <div class="row mt-2">
                         <label class="col-12 col-sm-4 col-form-label">Design Color</label>

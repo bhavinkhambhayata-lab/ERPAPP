@@ -5,9 +5,9 @@
         public int DisplayNo { get; set; }
 
         // ---------------- TextBox Fields ----------------
-        public string CompanyCode { get; set; }
+        public string? CompanyCode { get; set; }
         public string Description { get; set; }
-        public string Description2 { get; set; }
+        public string? Description2 { get; set; }
         public decimal? RoundingPrecision { get; set; }
         public decimal? GrossWeight { get; set; }
         public decimal? NetWeight { get; set; }

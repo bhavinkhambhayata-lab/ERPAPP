@@ -87,7 +87,7 @@
             async: false,
             success: function (response) {
 
-                itemCode = response;
+                itemCode = "FG32539";
             }
         });
 
@@ -186,21 +186,21 @@
 
                             <td>
                                 <input type="text"
-                                       class="form-control"
+                                       class="form-control txt-itemcode"
                                        value="${currentItemCode}"
                                        readonly />
                             </td>
 
                             <td>
                                 <input type="text"
-                                       class="form-control"
+                                       class="form-control txt-grade"
                                        value="${selectedGrades[i].grade}"
                                        readonly />
                             </td>
 
                            <td>
                                 <input type="text"
-                                       class="form-control"
+                                       class="form-control txt-gradelinkcode"
                                        value="${commonGradeLinkCode.replace(
                 /\.\d+$/,
                 selectedGrades[i].gradeLinkCode
@@ -248,12 +248,14 @@
         $("#grade-tbbody tr").each(function () {
 
             gradeList.push({
-                ItemCode: $(this).find(".txt-itemcode").val(),
+                GradeItemCode: $(this).find(".txt-itemcode").val(),
                 Grade: $(this).find(".txt-grade").val(),
                 GradeLinkCode: $(this).find(".txt-gradelinkcode").val()
             });
 
         });
+
+        console.log(gradeList);
 
         // ---------------------------------------------
         // Main Model Data
@@ -285,6 +287,8 @@
             SizeOfTile: $("#SizeOfTile").val(),
             Brand: $("#Brand").val(),
             Collection: $("#Collection").val(),
+            SurfaceFinishOrGlaze: $("#SurfaceFinishOrGlaze").val(),
+            GlazeEffect: $("#GlazeEffect").val(),
             DesignColor: $("#DesignColor").val(),
             ColourFamily: $("#ColourFamily").val(),
             TypeOfTile: $("#TypeOfTile").val(),

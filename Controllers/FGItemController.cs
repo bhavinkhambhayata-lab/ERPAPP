@@ -109,5 +109,55 @@ namespace ERPAPP.Controllers
             var data = await _fGItemRepository.GetFGItemCompanyLastNoUsedCompanyCode();
             return data;
         }
+
+        public async Task<IActionResult> SaveFGItemMaster([FromBody]FGItemModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return Json(new
+                {
+                    success = false,
+                    message = "Validation failed",
+                    errors = ModelState
+                                .Where(x => x.Value.Errors.Count > 0)
+                                .ToDictionary(
+                                    k => k.Key,
+                                    v => v.Value.Errors.Select(e => e.ErrorMessage).ToArray()
+                                )
+                });
+            }
+
+            try
+            {
+               // var userName = HttpContext.Session.GetString("UserName");
+
+                var insertResult = await _fGItemRepository.InsertFGItem(model);
+
+                if (insertResult)
+                {
+                    return Json(new
+                    {
+                        success = true,
+                        message = "FG item saved successfully."
+                    });
+                }
+                else
+                {
+                    return Json(new
+                    {
+                        success = false,
+                        message = "something went wrong!."
+                    });
+                }
+            }
+            catch
+            {
+                return Json(new
+                {
+                    success = false,
+                    message = "Something went wrong while saving."
+                });
+            }
+        }
     }
 }
