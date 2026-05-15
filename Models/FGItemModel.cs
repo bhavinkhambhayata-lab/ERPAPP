@@ -51,7 +51,8 @@
         public string? GSTCredit { get; set; }
         public string? HSNSACCode { get; set; }
         // ---------------- Units ----------------
-        public string? SalesUnitOfMeasure { get; set; }
+        public string? SalesUnitOfMeasureWithSMPLGrade { get; set; }
+        public string? SalesUnitOfMeasureWithOtherGrade { get; set; }
         public string? ReplenishmentSystem { get; set; }
         public string? PurchUnitOfMeasure { get; set; }
         // ---------------- Tracking ----------------

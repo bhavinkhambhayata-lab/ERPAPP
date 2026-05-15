@@ -493,7 +493,8 @@ namespace ERPAPP.Repository
 
                     // ================= UNITS =================
 
-                    new SqlParameter("@SalesUnitOfMeasure", model.SalesUnitOfMeasure ?? ""),
+                    new SqlParameter("@SalesUnitOfMeasureWithSMPLGrade", model.SalesUnitOfMeasureWithSMPLGrade ?? ""),
+                    new SqlParameter("@SalesUnitOfMeasureWithOtherGrade", model.SalesUnitOfMeasureWithOtherGrade ?? ""),
                     new SqlParameter("@ReplenishmentSystem", model.ReplenishmentSystem ?? ""),
                     new SqlParameter("@PurchUnitOfMeasure", model.PurchUnitOfMeasure ?? ""),
 

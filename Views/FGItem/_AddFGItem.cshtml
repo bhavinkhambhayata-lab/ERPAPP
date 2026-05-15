@@ -330,6 +330,19 @@
                             <span asp-validation-for="ReplenishmentSystem" class="text-danger"></span>
                         </div>
                     </div>
+
+                    <!-- Reordering Policy -->
+                    <div class="row mt-2">
+                        <label class="col-12 col-sm-4 col-form-label">Reorderring Policy</label>
+                        <div class="col-12 col-sm-8">
+                            <select asp-for="ReorderingPolicy"
+                                    asp-items="@(new SelectList(Model.DropDownData.ReorderingPolicy, "Code", "Name"))"
+                                    class="form-select">
+                                <option value="">-- Select --</option>
+                            </select>
+                            <span asp-validation-for="ReorderingPolicy" class="text-danger"></span>
+                        </div>
+                    </div>
                 </div>
 
                 <!-- Column 3 -->
@@ -368,18 +381,46 @@
                             <span asp-validation-for="MovementType" class="text-danger"></span>
                         </div>
                     </div>
-                    <!-- Reordering Policy -->
+
+                    <!-- Sales Unit Of Measure With SMPL Grade -->
                     <div class="row mt-2">
-                        <label class="col-12 col-sm-4 col-form-label">Reorderring Policy</label>
+                        <label class="col-12 col-sm-4 col-form-label">Sales Unit Of Measure With SMPL Grade</label>
                         <div class="col-12 col-sm-8">
-                            <select asp-for="ReorderingPolicy"
-                                    asp-items="@(new SelectList(Model.DropDownData.ReorderingPolicy, "Code", "Name"))"
+                            <select asp-for="SalesUnitOfMeasureWithSMPLGrade"
+                                    asp-items="@(new SelectList(Model.DropDownData.UnitOfMeasures, "Code", "Name"))"
                                     class="form-select">
                                 <option value="">-- Select --</option>
                             </select>
-                            <span asp-validation-for="ReorderingPolicy" class="text-danger"></span>
+                            <span asp-validation-for="SalesUnitOfMeasureWithSMPLGrade" class="text-danger"></span>
                         </div>
                     </div>
+
+                    <!-- Sales Unit Of Measure With Other Grade-->
+                    <div class="row mt-2">
+                        <label class="col-12 col-sm-4 col-form-label">Sales Unit Of Measure With Other</label>
+                        <div class="col-12 col-sm-8">
+                            <select asp-for="SalesUnitOfMeasureWithOtherGrade"
+                                    asp-items="@(new SelectList(Model.DropDownData.UnitOfMeasures, "Code", "Name"))"
+                                    class="form-select">
+                                <option value="">-- Select --</option>
+                            </select>
+                            <span asp-validation-for="SalesUnitOfMeasureWithOtherGrade" class="text-danger"></span>
+                        </div>
+                    </div>
+
+                    <!-- Purch Unit Of Measure -->
+                    <div class="row mt-2">
+                        <label class="col-12 col-sm-4 col-form-label">Purch Unit Of Measure</label>
+                        <div class="col-12 col-sm-8">
+                            <select asp-for="PurchUnitOfMeasure"
+                                    asp-items="@(new SelectList(Model.DropDownData.UnitOfMeasures, "Code", "Name"))"
+                                    class="form-select">
+                                <option value="">-- Select --</option>
+                            </select>
+                            <span asp-validation-for="PurchUnitOfMeasure" class="text-danger"></span>
+                        </div>
+                    </div>
+                   
                 </div>
 
             </div>

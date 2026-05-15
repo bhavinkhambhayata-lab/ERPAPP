@@ -280,6 +280,9 @@
             MovementType: $("#MovementType").val(),
             ReorderingPolicy: $("#ReorderingPolicy").val(),
             ItemCategoryCode: $("#ItemCategoryCode").val(),
+            SalesUnitOfMeasureWithOtherGrade: $("#SalesUnitOfMeasureWithOtherGrade").val(),
+            SalesUnitOfMeasureWithSMPLGrade: $("#SalesUnitOfMeasureWithSMPLGrade").val(),
+            PurchUnitOfMeasure: $("#PurchUnitOfMeasure").val(),
 
             // ---------------- Item Specification ----------------
             TypeOfProduct: $("#TypeOfProduct").val(),
