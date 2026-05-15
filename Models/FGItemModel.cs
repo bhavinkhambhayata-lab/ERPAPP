@@ -29,7 +29,8 @@
         public string? DesignColor { get; set; }
         public string? ColourFamily { get; set; }
         public string? TypeOfTile { get; set; }
-        public string? Packaging { get; set; }
+        public string? PackagingWithOtherGrade { get; set; }
+        public string? PackagingWithSMPLGrade { get; set; }
         public string? Grade { get; set; }
         public string? GradeLinkCode { get; set; }
         public string? Thickness { get; set; }

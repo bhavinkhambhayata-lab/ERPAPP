@@ -464,7 +464,8 @@ namespace ERPAPP.Repository
                     new SqlParameter("@DesignColor", model.DesignColor ?? ""),
                     new SqlParameter("@ColourFamily", model.ColourFamily ?? ""),
                     new SqlParameter("@TypeOfTile", model.TypeOfTile ?? ""),
-                    new SqlParameter("@Packaging", model.Packaging ?? ""),
+                    new SqlParameter("@PackagingWithSMPLGrade", model.PackagingWithSMPLGrade ?? ""),
+                    new SqlParameter("@PackagingWithOtherGrade", model.PackagingWithOtherGrade ?? ""),
 
                     new SqlParameter("@Grade", model.Grade ?? ""),
                     new SqlParameter("@GradeLinkCode", model.GradeLinkCode ?? ""),

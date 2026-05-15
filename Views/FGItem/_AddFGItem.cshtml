@@ -609,11 +609,23 @@
                         </div>
                     </div>
 
-                    <!-- Packaging -->
+                    <!-- Packaging With SMPL Grade -->
                     <div class="row mt-2">
-                        <label class="col-12 col-sm-4 col-form-label">Packaging</label>
+                        <label class="col-12 col-sm-4 col-form-label">Packaging With SMPL Grade</label>
                         <div class="col-12 col-sm-8">
-                            <select asp-for="Packaging"
+                            <select asp-for="PackagingWithSMPLGrade"
+                                    asp-items="@(new SelectList(Model.DropDownData.Packagings, "Code", "Name"))"
+                                    class="form-select">
+                                <option value="">-- Select --</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <!-- Packaging With Other Grade -->
+                    <div class="row mt-2">
+                        <label class="col-12 col-sm-4 col-form-label">Packaging With Other Grade</label>
+                        <div class="col-12 col-sm-8">
+                            <select asp-for="PackagingWithOtherGrade"
                                     asp-items="@(new SelectList(Model.DropDownData.Packagings, "Code", "Name"))"
                                     class="form-select">
                                 <option value="">-- Select --</option>
