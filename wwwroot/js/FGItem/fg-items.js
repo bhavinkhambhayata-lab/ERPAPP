@@ -1,5 +1,5 @@
 ﻿$(document).ready(function () {
-
+  
     $('#GSTGroupCode').change(function () {
 
         var gstCode = $(this).val();
@@ -34,7 +34,7 @@
     });
 
     $("#BaseUnitOfMeasure").change(function () {
-
+        
         let baseUnit = $(this).val();
 
         $.ajax({
@@ -372,5 +372,9 @@
             $('#GenProdPostingGroup').val('');
         }
     });
+
+    $("#BaseUnitOfMeasure").val('SQM').trigger('change');
+    $("#SalesUnitOfMeasureWithSMPLGrade").val('PCS').trigger('change');
+    $("#SalesUnitOfMeasureWithOtherGrade").val('BOX').trigger('change');
 });
 
