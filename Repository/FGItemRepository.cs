@@ -344,20 +344,20 @@ namespace ERPAPP.Repository
             return newNo ?? "";
         }
 
-        public async Task<List<FAHSNModel>> GetFixedAssetHSNDataWithGSTGroupCode(string gstGroupCode)
+        public async Task<List<FGItemHSNModel>> GetFGItemHSNDataWithGSTGroupCode(string gstGroupCode)
         {
-            List<FAHSNModel> list = new List<FAHSNModel>();
+            List<FGItemHSNModel> list = new List<FGItemHSNModel>();
 
             SqlParameter[] param = new SqlParameter[]
             {
                  new SqlParameter("@GSTGroupCode", gstGroupCode)
             };
 
-            DataSet ds = _db.GetDataSet("GetFixedAssetHSNDataWithGSTGroupCode", param);
+            DataSet ds = _db.GetDataSet("GetFGItemHSNDataWithGSTGroupCode", param);
 
             if (ds != null && ds.Tables.Count > 0)
             {
-                list = ds.Tables[0].AsEnumerable().Select(row => new FAHSNModel
+                list = ds.Tables[0].AsEnumerable().Select(row => new FGItemHSNModel
                 {
                     Code = row["Code"]?.ToString(),
                     Name = row["Name"]?.ToString()

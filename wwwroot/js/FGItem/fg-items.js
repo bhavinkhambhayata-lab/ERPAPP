@@ -10,7 +10,7 @@
         if (gstCode !== '') {
 
             $.ajax({
-                url: baseURL + 'FGItem/GetFixedAssetHSNDataWithGSTGroupCode',
+                url: baseURL + 'FGItem/GetFGItemHSNDataWithGSTGroupCode',
                 type: 'GET',
                 data: { gstGroupCode: gstCode },
                 success: function (data) {

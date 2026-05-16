@@ -95,6 +95,8 @@
 
     public class ItemReorderingPolicyEnumModel : BaseDropDown { }
 
+    public class FGItemHSNModel : BaseDropDown { }
+
     public class ItemCategoryModel : BaseDropDown 
     {
         public string? GenProdPostingGroup { get; set; }

@@ -4,9 +4,9 @@ namespace ERPAPP.Interfaces
 {
     public interface IFGItemRepository
     {
-        public Task<GetFGItemAddModel> GetFGItemAddData();
+        Task<GetFGItemAddModel> GetFGItemAddData();
 
-        Task<List<FAHSNModel>> GetFixedAssetHSNDataWithGSTGroupCode(string gstGroupCode);
+        Task<List<FGItemHSNModel>> GetFGItemHSNDataWithGSTGroupCode(string gstGroupCode);
 
         Task<int> GetItemsTransferNewNo();
 

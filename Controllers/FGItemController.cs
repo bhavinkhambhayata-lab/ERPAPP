@@ -76,16 +76,16 @@ namespace ERPAPP.Controllers
         }
 
         [HttpGet]
-        public async Task<JsonResult> GetFixedAssetHSNDataWithGSTGroupCode(string gstGroupCode)
+        public async Task<JsonResult> GetFGItemHSNDataWithGSTGroupCode(string gstGroupCode)
         {
             try
             {
                 if (string.IsNullOrEmpty(gstGroupCode))
                 {
-                    return Json(new List<FAHSNModel>());
+                    return Json(new List<FGItemHSNModel>());
                 }
 
-                var data = await _fGItemRepository.GetFixedAssetHSNDataWithGSTGroupCode(gstGroupCode);
+                var data = await _fGItemRepository.GetFGItemHSNDataWithGSTGroupCode(gstGroupCode);
 
                 return Json(data);
             }
