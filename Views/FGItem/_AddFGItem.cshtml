@@ -281,7 +281,7 @@
 
                 <!-- Column 2 -->
                 <div class="col-4">
-                    <!-- Production BOM No -->
+                    @* <!-- Production BOM No -->
                     <div class="row mt-2">
                         <label class="col-12 col-sm-4 col-form-label">Production BOM No</label>
                         <div class="col-12 col-sm-8">
@@ -292,9 +292,9 @@
                         </div>
                     </div>
 
-                    <!-- Routing Header -->
+                    <!-- Routing No -->
                     <div class="row mt-2">
-                        <label class="col-12 col-sm-4 col-form-label">Routing Header</label>
+                        <label class="col-12 col-sm-4 col-form-label">Routing No</label>
                         <div class="col-12 col-sm-8">
                             <select asp-for="RoutingNo"
                                     asp-items="@(new SelectList(Model.DropDownData.RoutingNos, "Code", "Name"))"
@@ -303,7 +303,7 @@
                             </select>
                             <span asp-validation-for="RoutingNo" class="text-danger"></span>
                         </div>
-                    </div>
+                    </div> *@
 
                     <!-- ManufacturingPolicy -->
                     <div class="row mt-2">
@@ -426,90 +426,6 @@
             </div>
 
         </fieldset>
-
-        <fieldset>
-            <legend class="fw-bold">Grade Details</legend>
-
-            <div class="grade-container mb-2">
-
-                <!-- Grade List -->
-                <div class="row g-3" id="gradeListContainer">
-
-                    @for (int i = 0; i < Model.DropDownData.ItemGrades.Count; i++)
-                    {
-                        var extraClass = i >= 6 ? "extra-grade d-none" : "";
-
-                        <div class="col-xl-2 col-lg-3 col-md-4 col-sm-6 @extraClass">
-
-                            <label class="grade-card">
-
-                                <input class="form-check-input grade-checkbox"
-                                       type="checkbox"
-                                       name="SelectedGrades"
-                                       value="@Model.DropDownData.ItemGrades[i].Name"
-                                       data-gradelinkcode="@Model.DropDownData.ItemGrades[i].GradeLinkCode"
-                                       id="grade_@i" />
-
-                                <span class="grade-text">
-                                    @Model.DropDownData.ItemGrades[i].Name
-                                </span>
-
-                            </label>
-
-                        </div>
-                    }
-
-                </div>
-
-                <!-- More Button -->
-                @if (Model.DropDownData.ItemGrades.Count > 6)
-                {
-                    <div class="text-end mt-3">
-
-                        <button type="button"
-                                class="btn btn-outline-secondary btn-sm"
-                                id="btnShowMoreGrades">
-
-                            More Grade
-
-                        </button>
-
-                    </div>
-                }
-
-                <!-- Preview Button -->
-                <div class="text-end mt-4">
-
-                    <button type="button"
-                            class="btn btn-primary px-4 shadow-sm"
-                            id="btnPreviewGrades">
-
-                        <i class="fa fa-eye me-1"></i>
-                        Preview
-
-                    </button>
-
-                </div>
-
-            </div>
-
-            <!-- Item Grade List -->
-            <div class="table-responsive">
-                <table class="table table-bordered align-middle">
-                    <thead class="table-light">
-                        <tr>
-                            <th>Item Code</th>
-                            <th>Grade</th>
-                            <th>Grade Link Code</th>
-                        </tr>
-                    </thead>
-
-                    <tbody id="grade-tbbody">
-                    </tbody>
-                </table>
-            </div>
-        </fieldset>
-
 
         <!-- ================= Item Specification ================= -->
         <fieldset>
@@ -848,6 +764,96 @@
                 </div>
             </div>
 
+        </fieldset>
+
+        <fieldset>
+            <legend class="fw-bold">Grade Details</legend>
+
+            <div class="grade-container mb-2">
+
+                <!-- Grade List -->
+                <div class="row g-3" id="gradeListContainer">
+
+                    @for (int i = 0; i < Model.DropDownData.ItemGrades.Count; i++)
+                    {
+                        @if (i == 6)
+                        {
+                            <div class="col-12 extra-grade d-none">
+                                <hr class="grade-divider" />
+                            </div>
+                        }
+
+                        var extraClass = i >= 6 ? "extra-grade d-none" : "";
+
+                        <div class="col-xl-2 col-lg-3 col-md-4 col-sm-6 @extraClass">
+
+                            <label class="grade-card">
+
+                                <input class="form-check-input grade-checkbox"
+                                       type="checkbox"
+                                       name="SelectedGrades"
+                                       value="@Model.DropDownData.ItemGrades[i].Name"
+                                       data-gradelinkcode="@Model.DropDownData.ItemGrades[i].GradeLinkCode"
+                                       id="grade_@i" />
+
+                                <span class="grade-text">
+                                    @Model.DropDownData.ItemGrades[i].Name
+                                </span>
+
+                            </label>
+
+                        </div>
+                    }
+
+                </div>
+
+                <!-- More Button -->
+                @if (Model.DropDownData.ItemGrades.Count > 6)
+                {
+                    <div class="text-end mt-3">
+
+                        <button type="button"
+                                class="btn btn-outline-secondary btn-sm"
+                                id="btnShowMoreGrades">
+
+                            More Grade
+
+                        </button>
+
+                    </div>
+                }
+
+                <!-- Preview Button -->
+                <div class="text-end mt-4">
+
+                    <button type="button"
+                            class="btn btn-primary px-4 shadow-sm"
+                            id="btnPreviewGrades">
+
+                        <i class="fa fa-eye me-1"></i>
+                        Preview
+
+                    </button>
+
+                </div>
+
+            </div>
+
+            <!-- Item Grade List -->
+            <div class="table-responsive">
+                <table class="table table-bordered align-middle">
+                    <thead class="table-light">
+                        <tr>
+                            <th>Item Code</th>
+                            <th>Grade</th>
+                            <th>Grade Link Code</th>
+                        </tr>
+                    </thead>
+
+                    <tbody id="grade-tbbody">
+                    </tbody>
+                </table>
+            </div>
         </fieldset>
 
         <div class="action-buttons">

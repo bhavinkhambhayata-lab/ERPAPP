@@ -376,5 +376,8 @@
     $("#BaseUnitOfMeasure").val('SQM').trigger('change');
     $("#SalesUnitOfMeasureWithSMPLGrade").val('PCS').trigger('change');
     $("#SalesUnitOfMeasureWithOtherGrade").val('BOX').trigger('change');
+    $("#CostingMethod").val('0').trigger('change');
+    $("#GSTGroupCode").val('18_GOODS').trigger('change');
+    $("#RoundingPrecision").val('0.001');
 });
 
