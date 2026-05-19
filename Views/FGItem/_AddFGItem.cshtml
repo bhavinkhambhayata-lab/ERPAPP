@@ -281,6 +281,18 @@
 
                 <!-- Column 2 -->
                 <div class="col-4">
+                    <!-- General Product Posting Group -->
+                    <div class="row mt-2">
+                        <label class="col-12 col-sm-4 col-form-label"> Gen Product Posting Group</label>
+                        <div class="col-12 col-sm-8">
+                            <select asp-for="GenProdPostingGroup"
+                                    asp-items="@(new SelectList(Model.DropDownData.GeneralProductPostingGroups, "Code", "Name"))"
+                                    class="form-select">
+                                <option value="">-- Select --</option>
+                            </select>
+                            <span asp-validation-for="GenProdPostingGroup" class="text-danger"></span>
+                        </div>
+                    </div>
                     @* <!-- Production BOM No -->
                     <div class="row mt-2">
                         <label class="col-12 col-sm-4 col-form-label">Production BOM No</label>
@@ -383,7 +395,7 @@
                     </div>
 
                     <!-- Purch Unit Of Measure -->
-                    <div class="row mt-2">
+                    <div class="row mt-2 purch-unit-of-measure">
                         <label class="col-12 col-sm-4 col-form-label">Purch Unit Of Measure</label>
                         <div class="col-12 col-sm-8">
                             <select asp-for="PurchUnitOfMeasure"
@@ -649,18 +661,7 @@
                         </div>
                     </div>
 
-                    <!-- General Product Posting Group -->
-                    <div class="row mt-2">
-                        <label class="col-12 col-sm-4 col-form-label"> Gen Product Posting Group</label>
-                        <div class="col-12 col-sm-8">
-                            <select asp-for="GenProdPostingGroup"
-                                    asp-items="@(new SelectList(Model.DropDownData.GeneralProductPostingGroups, "Code", "Name"))"
-                                    class="form-select">
-                                <option value="">-- Select --</option>
-                            </select>
-                            <span asp-validation-for="GenProdPostingGroup" class="text-danger"></span>
-                        </div>
-                    </div>
+                    
 
                 </div>
 

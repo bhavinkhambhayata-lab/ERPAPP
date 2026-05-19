@@ -1,5 +1,5 @@
 ﻿$(document).ready(function () {
-  
+
     $('#GSTGroupCode').change(function () {
 
         var gstCode = $(this).val();
@@ -34,7 +34,7 @@
     });
 
     $("#BaseUnitOfMeasure").change(function () {
-        
+
         let baseUnit = $(this).val();
 
         $.ajax({
@@ -262,7 +262,7 @@
     });
 
     $("#btnSaveFGItemMaster").on("click", function () {
-        
+
         // ---------------------------------------------
         // Grade List Data
         // ---------------------------------------------
@@ -336,7 +336,7 @@
         };
 
         console.log(model);
-        
+
         // ---------------------------------------------
         // AJAX CALL
         // ---------------------------------------------
@@ -368,31 +368,61 @@
 
     });
 
-    $('#ItemCategoryCode').on('change', function () {
+    //$('#ItemCategoryCode').on('change', function () {
 
-        var selectedOption = $(this).find('option:selected');
+    //    var selectedOption = $(this).find('option:selected');
 
-        if ($(this).val() != '') {
+    //    if ($(this).val() != '') {
 
-            $('#CostingMethod').val(
-                selectedOption.data('costingmethod')
-            );
+    //        $('#CostingMethod').val(
+    //            selectedOption.data('costingmethod')
+    //        );
 
-            $('#InventoryPostingGroup').val(
-                selectedOption.data('inventorypostinggroup')
-            );
+    //        $('#InventoryPostingGroup').val(
+    //            selectedOption.data('inventorypostinggroup')
+    //        );
 
-            $('#GenProdPostingGroup').val(
-                selectedOption.data('genprodpostinggroup')
-            );
+    //        $('#GenProdPostingGroup').val(
+    //            selectedOption.data('genprodpostinggroup')
+    //        );
 
-        } else {
+    //    } else {
 
-            $('#CostingMethod').val('');
-            $('#InventoryPostingGroup').val('');
-            $('#GenProdPostingGroup').val('');
+    //        $('#CostingMethod').val('');
+    //        $('#InventoryPostingGroup').val('');
+    //        $('#GenProdPostingGroup').val('');
+    //    }
+    //});
+
+    $('#GenProdPostingGroup').on('change', function () {
+
+        var val = $(this).val();
+
+        // First clear all values
+        $('#ManufacturingPolicy').val('');
+        $('#ReplenishmentSystem').val('');
+        $('#ReorderingPolicy').val('');
+
+        if (val.includes('-T')) {
+
+            $('#ManufacturingPolicy').val('1');
+            $('#ReplenishmentSystem').val('1');
+
+            $('.purch-unit-of-measure').removeClass('d-none');
         }
+        else {
+
+            $('#ManufacturingPolicy').val('2');
+            $('#ReplenishmentSystem').val('2');
+            $('#ReorderingPolicy').val('3');
+
+            $('.purch-unit-of-measure').addClass('d-none');
+
+        }
+
     });
+
+
 
     $("#BaseUnitOfMeasure").val('SQM').trigger('change');
     $("#SalesUnitOfMeasureWithSMPLGrade").val('PCS').trigger('change');
