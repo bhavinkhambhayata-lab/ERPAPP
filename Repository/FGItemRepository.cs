@@ -367,6 +367,20 @@ namespace ERPAPP.Repository
             return list;
         }
 
+        public async Task<List<UnitOfMeasureModel>> GetFGUnitOfMeasureDropDownData()
+        {
+            DataTable dt = _db.GetDataTable("GetFGUnitOfMeasureDropDownData");
+
+            List<UnitOfMeasureModel> list = dt.AsEnumerable()
+                .Select(x => new UnitOfMeasureModel
+                {
+                    Code = x["Code"].ToString(),
+                    Name = x["Name"].ToString()
+                }).ToList();
+
+            return list;
+        }
+
         public async Task<int> GetItemsTransferNewNo()
         {
             int newNo = 0;
@@ -415,6 +429,7 @@ namespace ERPAPP.Repository
                 dtGrade.Columns.Add("GradeItemCode");
                 dtGrade.Columns.Add("Grade");
                 dtGrade.Columns.Add("GradeLinkCode");
+                dtGrade.Columns.Add("SalesUnitOfMeasure");
 
                 if (model.GradeListDetails != null &&
                     model.GradeListDetails.Count > 0)
@@ -424,7 +439,8 @@ namespace ERPAPP.Repository
                         dtGrade.Rows.Add(
                             item.GradeItemCode ?? "",
                             item.Grade ?? "",
-                            item.GradeLinkCode ?? ""
+                            item.GradeLinkCode ?? "",
+                            item.SalesUnitOfMeasure ?? ""
                         );
                     }
                 }
@@ -464,8 +480,7 @@ namespace ERPAPP.Repository
                     new SqlParameter("@DesignColor", model.DesignColor ?? ""),
                     new SqlParameter("@ColourFamily", model.ColourFamily ?? ""),
                     new SqlParameter("@TypeOfTile", model.TypeOfTile ?? ""),
-                    new SqlParameter("@PackagingWithSMPLGrade", model.PackagingWithSMPLGrade ?? ""),
-                    new SqlParameter("@PackagingWithOtherGrade", model.PackagingWithOtherGrade ?? ""),
+                    new SqlParameter("@Packaging", model.Packaging ?? ""),
 
                     new SqlParameter("@Grade", model.Grade ?? ""),
                     new SqlParameter("@GradeLinkCode", model.GradeLinkCode ?? ""),
@@ -493,8 +508,6 @@ namespace ERPAPP.Repository
 
                     // ================= UNITS =================
 
-                    new SqlParameter("@SalesUnitOfMeasureWithSMPLGrade", model.SalesUnitOfMeasureWithSMPLGrade ?? ""),
-                    new SqlParameter("@SalesUnitOfMeasureWithOtherGrade", model.SalesUnitOfMeasureWithOtherGrade ?? ""),
                     new SqlParameter("@ReplenishmentSystem", model.ReplenishmentSystem ?? ""),
                     new SqlParameter("@PurchUnitOfMeasure", model.PurchUnitOfMeasure ?? ""),
 

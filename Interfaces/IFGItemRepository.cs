@@ -15,5 +15,7 @@ namespace ERPAPP.Interfaces
         Task<bool> InsertFGItem(FGItemModel model);
 
         Task<string> GetFGItemCompanyLastNoUsedCompanyCode();
+
+        Task<List<UnitOfMeasureModel>> GetFGUnitOfMeasureDropDownData();
     }
 }

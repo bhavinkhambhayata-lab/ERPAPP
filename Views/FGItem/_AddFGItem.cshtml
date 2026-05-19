@@ -382,32 +382,6 @@
                         </div>
                     </div>
 
-                    <!-- Sales Unit Of Measure With SMPL Grade -->
-                    <div class="row mt-2">
-                        <label class="col-12 col-sm-4 col-form-label">Sales Unit Of Measure With SMPL Grade</label>
-                        <div class="col-12 col-sm-8">
-                            <select asp-for="SalesUnitOfMeasureWithSMPLGrade"
-                                    asp-items="@(new SelectList(Model.DropDownData.UnitOfMeasures, "Code", "Name"))"
-                                    class="form-select">
-                                <option value="">-- Select --</option>
-                            </select>
-                            <span asp-validation-for="SalesUnitOfMeasureWithSMPLGrade" class="text-danger"></span>
-                        </div>
-                    </div>
-
-                    <!-- Sales Unit Of Measure With Other Grade-->
-                    <div class="row mt-2">
-                        <label class="col-12 col-sm-4 col-form-label">Sales Unit Of Measure With Other</label>
-                        <div class="col-12 col-sm-8">
-                            <select asp-for="SalesUnitOfMeasureWithOtherGrade"
-                                    asp-items="@(new SelectList(Model.DropDownData.UnitOfMeasures, "Code", "Name"))"
-                                    class="form-select">
-                                <option value="">-- Select --</option>
-                            </select>
-                            <span asp-validation-for="SalesUnitOfMeasureWithOtherGrade" class="text-danger"></span>
-                        </div>
-                    </div>
-
                     <!-- Purch Unit Of Measure -->
                     <div class="row mt-2">
                         <label class="col-12 col-sm-4 col-form-label">Purch Unit Of Measure</label>
@@ -566,23 +540,11 @@
                         </div>
                     </div>
 
-                    <!-- Packaging With SMPL Grade -->
+                    <!-- Packaging -->
                     <div class="row mt-2">
-                        <label class="col-12 col-sm-4 col-form-label">Packaging With SMPL Grade</label>
+                        <label class="col-12 col-sm-4 col-form-label">Packaging</label>
                         <div class="col-12 col-sm-8">
-                            <select asp-for="PackagingWithSMPLGrade"
-                                    asp-items="@(new SelectList(Model.DropDownData.Packagings, "Code", "Name"))"
-                                    class="form-select">
-                                <option value="">-- Select --</option>
-                            </select>
-                        </div>
-                    </div>
-
-                    <!-- Packaging With Other Grade -->
-                    <div class="row mt-2">
-                        <label class="col-12 col-sm-4 col-form-label">Packaging With Other Grade</label>
-                        <div class="col-12 col-sm-8">
-                            <select asp-for="PackagingWithOtherGrade"
+                            <select asp-for="Packaging"
                                     asp-items="@(new SelectList(Model.DropDownData.Packagings, "Code", "Name"))"
                                     class="form-select">
                                 <option value="">-- Select --</option>
@@ -847,6 +809,7 @@
                             <th>Item Code</th>
                             <th>Grade</th>
                             <th>Grade Link Code</th>
+                            <th>Sales Unit Of Measure</th>
                         </tr>
                     </thead>
 

@@ -29,8 +29,7 @@
         public string? DesignColor { get; set; }
         public string? ColourFamily { get; set; }
         public string? TypeOfTile { get; set; }
-        public string? PackagingWithOtherGrade { get; set; }
-        public string? PackagingWithSMPLGrade { get; set; }
+        public string? Packaging { get; set; }
         public string? Grade { get; set; }
         public string? GradeLinkCode { get; set; }
         public string? Thickness { get; set; }
@@ -51,8 +50,6 @@
         public string? GSTCredit { get; set; }
         public string? HSNSACCode { get; set; }
         // ---------------- Units ----------------
-        public string? SalesUnitOfMeasureWithSMPLGrade { get; set; }
-        public string? SalesUnitOfMeasureWithOtherGrade { get; set; }
         public string? ReplenishmentSystem { get; set; }
         public string? PurchUnitOfMeasure { get; set; }
         // ---------------- Tracking ----------------
@@ -158,5 +155,7 @@
         public string? GradeItemCode { get; set; }
         public string? Grade { get; set; }
         public string? GradeLinkCode { get; set; }
+
+        public string? SalesUnitOfMeasure { get; set; }
     }
 }

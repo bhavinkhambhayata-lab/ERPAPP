@@ -91,7 +91,25 @@
             }
         });
 
-        
+
+        let salesUnitOptions = "";
+
+        $.ajax({
+            url: baseURL + 'FGItem/GetItem_UnitOfMeasureDropDownData',
+            type: 'GET',
+            async: false,
+            success: function (response) {
+
+                $.each(response, function (index, item) {
+
+                    salesUnitOptions += `
+                <option value="${item.code}">
+                    ${item.name}
+                </option>`;
+                });
+            }
+        });
+
 
         // Prefix + Number split
         let prefix = itemCode.match(/[A-Za-z]+/)[0];
@@ -207,7 +225,12 @@
             )
                 }" readonly />
                             </td>
-
+                             <td>
+                                <select class="form-select txt-salesunit">
+                                    <option value="">-- Select --</option>
+                                    ${salesUnitOptions}
+                                </select>
+                            </td>
                         </tr>`;
         }
 
@@ -239,7 +262,7 @@
     });
 
     $("#btnSaveFGItemMaster").on("click", function () {
-
+        
         // ---------------------------------------------
         // Grade List Data
         // ---------------------------------------------
@@ -250,7 +273,8 @@
             gradeList.push({
                 GradeItemCode: $(this).find(".txt-itemcode").val(),
                 Grade: $(this).find(".txt-grade").val(),
-                GradeLinkCode: $(this).find(".txt-gradelinkcode").val()
+                GradeLinkCode: $(this).find(".txt-gradelinkcode").val(),
+                SalesUnitOfMeasure: $(this).find(".txt-salesunit").val()
             });
 
         });
@@ -280,8 +304,6 @@
             MovementType: $("#MovementType").val(),
             ReorderingPolicy: $("#ReorderingPolicy").val(),
             ItemCategoryCode: $("#ItemCategoryCode").val(),
-            SalesUnitOfMeasureWithOtherGrade: $("#SalesUnitOfMeasureWithOtherGrade").val(),
-            SalesUnitOfMeasureWithSMPLGrade: $("#SalesUnitOfMeasureWithSMPLGrade").val(),
             PurchUnitOfMeasure: $("#PurchUnitOfMeasure").val(),
 
             // ---------------- Item Specification ----------------
@@ -295,8 +317,7 @@
             DesignColor: $("#DesignColor").val(),
             ColourFamily: $("#ColourFamily").val(),
             TypeOfTile: $("#TypeOfTile").val(),
-            PackagingWithOtherGrade: $("#PackagingWithOtherGrade").val(),
-            PackagingWithSMPLGrade: $("#PackagingWithSMPLGrade").val(),
+            Packaging: $("#Packaging").val(),
             Thickness: $("#Thickness").val(),
             Body: $("#Body").val(),
             PLCollection: $("#PLCollection").val(),
@@ -315,7 +336,7 @@
         };
 
         console.log(model);
-
+        
         // ---------------------------------------------
         // AJAX CALL
         // ---------------------------------------------
@@ -379,5 +400,6 @@
     $("#CostingMethod").val('0').trigger('change');
     $("#GSTGroupCode").val('18_GOODS').trigger('change');
     $("#RoundingPrecision").val('0.001');
+    $("#GSTCredit").val("1");
 });
 

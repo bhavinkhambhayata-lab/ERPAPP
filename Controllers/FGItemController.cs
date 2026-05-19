@@ -159,5 +159,13 @@ namespace ERPAPP.Controllers
                 });
             }
         }
+
+
+        public async Task<JsonResult> GetItem_UnitOfMeasureDropDownData()
+        {
+            var data = await _fGItemRepository.GetFGUnitOfMeasureDropDownData();
+
+            return Json(data);
+        }
     }
 }
