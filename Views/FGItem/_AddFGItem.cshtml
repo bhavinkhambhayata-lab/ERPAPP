@@ -487,6 +487,11 @@
                         </div>
                     </div>
 
+                   
+                </div>
+
+                <!-- Column 2 -->
+                <div class="col-4">
                     <!-- Surface Finish Glazes  -->
                     <div class="row mt-2">
                         <label class="col-12 col-sm-4 col-form-label">Surface Finish Or Glaze</label>
@@ -524,10 +529,7 @@
                             </select>
                         </div>
                     </div>
-                </div>
 
-                <!-- Column 2 -->
-                <div class="col-4">
                     <!-- Colour Family -->
                     <div class="row mt-2">
                         <label class="col-12 col-sm-4 col-form-label">Colour Family</label>
@@ -552,6 +554,12 @@
                         </div>
                     </div>
 
+                   
+
+                </div>
+
+                <!-- Column 3 -->
+                <div class="col-4">
                     <!-- Packaging -->
                     <div class="row mt-2">
                         <label class="col-12 col-sm-4 col-form-label">Packaging</label>
@@ -563,26 +571,6 @@
                             </select>
                         </div>
                     </div>
-
-                    @*  <!-- Grade -->
-                    <div class="row mt-2">
-                        <label class="col-12 col-sm-5 col-form-label">Grade</label>
-                        <div class="col-12 col-sm-7">
-                            <select asp-for="Grade"
-                                    asp-items="@(new SelectList(Model.DropDownData.Grades, "Code", "Name"))"
-                                    class="form-select">
-                                <option value="">-- Select --</option>
-                            </select>
-                        </div>
-                    </div>
-
-                    <!-- Grade Link Code -->
-                    <div class="row mt-2">
-                        <label class="col-12 col-sm-5 col-form-label">Grade Link Code</label>
-                        <div class="col-12 col-sm-7">
-                            <input asp-for="GradeLinkCode" class="form-control" />
-                        </div>
-                    </div> *@
 
                     <!-- Thickness -->
                     <div class="row mt-2">
@@ -596,10 +584,6 @@
                         </div>
                     </div>
 
-                </div>
-
-                <!-- Column 3 -->
-                <div class="col-4">
                     <!-- Body -->
                     <div class="row mt-2">
                         <label class="col-12 col-sm-4 col-form-label">Body</label>
@@ -661,8 +645,18 @@
                         </div>
                     </div>
 
-                    
-
+                    <!-- Inventory Posting Group -->
+                    <div class="row mt-2">
+                        <label class="col-12 col-sm-4 col-form-label"> Inventory Posting Group</label>
+                        <div class="col-12 col-sm-8">
+                            <select asp-for="InventoryPostingGroup"
+                                    asp-items="@(new SelectList(Model.DropDownData.InventoryPostingGroups, "Code", "Name"))"
+                                    class="form-select">
+                                <option value="">-- Select --</option>
+                            </select>
+                            <span asp-validation-for="InventoryPostingGroup" class="text-danger"></span>
+                        </div>
+                    </div>
                 </div>
 
 
@@ -710,18 +704,7 @@
                     </div>
 
 
-                    <!-- Inventory Posting Group -->
-                    <div class="row mt-2">
-                        <label class="col-12 col-sm-4 col-form-label"> Inventory Posting Group</label>
-                        <div class="col-12 col-sm-8">
-                            <select asp-for="InventoryPostingGroup"
-                                    asp-items="@(new SelectList(Model.DropDownData.InventoryPostingGroups, "Code", "Name"))"
-                                    class="form-select">
-                                <option value="">-- Select --</option>
-                            </select>
-                            <span asp-validation-for="InventoryPostingGroup" class="text-danger"></span>
-                        </div>
-                    </div>
+                  
 
 
                 </div>
@@ -739,14 +722,14 @@
 
                     @for (int i = 0; i < Model.DropDownData.ItemGrades.Count; i++)
                     {
-                        @if (i == 6)
+                        @if (i == 5)
                         {
                             <div class="col-12 extra-grade d-none">
                                 <hr class="grade-divider" />
                             </div>
                         }
 
-                        var extraClass = i >= 6 ? "extra-grade d-none" : "";
+                        var extraClass = i >= 5 ? "extra-grade d-none" : "";
 
                         <div class="col-xl-2 col-lg-3 col-md-4 col-sm-6 @extraClass">
 
