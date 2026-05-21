@@ -253,7 +253,7 @@
                         </div>
                     </div>
 
-                   
+
                 </div>
 
                 <div class="col-4">
@@ -556,19 +556,28 @@
 
                 <!-- Column 2 -->
                 <div class="col-4">
-                    
 
-                   @*  <!-- Design Color -->
-                    <div class="row mt-2">
-                        <label class="col-12 col-sm-4 col-form-label">Design Color</label>
+
+                    <!-- Design Color -->
+                    <div class="row mt-2 align-items-center">
+
+                        <label class="col-12 col-sm-4 col-form-label">
+                            Design Color
+                        </label>
+
                         <div class="col-12 col-sm-8">
-                            <select asp-for="DesignColor"
-                                    asp-items="@(new SelectList(Model.DropDownData.DesignColors, "Code", "Name"))"
-                                    class="form-select">
-                                <option value="">-- Select --</option>
-                            </select>
+                            <div class="form-check ms-1">
+                                <input class="form-check-input" type="checkbox" id="chkDesignColorSameAsDescription">
+                                <label class="form-check-label" for="chkDesignColorSameAsDescription">Same as Description</label>
+                            </div>
+
+                            <input type="text" asp-for="DesignColor" class="form-control mb-2" />
+
+                            <span asp-validation-for="DesignColor" class="text-danger"></span>
+
                         </div>
-                    </div> *@
+
+                    </div>
 
                     <!-- Colour Family -->
                     <div class="row mt-2">

@@ -1,5 +1,16 @@
 ﻿$(document).ready(function () {
 
+    $("#chkDesignColorSameAsDescription").change(function () {
+
+        if ($(this).is(":checked")) {
+            $("#DesignColor").val($("#Description").val());
+        }
+        else {
+            $("#DesignColor").val('');
+        }
+
+    });
+
     $('#Category').change(function () {
         $("#GSTGroupCode").val("18_GOODS").trigger("change");
     });
@@ -353,11 +364,11 @@
         formData.append("TypeOfProduct", $("#TypeOfProduct").val());
         formData.append("Category", $("#Category").val());
         formData.append("SizeOfTile", $("#SizeOfTile").val());
-        formData.append("Brand", $("#Brand").val());
+        //formData.append("Brand", $("#Brand").val());
         formData.append("Collection", $("#Collection").val());
         formData.append("SurfaceFinishOrGlaze", $("#SurfaceFinishOrGlaze").val());
         formData.append("GlazeEffect", $("#GlazeEffect").val());
-        //formData.append("DesignColor", $("#DesignColor").val() ?? '');
+        formData.append("DesignColor", $("#DesignColor").val() ?? '');
         formData.append("ColourFamily", $("#ColourFamily").val());
         formData.append("TypeOfTile", $("#TypeOfTile").val());
         formData.append("Packaging", $("#Packaging").val());
