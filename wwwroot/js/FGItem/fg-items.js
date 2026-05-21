@@ -1,25 +1,32 @@
 ﻿$(document).ready(function () {
 
-    $('#GSTGroupCode').change(function () {
+    $('#Category').change(function () {
+        $("#GSTGroupCode").val("18_GOODS").trigger("change");
+    });
 
+    $('#GSTGroupCode').change(function () {
+        
         var gstCode = $(this).val();
 
         $('#HSNSACCode').empty();
         $('#HSNSACCode').append('<option value="">--Select--</option>');
+
+        var category = $("#Category").val() ?? '';
 
         if (gstCode !== '') {
 
             $.ajax({
                 url: baseURL + 'FGItem/GetFGItemHSNDataWithGSTGroupCode',
                 type: 'GET',
-                data: { gstGroupCode: gstCode },
+                data: { gstGroupCode: gstCode, category: category },
                 success: function (data) {
 
                     $.each(data, function (i, item) {
                         $('#HSNSACCode').append(
                             $('<option>', {
                                 value: item.code,
-                                text: item.name
+                                text: item.name,
+                                selected: item.isSelected == true
                             })
                         );
                     });
@@ -321,13 +328,13 @@
 
         formData.append("BaseUnitOfMeasure", $("#BaseUnitOfMeasure").val());
 
-        formData.append("ProductionBOMNo", $("#ProductionBOMNo").val());
-        formData.append("RoutingNo", $("#RoutingNo").val());
+        //formData.append("ProductionBOMNo", $("#ProductionBOMNo").val() ?? '');
+        //formData.append("RoutingNo", $("#RoutingNo").val() ?? '');
         formData.append("ManufacturingPolicy", $("#ManufacturingPolicy").val());
         formData.append("ReplenishmentSystem", $("#ReplenishmentSystem").val());
         formData.append("MovementType", $("#MovementType").val());
         formData.append("ReorderingPolicy", $("#ReorderingPolicy").val());
-        formData.append("ItemCategoryCode", $("#ItemCategoryCode").val());
+        //formData.append("ItemCategoryCode", $("#ItemCategoryCode").val() ?? '');
         formData.append("PurchUnitOfMeasure", $("#PurchUnitOfMeasure").val());
 
         // ---------------- Item Specification ----------------
@@ -339,7 +346,7 @@
         formData.append("Collection", $("#Collection").val());
         formData.append("SurfaceFinishOrGlaze", $("#SurfaceFinishOrGlaze").val());
         formData.append("GlazeEffect", $("#GlazeEffect").val());
-        formData.append("DesignColor", $("#DesignColor").val());
+        //formData.append("DesignColor", $("#DesignColor").val() ?? '');
         formData.append("ColourFamily", $("#ColourFamily").val());
         formData.append("TypeOfTile", $("#TypeOfTile").val());
         formData.append("Packaging", $("#Packaging").val());

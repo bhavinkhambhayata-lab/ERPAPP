@@ -736,14 +736,14 @@
 
                     @for (int i = 0; i < Model.DropDownData.ItemGrades.Count; i++)
                     {
-                        @if (i == 5)
+                        @if (i == 4)
                         {
                             <div class="col-12 extra-grade d-none">
                                 <hr class="grade-divider" />
                             </div>
                         }
 
-                        var extraClass = i >= 5 ? "extra-grade d-none" : "";
+                        var extraClass = i >= 4 ? "extra-grade d-none" : "";
 
                         <div class="col-xl-2 col-lg-3 col-md-4 col-sm-6 @extraClass">
 

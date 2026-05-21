@@ -76,7 +76,7 @@ namespace ERPAPP.Controllers
         }
 
         [HttpGet]
-        public async Task<JsonResult> GetFGItemHSNDataWithGSTGroupCode(string gstGroupCode)
+        public async Task<JsonResult> GetFGItemHSNDataWithGSTGroupCode(string gstGroupCode,string category)
         {
             try
             {
@@ -85,7 +85,7 @@ namespace ERPAPP.Controllers
                     return Json(new List<FGItemHSNModel>());
                 }
 
-                var data = await _fGItemRepository.GetFGItemHSNDataWithGSTGroupCode(gstGroupCode);
+                var data = await _fGItemRepository.GetFGItemHSNDataWithGSTGroupCode(gstGroupCode,category);
 
                 return Json(data);
             }

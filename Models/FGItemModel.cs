@@ -107,7 +107,11 @@ namespace ERPAPP.Models
 
     public class ItemReorderingPolicyEnumModel : BaseDropDown { }
 
-    public class FGItemHSNModel : BaseDropDown { }
+    public class FGItemHSNModel : BaseDropDown 
+    { 
+        public bool IsSelected { get; set; }
+        public int? SelectedHSNCode { get; set; }
+    }
 
     public class ItemCategoryModel : BaseDropDown
     {

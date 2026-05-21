@@ -358,13 +358,14 @@ namespace ERPAPP.Repository
             return newNo ?? "";
         }
 
-        public async Task<List<FGItemHSNModel>> GetFGItemHSNDataWithGSTGroupCode(string gstGroupCode)
+        public async Task<List<FGItemHSNModel>> GetFGItemHSNDataWithGSTGroupCode(string gstGroupCode,string category)
         {
             List<FGItemHSNModel> list = new List<FGItemHSNModel>();
 
             SqlParameter[] param = new SqlParameter[]
             {
-                 new SqlParameter("@GSTGroupCode", gstGroupCode)
+                 new SqlParameter("@GSTGroupCode", gstGroupCode),
+                 new SqlParameter("@Category", category ?? "")    
             };
 
             DataSet ds = _db.GetDataSet("GetFGItemHSNDataWithGSTGroupCode", param);
@@ -376,6 +377,20 @@ namespace ERPAPP.Repository
                     Code = row["Code"]?.ToString(),
                     Name = row["Name"]?.ToString()
                 }).ToList();
+
+                // Selected HSN Code
+                string selectedHSNCode = "";
+
+                if (ds.Tables.Count > 1 && ds.Tables[1].Rows.Count > 0)
+                {
+                    selectedHSNCode = ds.Tables[1].Rows[0]["SelectedHSNCode"]?.ToString();
+                }
+
+                // Set Selected
+                foreach (var item in list)
+                {
+                    item.IsSelected = item.Code == selectedHSNCode;
+                }
             }
 
             return list;

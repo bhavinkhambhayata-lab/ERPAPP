@@ -6,7 +6,7 @@ namespace ERPAPP.Interfaces
     {
         Task<GetFGItemAddModel> GetFGItemAddData();
 
-        Task<List<FGItemHSNModel>> GetFGItemHSNDataWithGSTGroupCode(string gstGroupCode);
+        Task<List<FGItemHSNModel>> GetFGItemHSNDataWithGSTGroupCode(string gstGroupCode,string category);
 
         Task<int> GetItemsTransferNewNo();
 
