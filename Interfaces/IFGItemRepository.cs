@@ -19,5 +19,7 @@ namespace ERPAPP.Interfaces
         Task<List<UnitOfMeasureModel>> GetFGUnitOfMeasureDropDownData();
 
         Task<List<BrandModel>> GetFGBrandDropDownData();
+
+        Task<string> GetWIPItemCompanyLastNoUsedCompanyCode();
     }
 }

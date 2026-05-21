@@ -443,6 +443,20 @@ namespace ERPAPP.Repository
             return list;
         }
 
+        public async Task<string> GetWIPItemCompanyLastNoUsedCompanyCode()
+        {
+            string newNo = "";
+
+            DataTable dt = _db.GetDataTable("GetWIPItemCompanyLastNoUsedCompanyCode");
+
+            if (dt != null && dt.Rows.Count > 0)
+            {
+                newNo = Convert.ToString(dt.Rows[0]["NewWIPItemCode"]);
+            }
+
+            return newNo ?? "";
+        }
+
         public async Task<bool> InsertFGItem(FGItemModel model, string createdBy)
         {
             try
@@ -564,7 +578,8 @@ namespace ERPAPP.Repository
                 // STORE PROCEDURE CALL
                 // ============================================
 
-                var itemNoObj = _db.ExecuteScalar("FGItems_InsertDataWithCompany", param);
+                //var itemNoObj = _db.ExecuteScalar("FGItems_InsertDataWithCompany", param);
+                var itemNoObj = "";
 
                 string itemNo = itemNoObj?.ToString();
 

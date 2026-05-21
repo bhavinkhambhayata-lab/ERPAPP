@@ -174,5 +174,11 @@ namespace ERPAPP.Controllers
 
             return Json(data);
         }
+
+        public async Task<string> GetWIPItemCompanyLastNoUsedCompanyCode()
+        {
+            var data = await _fGItemRepository.GetWIPItemCompanyLastNoUsedCompanyCode();
+            return data;
+        }
     }
 }
