@@ -40,31 +40,31 @@
         }
     });
 
-    $("#BaseUnitOfMeasure").change(function () {
+    //$("#BaseUnitOfMeasure").change(function () {
 
-        let baseUnit = $(this).val();
+    //    let baseUnit = $(this).val();
 
-        $.ajax({
-            url: baseURL + 'FGItem/GetItem_UnitOfMeasureChange',
-            type: 'GET',
-            data: { baseUnitOfMeasure: baseUnit },
-            success: function (response) {
+    //    $.ajax({
+    //        url: baseURL + 'FGItem/GetItem_UnitOfMeasureChange',
+    //        type: 'GET',
+    //        data: { baseUnitOfMeasure: baseUnit },
+    //        success: function (response) {
 
-                $("#ProductionBOMNo").empty();
-                $("#ProductionBOMNo").append('<option value="">-- Select --</option>');
+    //            $("#ProductionBOMNo").empty();
+    //            $("#ProductionBOMNo").append('<option value="">-- Select --</option>');
 
-                $.each(response, function (i, item) {
+    //            $.each(response, function (i, item) {
 
-                    $("#ProductionBOMNo").append(
-                        `<option value="${item.code}">${item.name}</option>`
-                    );
+    //                $("#ProductionBOMNo").append(
+    //                    `<option value="${item.code}">${item.name}</option>`
+    //                );
 
-                });
+    //            });
 
-            }
-        });
+    //        }
+    //    });
 
-    });
+    //});
 
     $(document).on("click", "#btnPreviewGrades", function () {
 
@@ -258,7 +258,7 @@
                 }" readonly />
                             </td>
                              <td>
-                                <select class="form-select txt-salesunit" disabled>
+                                <select class="form-select txt-salesunit">
                                     <option value="">-- Select --</option>
                                     ${salesUnitOptions}
                                 </select>
@@ -272,18 +272,29 @@
         $("#grade-tbbody tr").each(function () {
 
             let grade = $(this).find(".txt-grade").val();
+            let salesUnit = $(this).find(".txt-salesunit");
 
             // Sales Unit Logic
             if (grade == "SMPL") {
 
-                $(this).find(".txt-salesunit").val("PCS");
+                salesUnit.val("PCS");
             }
             else {
 
-                $(this).find(".txt-salesunit").val("BOX");
+                salesUnit.val("BOX");
             }
 
-            // Brand Default = Griffine
+            // Disable Sales Unit for specific grades
+            if (grade == "SPRM" || grade == "STD" || grade == "ECO" || grade == "SMPL") {
+
+                salesUnit.prop("disabled", true);
+            }
+            else {
+
+                salesUnit.prop("disabled", false);
+            }
+
+            // Brand Default = GRIFINE
             $(this).find(".txt-brand").val("GRIFINE");
 
         });
