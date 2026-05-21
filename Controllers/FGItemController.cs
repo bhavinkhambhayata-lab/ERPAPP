@@ -110,7 +110,7 @@ namespace ERPAPP.Controllers
             return data;
         }
 
-        public async Task<IActionResult> SaveFGItemMaster([FromBody]FGItemModel model)
+        public async Task<IActionResult> SaveFGItemMaster(FGItemModel model)
         {
             if (!ModelState.IsValid)
             {
@@ -129,9 +129,9 @@ namespace ERPAPP.Controllers
 
             try
             {
-               // var userName = HttpContext.Session.GetString("UserName");
+                var userName = HttpContext.Session.GetString("UserName");
 
-                var insertResult = await _fGItemRepository.InsertFGItem(model);
+                var insertResult = await _fGItemRepository.InsertFGItem(model, userName ?? "");
 
                 if (insertResult)
                 {
@@ -164,6 +164,13 @@ namespace ERPAPP.Controllers
         public async Task<JsonResult> GetItem_UnitOfMeasureDropDownData()
         {
             var data = await _fGItemRepository.GetFGUnitOfMeasureDropDownData();
+
+            return Json(data);
+        }
+
+        public async Task<JsonResult> GetItem_BrandDropDownData()
+        {
+            var data = await _fGItemRepository.GetFGBrandDropDownData();
 
             return Json(data);
         }

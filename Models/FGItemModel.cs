@@ -1,4 +1,6 @@
-﻿namespace ERPAPP.Models
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace ERPAPP.Models
 {
     public class FGItemModel
     {
@@ -6,8 +8,12 @@
 
         // ---------------- TextBox Fields ----------------
         public string? CompanyCode { get; set; }
-        public string Description { get; set; }
-        public string? Description2 { get; set; }
+
+        [Required(ErrorMessage = "Description is required")]
+        public string Description { get; set; } = string.Empty;
+
+        [Required(ErrorMessage = "Description 2 is required")]
+        public string Description2 { get; set; } = string.Empty;
         public decimal? RoundingPrecision { get; set; }
         public decimal? GrossWeight { get; set; }
         public decimal? NetWeight { get; set; }
@@ -20,19 +26,28 @@
         public string? TypeOfProduct { get; set; }
 
         // ---------------- Tile Attributes ----------------
-        public string? Category { get; set; }
-        public string? SizeOfTile { get; set; }
+        [Required(ErrorMessage = "Category is required")]
+        public string Category { get; set; } = string.Empty;
+
+        [Required(ErrorMessage = "Size Of Tile is required")]
+        public string SizeOfTile { get; set; } = string.Empty;
+        
         public string? Brand { get; set; }
+
         public string? Collection { get; set; }
         public string? SurfaceFinishOrGlaze { get; set; }
         public string? GlazeEffect { get; set; }
         public string? DesignColor { get; set; }
         public string? ColourFamily { get; set; }
         public string? TypeOfTile { get; set; }
-        public string? Packaging { get; set; }
+
+        [Required(ErrorMessage = "Packaging is required")]
+        public string Packaging { get; set; } = string.Empty;
         public string? Grade { get; set; }
         public string? GradeLinkCode { get; set; }
-        public string? Thickness { get; set; }
+
+        [Required(ErrorMessage = "Thickness is required")]
+        public string Thickness { get; set; } = string.Empty;
         public string? Body { get; set; }
         public string? PLCollection { get; set; }
         public string? PLColours { get; set; }
@@ -65,7 +80,7 @@
     public class RoutingModel : BaseDropDown { }
     public class GeneralProductPostingGroupModel : BaseDropDown { }
     public class InventoryPostingGroupModel : BaseDropDown { }
-    public class  GSTGroupsModel : BaseDropDown { }
+    public class GSTGroupsModel : BaseDropDown { }
     public class ProductionBOMHeaderModel : BaseDropDown { }
     public class CategoryModel : BaseDropDown { }
     public class SizeOfTileModel : BaseDropDown { }
@@ -94,14 +109,15 @@
 
     public class FGItemHSNModel : BaseDropDown { }
 
-    public class ItemCategoryModel : BaseDropDown 
+    public class ItemCategoryModel : BaseDropDown
     {
         public string? GenProdPostingGroup { get; set; }
         public string? InventoryPostingGroup { get; set; }
         public string? CostingMethod { get; set; }
     }
-    public class ItemGradeModel : BaseDropDown { 
-    
+    public class ItemGradeModel : BaseDropDown
+    {
+
         public string? GradeLinkCode { get; set; }
 
     }
@@ -153,9 +169,9 @@
     public class FGItemGradeListDetails
     {
         public string? GradeItemCode { get; set; }
+        public string? Brand { get; set; }
         public string? Grade { get; set; }
         public string? GradeLinkCode { get; set; }
-
         public string? SalesUnitOfMeasure { get; set; }
     }
 }

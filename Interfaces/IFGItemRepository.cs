@@ -12,10 +12,12 @@ namespace ERPAPP.Interfaces
 
         Task<List<ProductionBOMHeaderModel>> GetItem_ChangeUnitOfMeasure(string baseUnitOfMeasure);
 
-        Task<bool> InsertFGItem(FGItemModel model);
+        Task<bool> InsertFGItem(FGItemModel model, string createdBy);
 
         Task<string> GetFGItemCompanyLastNoUsedCompanyCode();
 
         Task<List<UnitOfMeasureModel>> GetFGUnitOfMeasureDropDownData();
+
+        Task<List<BrandModel>> GetFGBrandDropDownData();
     }
 }

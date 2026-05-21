@@ -196,19 +196,17 @@
     </div>
 
     <div class="container-fluid mt-3">
-        <!-- ================= General ================= -->
+
+        <!-- ================= Basic Information ================= -->
         <fieldset>
-            <legend class="fw-bold">General Details</legend>
+            <legend class="fw-bold">Basic Information</legend>
 
             <div class="row">
-
-                <!-- Column 1 -->
                 <div class="col-4">
-
                     <!-- Description -->
                     <div class="row mt-2">
                         <label class="col-12 col-sm-4 col-form-label">
-                            Description
+                            Description<span class="required-star">*</span>
                         </label>
                         <div class="col-12 col-sm-8 position-relative">
                             <input asp-for="Description" class="form-control" />
@@ -219,13 +217,93 @@
                     <!-- Description 2 -->
                     <div class="row mt-2">
                         <label class="col-12 col-sm-4 col-form-label">
-                            Description 2
+                            Description 2<span class="required-star">*</span>
                         </label>
                         <div class="col-12 col-sm-8 position-relative">
                             <input asp-for="Description2" class="form-control" />
                             <span asp-validation-for="Description2" class="text-danger"></span>
                         </div>
                     </div>
+                </div>
+
+                <div class="col-4">
+                    <!-- Size Of Tile -->
+                    <div class="row mt-2">
+                        <label class="col-12 col-sm-4 col-form-label">Size Of Tile<span class="required-star">*</span></label>
+                        <div class="col-12 col-sm-8">
+                            <select asp-for="SizeOfTile"
+                                    asp-items="@(new SelectList(Model.DropDownData.SizeOfTiles, "Code", "Name"))"
+                                    class="form-select">
+                                <option value="">-- Select --</option>
+                            </select>
+                            <span asp-validation-for="SizeOfTile" class="text-danger"></span>
+                        </div>
+                    </div>
+
+                    <!-- Category -->
+                    <div class="row mt-2">
+                        <label class="col-12 col-sm-4 col-form-label">Category<span class="required-star">*</span></label>
+                        <div class="col-12 col-sm-8">
+                            <select asp-for="Category"
+                                    asp-items="@(new SelectList(Model.DropDownData.Categories, "Code", "Name"))"
+                                    class="form-select">
+                                <option value="">-- Select --</option>
+                            </select>
+                            <span asp-validation-for="Category" class="text-danger"></span>
+                        </div>
+                    </div>
+
+                   
+                </div>
+
+                <div class="col-4">
+                    <!-- Packaging -->
+                    <div class="row mt-2">
+                        <label class="col-12 col-sm-4 col-form-label">Packaging<span class="required-star">*</span></label>
+                        <div class="col-12 col-sm-8">
+                            <select asp-for="Packaging"
+                                    asp-items="@(new SelectList(Model.DropDownData.Packagings, "Code", "Name"))"
+                                    class="form-select">
+                                <option value="">-- Select --</option>
+                            </select>
+                            <span asp-validation-for="Packaging" class="text-danger"></span>
+                        </div>
+                    </div>
+
+                    <!-- Thickness -->
+                    <div class="row mt-2">
+                        <label class="col-12 col-sm-4 col-form-label">Thickness<span class="required-star">*</span></label>
+                        <div class="col-12 col-sm-8">
+                            <select asp-for="Thickness"
+                                    asp-items="@(new SelectList(Model.DropDownData.Thicknesses, "Code", "Name"))"
+                                    class="form-select">
+                                <option value="">-- Select --</option>
+                            </select>
+                            <span asp-validation-for="Thickness" class="text-danger"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row mt-3">
+                <div class="col-12 text-end">
+                    <button type="button"
+                            id="btnCheckInERP"
+                            class="btn btn-primary">
+                        Check In ERP
+                    </button>
+                </div>
+            </div>
+        </fieldset>
+
+        <!-- ================= General ================= -->
+        <fieldset>
+            <legend class="fw-bold">General Details</legend>
+
+            <div class="row">
+
+                <!-- Column 1 -->
+                <div class="col-4">
 
                     <!-- Rounding Precision -->
                     <div class="row mt-2">
@@ -251,7 +329,7 @@
                         </div>
                     </div>
 
-                    <!-- Item Category -->
+                    @* <!-- Item Category -->
                     <div class="row mt-2">
                         <label class="col-12 col-sm-4 col-form-label">Item Category</label>
                         <div class="col-12 col-sm-8">
@@ -275,7 +353,7 @@
                             </select>
                             <span asp-validation-for="ItemCategoryCode" class="text-danger"></span>
                         </div>
-                    </div>
+                    </div> *@
 
                 </div>
 
@@ -406,7 +484,7 @@
                             <span asp-validation-for="PurchUnitOfMeasure" class="text-danger"></span>
                         </div>
                     </div>
-                   
+
                 </div>
 
             </div>
@@ -435,45 +513,6 @@
                         </div>
                     </div>
 
-                    <!-- Category -->
-                    <div class="row mt-2">
-                        <label class="col-12 col-sm-4 col-form-label">Category</label>
-                        <div class="col-12 col-sm-8">
-                            <select asp-for="Category"
-                                    asp-items="@(new SelectList(Model.DropDownData.Categories, "Code", "Name"))"
-                                    class="form-select">
-                                <option value="">-- Select --</option>
-                            </select>
-                            <span asp-validation-for="Category" class="text-danger"></span>
-                        </div>
-                    </div>
-
-                    <!-- Size Of Tile -->
-                    <div class="row mt-2">
-                        <label class="col-12 col-sm-4 col-form-label">Size Of Tile</label>
-                        <div class="col-12 col-sm-8">
-                            <select asp-for="SizeOfTile"
-                                    asp-items="@(new SelectList(Model.DropDownData.SizeOfTiles, "Code", "Name"))"
-                                    class="form-select">
-                                <option value="">-- Select --</option>
-                            </select>
-                            <span asp-validation-for="SizeOfTile" class="text-danger"></span>
-                        </div>
-                    </div>
-
-                    <!-- Brand -->
-                    <div class="row mt-2">
-                        <label class="col-12 col-sm-4 col-form-label">Brand</label>
-                        <div class="col-12 col-sm-8">
-                            <select asp-for="Brand"
-                                    asp-items="@(new SelectList(Model.DropDownData.Brands, "Code", "Name"))"
-                                    class="form-select">
-                                <option value="">-- Select --</option>
-                            </select>
-                            <span asp-validation-for="Brand" class="text-danger"></span>
-                        </div>
-                    </div>
-
                     <!-- Collection -->
                     <div class="row mt-2">
                         <label class="col-12 col-sm-4 col-form-label">Collection</label>
@@ -487,11 +526,6 @@
                         </div>
                     </div>
 
-                   
-                </div>
-
-                <!-- Column 2 -->
-                <div class="col-4">
                     <!-- Surface Finish Glazes  -->
                     <div class="row mt-2">
                         <label class="col-12 col-sm-4 col-form-label">Surface Finish Or Glaze</label>
@@ -518,7 +552,13 @@
                         </div>
                     </div>
 
-                    <!-- Design Color -->
+                </div>
+
+                <!-- Column 2 -->
+                <div class="col-4">
+                    
+
+                   @*  <!-- Design Color -->
                     <div class="row mt-2">
                         <label class="col-12 col-sm-4 col-form-label">Design Color</label>
                         <div class="col-12 col-sm-8">
@@ -528,7 +568,7 @@
                                 <option value="">-- Select --</option>
                             </select>
                         </div>
-                    </div>
+                    </div> *@
 
                     <!-- Colour Family -->
                     <div class="row mt-2">
@@ -548,36 +588,6 @@
                         <div class="col-12 col-sm-8">
                             <select asp-for="TypeOfTile"
                                     asp-items="@(new SelectList(Model.DropDownData.TypeOfTiles, "Code", "Name"))"
-                                    class="form-select">
-                                <option value="">-- Select --</option>
-                            </select>
-                        </div>
-                    </div>
-
-                   
-
-                </div>
-
-                <!-- Column 3 -->
-                <div class="col-4">
-                    <!-- Packaging -->
-                    <div class="row mt-2">
-                        <label class="col-12 col-sm-4 col-form-label">Packaging</label>
-                        <div class="col-12 col-sm-8">
-                            <select asp-for="Packaging"
-                                    asp-items="@(new SelectList(Model.DropDownData.Packagings, "Code", "Name"))"
-                                    class="form-select">
-                                <option value="">-- Select --</option>
-                            </select>
-                        </div>
-                    </div>
-
-                    <!-- Thickness -->
-                    <div class="row mt-2">
-                        <label class="col-12 col-sm-4 col-form-label">Thickness</label>
-                        <div class="col-12 col-sm-8">
-                            <select asp-for="Thickness"
-                                    asp-items="@(new SelectList(Model.DropDownData.Thicknesses, "Code", "Name"))"
                                     class="form-select">
                                 <option value="">-- Select --</option>
                             </select>
@@ -607,6 +617,10 @@
                             </select>
                         </div>
                     </div>
+                </div>
+
+                <!-- Column 3 -->
+                <div class="col-4">
 
                     <!-- PL Colours -->
                     <div class="row mt-2">
@@ -704,7 +718,7 @@
                     </div>
 
 
-                  
+
 
 
                 </div>
@@ -791,6 +805,7 @@
                     <thead class="table-light">
                         <tr>
                             <th>Item Code</th>
+                            <th>Brand</th>
                             <th>Grade</th>
                             <th>Grade Link Code</th>
                             <th>Sales Unit Of Measure</th>

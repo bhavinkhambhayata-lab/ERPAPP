@@ -110,6 +110,24 @@
             }
         });
 
+        let brandOptions = "";
+
+        $.ajax({
+            url: baseURL + 'FGItem/GetItem_BrandDropDownData',
+            type: 'GET',
+            async: false,
+            success: function (response) {
+
+                $.each(response, function (index, item) {
+
+                    brandOptions += `
+                <option value="${item.code}">
+                    ${item.name}
+                </option>`;
+                });
+            }
+        });
+
 
         // Prefix + Number split
         let prefix = itemCode.match(/[A-Za-z]+/)[0];
@@ -210,6 +228,13 @@
                             </td>
 
                             <td>
+                                <select class="form-select txt-brand">
+                                    <option value="">-- Select --</option>
+                                    ${brandOptions}
+                                </select>
+                            </td>
+
+                            <td>
                                 <input type="text"
                                        class="form-control txt-grade"
                                        value="${selectedGrades[i].grade}"
@@ -226,7 +251,7 @@
                 }" readonly />
                             </td>
                              <td>
-                                <select class="form-select txt-salesunit">
+                                <select class="form-select txt-salesunit" disabled>
                                     <option value="">-- Select --</option>
                                     ${salesUnitOptions}
                                 </select>
@@ -236,6 +261,25 @@
 
         $("#grade-tbbody").html(tbody);
 
+
+        $("#grade-tbbody tr").each(function () {
+
+            let grade = $(this).find(".txt-grade").val();
+
+            // Sales Unit Logic
+            if (grade == "SMPL") {
+
+                $(this).find(".txt-salesunit").val("PCS");
+            }
+            else {
+
+                $(this).find(".txt-salesunit").val("BOX");
+            }
+
+            // Brand Default = Griffine
+            $(this).find(".txt-brand").val("GRIFINE");
+
+        });
     });
 
     $(document).ready(function () {
@@ -263,105 +307,111 @@
 
     $("#btnSaveFGItemMaster").on("click", function () {
 
-        // ---------------------------------------------
-        // Grade List Data
-        // ---------------------------------------------
-        let gradeList = [];
+        let formData = new FormData();
 
-        $("#grade-tbbody tr").each(function () {
+        // ---------------- General Details ----------------
 
-            gradeList.push({
-                GradeItemCode: $(this).find(".txt-itemcode").val(),
-                Grade: $(this).find(".txt-grade").val(),
-                GradeLinkCode: $(this).find(".txt-gradelinkcode").val(),
-                SalesUnitOfMeasure: $(this).find(".txt-salesunit").val()
-            });
+        formData.append("DisplayNo", $("#DisplayNo").text());
+
+        formData.append("Description", $("#Description").val());
+        formData.append("Description2", $("#Description2").val());
+        formData.append("RoundingPrecision", $("#RoundingPrecision").val());
+        formData.append("GrossWeight", $("#GrossWeight").val());
+        formData.append("NetWeight", $("#NetWeight").val());
+
+        formData.append("BaseUnitOfMeasure", $("#BaseUnitOfMeasure").val());
+
+        formData.append("ProductionBOMNo", $("#ProductionBOMNo").val());
+        formData.append("RoutingNo", $("#RoutingNo").val());
+        formData.append("ManufacturingPolicy", $("#ManufacturingPolicy").val());
+        formData.append("ReplenishmentSystem", $("#ReplenishmentSystem").val());
+        formData.append("MovementType", $("#MovementType").val());
+        formData.append("ReorderingPolicy", $("#ReorderingPolicy").val());
+        formData.append("ItemCategoryCode", $("#ItemCategoryCode").val());
+        formData.append("PurchUnitOfMeasure", $("#PurchUnitOfMeasure").val());
+
+        // ---------------- Item Specification ----------------
+
+        formData.append("TypeOfProduct", $("#TypeOfProduct").val());
+        formData.append("Category", $("#Category").val());
+        formData.append("SizeOfTile", $("#SizeOfTile").val());
+        formData.append("Brand", $("#Brand").val());
+        formData.append("Collection", $("#Collection").val());
+        formData.append("SurfaceFinishOrGlaze", $("#SurfaceFinishOrGlaze").val());
+        formData.append("GlazeEffect", $("#GlazeEffect").val());
+        formData.append("DesignColor", $("#DesignColor").val());
+        formData.append("ColourFamily", $("#ColourFamily").val());
+        formData.append("TypeOfTile", $("#TypeOfTile").val());
+        formData.append("Packaging", $("#Packaging").val());
+        formData.append("Thickness", $("#Thickness").val());
+        formData.append("Body", $("#Body").val());
+        formData.append("PLCollection", $("#PLCollection").val());
+        formData.append("PLColours", $("#PLColours").val());
+
+        // ---------------- Cost & Posting ----------------
+
+        formData.append("CostingMethod", $("#CostingMethod").val());
+        formData.append("GenProdPostingGroup", $("#GenProdPostingGroup").val());
+        formData.append("GSTGroupCode", $("#GSTGroupCode").val());
+        formData.append("HSNSACCode", $("#HSNSACCode").val());
+        formData.append("GSTCredit", $("#GSTCredit").val());
+        formData.append("InventoryPostingGroup", $("#InventoryPostingGroup").val());
+
+        // ---------------- Grade List ----------------
+
+        $("#grade-tbbody tr").each(function (index) {
+
+            formData.append(`GradeListDetails[${index}].GradeItemCode`,
+                $(this).find(".txt-itemcode").val());
+
+            formData.append(`GradeListDetails[${index}].Brand`,
+                $(this).find(".txt-brand").val());
+
+            formData.append(`GradeListDetails[${index}].Grade`,
+                $(this).find(".txt-grade").val());
+
+            formData.append(`GradeListDetails[${index}].GradeLinkCode`,
+                $(this).find(".txt-gradelinkcode").val());
+
+            formData.append(`GradeListDetails[${index}].SalesUnitOfMeasure`,
+                $(this).find(".txt-salesunit").val());
 
         });
 
-        console.log(gradeList);
-
-        // ---------------------------------------------
-        // Main Model Data
-        // ---------------------------------------------
-        let model = {
-
-            DisplayNo: $("#DisplayNo").text(),
-
-            // ---------------- General Details ----------------
-            Description: $("#Description").val(),
-            Description2: $("#Description2").val(),
-            RoundingPrecision: $("#RoundingPrecision").val(),
-            GrossWeight: $("#GrossWeight").val(),
-            NetWeight: $("#NetWeight").val(),
-
-            BaseUnitOfMeasure: $("#BaseUnitOfMeasure").val(),
-
-            ProductionBOMNo: $("#ProductionBOMNo").val(),
-            RoutingNo: $("#RoutingNo").val(),
-            ManufacturingPolicy: $("#ManufacturingPolicy").val(),
-            ReplenishmentSystem: $("#ReplenishmentSystem").val(),
-            MovementType: $("#MovementType").val(),
-            ReorderingPolicy: $("#ReorderingPolicy").val(),
-            ItemCategoryCode: $("#ItemCategoryCode").val(),
-            PurchUnitOfMeasure: $("#PurchUnitOfMeasure").val(),
-
-            // ---------------- Item Specification ----------------
-            TypeOfProduct: $("#TypeOfProduct").val(),
-            Category: $("#Category").val(),
-            SizeOfTile: $("#SizeOfTile").val(),
-            Brand: $("#Brand").val(),
-            Collection: $("#Collection").val(),
-            SurfaceFinishOrGlaze: $("#SurfaceFinishOrGlaze").val(),
-            GlazeEffect: $("#GlazeEffect").val(),
-            DesignColor: $("#DesignColor").val(),
-            ColourFamily: $("#ColourFamily").val(),
-            TypeOfTile: $("#TypeOfTile").val(),
-            Packaging: $("#Packaging").val(),
-            Thickness: $("#Thickness").val(),
-            Body: $("#Body").val(),
-            PLCollection: $("#PLCollection").val(),
-            PLColours: $("#PLColours").val(),
-
-            // ---------------- Cost & Posting ----------------
-            CostingMethod: $("#CostingMethod").val(),
-            GenProdPostingGroup: $("#GenProdPostingGroup").val(),
-            GSTGroupCode: $("#GSTGroupCode").val(),
-            HSNSACCode: $("#HSNSACCode").val(),
-            GSTCredit: $("#GSTCredit").val(),
-            InventoryPostingGroup: $("#InventoryPostingGroup").val(),
-
-            // ---------------- Grade List ----------------
-            GradeListDetails: gradeList
-        };
-
-        console.log(model);
-
-        // ---------------------------------------------
-        // AJAX CALL
-        // ---------------------------------------------
         $.ajax({
             url: baseURL + "FGItem/SaveFGItemMaster",
             type: "POST",
-            contentType: "application/json",
-            data: JSON.stringify(model),
+            data: formData,
+
+            processData: false,
+            contentType: false,
 
             success: function (response) {
 
                 if (response.success) {
 
                     showToast(response.message, "success", 4000);
+
                 } else {
 
-                    showToast(response.message, "danger", 4000);
-                }
+                    $('.text-danger').text('');
 
+                    if (response.errors) {
+
+                        $.each(response.errors, function (key, messages) {
+
+                            $('[data-valmsg-for="' + key + '"]')
+                                .text(messages[0]);
+
+                        });
+                    }
+                }
             },
 
             error: function (xhr) {
 
-                toastr.error("Something went wrong.");
                 console.log(xhr);
+                toastr.error("Something went wrong.");
 
             }
         });
@@ -405,14 +455,15 @@
 
         if (val.includes('-T')) {
 
-            $('#ManufacturingPolicy').val('1');
+            $('#ManufacturingPolicy').val('2');
             $('#ReplenishmentSystem').val('1');
+            $('#ReorderingPolicy').val('3');
 
             $('.purch-unit-of-measure').removeClass('d-none');
         }
         else {
 
-            $('#ManufacturingPolicy').val('2');
+            $('#ManufacturingPolicy').val('1');
             $('#ReplenishmentSystem').val('2');
             $('#ReorderingPolicy').val('3');
 

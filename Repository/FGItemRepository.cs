@@ -15,6 +15,20 @@ namespace ERPAPP.Repository
             _db = db;
         }
 
+        public async Task<List<BrandModel>> GetFGBrandDropDownData()
+        {
+            DataTable dt = _db.GetDataTable("GetFGBrandDropDownData");
+
+            List<BrandModel> list = dt.AsEnumerable()
+                .Select(x => new BrandModel
+                {
+                    Code = x["Code"].ToString(),
+                    Name = x["Name"].ToString()
+                }).ToList();
+
+            return list;
+        }
+
         public async Task<GetFGItemAddModel> GetFGItemAddData()
         {
             var model = new GetFGItemAddModel();
@@ -385,7 +399,7 @@ namespace ERPAPP.Repository
         {
             int newNo = 0;
 
-            DataTable dt = _db.GetDataTable("Items_Transfer_Entry_GetNewNo");
+            DataTable dt = _db.GetDataTable("ItemsGetNewNo");
 
             if (dt != null && dt.Rows.Count > 0)
             {
@@ -414,7 +428,7 @@ namespace ERPAPP.Repository
             return list;
         }
 
-        public async Task<bool> InsertFGItem(FGItemModel model)
+        public async Task<bool> InsertFGItem(FGItemModel model, string createdBy)
         {
             try
             {
@@ -427,6 +441,7 @@ namespace ERPAPP.Repository
                 DataTable dtGrade = new DataTable();
 
                 dtGrade.Columns.Add("GradeItemCode");
+                dtGrade.Columns.Add("Brand");
                 dtGrade.Columns.Add("Grade");
                 dtGrade.Columns.Add("GradeLinkCode");
                 dtGrade.Columns.Add("SalesUnitOfMeasure");
@@ -438,6 +453,7 @@ namespace ERPAPP.Repository
                     {
                         dtGrade.Rows.Add(
                             item.GradeItemCode ?? "",
+                            item.Brand ?? "",
                             item.Grade ?? "",
                             item.GradeLinkCode ?? "",
                             item.SalesUnitOfMeasure ?? ""
@@ -515,6 +531,8 @@ namespace ERPAPP.Repository
 
                     new SqlParameter("@ItemTrackingCode", model.ItemTrackingCode ?? ""),
                     new SqlParameter("@ReorderingPolicy", model.ReorderingPolicy ?? ""),
+
+                    new SqlParameter("@CreatedBy", createdBy ?? ""),
 
                     // ================= GRADE LIST TABLE TYPE =================
 
