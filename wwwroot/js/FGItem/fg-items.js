@@ -468,6 +468,8 @@
 
         });
 
+        showLoader();
+
         $.ajax({
             url: baseURL + "FGItem/SaveFGItemMaster",
             type: "POST",
@@ -479,11 +481,12 @@
             success: function (response) {
 
                 if (response.success) {
-
+                    hideLoader();
                     showToast(response.message, "success", 4000);
 
                 } else {
 
+                    hideLoader();
                     $('.text-danger').text('');
 
                     if (response.errors) {
@@ -499,10 +502,10 @@
             },
 
             error: function (xhr) {
-
+                hideLoader();
                 console.log(xhr);
                 toastr.error("Something went wrong.");
-
+               
             }
         });
 
