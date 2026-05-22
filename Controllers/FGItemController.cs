@@ -180,5 +180,12 @@ namespace ERPAPP.Controllers
             var data = await _fGItemRepository.GetWIPItemCompanyLastNoUsedCompanyCode();
             return data;
         }
+
+
+        public async Task<IActionResult> GetFGItemEditData(string description, string description2, string category, string sizeOfTile, string thickness, string packaging)
+        {
+            var data =  await _fGItemRepository.GetFGItemEditData(description, description2, category, sizeOfTile, thickness, packaging);
+            return Json(data);
+        }
     }
 }

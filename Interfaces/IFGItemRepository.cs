@@ -22,5 +22,7 @@ namespace ERPAPP.Interfaces
 
         Task<string> GetWIPItemCompanyLastNoUsedCompanyCode();
         Task<FGItemDropDownEditModel> GetFGItemEditDropDownData();
+
+        Task<GetFGItemEditModel> GetFGItemEditData(string description, string description2, string category, string sizeOfTile, string thickness, string packaging);
     }
 }
