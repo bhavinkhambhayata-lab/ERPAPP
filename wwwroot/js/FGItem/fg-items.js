@@ -102,6 +102,17 @@
             }
         });
 
+        let wipItemCode = "";
+
+        $.ajax({
+            url: baseURL + 'FGItem/GetWIPItemCompanyLastNoUsedCompanyCode',
+            type: 'GET',
+            async: false,
+            success: function (response) {
+
+                wipItemCode = response;
+            }
+        });
 
         let salesUnitOptions = "";
 
@@ -114,9 +125,9 @@
                 $.each(response, function (index, item) {
 
                     salesUnitOptions += `
-                <option value="${item.code}">
-                    ${item.name}
-                </option>`;
+                    <option value="${item.code}">
+                        ${item.name}
+                    </option>`;
                 });
             }
         });
@@ -132,13 +143,12 @@
                 $.each(response, function (index, item) {
 
                     brandOptions += `
-                <option value="${item.code}">
-                    ${item.name}
-                </option>`;
+                    <option value="${item.code}">
+                        ${item.name}
+                    </option>`;
                 });
             }
         });
-
 
         // Prefix + Number split
         let prefix = itemCode.match(/[A-Za-z]+/)[0];
@@ -214,6 +224,10 @@
                 itemCode + firstSelectedGrade.gradeLinkCode;
         }
 
+        // =======================
+        // NORMAL GRADE ROWS
+        // =======================
+
         for (let i = 0; i < selectedGrades.length; i++) {
 
             let currentItemCode = "";
@@ -229,49 +243,98 @@
             }
 
             tbody += `
-                        <tr>
+            <tr>
 
-                            <td>
-                                <input type="text"
-                                       class="form-control txt-itemcode"
-                                       value="${currentItemCode}"
-                                       readonly />
-                            </td>
+                <td>
+                    <input type="text"
+                           class="form-control txt-itemcode"
+                           value="${currentItemCode}"
+                           readonly />
+                </td>
 
-                            <td>
-                                <select class="form-select txt-brand">
-                                    <option value="">-- Select --</option>
-                                    ${brandOptions}
-                                </select>
-                            </td>
+                <td>
+                    <select class="form-select txt-brand">
+                        <option value="">-- Select --</option>
+                        ${brandOptions}
+                    </select>
+                </td>
 
-                            <td>
-                                <input type="text"
-                                       class="form-control txt-grade"
-                                       value="${selectedGrades[i].grade}"
-                                       readonly />
-                            </td>
+                <td>
+                    <input type="text"
+                           class="form-control txt-grade"
+                           value="${selectedGrades[i].grade}"
+                           readonly />
+                </td>
 
-                           <td>
-                                <input type="text"
-                                       class="form-control txt-gradelinkcode"
-                                       value="${commonGradeLinkCode.replace(
+                <td>
+                    <input type="text"
+                           class="form-control txt-gradelinkcode"
+                           value="${commonGradeLinkCode.replace(
                 /\.\d+$/,
                 selectedGrades[i].gradeLinkCode
-            )
-                }" readonly />
-                            </td>
-                             <td>
-                                <select class="form-select txt-salesunit">
-                                    <option value="">-- Select --</option>
-                                    ${salesUnitOptions}
-                                </select>
-                            </td>
-                        </tr>`;
+            )}"
+                           readonly />
+                </td>
+
+                <td>
+                    <select class="form-select txt-salesunit">
+                        <option value="">-- Select --</option>
+                        ${salesUnitOptions}
+                    </select>
+                </td>
+
+            </tr>`;
+        }
+
+        // =======================
+        // WIP ROW ADD
+        // ONLY IF SPRM SELECTED
+        // =======================
+
+        if (sprmIndex != -1) {
+
+            tbody += `
+            <tr class="wip-row">
+
+                <td>
+                    <input type="text"
+                           class="form-control txt-itemcode"
+                           value="${wipItemCode}"
+                           readonly />
+                </td>
+
+                <td>
+                    <select class="form-select txt-brand">
+                        <option value="">-- Select --</option>
+                        ${brandOptions}
+                    </select>
+                </td>
+
+                <td>
+                    <input type="text"
+                           class="form-control txt-grade"
+                           value=""
+                           readonly />
+                </td>
+
+                <td>
+                    <input type="text"
+                           class="form-control txt-gradelinkcode"
+                           value=""
+                           readonly />
+                </td>
+
+                <td>
+                    <select class="form-select txt-salesunit">
+                        <option value="">-- Select --</option>
+                        ${salesUnitOptions}
+                    </select>
+                </td>
+
+            </tr>`;
         }
 
         $("#grade-tbbody").html(tbody);
-
 
         $("#grade-tbbody tr").each(function () {
 
@@ -289,7 +352,12 @@
             }
 
             // Disable Sales Unit for specific grades
-            if (grade == "SPRM" || grade == "STD" || grade == "ECO" || grade == "SMPL") {
+            if (
+                grade == "SPRM"
+                || grade == "STD"
+                || grade == "ECO"
+                || grade == "SMPL"
+            ) {
 
                 salesUnit.prop("disabled", true);
             }
