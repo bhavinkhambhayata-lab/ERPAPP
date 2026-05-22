@@ -329,6 +329,19 @@
                         </div>
                     </div>
 
+                    <!-- Movement -->
+                    <div class="row mt-2">
+                        <label class="col-12 col-sm-4 col-form-label">Movement</label>
+                        <div class="col-12 col-sm-8">
+                            <select asp-for="MovementType"
+                                    asp-items="@(new SelectList(Model.DropDownData.MovementTypes, "Code", "Name"))"
+                                    class="form-select">
+                                <option value="">-- Select --</option>
+                            </select>
+                            <span asp-validation-for="MovementType" class="text-danger"></span>
+                        </div>
+                    </div>
+
                     @* <!-- Item Category -->
                     <div class="row mt-2">
                         <label class="col-12 col-sm-4 col-form-label">Item Category</label>
@@ -459,18 +472,7 @@
                         </div>
                     </div>
 
-                    <!-- Movement -->
-                    <div class="row mt-2">
-                        <label class="col-12 col-sm-4 col-form-label">Movement</label>
-                        <div class="col-12 col-sm-8">
-                            <select asp-for="MovementType"
-                                    asp-items="@(new SelectList(Model.DropDownData.MovementTypes, "Code", "Name"))"
-                                    class="form-select">
-                                <option value="">-- Select --</option>
-                            </select>
-                            <span asp-validation-for="MovementType" class="text-danger"></span>
-                        </div>
-                    </div>
+                    
 
                     <!-- Purch Unit Of Measure -->
                     <div class="row mt-2 purch-unit-of-measure">
@@ -608,6 +610,11 @@
                         </div>
                     </div>
 
+                    
+                </div>
+
+                <!-- Column 3 -->
+                <div class="col-4">
                     <!-- PL Collection -->
                     <div class="row mt-2">
                         <label class="col-12 col-sm-4 col-form-label">PL Collection</label>
@@ -619,11 +626,6 @@
                             </select>
                         </div>
                     </div>
-                </div>
-
-                <!-- Column 3 -->
-                <div class="col-4">
-
                     <!-- PL Colours -->
                     <div class="row mt-2">
                         <label class="col-12 col-sm-4 col-form-label">PL Colours</label>
