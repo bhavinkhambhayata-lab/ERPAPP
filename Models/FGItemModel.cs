@@ -178,4 +178,123 @@ namespace ERPAPP.Models
         public string? GradeLinkCode { get; set; }
         public string? SalesUnitOfMeasure { get; set; }
     }
+
+    public class FGItemDropDownEditModel
+    {
+        public List<UnitOfMeasureModel> UnitOfMeasures { get; set; } = new();
+        public List<RoutingModel> RoutingNos { get; set; } = new();
+        public List<GeneralProductPostingGroupModel> GeneralProductPostingGroups { get; set; } = new();
+        public List<InventoryPostingGroupModel> InventoryPostingGroups { get; set; } = new();
+        public List<GSTGroupsModel> GSTGroups { get; set; } = new();
+
+        public List<ProductionBOMHeaderModel> ProductionBOMHeaders { get; set; } = new();
+
+        public List<CategoryModel> Categories { get; set; } = new();
+        public List<SizeOfTileModel> SizeOfTiles { get; set; } = new();
+        public List<BrandModel> Brands { get; set; } = new();
+        public List<CollectionModel> Collections { get; set; } = new();
+        public List<SurfaceFinishGlazeModel> SurfaceFinishGlazes { get; set; } = new();
+        public List<GlazeEffectModel> GlazeEffects { get; set; } = new();
+        public List<DesignColorModel> DesignColors { get; set; } = new();
+        public List<ColourFamilyModel> ColourFamilies { get; set; } = new();
+        public List<TypeOfTileModel> TypeOfTiles { get; set; } = new();
+        public List<PackagingModel> Packagings { get; set; } = new();
+        public List<GradeModel> Grades { get; set; } = new();
+        public List<ThicknessModel> Thicknesses { get; set; } = new();
+        public List<BodyModel> Bodies { get; set; } = new();
+        public List<PLCollectionModel> PLCollections { get; set; } = new();
+        public List<PLColoursModel> PLColours { get; set; } = new();
+
+        public List<ItemMovementTypeEnumModel> MovementTypes { get; set; } = new();
+        public List<ItemTypeOfProductEnumModel> TypeOfProducts { get; set; } = new();
+        public List<ItemManufacturingPolicyEnumModel> ManufacturingPolicies { get; set; } = new();
+        public List<ItemCostingMethodEnumModel> CostingMethods { get; set; } = new();
+        public List<ItemGSTCreditEnumModel> GSTCredits { get; set; } = new();
+        public List<ItemReplenishmentSystemEnumModel> ReplenishmentSystems { get; set; } = new();
+
+        public List<ItemReorderingPolicyEnumModel> ReorderingPolicy { get; set; } = new();
+
+        public List<ItemGradeModel> ItemGrades { get; set; } = new();
+        public List<ItemCategoryModel> ItemCategories { get; set; } = new();
+    }
+
+
+    public class FGItemeEditModel
+    {
+        public int DisplayNo { get; set; }
+
+        // ---------------- TextBox Fields ----------------
+        public string? CompanyCode { get; set; }
+
+        [Required(ErrorMessage = "Description is required")]
+        public string Description { get; set; } = string.Empty;
+
+        [Required(ErrorMessage = "Description 2 is required")]
+        public string Description2 { get; set; } = string.Empty;
+        public decimal? RoundingPrecision { get; set; }
+        public decimal? GrossWeight { get; set; }
+        public decimal? NetWeight { get; set; }
+
+        // ---------------- DropDown Fields ----------------
+        public string? BaseUnitOfMeasure { get; set; }
+        public string? ItemCategoryCode { get; set; }
+        public string? ProductGroupCode { get; set; }
+        public string? MovementType { get; set; }
+        public string? TypeOfProduct { get; set; }
+
+        // ---------------- Tile Attributes ----------------
+        [Required(ErrorMessage = "Category is required")]
+        public string Category { get; set; } = string.Empty;
+
+        [Required(ErrorMessage = "Size Of Tile is required")]
+        public string SizeOfTile { get; set; } = string.Empty;
+
+        public string? Brand { get; set; }
+
+        public string? Collection { get; set; }
+        public string? SurfaceFinishOrGlaze { get; set; }
+        public string? GlazeEffect { get; set; }
+        public string? DesignColor { get; set; }
+        public string? ColourFamily { get; set; }
+        public string? TypeOfTile { get; set; }
+
+        [Required(ErrorMessage = "Packaging is required")]
+        public string Packaging { get; set; } = string.Empty;
+        public string? Grade { get; set; }
+        public string? GradeLinkCode { get; set; }
+
+        [Required(ErrorMessage = "Thickness is required")]
+        public string Thickness { get; set; } = string.Empty;
+        public string? Body { get; set; }
+        public string? PLCollection { get; set; }
+        public string? PLColours { get; set; }
+        // ---------------- Manufacturing ----------------
+        public string? ManufacturingPolicy { get; set; }
+        public string? RoutingNo { get; set; }
+        public string? ProductionBOMNo { get; set; }
+
+        // ---------------- Posting / Costing ----------------
+        public string? CostingMethod { get; set; }
+        public string? GenProdPostingGroup { get; set; }
+        public string? VATProdPostingGroup { get; set; }
+        public string? InventoryPostingGroup { get; set; }
+        public string? GSTGroupCode { get; set; }
+        public string? GSTCredit { get; set; }
+        public string? HSNSACCode { get; set; }
+        // ---------------- Units ----------------
+        public string? ReplenishmentSystem { get; set; }
+        public string? PurchUnitOfMeasure { get; set; }
+        // ---------------- Tracking ----------------
+        public string? ItemTrackingCode { get; set; }
+
+        public string? ReorderingPolicy { get; set; }
+
+        public List<FGItemGradeListDetails> GradeListDetails { get; set; } = new();
+
+    }
+
+    public class GetFGItemEditModel : FGItemeEditModel
+    {
+        public FGItemDropDownEditModel DropDownData { get; set; } = new();
+    }
 }

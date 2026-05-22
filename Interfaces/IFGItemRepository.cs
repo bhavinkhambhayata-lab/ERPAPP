@@ -21,5 +21,6 @@ namespace ERPAPP.Interfaces
         Task<List<BrandModel>> GetFGBrandDropDownData();
 
         Task<string> GetWIPItemCompanyLastNoUsedCompanyCode();
+        Task<FGItemDropDownEditModel> GetFGItemEditDropDownData();
     }
 }
