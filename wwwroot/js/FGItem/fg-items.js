@@ -1,14 +1,7 @@
 ﻿$(document).ready(function () {
 
-    $("#chkDesignColorSameAsDescription").change(function () {
-
-        if ($(this).is(":checked")) {
-            $("#DesignColor").val($("#Description").val());
-        }
-        else {
-            $("#DesignColor").val('');
-        }
-
+    $("#Description").on("input", function () {
+        $("#DesignColor").val($(this).val());
     });
 
     $('#Category').change(function () {
