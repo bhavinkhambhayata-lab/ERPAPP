@@ -35,32 +35,64 @@
 </div>
 
 <script>
-        $(document).ready(function () {
+    var getFGItemEditModel='';
 
-        // Default load
-        loadDetails();
+            $(document).ready(function () {
 
-        $("#listBtn").click(function () {
-            //loadList();
-        });
+            // Default load
+            loadDetails();
 
-        $("#detailsBtn").click(function () {
-              loadDetails();
-        });
-
-        function loadList() {
-
-            // $.get(baseURL +'Customer/CustomerList', function (data) {
-            //     $("#tabContent").html(data);
-            // });
-        }
-
-        function loadDetails() {
-            $.get(baseURL +'FGItem/AddFGItem', function (data) {
-                $("#tabContent").html(data);
+            $("#listBtn").click(function () {
+                //loadList();
             });
+
+            $("#detailsBtn").click(function () {
+
+                $("#tabContent").html('');
+                       // jo edit model hoy to Edit page load karse
+                if (getFGItemEditModel != null && getFGItemEditModel != '') {
+
+                    editFGItemPageLoad(getFGItemEditModel);
+                }
+                else {
+
+                    // normal Add page load karse
+                    loadDetails();
+                }
+            });
+
+            function loadList() {
+
+                // $.get(baseURL +'Customer/CustomerList', function (data) {
+                //     $("#tabContent").html(data);
+                // });
+            }
+
+            function loadDetails() {
+                $.get(baseURL +'FGItem/AddFGItem', function (data) {
+                    $("#tabContent").html(data);
+                });
+            }
+
+            function editFGItemPageLoad(model) {
+                    //$("#tabContent").html('');
+                    
+                     showLoader();
+                    $.ajax({
+                        url: baseURL + 'FGItem/EditFGItem',
+                        type: 'POST',
+                        data: model,
+                        success: function (partialView) {
+                            hideLoader();
+                            $("#tabContent").html(partialView);
+                        },
+                        error: function () {
+                            hideLoader();
+                            toastr.error("Failed to load item data.");
+                        }
+                    });
         }
 
-    });
+        });
 </script>
 

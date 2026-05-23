@@ -1,5 +1,45 @@
 ﻿$(document).ready(function () {
 
+    $(document).on("click", "#btnCheckInERP", function () {
+
+        let model = {
+            description: $("#Description").val(),
+            description2: $("#Description2").val(),
+            category: $("#Category").val(),
+            sizeOfTile: $("#SizeOfTile").val(),
+            thickness: $("#Thickness").val(),
+            packaging: $("#Packaging").val()
+        };
+
+        $.ajax({
+            url: baseURL + 'FGItem/CheckItemInERP',
+            type: 'POST',
+            data: model,
+            success: function (response) {
+
+                if (response.success) {
+
+                    if(confirm("This item already exists in ERP. Do you want to add grade in this item?")) {
+                        
+                        getFGItemEditModel = model;
+
+                        $("#detailsBtn").click();
+                    }
+                }
+                else {
+
+                    toastr.success("Item not found in ERP. You can create new item.");
+                }
+            },
+            error: function () {
+
+                toastr.error("Something went wrong.");
+            }
+        });
+
+    });
+
+
     $("#Description").on("input", function () {
         $("#DesignColor").val($(this).val());
     });
@@ -9,7 +49,7 @@
     });
 
     $('#GSTGroupCode').change(function () {
-        
+
         var gstCode = $(this).val();
 
         $('#HSNSACCode').empty();
@@ -505,7 +545,7 @@
                 hideLoader();
                 console.log(xhr);
                 toastr.error("Something went wrong.");
-               
+
             }
         });
 

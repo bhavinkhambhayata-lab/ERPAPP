@@ -1,14 +1,13 @@
-﻿@model GetFGItemAddModel
+﻿@model GetFGItemEditModel
 @using Microsoft.AspNetCore.Mvc.Rendering
 @using static ERPAPP.Helper.Enums
 @{
-    ViewData["Title"] = "FG Item Details";
+    ViewData["Title"] = "Edit FG Item Details";
 }
 
 <script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
 <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
-
-<script src="~/js/fgitem/fg-items.js" asp-append-version="true"></script>
+<script src="~/js/fgitem/edit-fg-items.js" asp-append-version="true"></script>
 
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
 
@@ -173,7 +172,7 @@
         color: #2c2f33;
     }
 
-    #btnPreviewGrades {
+    #btnEditPreviewGrades {
         border-radius: 6px;
         font-weight: 600;
         min-width: 100px;
@@ -182,11 +181,11 @@
     }
 </style>
 
-<form id="FGItemForm" method="post">
+<form id="FGItemEditForm" method="post">
 
     <div class="topbar d-flex justify-content-between align-items-center">
         <div class="fw-bold">
-            FG Item Details
+            Edit FG Item Details
         </div>
 
         <div class="fw-bold">
@@ -209,7 +208,7 @@
                             Description<span class="required-star">*</span>
                         </label>
                         <div class="col-12 col-sm-8 position-relative">
-                            <input asp-for="Description" class="form-control" />
+                            <input asp-for="Description" class="form-control" disabled />
                             <span asp-validation-for="Description" class="text-danger"></span>
                         </div>
                     </div>
@@ -220,7 +219,7 @@
                             Description 2<span class="required-star">*</span>
                         </label>
                         <div class="col-12 col-sm-8 position-relative">
-                            <input asp-for="Description2" class="form-control" />
+                            <input asp-for="Description2" class="form-control" disabled />
                             <span asp-validation-for="Description2" class="text-danger"></span>
                         </div>
                     </div>
@@ -233,7 +232,7 @@
                         <div class="col-12 col-sm-8">
                             <select asp-for="SizeOfTile"
                                     asp-items="@(new SelectList(Model.DropDownData.SizeOfTiles, "Code", "Name"))"
-                                    class="form-select">
+                                    class="form-select" disabled>
                                 <option value="">-- Select --</option>
                             </select>
                             <span asp-validation-for="SizeOfTile" class="text-danger"></span>
@@ -246,7 +245,7 @@
                         <div class="col-12 col-sm-8">
                             <select asp-for="Category"
                                     asp-items="@(new SelectList(Model.DropDownData.Categories, "Code", "Name"))"
-                                    class="form-select">
+                                    class="form-select" disabled>
                                 <option value="">-- Select --</option>
                             </select>
                             <span asp-validation-for="Category" class="text-danger"></span>
@@ -263,7 +262,7 @@
                         <div class="col-12 col-sm-8">
                             <select asp-for="Packaging"
                                     asp-items="@(new SelectList(Model.DropDownData.Packagings, "Code", "Name"))"
-                                    class="form-select">
+                                    class="form-select" disabled>
                                 <option value="">-- Select --</option>
                             </select>
                             <span asp-validation-for="Packaging" class="text-danger"></span>
@@ -276,7 +275,7 @@
                         <div class="col-12 col-sm-8">
                             <select asp-for="Thickness"
                                     asp-items="@(new SelectList(Model.DropDownData.Thicknesses, "Code", "Name"))"
-                                    class="form-select">
+                                    class="form-select" disabled>
                                 <option value="">-- Select --</option>
                             </select>
                             <span asp-validation-for="Thickness" class="text-danger"></span>
@@ -288,8 +287,8 @@
             <div class="row mt-3">
                 <div class="col-12 text-end">
                     <button type="button"
-                            id="btnCheckInERP"
-                            class="btn btn-primary">
+                            id="btnEditCheckInERP"
+                            class="btn btn-primary" disabled>
                         Check In ERP
                     </button>
                 </div>
@@ -311,7 +310,7 @@
                             Rounding Precision
                         </label>
                         <div class="col-12 col-sm-8">
-                            <input asp-for="RoundingPrecision" class="form-control" />
+                            <input asp-for="RoundingPrecision" class="form-control" disabled />
                             <span asp-validation-for="RoundingPrecision" class="text-danger"></span>
                         </div>
                     </div>
@@ -322,7 +321,7 @@
                         <div class="col-12 col-sm-8">
                             <select asp-for="BaseUnitOfMeasure"
                                     asp-items="@(new SelectList(Model.DropDownData.UnitOfMeasures, "Code", "Name"))"
-                                    class="form-select">
+                                    class="form-select" disabled>
                                 <option value="">-- Select --</option>
                             </select>
                             <span asp-validation-for="BaseUnitOfMeasure" class="text-danger"></span>
@@ -335,7 +334,7 @@
                         <div class="col-12 col-sm-8">
                             <select asp-for="MovementType"
                                     asp-items="@(new SelectList(Model.DropDownData.MovementTypes, "Code", "Name"))"
-                                    class="form-select">
+                                    class="form-select" disabled>
                                 <option value="">-- Select --</option>
                             </select>
                             <span asp-validation-for="MovementType" class="text-danger"></span>
@@ -378,7 +377,7 @@
                         <div class="col-12 col-sm-8">
                             <select asp-for="GenProdPostingGroup"
                                     asp-items="@(new SelectList(Model.DropDownData.GeneralProductPostingGroups, "Code", "Name"))"
-                                    class="form-select">
+                                    class="form-select" disabled>
                                 <option value="">-- Select --</option>
                             </select>
                             <span asp-validation-for="GenProdPostingGroup" class="text-danger"></span>
@@ -414,7 +413,7 @@
                         <div class="col-12 col-sm-8">
                             <select asp-for="ManufacturingPolicy"
                                     asp-items="@(new SelectList(Model.DropDownData.ManufacturingPolicies, "Code", "Name"))"
-                                    class="form-select">
+                                    class="form-select" disabled>
                                 <option value="">-- Select --</option>
                             </select>
                             <span asp-validation-for="ManufacturingPolicy" class="text-danger"></span>
@@ -427,7 +426,7 @@
                         <div class="col-12 col-sm-8">
                             <select asp-for="ReplenishmentSystem"
                                     asp-items="@(new SelectList(Model.DropDownData.ReplenishmentSystems, "Code", "Name"))"
-                                    class="form-select">
+                                    class="form-select" disabled>
                                 <option value="">-- Select --</option>
                             </select>
                             <span asp-validation-for="ReplenishmentSystem" class="text-danger"></span>
@@ -440,7 +439,7 @@
                         <div class="col-12 col-sm-8">
                             <select asp-for="ReorderingPolicy"
                                     asp-items="@(new SelectList(Model.DropDownData.ReorderingPolicy, "Code", "Name"))"
-                                    class="form-select">
+                                    class="form-select" disabled>
                                 <option value="">-- Select --</option>
                             </select>
                             <span asp-validation-for="ReorderingPolicy" class="text-danger"></span>
@@ -456,7 +455,7 @@
                             Gross Weight
                         </label>
                         <div class="col-12 col-sm-8">
-                            <input asp-for="GrossWeight" class="form-control" />
+                            <input asp-for="GrossWeight" class="form-control" disabled />
                             <span asp-validation-for="GrossWeight" class="text-danger"></span>
                         </div>
                     </div>
@@ -467,12 +466,12 @@
                             Net Weight
                         </label>
                         <div class="col-12 col-sm-8">
-                            <input asp-for="NetWeight" class="form-control" />
+                            <input asp-for="NetWeight" class="form-control" disabled />
                             <span asp-validation-for="NetWeight" class="text-danger"></span>
                         </div>
                     </div>
 
-                    
+
 
                     <!-- Purch Unit Of Measure -->
                     <div class="row mt-2 purch-unit-of-measure">
@@ -480,7 +479,7 @@
                         <div class="col-12 col-sm-8">
                             <select asp-for="PurchUnitOfMeasure"
                                     asp-items="@(new SelectList(Model.DropDownData.UnitOfMeasures, "Code", "Name"))"
-                                    class="form-select">
+                                    class="form-select" disabled>
                                 <option value="">-- Select --</option>
                             </select>
                             <span asp-validation-for="PurchUnitOfMeasure" class="text-danger"></span>
@@ -521,7 +520,7 @@
                         <div class="col-12 col-sm-8">
                             <select asp-for="Collection"
                                     asp-items="@(new SelectList(Model.DropDownData.Collections, "Code", "Name"))"
-                                    class="form-select">
+                                    class="form-select" disabled>
                                 <option value="">-- Select --</option>
                             </select>
                             <span asp-validation-for="Collection" class="text-danger"></span>
@@ -534,7 +533,7 @@
                         <div class="col-12 col-sm-8">
                             <select asp-for="SurfaceFinishOrGlaze"
                                     asp-items="@(new SelectList(Model.DropDownData.SurfaceFinishGlazes, "Code", "Name"))"
-                                    class="form-select">
+                                    class="form-select" disabled>
                                 <option value="">-- Select --</option>
                             </select>
                             <span asp-validation-for="SurfaceFinishOrGlaze" class="text-danger"></span>
@@ -547,7 +546,7 @@
                         <div class="col-12 col-sm-8">
                             <select asp-for="GlazeEffect"
                                     asp-items="@(new SelectList(Model.DropDownData.GlazeEffects, "Code", "Name"))"
-                                    class="form-select">
+                                    class="form-select" disabled>
                                 <option value="">-- Select --</option>
                             </select>
                             <span asp-validation-for="GlazeEffect" class="text-danger"></span>
@@ -566,7 +565,7 @@
                         <label class="col-12 col-sm-4 col-form-label">
                             Design Color
                         </label>
-                        
+
                         <div class="col-12 col-sm-8">
                             <input type="text" asp-for="DesignColor" class="form-control mb-2" disabled />
                             <span asp-validation-for="DesignColor" class="text-danger"></span>
@@ -580,7 +579,7 @@
                         <div class="col-12 col-sm-8">
                             <select asp-for="ColourFamily"
                                     asp-items="@(new SelectList(Model.DropDownData.ColourFamilies, "Code", "Name"))"
-                                    class="form-select">
+                                    class="form-select" disabled>
                                 <option value="">-- Select --</option>
                             </select>
                         </div>
@@ -592,7 +591,7 @@
                         <div class="col-12 col-sm-8">
                             <select asp-for="TypeOfTile"
                                     asp-items="@(new SelectList(Model.DropDownData.TypeOfTiles, "Code", "Name"))"
-                                    class="form-select">
+                                    class="form-select" disabled>
                                 <option value="">-- Select --</option>
                             </select>
                         </div>
@@ -604,13 +603,13 @@
                         <div class="col-12 col-sm-8">
                             <select asp-for="Body"
                                     asp-items="@(new SelectList(Model.DropDownData.Bodies, "Code", "Name"))"
-                                    class="form-select">
+                                    class="form-select" disabled>
                                 <option value="">-- Select --</option>
                             </select>
                         </div>
                     </div>
 
-                    
+
                 </div>
 
                 <!-- Column 3 -->
@@ -621,7 +620,7 @@
                         <div class="col-12 col-sm-8">
                             <select asp-for="PLCollection"
                                     asp-items="@(new SelectList(Model.DropDownData.PLCollections, "Code", "Name"))"
-                                    class="form-select">
+                                    class="form-select" disabled>
                                 <option value="">-- Select --</option>
                             </select>
                         </div>
@@ -632,7 +631,7 @@
                         <div class="col-12 col-sm-8">
                             <select asp-for="PLColours"
                                     asp-items="@(new SelectList(Model.DropDownData.PLColours, "Code", "Name"))"
-                                    class="form-select">
+                                    class="form-select" disabled>
                                 <option value="">-- Select --</option>
                             </select>
                         </div>
@@ -656,7 +655,7 @@
                         <div class="col-12 col-sm-8">
                             <select asp-for="CostingMethod"
                                     asp-items="@(new SelectList(Model.DropDownData.CostingMethods, "Code", "Name"))"
-                                    class="form-select">
+                                    class="form-select" disabled>
                                 <option value="">-- Select --</option>
                             </select>
                             <span asp-validation-for="CostingMethod" class="text-danger"></span>
@@ -669,7 +668,7 @@
                         <div class="col-12 col-sm-8">
                             <select asp-for="InventoryPostingGroup"
                                     asp-items="@(new SelectList(Model.DropDownData.InventoryPostingGroups, "Code", "Name"))"
-                                    class="form-select">
+                                    class="form-select" disabled>
                                 <option value="">-- Select --</option>
                             </select>
                             <span asp-validation-for="InventoryPostingGroup" class="text-danger"></span>
@@ -686,7 +685,7 @@
                         <div class="col-12 col-sm-8">
                             <select asp-for="GSTGroupCode"
                                     asp-items="@(new SelectList(Model.DropDownData.GSTGroups, "Code", "Name"))"
-                                    class="form-select">
+                                    class="form-select" disabled>
                                 <option value="">--Select--</option>
                             </select>
                             <span asp-validation-for="GSTGroupCode" class="text-danger"></span>
@@ -698,7 +697,7 @@
                         <label class="col-12 col-sm-4 col-form-label">HSN/SAC Code</label>
                         <div class="col-12 col-sm-8">
                             <select asp-for="HSNSACCode"
-                                    class="form-select">
+                                    class="form-select" disabled>
                                 <option value="">--Select--</option>
                             </select>
                             <span asp-validation-for="HSNSACCode" class="text-danger"></span>
@@ -714,7 +713,7 @@
                         <div class="col-12 col-sm-8">
                             <select asp-for="GSTCredit"
                                     asp-items="@(new SelectList(Model.DropDownData.GSTCredits, "Code", "Name"))"
-                                    class="form-select">
+                                    class="form-select" disabled>
                                 <option value="">--Select--</option>
                             </select>
                             <span asp-validation-for="GSTCredit" class="text-danger"></span>
@@ -749,6 +748,10 @@
 
                         var extraClass = i >= 4 ? "extra-grade d-none" : "";
 
+                        // Existing Grade Check
+                        bool isChecked = Model.GradeListDetails != null &&
+                        Model.GradeListDetails.Any(x => x.Grade == Model.DropDownData.ItemGrades[i].Name);
+
                         <div class="col-xl-2 col-lg-3 col-md-4 col-sm-6 @extraClass">
 
                             <label class="grade-card">
@@ -758,7 +761,8 @@
                                        name="SelectedGrades"
                                        value="@Model.DropDownData.ItemGrades[i].Name"
                                        data-gradelinkcode="@Model.DropDownData.ItemGrades[i].GradeLinkCode"
-                                       id="grade_@i" />
+                                       id="grade_@i" @(isChecked ? "checked" : "")
+                                       @(isChecked ? "disabled" : "") />
 
                                 <span class="grade-text">
                                     @Model.DropDownData.ItemGrades[i].Name
@@ -778,7 +782,7 @@
 
                         <button type="button"
                                 class="btn btn-outline-secondary btn-sm"
-                                id="btnShowMoreGrades">
+                                id="btnEditShowMoreGrades">
 
                             More Grade
 
@@ -792,7 +796,7 @@
 
                     <button type="button"
                             class="btn btn-primary px-4 shadow-sm"
-                            id="btnPreviewGrades">
+                            id="btnEditPreviewGrades">
 
                         <i class="fa fa-eye me-1"></i>
                         Preview
@@ -817,13 +821,61 @@
                     </thead>
 
                     <tbody id="grade-tbbody">
+
+                        @if (Model.GradeListDetails != null && Model.GradeListDetails.Any())
+                        {
+                            foreach (var item in Model.GradeListDetails)
+                            {
+                                <tr class="existing-row">
+
+                                    <td>
+                                        <input type="text"
+                                               class="form-control txt-gradeitemcode"
+                                               value="@item.GradeItemCode"
+                                               disabled />
+                                    </td>
+
+                                    <td>
+                                        <input type="text"
+                                               class="form-control txt-brand"
+                                               value="@item.Brand"
+                                               disabled />
+                                    </td>
+
+                                    <td>
+                                        <input type="text"
+                                               class="form-control txt-grade"
+                                               value="@item.Grade"
+                                               disabled />
+                                    </td>
+
+                                    <td>
+                                        <input type="text"
+                                               class="form-control txt-gradelinkcode"
+                                               value="@item.GradeLinkCode"
+                                               disabled />
+                                    </td>
+
+                                    <td>
+                                        <input type="text"
+                                               class="form-control txt-salesunit"
+                                               value="@item.SalesUnitOfMeasure"
+                                               disabled />
+                                    </td>
+
+                                </tr>
+                            }
+                        }
+
                     </tbody>
                 </table>
             </div>
         </fieldset>
 
         <div class="action-buttons">
-            <button type="button" class="btn btn-primary" id="btnSaveFGItemMaster">Save & Create In ERP</button>
+            <button type="button" class="btn btn-primary" id="btnUpdateFGItemMaster">Update In ERP</button>
         </div>
     </div>
 </form>
+
+

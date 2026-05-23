@@ -76,7 +76,7 @@ namespace ERPAPP.Controllers
         }
 
         [HttpGet]
-        public async Task<JsonResult> GetFGItemHSNDataWithGSTGroupCode(string gstGroupCode,string category)
+        public async Task<JsonResult> GetFGItemHSNDataWithGSTGroupCode(string gstGroupCode, string category)
         {
             try
             {
@@ -85,7 +85,7 @@ namespace ERPAPP.Controllers
                     return Json(new List<FGItemHSNModel>());
                 }
 
-                var data = await _fGItemRepository.GetFGItemHSNDataWithGSTGroupCode(gstGroupCode,category);
+                var data = await _fGItemRepository.GetFGItemHSNDataWithGSTGroupCode(gstGroupCode, category);
 
                 return Json(data);
             }
@@ -182,10 +182,32 @@ namespace ERPAPP.Controllers
         }
 
 
-        public async Task<IActionResult> GetFGItemEditData(string description, string description2, string category, string sizeOfTile, string thickness, string packaging)
+        [HttpPost]
+        public async Task<JsonResult> CheckItemInERP(string description, string description2, string category, string sizeOfTile, string thickness, string packaging)
         {
-            var data =  await _fGItemRepository.GetFGItemEditData(description, description2, category, sizeOfTile, thickness, packaging);
-            return Json(data);
+            var data = await _fGItemRepository.GetFGItemEditData(description, description2, category, sizeOfTile, thickness, packaging);
+
+            bool isExist = !string.IsNullOrWhiteSpace(data.Description);
+
+            return Json(new
+            {
+                success = isExist,
+                data = data
+            });
+        }
+
+        public async Task<IActionResult> EditFGItem(string description, string description2, string category, string sizeOfTile, string thickness, string packaging)
+        {
+            var data = await _fGItemRepository.GetFGItemEditData(description, description2, category, sizeOfTile, thickness, packaging);
+            if (string.IsNullOrWhiteSpace(data.Description))
+            {
+                return Json(new
+                {
+                    success = false,
+                    message = "Item not found."
+                });
+            }
+            return PartialView("_EditFGItem", data);
         }
     }
 }
