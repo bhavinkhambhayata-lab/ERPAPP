@@ -381,7 +381,7 @@ namespace ERPAPP.Repository
                 DataRow row = ds.Tables[0].Rows[0];
 
                 // ================= BASIC =================
-
+                model.DisplayNo = row["DisplayNo"] != DBNull.Value ? Convert.ToInt32(row["DisplayNo"]) : 0;
                 model.Description = row["Description"]?.ToString() ?? "";
                 model.Description2 = row["Description2"]?.ToString() ?? "";
 
