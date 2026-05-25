@@ -53,11 +53,13 @@
                 if (getFGItemEditModel != null && getFGItemEditModel != '') {
 
                     editFGItemPageLoad(getFGItemEditModel);
+                    getFGItemEditModel='';
                 }
                 else {
 
                     // normal Add page load karse
                     loadDetails();
+                    getFGItemEditModel='';
                 }
             });
 
