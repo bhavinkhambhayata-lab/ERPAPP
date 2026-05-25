@@ -514,6 +514,18 @@
 
     $("#btnUpdateFGItemMaster").on("click", function () {
 
+        if (IsItemsEditExists()) {
+
+            let confirmContinue = confirm("Some FG items from the selected grade list are already created in ERP. Do you want to continue with the latest FG items?");
+
+            if (!confirmContinue) {
+                return;
+            }
+
+            // AUTO CLICK PREVIEW BUTTON
+            $("#btnEditPreviewGrades").trigger("click");
+        }
+
         let formData = new FormData();
 
         // ---------------- General Details ----------------
@@ -630,4 +642,35 @@
 
     
 });
+function IsItemsEditExists() {
 
+    let itemNos = [];
+
+    $("#grade-tbbody .preview-row").each(function () {
+
+        let itemCode = $(this).find(".txt-itemcode").val();
+
+        if (itemCode) {
+            itemNos.push(itemCode);
+        }
+    });
+
+    let isExists = 0;
+
+    $.ajax({
+        url: baseURL + "FGItem/CheckMultipleItemsExists",
+        type: "GET",
+        data: { itemNos: itemNos.join(",") },
+        async: false,
+        success: function (response) {
+
+            // Item exists in ERP
+            if (response.success) {
+
+                isExists = 1;
+            }
+        }
+    });
+
+    return isExists;
+}

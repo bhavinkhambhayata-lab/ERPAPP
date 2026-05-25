@@ -26,5 +26,6 @@ namespace ERPAPP.Interfaces
         Task<GetFGItemEditModel> GetFGItemEditData(string description, string description2, string category, string sizeOfTile, string thickness, string packaging);
 
         Task<bool> UpdateFGItem(FGItemeEditModel model, string updatedBy);
+        Task<bool> CheckMultipleItemsExists(string No);
     }
 }

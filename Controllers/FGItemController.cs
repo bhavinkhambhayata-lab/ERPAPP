@@ -2,6 +2,7 @@
 using ERPAPP.Models;
 using ERPAPP.Repository;
 using Microsoft.AspNetCore.Mvc;
+using System.Data;
 
 namespace ERPAPP.Controllers
 {
@@ -256,6 +257,29 @@ namespace ERPAPP.Controllers
                 {
                     success = false,
                     message = "Something went wrong while saving."
+                });
+            }
+        }
+
+
+        public async Task<JsonResult> CheckMultipleItemsExists(string itemNos)
+        {
+            var result = await _fGItemRepository.CheckMultipleItemsExists(itemNos);
+
+            if (result)
+            {
+                return Json(new
+                {
+                    success = true,
+                    message = "Some FG items from the selected grade list are already created in ERP. Do you want to continue with the latest FG items?"
+                });
+            }
+            else
+            {
+                return Json(new
+                {
+                    success = false,
+                    message = ""
                 });
             }
         }

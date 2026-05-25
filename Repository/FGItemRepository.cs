@@ -16,6 +16,32 @@ namespace ERPAPP.Repository
             _db = db;
         }
 
+        public async Task<bool> CheckMultipleItemsExists(string itemNos)
+        {
+            try
+            {
+                SqlParameter[] param = new SqlParameter[]
+                {
+            new SqlParameter("@No_", itemNos ?? "")
+                };
+
+                bool exists = false;
+
+                DataTable dt = _db.GetDataTable("CheckMultipleItemsExists", param);
+
+                if (dt != null && dt.Rows.Count > 0)
+                {
+                    exists = Convert.ToInt32(dt.Rows[0]["IsExists"]) == 1;
+                }
+
+                return exists;
+            }
+            catch (Exception ex)
+            {
+                return false;
+            }
+        }
+
         public async Task<List<BrandModel>> GetFGBrandDropDownData()
         {
             DataTable dt = _db.GetDataTable("GetFGBrandDropDownData");
