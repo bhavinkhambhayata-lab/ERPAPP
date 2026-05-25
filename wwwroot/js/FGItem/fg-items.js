@@ -19,16 +19,29 @@
 
                 if (response.success) {
 
-                    if(confirm("This item already exists in ERP. Do you want to add grade in this item?")) {
-                        
+                    if (confirm("This item already exists in ERP. Do you want to add grade in this item?")) {
+
                         getFGItemEditModel = model;
 
                         $("#detailsBtn").click();
                     }
+                    else {
+                        $("#generalDetailsFieldset").prop("disabled", false);
+                        $("#itemSpeficationFieldset").prop("disabled", false);
+                        $("#gradeFieldset").prop("disabled", false);
+                        $("#costandPostingFieldset").prop("disabled", false);
+                        $("#btnSaveFGItemMaster").prop("disabled", false);
+                    }
                 }
                 else {
-
-                    toastr.success("Item not found in ERP. You can create new item.");
+                    
+                    if (confirm("This item does not already exist in ERP. Continue with adding other field details.")) {
+                        $("#generalDetailsFieldset").prop("disabled", false);
+                        $("#itemSpeficationFieldset").prop("disabled", false);
+                        $("#gradeFieldset").prop("disabled", false);
+                        $("#costandPostingFieldset").prop("disabled", false);
+                        $("#btnSaveFGItemMaster").prop("disabled", false);
+                    }
                 }
             },
             error: function () {
@@ -615,5 +628,11 @@
     $("#GSTGroupCode").val('18_GOODS').trigger('change');
     $("#RoundingPrecision").val('0.001');
     $("#GSTCredit").val("1");
+
+    $("#generalDetailsFieldset").prop("disabled", true);
+    $("#itemSpeficationFieldset").prop("disabled", true);
+    $("#gradeFieldset").prop("disabled", true);
+    $("#costandPostingFieldset").prop("disabled", true);
+    $("#btnSaveFGItemMaster").prop("disabled", true);
 });
 
