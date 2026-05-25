@@ -1,8 +1,5 @@
 ﻿$(document).ready(function () {
-
-    var category = $("#Category").val();
-    $("#Category").val(category).trigger("change");
-
+   
     $('#Category').change(function () {
         $("#GSTGroupCode").val("18_GOODS").trigger("change");
     });
@@ -23,7 +20,7 @@
                 type: 'GET',
                 data: { gstGroupCode: gstCode, category: category },
                 success: function (data) {
-
+                    
                     $.each(data, function (i, item) {
                         $('#HSNSACCode').append(
                             $('<option>', {
@@ -42,6 +39,10 @@
 
         }
     });
+
+    var category = $("#Category").val();
+    $("#Category").val(category).trigger("change");
+
     $(document).on("click", "#btnEditPreviewGrades", function () {
 
         // REMOVE ONLY PREVIEW ROWS
@@ -627,7 +628,6 @@
 
     });
 
-   
-
+    
 });
 
