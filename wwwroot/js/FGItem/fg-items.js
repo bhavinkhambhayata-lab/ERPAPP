@@ -1,5 +1,7 @@
 ﻿$(document).ready(function () {
 
+    var isCreatedWIPItem = false;
+
     $(document).on("click", "#btnCheckInERP", function () {
 
         let model = {
@@ -124,6 +126,15 @@
     //});
 
     $(document).on("click", "#btnPreviewGrades", function () {
+
+        // CHECK GenProdPostingGroup
+        if ($("#GenProdPostingGroup").val() == "") {
+
+            showToast("Please select Gen Prod Posting Group.","danger");
+            $("#GenProdPostingGroup").focus();
+            return;
+        }
+
 
         $("#grade-tbbody").html('');
 
@@ -344,7 +355,7 @@
         // ONLY IF SPRM SELECTED
         // =======================
 
-        if (sprmIndex != -1) {
+        if (sprmIndex != -1 && isCreatedWIPItem == true) {
 
             tbody += `
             <tr class="wip-row">
@@ -601,6 +612,8 @@
 
         if (val.includes('-T')) {
 
+            isCreatedWIPItem = false;
+
             $('#ManufacturingPolicy').val('2');
             $('#ReplenishmentSystem').val('1');
             $('#ReorderingPolicy').val('3');
@@ -608,6 +621,8 @@
             $('.purch-unit-of-measure').removeClass('d-none');
         }
         else {
+
+            isCreatedWIPItem = true;
 
             $('#ManufacturingPolicy').val('1');
             $('#ReplenishmentSystem').val('2');

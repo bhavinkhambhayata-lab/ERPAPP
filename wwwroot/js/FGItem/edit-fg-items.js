@@ -184,6 +184,13 @@
         let prefix = itemCode.match(/[A-Za-z]+/)[0];
         let number = parseInt(itemCode.match(/\d+/)[0]);
 
+        var isCreatedWIPItem = false;
+
+        let val = $('#GenProdPostingGroup').val();
+
+        isCreatedWIPItem = !val.includes('-T');
+
+
         let tbody = "";
 
         // ============================================
@@ -328,11 +335,12 @@
             </tr>`;
             }
 
-            // ====================================
-            // WIP ROW
-            // ====================================
+            if (isCreatedWIPItem) {
+                // ====================================
+                // WIP ROW
+                // ====================================
 
-            tbody += `
+                tbody += `
         <tr class="wip-row preview-row">
 
             <td>
@@ -371,6 +379,7 @@
             </td>
 
         </tr>`;
+            }
         }
 
         // ============================================
