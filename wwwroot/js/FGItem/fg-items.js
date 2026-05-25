@@ -4,6 +4,38 @@
 
     $(document).on("click", "#btnCheckInERP", function () {
 
+        let isValid = true;
+
+        let fields = [
+            { id: "Description", label: "Description" },
+            { id: "Description2", label: "Description 2" },
+            { id: "Category", label: "Category" },
+            { id: "SizeOfTile", label: "Size Of Tile" },
+            { id: "Thickness", label: "Thickness" },
+            { id: "Packaging", label: "Packaging" }
+        ];
+
+        fields.forEach(function (field) {
+
+            let value = $("#" + field.id).val();
+
+            if (!value) {
+
+                $("span[data-valmsg-for='" + field.id + "']")
+                    .text(field.label + " is required.");
+
+                isValid = false;
+            }
+            else {
+
+                $("span[data-valmsg-for='" + field.id + "']").text("");
+            }
+        });
+
+        if (!isValid) {
+            return;
+        }
+
         let model = {
             description: $("#Description").val(),
             description2: $("#Description2").val(),
