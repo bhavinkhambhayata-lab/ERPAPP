@@ -209,5 +209,55 @@ namespace ERPAPP.Controllers
             }
             return PartialView("_EditFGItem", data);
         }
+
+        public async Task<IActionResult> UpdateFGItemMaster(FGItemeEditModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return Json(new
+                {
+                    success = false,
+                    message = "Validation failed",
+                    errors = ModelState
+                                .Where(x => x.Value.Errors.Count > 0)
+                                .ToDictionary(
+                                    k => k.Key,
+                                    v => v.Value.Errors.Select(e => e.ErrorMessage).ToArray()
+                                )
+                });
+            }
+
+            try
+            {
+                var userName = HttpContext.Session.GetString("UserName");
+
+                var updateResult = await _fGItemRepository.UpdateFGItem(model, userName ?? "");
+
+                if (updateResult)
+                {
+                    return Json(new
+                    {
+                        success = true,
+                        message = "FG item updated successfully."
+                    });
+                }
+                else
+                {
+                    return Json(new
+                    {
+                        success = false,
+                        message = "something went wrong!."
+                    });
+                }
+            }
+            catch
+            {
+                return Json(new
+                {
+                    success = false,
+                    message = "Something went wrong while saving."
+                });
+            }
+        }
     }
 }

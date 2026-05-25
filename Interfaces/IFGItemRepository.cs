@@ -24,5 +24,7 @@ namespace ERPAPP.Interfaces
         Task<FGItemDropDownEditModel> GetFGItemEditDropDownData();
 
         Task<GetFGItemEditModel> GetFGItemEditData(string description, string description2, string category, string sizeOfTile, string thickness, string packaging);
+
+        Task<bool> UpdateFGItem(FGItemeEditModel model, string updatedBy);
     }
 }

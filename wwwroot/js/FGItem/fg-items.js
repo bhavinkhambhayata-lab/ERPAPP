@@ -37,7 +37,7 @@
                 }
                 else {
                     
-                    if (confirm("This item does not already exist in ERP. Continue with adding other field details.")) {
+                    if (confirm("This item does not exist in ERP. Do you want to continue adding item details?")) {
                         $("#generalDetailsFieldset").prop("disabled", false);
                         $("#itemSpeficationFieldset").prop("disabled", false);
                         $("#gradeFieldset").prop("disabled", false);

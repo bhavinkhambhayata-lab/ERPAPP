@@ -511,121 +511,121 @@
 
     });
 
-    //$("#btnSaveFGItemMaster").on("click", function () {
+    $("#btnUpdateFGItemMaster").on("click", function () {
 
-    //    let formData = new FormData();
+        let formData = new FormData();
 
-    //    // ---------------- General Details ----------------
+        // ---------------- General Details ----------------
 
-    //    formData.append("DisplayNo", $("#DisplayNo").text());
+        formData.append("DisplayNo", $("#DisplayNo").text());
 
-    //    formData.append("Description", $("#Description").val());
-    //    formData.append("Description2", $("#Description2").val());
-    //    formData.append("RoundingPrecision", $("#RoundingPrecision").val());
-    //    formData.append("GrossWeight", $("#GrossWeight").val());
-    //    formData.append("NetWeight", $("#NetWeight").val());
+        formData.append("Description", $("#Description").val());
+        formData.append("Description2", $("#Description2").val());
+        formData.append("RoundingPrecision", $("#RoundingPrecision").val());
+        formData.append("GrossWeight", $("#GrossWeight").val());
+        formData.append("NetWeight", $("#NetWeight").val());
 
-    //    formData.append("BaseUnitOfMeasure", $("#BaseUnitOfMeasure").val());
+        formData.append("BaseUnitOfMeasure", $("#BaseUnitOfMeasure").val());
 
-    //    //formData.append("ProductionBOMNo", $("#ProductionBOMNo").val() ?? '');
-    //    //formData.append("RoutingNo", $("#RoutingNo").val() ?? '');
-    //    formData.append("ManufacturingPolicy", $("#ManufacturingPolicy").val());
-    //    formData.append("ReplenishmentSystem", $("#ReplenishmentSystem").val());
-    //    formData.append("MovementType", $("#MovementType").val());
-    //    formData.append("ReorderingPolicy", $("#ReorderingPolicy").val());
-    //    //formData.append("ItemCategoryCode", $("#ItemCategoryCode").val() ?? '');
-    //    formData.append("PurchUnitOfMeasure", $("#PurchUnitOfMeasure").val());
+        //formData.append("ProductionBOMNo", $("#ProductionBOMNo").val() ?? '');
+        //formData.append("RoutingNo", $("#RoutingNo").val() ?? '');
+        formData.append("ManufacturingPolicy", $("#ManufacturingPolicy").val());
+        formData.append("ReplenishmentSystem", $("#ReplenishmentSystem").val());
+        formData.append("MovementType", $("#MovementType").val());
+        formData.append("ReorderingPolicy", $("#ReorderingPolicy").val());
+        //formData.append("ItemCategoryCode", $("#ItemCategoryCode").val() ?? '');
+        formData.append("PurchUnitOfMeasure", $("#PurchUnitOfMeasure").val());
 
-    //    // ---------------- Item Specification ----------------
+        // ---------------- Item Specification ----------------
 
-    //    formData.append("TypeOfProduct", $("#TypeOfProduct").val());
-    //    formData.append("Category", $("#Category").val());
-    //    formData.append("SizeOfTile", $("#SizeOfTile").val());
-    //    //formData.append("Brand", $("#Brand").val());
-    //    formData.append("Collection", $("#Collection").val());
-    //    formData.append("SurfaceFinishOrGlaze", $("#SurfaceFinishOrGlaze").val());
-    //    formData.append("GlazeEffect", $("#GlazeEffect").val());
-    //    formData.append("DesignColor", $("#DesignColor").val() ?? '');
-    //    formData.append("ColourFamily", $("#ColourFamily").val());
-    //    formData.append("TypeOfTile", $("#TypeOfTile").val());
-    //    formData.append("Packaging", $("#Packaging").val());
-    //    formData.append("Thickness", $("#Thickness").val());
-    //    formData.append("Body", $("#Body").val());
-    //    formData.append("PLCollection", $("#PLCollection").val());
-    //    formData.append("PLColours", $("#PLColours").val());
+        formData.append("TypeOfProduct", $("#TypeOfProduct").val());
+        formData.append("Category", $("#Category").val());
+        formData.append("SizeOfTile", $("#SizeOfTile").val());
+        //formData.append("Brand", $("#Brand").val());
+        formData.append("Collection", $("#Collection").val());
+        formData.append("SurfaceFinishOrGlaze", $("#SurfaceFinishOrGlaze").val());
+        formData.append("GlazeEffect", $("#GlazeEffect").val());
+        formData.append("DesignColor", $("#DesignColor").val() ?? '');
+        formData.append("ColourFamily", $("#ColourFamily").val());
+        formData.append("TypeOfTile", $("#TypeOfTile").val());
+        formData.append("Packaging", $("#Packaging").val());
+        formData.append("Thickness", $("#Thickness").val());
+        formData.append("Body", $("#Body").val());
+        formData.append("PLCollection", $("#PLCollection").val());
+        formData.append("PLColours", $("#PLColours").val());
 
-    //    // ---------------- Cost & Posting ----------------
+        // ---------------- Cost & Posting ----------------
 
-    //    formData.append("CostingMethod", $("#CostingMethod").val());
-    //    formData.append("GenProdPostingGroup", $("#GenProdPostingGroup").val());
-    //    formData.append("GSTGroupCode", $("#GSTGroupCode").val());
-    //    formData.append("HSNSACCode", $("#HSNSACCode").val());
-    //    formData.append("GSTCredit", $("#GSTCredit").val());
-    //    formData.append("InventoryPostingGroup", $("#InventoryPostingGroup").val());
+        formData.append("CostingMethod", $("#CostingMethod").val());
+        formData.append("GenProdPostingGroup", $("#GenProdPostingGroup").val());
+        formData.append("GSTGroupCode", $("#GSTGroupCode").val());
+        formData.append("HSNSACCode", $("#HSNSACCode").val());
+        formData.append("GSTCredit", $("#GSTCredit").val());
+        formData.append("InventoryPostingGroup", $("#InventoryPostingGroup").val());
 
-    //    // ---------------- Grade List ----------------
+        // ---------------- Grade List ----------------
 
-    //    $("#grade-tbbody tr").each(function (index) {
+        $("#grade-tbbody .preview-row").each(function (index) {
 
-    //        formData.append(`GradeListDetails[${index}].GradeItemCode`,
-    //            $(this).find(".txt-itemcode").val());
+            formData.append(`GradeListDetails[${index}].GradeItemCode`,
+                $(this).find(".txt-itemcode").val());
 
-    //        formData.append(`GradeListDetails[${index}].Brand`,
-    //            $(this).find(".txt-brand").val());
+            formData.append(`GradeListDetails[${index}].Brand`,
+                $(this).find(".txt-brand").val());
 
-    //        formData.append(`GradeListDetails[${index}].Grade`,
-    //            $(this).find(".txt-grade").val());
+            formData.append(`GradeListDetails[${index}].Grade`,
+                $(this).find(".txt-grade").val());
 
-    //        formData.append(`GradeListDetails[${index}].GradeLinkCode`,
-    //            $(this).find(".txt-gradelinkcode").val());
+            formData.append(`GradeListDetails[${index}].GradeLinkCode`,
+                $(this).find(".txt-gradelinkcode").val());
 
-    //        formData.append(`GradeListDetails[${index}].SalesUnitOfMeasure`,
-    //            $(this).find(".txt-salesunit").val());
+            formData.append(`GradeListDetails[${index}].SalesUnitOfMeasure`,
+                $(this).find(".txt-salesunit").val());
 
-    //    });
+        });
 
-    //    showLoader();
+        showLoader();
 
-    //    $.ajax({
-    //        url: baseURL + "FGItem/SaveFGItemMaster",
-    //        type: "POST",
-    //        data: formData,
+        $.ajax({
+            url: baseURL + "FGItem/UpdateFGItemMaster",
+            type: "POST",
+            data: formData,
 
-    //        processData: false,
-    //        contentType: false,
+            processData: false,
+            contentType: false,
 
-    //        success: function (response) {
+            success: function (response) {
 
-    //            if (response.success) {
-    //                hideLoader();
-    //                showToast(response.message, "success", 4000);
+                if (response.success) {
+                    hideLoader();
+                    showToast(response.message, "success", 4000);
 
-    //            } else {
+                } else {
 
-    //                hideLoader();
-    //                $('.text-danger').text('');
+                    hideLoader();
+                    $('.text-danger').text('');
 
-    //                if (response.errors) {
+                    if (response.errors) {
 
-    //                    $.each(response.errors, function (key, messages) {
+                        $.each(response.errors, function (key, messages) {
 
-    //                        $('[data-valmsg-for="' + key + '"]')
-    //                            .text(messages[0]);
+                            $('[data-valmsg-for="' + key + '"]')
+                                .text(messages[0]);
 
-    //                    });
-    //                }
-    //            }
-    //        },
+                        });
+                    }
+                }
+            },
 
-    //        error: function (xhr) {
-    //            hideLoader();
-    //            console.log(xhr);
-    //            toastr.error("Something went wrong.");
+            error: function (xhr) {
+                hideLoader();
+                console.log(xhr);
+                toastr.error("Something went wrong.");
 
-    //        }
-    //    });
+            }
+        });
 
-    //});
+    });
 
    
 
