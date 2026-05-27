@@ -41,9 +41,7 @@ namespace ERPAPP.Models
 
         [Required(ErrorMessage = "Packaging is required")]
         public string Packaging { get; set; } = string.Empty;
-        public string? Grade { get; set; }
-        public string? GradeLinkCode { get; set; }
-
+       
         [Required(ErrorMessage = "Thickness is required")]
         public string Thickness { get; set; } = string.Empty;
         public string? Body { get; set; }
@@ -255,9 +253,7 @@ namespace ERPAPP.Models
 
         [Required(ErrorMessage = "Packaging is required")]
         public string Packaging { get; set; } = string.Empty;
-        public string? Grade { get; set; }
-        public string? GradeLinkCode { get; set; }
-
+       
         [Required(ErrorMessage = "Thickness is required")]
         public string Thickness { get; set; } = string.Empty;
         public string? Body { get; set; }

@@ -463,10 +463,6 @@ namespace ERPAPP.Repository
 
                 model.Packaging = row["Packaging"]?.ToString() ?? "";
 
-                model.Grade = row["Grade"]?.ToString();
-
-                model.GradeLinkCode = row["GradeLinkCode"]?.ToString();
-
                 model.Thickness = row["Thickness"]?.ToString() ?? "";
 
                 model.Body = row["Body"]?.ToString();
@@ -991,8 +987,7 @@ namespace ERPAPP.Repository
                     new SqlParameter("@TypeOfTile", model.TypeOfTile ?? ""),
                     new SqlParameter("@Packaging", model.Packaging ?? ""),
 
-                    new SqlParameter("@Grade", model.Grade ?? ""),
-                    new SqlParameter("@GradeLinkCode", model.GradeLinkCode ?? ""),
+                   
 
                     new SqlParameter("@Thickness", model.Thickness ?? ""),
                     new SqlParameter("@Body", model.Body ?? ""),
@@ -1128,9 +1123,6 @@ namespace ERPAPP.Repository
                     new SqlParameter("@ColourFamily", model.ColourFamily ?? ""),
                     new SqlParameter("@TypeOfTile", model.TypeOfTile ?? ""),
                     new SqlParameter("@Packaging", model.Packaging ?? ""),
-
-                    new SqlParameter("@Grade", model.Grade ?? ""),
-                    new SqlParameter("@GradeLinkCode", model.GradeLinkCode ?? ""),
 
                     new SqlParameter("@Thickness", model.Thickness ?? ""),
                     new SqlParameter("@Body", model.Body ?? ""),
