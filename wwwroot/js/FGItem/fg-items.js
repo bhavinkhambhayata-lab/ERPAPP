@@ -345,7 +345,7 @@
                     <input type="text"
                            class="form-control txt-itemcode"
                            value="${currentItemCode}"
-                           readonly />
+                           disabled />
                 </td>
 
                 <td>
@@ -359,7 +359,7 @@
                     <input type="text"
                            class="form-control txt-grade"
                            value="${selectedGrades[i].grade}"
-                           readonly />
+                           disabled />
                 </td>
 
                 <td>
@@ -369,7 +369,7 @@
                 /\.\d+$/,
                 selectedGrades[i].gradeLinkCode
             )}"
-                           readonly />
+                           disabled />
                 </td>
 
                 <td>
@@ -396,7 +396,7 @@
                     <input type="text"
                            class="form-control txt-itemcode"
                            value="${wipItemCode}"
-                           readonly />
+                           disabled />
                 </td>
 
                 <td>
@@ -410,14 +410,14 @@
                     <input type="text"
                            class="form-control txt-grade"
                            value=""
-                           readonly />
+                           disabled />
                 </td>
 
                 <td>
                     <input type="text"
                            class="form-control txt-gradelinkcode"
                            value=""
-                           readonly />
+                           disabled />
                 </td>
 
                 <td>
