@@ -32,8 +32,6 @@ namespace ERPAPP.Models
         [Required(ErrorMessage = "Size Of Tile is required")]
         public string SizeOfTile { get; set; } = string.Empty;
         
-        public string? Brand { get; set; }
-
         public string? Collection { get; set; }
         public string? SurfaceFinishOrGlaze { get; set; }
         public string? GlazeEffect { get; set; }
@@ -248,9 +246,6 @@ namespace ERPAPP.Models
 
         [Required(ErrorMessage = "Size Of Tile is required")]
         public string SizeOfTile { get; set; } = string.Empty;
-
-        public string? Brand { get; set; }
-
         public string? Collection { get; set; }
         public string? SurfaceFinishOrGlaze { get; set; }
         public string? GlazeEffect { get; set; }

@@ -449,8 +449,6 @@ namespace ERPAPP.Repository
 
                 model.SizeOfTile = row["SizeOfTile"]?.ToString() ?? "";
 
-                model.Brand = row["Brand"]?.ToString();
-
                 model.Collection = row["Collection"]?.ToString();
 
                 model.SurfaceFinishOrGlaze = row["SurfaceFinishOrGlaze"]?.ToString();
@@ -984,7 +982,7 @@ namespace ERPAPP.Repository
 
                     new SqlParameter("@Category", model.Category ?? ""),
                     new SqlParameter("@SizeOfTile", model.SizeOfTile ?? ""),
-                    new SqlParameter("@Brand", model.Brand ?? ""),
+                 
                     new SqlParameter("@Collection", model.Collection ?? ""),
                     new SqlParameter("@SurfaceFinishOrGlaze", model.SurfaceFinishOrGlaze ?? ""),
                     new SqlParameter("@GlazeEffect", model.GlazeEffect ?? ""),
@@ -1122,7 +1120,7 @@ namespace ERPAPP.Repository
 
                     new SqlParameter("@Category", model.Category ?? ""),
                     new SqlParameter("@SizeOfTile", model.SizeOfTile ?? ""),
-                    new SqlParameter("@Brand", model.Brand ?? ""),
+                    
                     new SqlParameter("@Collection", model.Collection ?? ""),
                     new SqlParameter("@SurfaceFinishOrGlaze", model.SurfaceFinishOrGlaze ?? ""),
                     new SqlParameter("@GlazeEffect", model.GlazeEffect ?? ""),

@@ -533,7 +533,6 @@
         formData.append("TypeOfProduct", $("#TypeOfProduct").val());
         formData.append("Category", $("#Category").val());
         formData.append("SizeOfTile", $("#SizeOfTile").val());
-        //formData.append("Brand", $("#Brand").val());
         formData.append("Collection", $("#Collection").val());
         formData.append("SurfaceFinishOrGlaze", $("#SurfaceFinishOrGlaze").val());
         formData.append("GlazeEffect", $("#GlazeEffect").val());
