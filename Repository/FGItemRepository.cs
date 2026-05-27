@@ -418,7 +418,7 @@ namespace ERPAPP.Repository
 
                 model.NetWeight = row["NetWeight"] != DBNull.Value ? Convert.ToDecimal(row["NetWeight"]) : null;
 
-                model.RoundingPrecision = row["RoundingPrecision"] != DBNull.Value ? Convert.ToDecimal(row["RoundingPrecision"]) : null;
+                model.RoundingPrecision = row["RoundingPrecision"] != DBNull.Value ? Convert.ToDecimal(row["RoundingPrecision"]) : 0;
 
                 model.PurchUnitOfMeasure = row["PurchUnitOfMeasure"]?.ToString();
 
@@ -964,7 +964,7 @@ namespace ERPAPP.Repository
                     new SqlParameter("@Description", model.Description ?? ""),
                     new SqlParameter("@Description2", model.Description2 ?? ""),
 
-                    new SqlParameter("@RoundingPrecision", model.RoundingPrecision ?? 0),
+                    new SqlParameter("@RoundingPrecision", model.RoundingPrecision),
                     new SqlParameter("@GrossWeight", model.GrossWeight ?? 0),
                     new SqlParameter("@NetWeight", model.NetWeight ?? 0),
 
@@ -1101,7 +1101,7 @@ namespace ERPAPP.Repository
                     new SqlParameter("@Description", model.Description ?? ""),
                     new SqlParameter("@Description2", model.Description2 ?? ""),
 
-                    new SqlParameter("@RoundingPrecision", model.RoundingPrecision ?? 0),
+                    new SqlParameter("@RoundingPrecision", model.RoundingPrecision),
                     new SqlParameter("@GrossWeight", model.GrossWeight ?? 0),
                     new SqlParameter("@NetWeight", model.NetWeight ?? 0),
 

@@ -14,16 +14,25 @@ namespace ERPAPP.Models
 
         [Required(ErrorMessage = "Description 2 is required")]
         public string Description2 { get; set; } = string.Empty;
-        public decimal? RoundingPrecision { get; set; }
+
+        [Required(ErrorMessage = "Rounding Precision is required")]
+        public decimal RoundingPrecision { get; set; }
+
         public decimal? GrossWeight { get; set; }
         public decimal? NetWeight { get; set; }
 
         // ---------------- DropDown Fields ----------------
-        public string? BaseUnitOfMeasure { get; set; }
+        [Required(ErrorMessage = "Base Unit Of Measure is required")]
+        public string BaseUnitOfMeasure { get; set; } = string.Empty;
+
         public string? ItemCategoryCode { get; set; }
-        public string? ProductGroupCode { get; set; }
-        public string? MovementType { get; set; }
-        public string? TypeOfProduct { get; set; }
+        public string? ProductGroupCode { get; set; } = string.Empty;
+
+        [Required(ErrorMessage = "Movement Type is required")]
+        public string MovementType { get; set; } = string.Empty;
+
+        [Required(ErrorMessage = "Type Of Product is required")]
+        public string TypeOfProduct { get; set; } = string.Empty;
 
         // ---------------- Tile Attributes ----------------
         [Required(ErrorMessage = "Category is required")]
@@ -31,42 +40,74 @@ namespace ERPAPP.Models
 
         [Required(ErrorMessage = "Size Of Tile is required")]
         public string SizeOfTile { get; set; } = string.Empty;
-        
-        public string? Collection { get; set; }
-        public string? SurfaceFinishOrGlaze { get; set; }
-        public string? GlazeEffect { get; set; }
-        public string? DesignColor { get; set; }
-        public string? ColourFamily { get; set; }
-        public string? TypeOfTile { get; set; }
+
+        [Required(ErrorMessage = "Collection is required")]
+        public string Collection { get; set; } = string.Empty;
+
+        [Required(ErrorMessage = "Surface Finish Or Glaze is required")]
+        public string SurfaceFinishOrGlaze { get; set; } = string.Empty;
+
+        [Required(ErrorMessage = "Glaze Effect is required")]
+        public string GlazeEffect { get; set; } = string.Empty;
+
+        [Required(ErrorMessage = "Design Color is required")]
+        public string DesignColor { get; set; } = string.Empty;
+
+        [Required(ErrorMessage = "Colour Family is required")]
+        public string ColourFamily { get; set; } = string.Empty;
+
+        [Required(ErrorMessage = "Type Of Tile is required")]
+        public string TypeOfTile { get; set; } = string.Empty;
 
         [Required(ErrorMessage = "Packaging is required")]
         public string Packaging { get; set; } = string.Empty;
-       
+
         [Required(ErrorMessage = "Thickness is required")]
         public string Thickness { get; set; } = string.Empty;
-        public string? Body { get; set; }
-        public string? PLCollection { get; set; }
-        public string? PLColours { get; set; }
+
+        [Required(ErrorMessage = "Body is required")]
+        public string Body { get; set; } = string.Empty;
+
+        [Required(ErrorMessage = "PL Collection is required")]
+        public string PLCollection { get; set; } = string.Empty;
+
+        [Required(ErrorMessage = "PL Colours is required")]
+        public string PLColours { get; set; } = string.Empty;
         // ---------------- Manufacturing ----------------
-        public string? ManufacturingPolicy { get; set; }
+        [Required(ErrorMessage = "Manufacturing Policy is required")]
+        public string ManufacturingPolicy { get; set; } = string.Empty;
         public string? RoutingNo { get; set; }
         public string? ProductionBOMNo { get; set; }
 
         // ---------------- Posting / Costing ----------------
-        public string? CostingMethod { get; set; }
-        public string? GenProdPostingGroup { get; set; }
+        [Required(ErrorMessage = "Costing Method is required")]
+        public string CostingMethod { get; set; } = string.Empty;
+
+        [Required(ErrorMessage = "General Product Posting Group is required")]
+        public string GenProdPostingGroup { get; set; } = string.Empty;
         public string? VATProdPostingGroup { get; set; }
-        public string? InventoryPostingGroup { get; set; }
-        public string? GSTGroupCode { get; set; }
-        public string? GSTCredit { get; set; }
-        public string? HSNSACCode { get; set; }
+
+        [Required(ErrorMessage = "Inventory Posting Group is required")]
+        public string InventoryPostingGroup { get; set; } = string.Empty;
+
+        [Required(ErrorMessage = "GST Group Code is required")]
+        public string GSTGroupCode { get; set; } = string.Empty;
+
+        [Required(ErrorMessage = "GST Credit is required")]
+        public string GSTCredit { get; set; } = string.Empty;
+
+        [Required(ErrorMessage = "HSN/SAC Code is required")]
+        public string HSNSACCode { get; set; } = string.Empty;
         // ---------------- Units ----------------
-        public string? ReplenishmentSystem { get; set; }
+        [Required(ErrorMessage = "Replenishment System is required")]
+        public string ReplenishmentSystem { get; set; } = string.Empty;
+
         public string? PurchUnitOfMeasure { get; set; }
         // ---------------- Tracking ----------------
         public string? ItemTrackingCode { get; set; }
 
-        public string? ReorderingPolicy { get; set; }
+        [Required(ErrorMessage = "Reordering Policy is required")]
+        public string ReorderingPolicy { get; set; } = string.Empty;
 
         public List<FGItemGradeListDetails> GradeListDetails { get; set; } = new();
 
@@ -103,8 +144,8 @@ namespace ERPAPP.Models
 
     public class ItemReorderingPolicyEnumModel : BaseDropDown { }
 
-    public class FGItemHSNModel : BaseDropDown 
-    { 
+    public class FGItemHSNModel : BaseDropDown
+    {
         public bool IsSelected { get; set; }
         public int? SelectedHSNCode { get; set; }
     }
@@ -227,58 +268,98 @@ namespace ERPAPP.Models
 
         [Required(ErrorMessage = "Description 2 is required")]
         public string Description2 { get; set; } = string.Empty;
-        public decimal? RoundingPrecision { get; set; }
+
+        [Required(ErrorMessage = "Rounding Precision is required")]
+        public decimal RoundingPrecision { get; set; }
         public decimal? GrossWeight { get; set; }
         public decimal? NetWeight { get; set; }
 
         // ---------------- DropDown Fields ----------------
-        public string? BaseUnitOfMeasure { get; set; }
+        [Required(ErrorMessage = "Base Unit Of Measure is required")]
+        public string BaseUnitOfMeasure { get; set; } = string.Empty;
         public string? ItemCategoryCode { get; set; }
         public string? ProductGroupCode { get; set; }
-        public string? MovementType { get; set; }
-        public string? TypeOfProduct { get; set; }
 
+        [Required(ErrorMessage = "Movement Type is required.")]
+        public string MovementType { get; set; } = string.Empty;
+
+        [Required(ErrorMessage = "Type Of Product is required")]
+        public string TypeOfProduct { get; set; } = string.Empty;
         // ---------------- Tile Attributes ----------------
         [Required(ErrorMessage = "Category is required")]
         public string Category { get; set; } = string.Empty;
 
         [Required(ErrorMessage = "Size Of Tile is required")]
         public string SizeOfTile { get; set; } = string.Empty;
-        public string? Collection { get; set; }
-        public string? SurfaceFinishOrGlaze { get; set; }
-        public string? GlazeEffect { get; set; }
-        public string? DesignColor { get; set; }
-        public string? ColourFamily { get; set; }
-        public string? TypeOfTile { get; set; }
+
+        [Required(ErrorMessage = "Collection is required")]
+        public string Collection { get; set; } = string.Empty;
+
+        [Required(ErrorMessage = "Surface Finish Or Glaze is required")]
+        public string SurfaceFinishOrGlaze { get; set; } = string.Empty;
+
+        [Required(ErrorMessage = "Glaze Effect is required")]
+        public string GlazeEffect { get; set; } = string.Empty;
+
+        [Required(ErrorMessage = "Design Color is required")]
+        public string DesignColor { get; set; } = string.Empty;
+
+        [Required(ErrorMessage = "Colour Family is required")]
+        public string ColourFamily { get; set; } = string.Empty;
+
+        [Required(ErrorMessage = "Type Of Tile is required")]
+        public string TypeOfTile { get; set; } = string.Empty;
 
         [Required(ErrorMessage = "Packaging is required")]
         public string Packaging { get; set; } = string.Empty;
-       
+
         [Required(ErrorMessage = "Thickness is required")]
         public string Thickness { get; set; } = string.Empty;
-        public string? Body { get; set; }
-        public string? PLCollection { get; set; }
-        public string? PLColours { get; set; }
+
+        [Required(ErrorMessage = "Body is required")]
+        public string Body { get; set; } = string.Empty;
+
+        [Required(ErrorMessage = "PL Collection is required")]
+        public string PLCollection { get; set; } = string.Empty;
+
+        [Required(ErrorMessage = "PL Colours is required")]
+        public string PLColours { get; set; } = string.Empty;
         // ---------------- Manufacturing ----------------
-        public string? ManufacturingPolicy { get; set; }
+
+        [Required(ErrorMessage = "Manufacturing Policy is required")]
+        public string ManufacturingPolicy { get; set; } = string.Empty;
         public string? RoutingNo { get; set; }
         public string? ProductionBOMNo { get; set; }
 
         // ---------------- Posting / Costing ----------------
-        public string? CostingMethod { get; set; }
-        public string? GenProdPostingGroup { get; set; }
+        [Required(ErrorMessage = "Costing Method is required")]
+        public string CostingMethod { get; set; } = string.Empty;
+
+        [Required(ErrorMessage = "GenProdPostingGroup is required")]
+        public string GenProdPostingGroup { get; set; } = string.Empty;
         public string? VATProdPostingGroup { get; set; }
-        public string? InventoryPostingGroup { get; set; }
-        public string? GSTGroupCode { get; set; }
-        public string? GSTCredit { get; set; }
-        public string? HSNSACCode { get; set; }
+
+        [Required(ErrorMessage = "InventoryPostingGroup is required")]
+        public string InventoryPostingGroup { get; set; } = string.Empty;
+
+        [Required(ErrorMessage = "GSTGroupCode is required")]
+        public string GSTGroupCode { get; set; } = string.Empty;
+
+        [Required(ErrorMessage = "GSTCredit is required")]
+        public string GSTCredit { get; set; } = string.Empty;
+
+        [Required(ErrorMessage = "HSNSACCode is required")]
+        public string HSNSACCode { get; set; } = string.Empty;
         // ---------------- Units ----------------
-        public string? ReplenishmentSystem { get; set; }
+        [Required(ErrorMessage = "ReplenishmentSystem is required")]
+        public string ReplenishmentSystem { get; set; } = string.Empty;
+
         public string? PurchUnitOfMeasure { get; set; }
         // ---------------- Tracking ----------------
         public string? ItemTrackingCode { get; set; }
 
-        public string? ReorderingPolicy { get; set; }
+        [Required(ErrorMessage = "ReorderingPolicy is required")]
+        public string ReorderingPolicy { get; set; } = string.Empty;
 
         public List<FGItemGradeListDetails> GradeListDetails { get; set; } = new();
 
