@@ -607,6 +607,12 @@
 
         });
 
+        if ($("#grade-tbbody .preview-row").length == 0) {
+
+            showToast("Please select at least one grade.", "danger");
+            return false;
+        }
+
         showLoader();
 
         $.ajax({
