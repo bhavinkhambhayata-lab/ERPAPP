@@ -252,7 +252,9 @@ namespace ERPAPP.Models
 
     public class StateModel : BaseDropDown { }
 
-    public class PostCodeModel : BaseDropDown { }
+    public class PostCodeModel : BaseDropDown { 
+        public string? StateCode { get; set; }
+    }
 
     public class CountryModel : BaseDropDown { }
 

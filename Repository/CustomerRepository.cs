@@ -2094,7 +2094,8 @@ namespace ERPAPP.Repository
                 list.Add(new PostCodeModel
                 {
                     Code = row["Code"].ToString(),
-                    Name = row["Name"].ToString()
+                    Name = row["Name"].ToString(),
+                    StateCode = row["StateCode"].ToString()
                 });
             }
 

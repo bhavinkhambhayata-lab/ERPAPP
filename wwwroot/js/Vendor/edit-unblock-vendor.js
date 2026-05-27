@@ -165,7 +165,8 @@
                         return {
                             label: item.name,   // show in dropdown
                             value: item.name,   // set in textbox
-                            code: item.code     // hidden field mate
+                            code: item.code,     // hidden field mate
+                            stateCode: item.stateCode 
                         };
                     }));
 
@@ -179,6 +180,7 @@
         select: function (event, ui) {
 
             $("#PostCode").val(ui.item.code);
+            $("#StateCode").val(ui.item.stateCode);
 
             return false;
         }

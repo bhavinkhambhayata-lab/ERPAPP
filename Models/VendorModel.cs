@@ -214,7 +214,10 @@ namespace ERPAPP.Models
     public class VendorCountryModel : BaseDropDown { }
     public class VendorCurrencyCodeModel : BaseDropDown { }
 
-    public class VendorPostCodeModel : BaseDropDown { }
+    public class VendorPostCodeModel : BaseDropDown
+    {
+        public string? StateCode { get; set; }
+    }
 
     public class VendorAggregateTurnoverModel : BaseDropDown { }
 
@@ -467,7 +470,7 @@ namespace ERPAPP.Models
 
         public int Blocked { get; set; } = 0;
 
-        public int IsAlreadyCreatedMaster { get;set; } = 0;
+        public int IsAlreadyCreatedMaster { get; set; } = 0;
     }
 
     public class GetVendorEditData : VendorsEditModel
