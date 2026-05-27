@@ -433,36 +433,46 @@
         $("#grade-tbbody").html(tbody);
 
         $("#grade-tbbody tr").each(function () {
-
+            
             let grade = $(this).find(".txt-grade").val();
+            let itemCode = $(this).find(".txt-itemcode").val();
             let salesUnit = $(this).find(".txt-salesunit");
-
-            // Sales Unit Logic
-            if (grade == "SMPL") {
-
-                salesUnit.val("PCS");
-            }
-            else {
+            
+            // If ItemCode = WIP and Grade is null/empty
+            if (itemCode.startsWith("WIP") && (!grade || grade.trim() == "")) {
 
                 salesUnit.val("BOX");
-            }
-
-            // Disable Sales Unit for specific grades
-            if (
-                grade == "SPRM"
-                || grade == "STD"
-                || grade == "ECO"
-                || grade == "SMPL"
-            ) {
-
                 salesUnit.prop("disabled", true);
             }
             else {
 
-                salesUnit.prop("disabled", false);
+                // Sales Unit Logic
+                if (grade == "SMPL") {
+
+                    salesUnit.val("PCS");
+                }
+                else {
+
+                    salesUnit.val("BOX");
+                }
+
+                // Disable Sales Unit for specific grades
+                if (
+                    grade == "SPRM"
+                    || grade == "STD"
+                    || grade == "ECO"
+                    || grade == "SMPL"
+                ) {
+
+                    salesUnit.prop("disabled", true);
+                }
+                else {
+
+                    salesUnit.prop("disabled", false);
+                }
             }
 
-            // Brand Default = GRIFINE
+            // Brand Default
             $(this).find(".txt-brand").val("GRIFINE");
 
         });
