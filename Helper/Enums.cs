@@ -192,16 +192,16 @@ namespace ERPAPP.Helper
 
         public enum ItemMovementType
         {
-            StdSKU = 1,
-            NonStdSKU = 2,
-            D0 = 3,
-            D1 = 4,
-            D2 = 5,
-            D3 = 6,
-            D4 = 7,
-            D5 = 8,
-            D6 = 9,
-            Obsolete = 10
+            StdSKU = 0,
+            NonStdSKU = 1,
+            D0 = 2,
+            D1 = 3,
+            D2 = 4,
+            D3 = 5,
+            D4 = 6,
+            D5 = 7,
+            D6 = 8,
+            Obsolete = 9
         }
 
         public enum ItemTypeOfProduct
@@ -245,13 +245,13 @@ namespace ERPAPP.Helper
         public enum ItemReplenishmentSystem
         {
             [Display(Name = "Purchase")]
-            Purchase = 1,
+            Purchase = 0,
 
             [Display(Name = "Prod. Order")]
-            ProdOrder = 2,
+            ProdOrder = 1,
 
             [Display(Name = "Assembly")]
-            Assembly = 3
+            Assembly = 2
         }
 
         public enum ItemReorderingPolicy
