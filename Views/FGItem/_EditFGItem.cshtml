@@ -307,7 +307,7 @@
                     <!-- Rounding Precision -->
                     <div class="row mt-2">
                         <label class="col-12 col-sm-4 col-form-label">
-                            Rounding Precision
+                            Rounding Precision<span class="required-star">*</span>
                         </label>
                         <div class="col-12 col-sm-8">
                             <input asp-for="RoundingPrecision" class="form-control" disabled />
@@ -317,7 +317,7 @@
 
                     <!-- Unit Of Measure -->
                     <div class="row mt-2">
-                        <label class="col-12 col-sm-4 col-form-label">Base Unit Of Measure</label>
+                        <label class="col-12 col-sm-4 col-form-label">Base Unit Of Measure<span class="required-star">*</span></label>
                         <div class="col-12 col-sm-8">
                             <select asp-for="BaseUnitOfMeasure"
                                     asp-items="@(new SelectList(Model.DropDownData.UnitOfMeasures, "Code", "Name"))"
@@ -330,7 +330,7 @@
 
                     <!-- Movement -->
                     <div class="row mt-2">
-                        <label class="col-12 col-sm-4 col-form-label">Movement</label>
+                        <label class="col-12 col-sm-4 col-form-label">Movement<span class="required-star">*</span></label>
                         <div class="col-12 col-sm-8">
                             <select asp-for="MovementType"
                                     asp-items="@(new SelectList(Model.DropDownData.MovementTypes, "Code", "Name"))"
@@ -373,7 +373,7 @@
                 <div class="col-4">
                     <!-- General Product Posting Group -->
                     <div class="row mt-2">
-                        <label class="col-12 col-sm-4 col-form-label"> Gen Product Posting Group</label>
+                        <label class="col-12 col-sm-4 col-form-label"> Gen Product Posting Group<span class="required-star">*</span></label>
                         <div class="col-12 col-sm-8">
                             <select asp-for="GenProdPostingGroup"
                                     asp-items="@(new SelectList(Model.DropDownData.GeneralProductPostingGroups, "Code", "Name"))"
@@ -409,7 +409,7 @@
 
                     <!-- ManufacturingPolicy -->
                     <div class="row mt-2">
-                        <label class="col-12 col-sm-4 col-form-label">Manufacturing Policy</label>
+                        <label class="col-12 col-sm-4 col-form-label">Manufacturing Policy<span class="required-star">*</span></label>
                         <div class="col-12 col-sm-8">
                             <select asp-for="ManufacturingPolicy"
                                     asp-items="@(new SelectList(Model.DropDownData.ManufacturingPolicies, "Code", "Name"))"
@@ -422,7 +422,7 @@
 
                     <!-- Replenishment System -->
                     <div class="row mt-2">
-                        <label class="col-12 col-sm-4 col-form-label">Replenishment System</label>
+                        <label class="col-12 col-sm-4 col-form-label">Replenishment System<span class="required-star">*</span></label>
                         <div class="col-12 col-sm-8">
                             <select asp-for="ReplenishmentSystem"
                                     asp-items="@(new SelectList(Model.DropDownData.ReplenishmentSystems, "Code", "Name"))"
@@ -435,7 +435,7 @@
 
                     <!-- Reordering Policy -->
                     <div class="row mt-2">
-                        <label class="col-12 col-sm-4 col-form-label">Reorderring Policy</label>
+                        <label class="col-12 col-sm-4 col-form-label">Reorderring Policy<span class="required-star">*</span></label>
                         <div class="col-12 col-sm-8">
                             <select asp-for="ReorderingPolicy"
                                     asp-items="@(new SelectList(Model.DropDownData.ReorderingPolicy, "Code", "Name"))"
@@ -503,7 +503,7 @@
 
                     <!-- TypeOfProduct -->
                     <div class="row mt-2">
-                        <label class="col-12 col-sm-4 col-form-label">Type Of Product</label>
+                        <label class="col-12 col-sm-4 col-form-label">Type Of Product<span class="required-star">*</span></label>
                         <div class="col-12 col-sm-8">
                             <select asp-for="TypeOfProduct"
                                     asp-items="@(new SelectList(Model.DropDownData.TypeOfProducts, "Code", "Name"))"
@@ -516,7 +516,7 @@
 
                     <!-- Collection -->
                     <div class="row mt-2">
-                        <label class="col-12 col-sm-4 col-form-label">Collection</label>
+                        <label class="col-12 col-sm-4 col-form-label">Collection<span class="required-star">*</span></label>
                         <div class="col-12 col-sm-8">
                             <select asp-for="Collection"
                                     asp-items="@(new SelectList(Model.DropDownData.Collections, "Code", "Name"))"
@@ -529,7 +529,7 @@
 
                     <!-- Surface Finish Glazes  -->
                     <div class="row mt-2">
-                        <label class="col-12 col-sm-4 col-form-label">Surface Finish Or Glaze</label>
+                        <label class="col-12 col-sm-4 col-form-label">Surface Finish Or Glaze<span class="required-star">*</span></label>
                         <div class="col-12 col-sm-8">
                             <select asp-for="SurfaceFinishOrGlaze"
                                     asp-items="@(new SelectList(Model.DropDownData.SurfaceFinishGlazes, "Code", "Name"))"
@@ -542,7 +542,7 @@
 
                     <!-- GlazeEffect  -->
                     <div class="row mt-2">
-                        <label class="col-12 col-sm-4 col-form-label">Glaze Effect</label>
+                        <label class="col-12 col-sm-4 col-form-label">Glaze Effect<span class="required-star">*</span></label>
                         <div class="col-12 col-sm-8">
                             <select asp-for="GlazeEffect"
                                     asp-items="@(new SelectList(Model.DropDownData.GlazeEffects, "Code", "Name"))"
@@ -563,7 +563,7 @@
                     <div class="row mt-2 align-items-center">
 
                         <label class="col-12 col-sm-4 col-form-label">
-                            Design Color
+                            Design Color<span class="required-star">*</span>
                         </label>
 
                         <div class="col-12 col-sm-8">
@@ -572,7 +572,7 @@
                         </div>
 
                     </div>
-
+@* 
                     <!-- Colour Family -->
                     <div class="row mt-2">
                         <label class="col-12 col-sm-4 col-form-label">Colour Family</label>
@@ -584,11 +584,11 @@
                             </select>
                             <span asp-validation-for="ColourFamily" class="text-danger"></span>
                         </div>
-                    </div>
+                    </div> *@
 
                     <!-- Type Of Tile -->
                     <div class="row mt-2">
-                        <label class="col-12 col-sm-4 col-form-label">Type Of Tile</label>
+                        <label class="col-12 col-sm-4 col-form-label">Type Of Tile<span class="required-star">*</span></label>
                         <div class="col-12 col-sm-8">
                             <select asp-for="TypeOfTile"
                                     asp-items="@(new SelectList(Model.DropDownData.TypeOfTiles, "Code", "Name"))"
@@ -601,7 +601,7 @@
 
                     <!-- Body -->
                     <div class="row mt-2">
-                        <label class="col-12 col-sm-4 col-form-label">Body</label>
+                        <label class="col-12 col-sm-4 col-form-label">Body<span class="required-star">*</span></label>
                         <div class="col-12 col-sm-8">
                             <select asp-for="Body"
                                     asp-items="@(new SelectList(Model.DropDownData.Bodies, "Code", "Name"))"
@@ -619,7 +619,7 @@
                 <div class="col-4">
                     <!-- PL Collection -->
                     <div class="row mt-2">
-                        <label class="col-12 col-sm-4 col-form-label">PL Collection</label>
+                        <label class="col-12 col-sm-4 col-form-label">PL Collection<span class="required-star">*</span></label>
                         <div class="col-12 col-sm-8">
                             <select asp-for="PLCollection"
                                     asp-items="@(new SelectList(Model.DropDownData.PLCollections, "Code", "Name"))"
@@ -631,7 +631,7 @@
                     </div>
                     <!-- PL Colours -->
                     <div class="row mt-2">
-                        <label class="col-12 col-sm-4 col-form-label">PL Colours</label>
+                        <label class="col-12 col-sm-4 col-form-label">PL Colours<span class="required-star">*</span></label>
                         <div class="col-12 col-sm-8">
                             <select asp-for="PLColours"
                                     asp-items="@(new SelectList(Model.DropDownData.PLColours, "Code", "Name"))"
@@ -656,7 +656,7 @@
 
                     <!-- Costing Method -->
                     <div class="row mt-2">
-                        <label class="col-12 col-sm-4 col-form-label">Costing Method</label>
+                        <label class="col-12 col-sm-4 col-form-label">Costing Method<span class="required-star">*</span></label>
                         <div class="col-12 col-sm-8">
                             <select asp-for="CostingMethod"
                                     asp-items="@(new SelectList(Model.DropDownData.CostingMethods, "Code", "Name"))"
@@ -669,7 +669,7 @@
 
                     <!-- Inventory Posting Group -->
                     <div class="row mt-2">
-                        <label class="col-12 col-sm-4 col-form-label"> Inventory Posting Group</label>
+                        <label class="col-12 col-sm-4 col-form-label"> Inventory Posting Group<span class="required-star">*</span></label>
                         <div class="col-12 col-sm-8">
                             <select asp-for="InventoryPostingGroup"
                                     asp-items="@(new SelectList(Model.DropDownData.InventoryPostingGroups, "Code", "Name"))"
@@ -686,7 +686,7 @@
                 <div class="col-4">
                     <!-- GST Group Code-->
                     <div class="row mt-2">
-                        <label class="col-12 col-sm-4 col-form-label">GST Group Code</label>
+                        <label class="col-12 col-sm-4 col-form-label">GST Group Code<span class="required-star">*</span></label>
                         <div class="col-12 col-sm-8">
                             <select asp-for="GSTGroupCode"
                                     asp-items="@(new SelectList(Model.DropDownData.GSTGroups, "Code", "Name"))"
@@ -699,7 +699,7 @@
 
                     <!-- HSN/SAC Code -->
                     <div class="row mt-2">
-                        <label class="col-12 col-sm-4 col-form-label">HSN/SAC Code</label>
+                        <label class="col-12 col-sm-4 col-form-label">HSN/SAC Code<span class="required-star">*</span></label>
                         <div class="col-12 col-sm-8">
                             <select asp-for="HSNSACCode"
                                     class="form-select" disabled>
@@ -714,7 +714,7 @@
                 <div class="col-4">
                     <!-- GST Credit -->
                     <div class="row mt-2">
-                        <label class="col-12 col-sm-4 col-form-label">GST Credit</label>
+                        <label class="col-12 col-sm-4 col-form-label">GST Credit<span class="required-star">*</span></label>
                         <div class="col-12 col-sm-8">
                             <select asp-for="GSTCredit"
                                     asp-items="@(new SelectList(Model.DropDownData.GSTCredits, "Code", "Name"))"

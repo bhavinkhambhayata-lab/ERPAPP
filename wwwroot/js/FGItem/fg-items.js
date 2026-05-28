@@ -547,7 +547,7 @@
         formData.append("SurfaceFinishOrGlaze", $("#SurfaceFinishOrGlaze").val());
         formData.append("GlazeEffect", $("#GlazeEffect").val());
         formData.append("DesignColor", $("#DesignColor").val() ?? '');
-        formData.append("ColourFamily", $("#ColourFamily").val());
+        //formData.append("ColourFamily", $("#ColourFamily").val());
         formData.append("TypeOfTile", $("#TypeOfTile").val());
         formData.append("Packaging", $("#Packaging").val());
         formData.append("Thickness", $("#Thickness").val());
