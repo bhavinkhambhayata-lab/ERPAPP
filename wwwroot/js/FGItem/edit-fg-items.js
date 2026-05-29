@@ -83,11 +83,29 @@
             .filter(":checked")
             .each(function () {
 
-                rowsToGenerate.push({
-                    grade: $(this).val(),
-                    gradeLinkCode: $(this).data("gradelinkcode"),
-                    isExistingGradeExtraCount: false
-                });
+                let checkbox = $(this);
+
+                let grade = checkbox.val();
+
+                let gradeLinkCode =
+                    checkbox.data("gradelinkcode");
+
+                let countTextbox =
+                    checkbox.closest(".grade-card").find(".grade-count");
+
+                let count =
+                    parseInt(countTextbox.val()) || 1;
+
+                // GENERATE ROWS AS PER COUNT
+                for (let i = 0; i < count; i++) {
+
+                    rowsToGenerate.push({
+                        grade: grade,
+                        gradeLinkCode: gradeLinkCode,
+                        isExistingGradeExtraCount: false
+                    });
+
+                }
 
             });
 
