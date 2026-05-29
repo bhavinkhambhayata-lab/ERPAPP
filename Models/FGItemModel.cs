@@ -303,8 +303,7 @@ namespace ERPAPP.Models
         [Required(ErrorMessage = "Design Color is required")]
         public string DesignColor { get; set; } = string.Empty;
 
-        [Required(ErrorMessage = "Colour Family is required")]
-        public string ColourFamily { get; set; } = string.Empty;
+        public string? ColourFamily { get; set; } = string.Empty;
 
         [Required(ErrorMessage = "Type Of Tile is required")]
         public string TypeOfTile { get; set; } = string.Empty;

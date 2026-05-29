@@ -162,27 +162,47 @@
         // CHECK GenProdPostingGroup
         if ($("#GenProdPostingGroup").val() == "") {
 
-            showToast("Please select Gen Prod Posting Group.","danger");
+            showToast("Please select Gen Prod Posting Group.", "danger");
             $("#GenProdPostingGroup").focus();
             return;
         }
-
 
         $("#grade-tbbody").html('');
 
         let selectedGrades = [];
 
+        // ===============================
+        // GRADE + COUNT LOGIC
+        // ===============================
+
         $(".grade-checkbox:checked").each(function () {
 
-            selectedGrades.push({
-                grade: $(this).val(),
-                gradeLinkCode: $(this).data("gradelinkcode")
-            });
+            let grade = $(this).val();
+
+            let gradeLinkCode =
+                $(this).data("gradelinkcode");
+
+            let count = parseInt(
+                $(this)
+                    .closest(".grade-card")
+                    .find(".grade-count")
+                    .val()
+            ) || 1;
+
+            // Count wise multiple rows
+            for (let i = 0; i < count; i++) {
+
+                selectedGrades.push({
+                    grade: grade,
+                    gradeLinkCode: gradeLinkCode
+                });
+            }
 
         });
 
         if (selectedGrades.length == 0) {
-            alert("Please select at least one grade.");
+
+            showToast("Please select at least one grade.", "danger");
             return;
         }
 
@@ -221,9 +241,9 @@
                 $.each(response, function (index, item) {
 
                     salesUnitOptions += `
-                    <option value="${item.code}">
-                        ${item.name}
-                    </option>`;
+                <option value="${item.code}">
+                    ${item.name}
+                </option>`;
                 });
             }
         });
@@ -239,214 +259,174 @@
                 $.each(response, function (index, item) {
 
                     brandOptions += `
-                    <option value="${item.code}">
-                        ${item.name}
-                    </option>`;
+                <option value="${item.code}">
+                    ${item.name}
+                </option>`;
                 });
             }
         });
 
-        // Prefix + Number split
+        // ===============================
+        // ITEM CODE SPLIT
+        // ===============================
+
         let prefix = itemCode.match(/[A-Za-z]+/)[0];
-        let number = parseInt(itemCode.match(/\d+/)[0]);
+
+        let number = parseInt(
+            itemCode.match(/\d+/)[0]
+        );
 
         let tbody = "";
 
-        // First Selected Grade
-        let firstSelectedGrade = selectedGrades[0];
+        // ===============================
+        // SPRM INDEX
+        // ===============================
 
-        // SPRM Item Code
-        let sprmItemCode = "";
+        let sprmIndex = selectedGrades.findIndex(
+            x => x.grade === "SPRM"
+        );
 
-        // Find SPRM Index
-        let sprmIndex = selectedGrades.findIndex(x => x.grade == "SPRM");
+        // ===============================
+        // ROW CREATE
+        // ===============================
 
-        if (sprmIndex != -1) {
-
-            // SPRM Item Code Generate
-            if (sprmIndex == 0) {
-
-                sprmItemCode = itemCode;
-            }
-            else {
-
-                sprmItemCode = prefix + (number + sprmIndex);
-            }
-        }
-
-        let commonGradeLinkCode = "";
-
-        /*
-            SCENARIO 1:
-            First Selected = 1ST CHOICE
-            AND SPRM selected
-    
-            => SPRM ItemCode + .1
-        */
-
-        if (
-            firstSelectedGrade.grade == "1ST CHOICE"
-            && sprmIndex != -1
-        ) {
-
-            commonGradeLinkCode =
-                sprmItemCode + firstSelectedGrade.gradeLinkCode;
-        }
-
-        /*
-            SCENARIO 2:
-            First Selected = SPRM
-    
-            => ItemCode + .1
-        */
-
-        else if (firstSelectedGrade.grade == "SPRM") {
-
-            commonGradeLinkCode =
-                itemCode + firstSelectedGrade.gradeLinkCode;
-        }
-
-        /*
-            SCENARIO 3:
-            First Selected = Any Grade
-            AND NOT SPRM
-    
-            => ItemCode + point value
-        */
-
-        else {
-
-            commonGradeLinkCode =
-                itemCode + firstSelectedGrade.gradeLinkCode;
-        }
-
-        // =======================
-        // NORMAL GRADE ROWS
-        // =======================
+        let runningNumber = number;
 
         for (let i = 0; i < selectedGrades.length; i++) {
 
             let currentItemCode = "";
 
-            // Item Code Generate
+            // First item
             if (i == 0) {
 
                 currentItemCode = itemCode;
             }
             else {
 
-                currentItemCode = prefix + (number + i);
+                runningNumber++;
+
+                currentItemCode =
+                    prefix + runningNumber;
             }
 
             tbody += `
-            <tr>
+        <tr>
 
-                <td>
-                    <input type="text"
-                           class="form-control txt-itemcode"
-                           value="${currentItemCode}"
-                           disabled />
-                </td>
+            <td>
+                <input type="text"
+                       class="form-control txt-itemcode"
+                       value="${currentItemCode}"
+                       disabled />
+            </td>
 
-                <td>
-                    <select class="form-select txt-brand">
-                        <option value="">-- Select --</option>
-                        ${brandOptions}
-                    </select>
-                </td>
+            <td>
+                <select class="form-select txt-brand">
+                    <option value="">-- Select --</option>
+                    ${brandOptions}
+                </select>
+            </td>
 
-                <td>
-                    <input type="text"
-                           class="form-control txt-grade"
-                           value="${selectedGrades[i].grade}"
-                           disabled />
-                </td>
+            <td>
+                <input type="text"
+                       class="form-control txt-grade"
+                       value="${selectedGrades[i].grade}"
+                       disabled />
+            </td>
 
-                <td>
-                    <input type="text"
-                           class="form-control txt-gradelinkcode"
-                           value="${commonGradeLinkCode.replace(
-                /\.\d+$/,
-                selectedGrades[i].gradeLinkCode
-            )}"
-                           disabled />
-                </td>
+            <td>
+                 <input type="text"
+           class="form-control txt-gradelinkcode"
+           value="${itemCode + selectedGrades[i].gradeLinkCode}"
+           disabled />
+            </td>
 
-                <td>
-                    <select class="form-select txt-salesunit">
-                        <option value="">-- Select --</option>
-                        ${salesUnitOptions}
-                    </select>
-                </td>
+            <td>
+                <select class="form-select txt-salesunit">
+                    <option value="">-- Select --</option>
+                    ${salesUnitOptions}
+                </select>
+            </td>
 
-            </tr>`;
+        </tr>`;
         }
 
-        // =======================
-        // WIP ROW ADD
-        // ONLY IF SPRM SELECTED
-        // =======================
+        // ===============================
+        // WIP ROW
+        // ===============================
 
         if (sprmIndex != -1 && isCreatedWIPItem == true) {
 
             tbody += `
-            <tr class="wip-row">
+        <tr class="wip-row">
 
-                <td>
-                    <input type="text"
-                           class="form-control txt-itemcode"
-                           value="${wipItemCode}"
-                           disabled />
-                </td>
+            <td>
+                <input type="text"
+                       class="form-control txt-itemcode"
+                       value="${wipItemCode}"
+                       disabled />
+            </td>
 
-                <td>
-                    <select class="form-select txt-brand">
-                        <option value="">-- Select --</option>
-                        ${brandOptions}
-                    </select>
-                </td>
+            <td>
+                <select class="form-select txt-brand">
+                    <option value="">-- Select --</option>
+                    ${brandOptions}
+                </select>
+            </td>
 
-                <td>
-                    <input type="text"
-                           class="form-control txt-grade"
-                           value=""
-                           disabled />
-                </td>
+            <td>
+                <input type="text"
+                       class="form-control txt-grade"
+                       value=""
+                       disabled />
+            </td>
 
-                <td>
-                    <input type="text"
-                           class="form-control txt-gradelinkcode"
-                           value=""
-                           disabled />
-                </td>
+            <td>
+                <input type="text"
+                       class="form-control txt-gradelinkcode"
+                       value=""
+                       disabled />
+            </td>
 
-                <td>
-                    <select class="form-select txt-salesunit">
-                        <option value="">-- Select --</option>
-                        ${salesUnitOptions}
-                    </select>
-                </td>
+            <td>
+                <select class="form-select txt-salesunit">
+                    <option value="">-- Select --</option>
+                    ${salesUnitOptions}
+                </select>
+            </td>
 
-            </tr>`;
+        </tr>`;
         }
 
         $("#grade-tbbody").html(tbody);
 
+        // ===============================
+        // SALES UNIT + BRAND LOGIC
+        // ===============================
+
         $("#grade-tbbody tr").each(function () {
-            
-            let grade = $(this).find(".txt-grade").val();
-            let itemCode = $(this).find(".txt-itemcode").val();
-            let salesUnit = $(this).find(".txt-salesunit");
-            
-            // If ItemCode = WIP and Grade is null/empty
-            if (itemCode.startsWith("WIP") && (!grade || grade.trim() == "")) {
+
+            let grade =
+                $(this).find(".txt-grade").val();
+
+            let itemCode =
+                $(this).find(".txt-itemcode").val();
+
+            let salesUnit =
+                $(this).find(".txt-salesunit");
+
+            // WIP Row
+            if (
+                itemCode.startsWith("WIP")
+                && (!grade || grade.trim() == "")
+            ) {
 
                 salesUnit.val("BOX");
+
                 salesUnit.prop("disabled", true);
             }
             else {
 
-                // Sales Unit Logic
+                // Sales Unit Default
                 if (grade == "SMPL") {
 
                     salesUnit.val("PCS");
@@ -456,7 +436,7 @@
                     salesUnit.val("BOX");
                 }
 
-                // Disable Sales Unit for specific grades
+                // Disable Logic
                 if (
                     grade == "SPRM"
                     || grade == "STD"
@@ -473,9 +453,11 @@
             }
 
             // Brand Default
-            $(this).find(".txt-brand").val("GRIFINE");
+            $(this).find(".txt-brand")
+                .val("GRIFINE");
 
         });
+
     });
 
     $(document).ready(function () {
@@ -591,6 +573,95 @@
             return false;
         }
 
+        // ===============================
+        // DUPLICATE GRADE + BRAND VALIDATION
+        // ===============================
+
+        let duplicateGradeBrand = {};
+
+        let isValidationFailed = false;
+
+        $("#grade-tbbody tr").each(function () {
+
+            let currentRow = $(this);
+
+            let itemCode = currentRow
+                .find(".txt-itemcode")
+                .val();
+
+            let grade = currentRow
+                .find(".txt-grade")
+                .val()
+                ?.trim();
+
+            let brand = currentRow
+                .find(".txt-brand")
+                .val()
+                ?.trim();
+
+            // Remove old error class
+            currentRow
+                .find(".txt-brand")
+                .removeClass("brand-error-field");
+
+            // Skip WIP Row
+            if (
+                itemCode &&
+                itemCode.startsWith("WIP")
+            ) {
+                return true;
+            }
+
+            // Brand Required
+            if (!brand) {
+
+                showToast(
+                    `Please select brand for Grade "${grade}".`,
+                    "danger"
+                );
+
+                currentRow
+                    .find(".txt-brand")
+                    .addClass("brand-error-field")
+                    .focus();
+
+                isValidationFailed = true;
+
+                return false;
+            }
+
+            // Create Unique Key
+            let uniqueKey =
+                `${grade}_${brand}`;
+
+            // Duplicate Check
+            if (duplicateGradeBrand[uniqueKey]) {
+
+                showToast(
+                    `Duplicate Brand "${brand}" is not allowed for Grade "${grade}".`,
+                    "danger"
+                );
+
+                currentRow
+                    .find(".txt-brand")
+                    .addClass("brand-error-field")
+                    .focus();
+
+                isValidationFailed = true;
+
+                return false;
+            }
+
+            // Store Key
+            duplicateGradeBrand[uniqueKey] = true;
+
+        });
+
+        // Stop Save
+        if (isValidationFailed) {
+            return;
+        }
+
         showLoader();
 
         $.ajax({
@@ -606,7 +677,8 @@
                 if (response.success) {
                     hideLoader();
                     showToast(response.message, "success", 4000);
-
+                    getFGItemEditModel = '';
+                    $("#detailsBtn").click();
                 } else {
 
                     hideLoader();

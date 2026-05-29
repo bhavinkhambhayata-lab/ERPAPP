@@ -179,6 +179,14 @@
         height: 36px;
         font-size: 13px;
     }
+
+    .grade-count {
+        width: 45px;
+        height: 24px;
+        padding: 2px 5px;
+        font-size: 12px;
+        margin-left: auto; /* Right side lai jashe */
+    }
 </style>
 
 <form id="FGItemEditForm" method="post">
@@ -572,7 +580,7 @@
                         </div>
 
                     </div>
-@* 
+                    @* 
                     <!-- Colour Family -->
                     <div class="row mt-2">
                         <label class="col-12 col-sm-4 col-form-label">Colour Family</label>
@@ -752,6 +760,8 @@
                         }
 
                         var extraClass = i >= 4 ? "extra-grade d-none" : "";
+                        bool isSPMGradeEnable = Model.DropDownData.ItemGrades[i].Name == "SPRM";
+                        var countGradeWithBrand = Model.GradeListDetails != null ? Math.Max(Model.GradeListDetails.Count(x => x.Grade == Model.DropDownData.ItemGrades[i].Name), 1) : 1;
 
                         // Existing Grade Check
                         bool isChecked = Model.GradeListDetails != null &&
@@ -772,6 +782,15 @@
                                 <span class="grade-text">
                                     @Model.DropDownData.ItemGrades[i].Name
                                 </span>
+
+                                <!-- Number Textbox -->
+                                <input type="number"
+                                       class="form-control grade-count"
+                                       value="@countGradeWithBrand"
+                                       min="1"
+                                       data-oldcount="@countGradeWithBrand"
+                                       style="width:80px;"
+                                       @(isSPMGradeEnable ? "" : "disabled") />
 
                             </label>
 
