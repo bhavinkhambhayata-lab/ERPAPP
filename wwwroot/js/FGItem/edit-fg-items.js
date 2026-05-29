@@ -294,37 +294,37 @@
             }
         }
 
-        // =====================================
-        // IF NEW SPRM
-        // =====================================
+        //// =====================================
+        //// IF NEW SPRM
+        //// =====================================
 
-        if (!existingSPRM && newSPRM) {
+        //if (!existingSPRM && newSPRM) {
 
-            let sprmIndex =
-                rowsToGenerate.findIndex(x => x.grade == "SPRM");
+        //    let sprmIndex =
+        //        rowsToGenerate.findIndex(x => x.grade == "SPRM");
 
-            let sprmItemCode =
-                prefix + (number + sprmIndex);
+        //    let sprmItemCode =
+        //        prefix + (number + sprmIndex);
 
-            baseLinkCode = sprmItemCode;
+        //    baseLinkCode = sprmItemCode;
 
-            // UPDATE EXISTING ROWS
-            $("#grade-tbbody .existing-row").each(function () {
+        //    // UPDATE EXISTING ROWS
+        //    $("#grade-tbbody .existing-row").each(function () {
 
-                let existingGradeLinkCode =
-                    $(this).find(".txt-gradelinkcode").val();
+        //        let existingGradeLinkCode =
+        //            $(this).find(".txt-gradelinkcode").val();
 
-                let suffix =
-                    existingGradeLinkCode.match(/\.\d+$/);
+        //        let suffix =
+        //            existingGradeLinkCode.match(/\.\d+$/);
 
-                suffix = suffix ? suffix[0] : "";
+        //        suffix = suffix ? suffix[0] : "";
 
-                $(this)
-                    .find(".txt-gradelinkcode")
-                    .val(baseLinkCode + suffix);
+        //        $(this)
+        //            .find(".txt-gradelinkcode")
+        //            .val(baseLinkCode + suffix);
 
-            });
-        }
+        //    });
+        //}
 
         // =====================================
         // GENERATE ROWS
