@@ -110,7 +110,7 @@
 
 
 
-             @if (menu?.CustomerDetails == true)
+            @if (menu?.CustomerDetails == true)
             {
                 <li class="nav-item">
                     <a class="nav-link collapsed" asp-controller="Customer" asp-action="Index">
@@ -214,6 +214,20 @@
     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 
     <script>
+         $(document).ajaxComplete(function (event, xhr) {
+            if (!xhr || !xhr.responseText)
+                return;
+
+            var response = xhr.responseText.trim();
+
+            if (response === "ERPSystemSessionExpired") {
+
+                alert("Session expired. Please login again.");
+
+                window.location.href = baseURL + "Login/Index";
+                return false;
+            }
+        });
         function showLoader() {
             $("#loader").removeClass("d-none");
         }
