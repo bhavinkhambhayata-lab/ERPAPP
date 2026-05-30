@@ -479,10 +479,13 @@
                         </div>
                     </div>
 
-
+                    @{
+                        var isPurchaseUnitOfMeasure = Model.GenProdPostingGroup != null && Model.GenProdPostingGroup.Contains("-T") ? true : false;
+                        var showPurchUnitOfMeasure = isPurchaseUnitOfMeasure ? "" : "d-none";
+                    }
 
                     <!-- Purch Unit Of Measure -->
-                    <div class="row mt-2 purch-unit-of-measure">
+                    <div class="row mt-2 purch-unit-of-measure @showPurchUnitOfMeasure">
                         <label class="col-12 col-sm-4 col-form-label">Purch Unit Of Measure</label>
                         <div class="col-12 col-sm-8">
                             <select asp-for="PurchUnitOfMeasure"
