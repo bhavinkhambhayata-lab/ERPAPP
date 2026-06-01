@@ -746,7 +746,7 @@
             isCreatedWIPItem = false;
 
             $('#ManufacturingPolicy').val('2');
-            $('#ReplenishmentSystem').val('1');
+            $('#ReplenishmentSystem').val('0');
             $('#ReorderingPolicy').val('3');
 
             $('.purch-unit-of-measure').removeClass('d-none');
@@ -756,7 +756,7 @@
             isCreatedWIPItem = true;
 
             $('#ManufacturingPolicy').val('1');
-            $('#ReplenishmentSystem').val('2');
+            $('#ReplenishmentSystem').val('1');
             $('#ReorderingPolicy').val('3');
 
             $('.purch-unit-of-measure').addClass('d-none');
