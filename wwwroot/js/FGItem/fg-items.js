@@ -7,8 +7,8 @@
         let isValid = true;
 
         let fields = [
-            { id: "Description", label: "Description" },
-            { id: "Description2", label: "Description 2" },
+            { id: "Description", label: "Description", maxLength: 100 },
+            { id: "Description2", label: "Description 2", maxLength: 50 },
             { id: "Category", label: "Category" },
             { id: "SizeOfTile", label: "Size Of Tile" },
             { id: "Thickness", label: "Thickness" },
@@ -19,10 +19,19 @@
 
             let value = $("#" + field.id).val();
 
+            value = value ? value.trim() : "";
+
             if (!value) {
 
                 $("span[data-valmsg-for='" + field.id + "']")
                     .text(field.label + " is required.");
+
+                isValid = false;
+            }
+            else if (field.maxLength && value.length > field.maxLength) {
+
+                $("span[data-valmsg-for='" + field.id + "']")
+                    .text(field.label + " cannot exceed " + field.maxLength + " characters.");
 
                 isValid = false;
             }
@@ -37,8 +46,8 @@
         }
 
         let model = {
-            description: $("#Description").val(),
-            description2: $("#Description2").val(),
+            description: $("#Description").val().trim(),
+            description2: $("#Description2").val().trim(),
             category: $("#Category").val(),
             sizeOfTile: $("#SizeOfTile").val(),
             thickness: $("#Thickness").val(),
@@ -68,7 +77,7 @@
                     }
                 }
                 else {
-                    
+
                     if (confirm("This item does not exist in ERP. Do you want to continue adding item details?")) {
                         $("#generalDetailsFieldset").prop("disabled", false);
                         $("#itemSpeficationFieldset").prop("disabled", false);
@@ -86,7 +95,7 @@
 
     });
 
-
+   
     $("#Description").on("input", function () {
         $("#DesignColor").val($(this).val());
     });
