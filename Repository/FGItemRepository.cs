@@ -11,9 +11,11 @@ namespace ERPAPP.Repository
     public class FGItemRepository : IFGItemRepository
     {
         private readonly DbHelper _db;
-        public FGItemRepository(DbHelper db)
+        private readonly IEmailRepository _emailRepository;
+        public FGItemRepository(DbHelper db, IEmailRepository emailRepository)
         {
             _db = db;
+            _emailRepository = emailRepository;
         }
 
         public async Task<bool> CheckMultipleItemsExists(string itemNos)
@@ -978,7 +980,7 @@ namespace ERPAPP.Repository
 
                     new SqlParameter("@Category", model.Category ?? ""),
                     new SqlParameter("@SizeOfTile", model.SizeOfTile ?? ""),
-                 
+
                     new SqlParameter("@Collection", model.Collection ?? ""),
                     new SqlParameter("@SurfaceFinishOrGlaze", model.SurfaceFinishOrGlaze ?? ""),
                     new SqlParameter("@GlazeEffect", model.GlazeEffect ?? ""),
@@ -987,7 +989,7 @@ namespace ERPAPP.Repository
                     new SqlParameter("@TypeOfTile", model.TypeOfTile ?? ""),
                     new SqlParameter("@Packaging", model.Packaging ?? ""),
 
-                   
+
 
                     new SqlParameter("@Thickness", model.Thickness ?? ""),
                     new SqlParameter("@Body", model.Body ?? ""),
@@ -1044,6 +1046,19 @@ namespace ERPAPP.Repository
                 if (!string.IsNullOrWhiteSpace(itemNo) && itemNo == "1")
                 {
                     result = true;
+                    //if (model.GradeListDetails != null && model.GradeListDetails.Count > 0)
+                    //{
+                    //    var itemCodeCommaList = string.Join(",", model.GradeListDetails.Select(x => x.GradeItemCode));
+
+                    //    var fgItemDetailsList = await _emailRepository.GetFGItemsEmailList(itemCodeCommaList);
+
+                    //    if (fgItemDetailsList != null && fgItemDetailsList.Count > 0)
+                    //    {
+                    //        var sendEmail = await _emailRepository.SendFGItemCreationMail(fgItemDetailsList, createdBy ?? "");
+                    //    }
+
+                    //    result = true;
+                    //} 
                 }
 
                 return result;
@@ -1115,7 +1130,7 @@ namespace ERPAPP.Repository
 
                     new SqlParameter("@Category", model.Category ?? ""),
                     new SqlParameter("@SizeOfTile", model.SizeOfTile ?? ""),
-                    
+
                     new SqlParameter("@Collection", model.Collection ?? ""),
                     new SqlParameter("@SurfaceFinishOrGlaze", model.SurfaceFinishOrGlaze ?? ""),
                     new SqlParameter("@GlazeEffect", model.GlazeEffect ?? ""),

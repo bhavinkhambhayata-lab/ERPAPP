@@ -367,4 +367,92 @@ namespace ERPAPP.Models
     {
         public FGItemDropDownEditModel DropDownData { get; set; } = new();
     }
+
+    public class FGItemEmailDetailModel
+    {
+        public int DisplayNo { get; set; }
+
+        // Basic Information
+        public string? CompanyCode { get; set; }
+        public string? Description { get; set; }
+        public string? Description2 { get; set; }
+        public decimal RoundingPrecision { get; set; }
+        public decimal? GrossWeight { get; set; }
+        public decimal? NetWeight { get; set; }
+
+        // Item Details
+        public string? BaseUnitOfMeasure { get; set; }
+        public string? ItemCategoryCode { get; set; }
+        public string? ProductGroupCode { get; set; }
+        public string? MovementType { get; set; }
+        public string? TypeOfProduct { get; set; }
+
+        // Tile Attributes
+        public string? Category { get; set; }
+        public string? SizeOfTile { get; set; }
+        public string? Collection { get; set; }
+        public string? SurfaceFinishOrGlaze { get; set; }
+        public string? GlazeEffect { get; set; }
+        public string? DesignColor { get; set; }
+        public string? ColourFamily { get; set; }
+        public string? TypeOfTile { get; set; }
+        public string? Packaging { get; set; }
+        public string? Thickness { get; set; }
+        public string? Body { get; set; }
+        public string? PLCollection { get; set; }
+        public string? PLColours { get; set; }
+
+        // Manufacturing
+        public string? ManufacturingPolicy { get; set; }
+        public string? RoutingNo { get; set; }
+        public string? ProductionBOMNo { get; set; }
+
+        // Posting / Costing
+        public string? CostingMethod { get; set; }
+        public string? GenProdPostingGroup { get; set; }
+        public string? VATProdPostingGroup { get; set; }
+        public string? InventoryPostingGroup { get; set; }
+        public string? GSTGroupCode { get; set; }
+        public string? GSTCredit { get; set; }
+        public string? HSNSACCode { get; set; }
+
+        // Units
+        public string? ReplenishmentSystem { get; set; }
+        public string? PurchUnitOfMeasure { get; set; }
+
+        // Tracking
+        public string? ItemTrackingCode { get; set; }
+        public string? ReorderingPolicy { get; set; }
+
+        // Grade / Brand Details
+        public string? GradeItemCode { get; set; }
+        public string? Brand { get; set; }
+        public string? Grade { get; set; }
+        public string? GradeLinkCode { get; set; }
+        public string? SalesUnitOfMeasure { get; set; }
+
+        public string? CreatedBy { get; set; }
+        public DateTime? CreatedOn { get; set; }
+        public string? ModifiedBy { get; set; }
+        public DateTime? ModifiedOn { get; set; }
+    }
+
+    public class ERPEmailConfigurationModel
+    {
+        public int Id { get; set; }
+
+        public string? ModuleName { get; set; }
+
+        public string? Type { get; set; }
+
+        public string? FromEmail { get; set; }
+
+        public string? ToEmails { get; set; }
+
+        public string? CCEmails { get; set; }
+
+        public string? BCCEmails { get; set; }
+
+        public bool IsActive { get; set; }
+    }
 }

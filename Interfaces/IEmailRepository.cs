@@ -30,5 +30,11 @@ namespace ERPAPP.Interfaces
 
         Task<bool> SendMailFixedAssetBlock(int displayNo, string fixedAssetCode, string fixedDescription);
 
+        //FG Item Creation Mail
+
+        Task<ERPEmailConfigurationModel> GetERPEmailConfiguration(string moduleName, string type);
+        Task<List<FGItemEmailDetailModel>> GetFGItemsEmailList(string itemCodes);
+        Task<List<ERPEmailConfigurationModel>> GetFGItemMailConfigurationList(string createdUser);
+        Task<bool> SendFGItemCreationMail(List<FGItemEmailDetailModel> itemList, string createdUser);
     }
 }
