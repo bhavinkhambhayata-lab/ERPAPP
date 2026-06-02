@@ -10,9 +10,11 @@ namespace ERPAPP.Models
         public string? CompanyCode { get; set; }
 
         [Required(ErrorMessage = "Description is required")]
+        [StringLength(100)]
         public string Description { get; set; } = string.Empty;
 
         [Required(ErrorMessage = "Description 2 is required")]
+        [StringLength(50)]
         public string Description2 { get; set; } = string.Empty;
 
         [Required(ErrorMessage = "Rounding Precision is required")]
@@ -51,6 +53,7 @@ namespace ERPAPP.Models
         public string GlazeEffect { get; set; } = string.Empty;
 
         [Required(ErrorMessage = "Design Color is required")]
+        [StringLength(30)]
         public string DesignColor { get; set; } = string.Empty;
 
         public string? ColourFamily { get; set; } = string.Empty;
@@ -263,9 +266,11 @@ namespace ERPAPP.Models
         public string? CompanyCode { get; set; }
 
         [Required(ErrorMessage = "Description is required")]
+        [StringLength(100)]
         public string Description { get; set; } = string.Empty;
 
         [Required(ErrorMessage = "Description 2 is required")]
+        [StringLength(50)]
         public string Description2 { get; set; } = string.Empty;
 
         [Required(ErrorMessage = "Rounding Precision is required")]
@@ -301,6 +306,7 @@ namespace ERPAPP.Models
         public string GlazeEffect { get; set; } = string.Empty;
 
         [Required(ErrorMessage = "Design Color is required")]
+        [StringLength(30)]
         public string DesignColor { get; set; } = string.Empty;
 
         public string? ColourFamily { get; set; } = string.Empty;
