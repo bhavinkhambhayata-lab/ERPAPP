@@ -1293,7 +1293,7 @@ namespace ERPAPP.Repository
             StringBuilder body = new StringBuilder();
 
             body.Append("Dear All,<br/><br/>");
-            body.Append("The FG items have been successfully created in the system.\r\nPlease find below attached the list of the newly created FG items for your reference.<br/><br/>");
+            body.Append("Some New FG items have been successfully created in the system which are listed hereunder:<br/><br/>");
 
             body.Append("<table border='1' cellpadding='5' cellspacing='0' style='border-collapse:collapse;'>");
 
@@ -1337,6 +1337,10 @@ namespace ERPAPP.Repository
             body.Append("</table>");
 
             body.Append("<br/><br/>");
+            body.Append("This mail is just for reference purpose.");
+            body.Append("<br/><br/>");
+            //body.Append("Regards,");
+            //body.Append("<br/><br/>");
             body.Append(GetSignature());
             body.Append("<br/>Note: Please do not reply to this mail.");
 
