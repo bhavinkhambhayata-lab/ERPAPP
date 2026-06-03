@@ -982,8 +982,8 @@ namespace ERPAPP.Repository
                     new SqlParameter("@SizeOfTile", model.SizeOfTile ?? ""),
 
                     new SqlParameter("@Collection", model.Collection ?? ""),
-                    new SqlParameter("@SurfaceFinishOrGlaze", model.SurfaceFinishOrGlaze ?? ""),
-                    new SqlParameter("@GlazeEffect", model.GlazeEffect ?? ""),
+                    new SqlParameter("@SurfaceFinishOrGlaze", model.SurfaceFinishOrGlaze == "NOT APPLICABLE" ? "" : model.SurfaceFinishOrGlaze),
+                    new SqlParameter("@GlazeEffect", model.GlazeEffect == "NOT APPLICABLE" ? "" : model.GlazeEffect),
                     new SqlParameter("@DesignColor", model.DesignColor ?? ""),
                     new SqlParameter("@ColourFamily", model.ColourFamily ?? ""),
                     new SqlParameter("@TypeOfTile", model.TypeOfTile ?? ""),
@@ -992,7 +992,7 @@ namespace ERPAPP.Repository
 
 
                     new SqlParameter("@Thickness", model.Thickness ?? ""),
-                    new SqlParameter("@Body", model.Body ?? ""),
+                    new SqlParameter("@Body", model.Body == "NOT APPLICABLE" ? "" : model.Body),
                     new SqlParameter("@PLCollection", model.PLCollection ?? ""),
                     new SqlParameter("@PLColours", model.PLColours ?? ""),
 
@@ -1045,20 +1045,20 @@ namespace ERPAPP.Repository
 
                 if (!string.IsNullOrWhiteSpace(itemNo) && itemNo == "1")
                 {
-                    result = true;
-                    //if (model.GradeListDetails != null && model.GradeListDetails.Count > 0)
-                    //{
-                    //    var itemCodeCommaList = string.Join(",", model.GradeListDetails.Select(x => x.GradeItemCode));
+                    //result = true;
+                    if (model.GradeListDetails != null && model.GradeListDetails.Count > 0)
+                    {
+                        var itemCodeCommaList = string.Join(",", model.GradeListDetails.Select(x => x.GradeItemCode));
 
-                    //    var fgItemDetailsList = await _emailRepository.GetFGItemsEmailList(itemCodeCommaList);
+                        var fgItemDetailsList = await _emailRepository.GetFGItemsEmailList(itemCodeCommaList);
 
-                    //    if (fgItemDetailsList != null && fgItemDetailsList.Count > 0)
-                    //    {
-                    //        var sendEmail = await _emailRepository.SendFGItemCreationMail(fgItemDetailsList, createdBy ?? "");
-                    //    }
+                        if (fgItemDetailsList != null && fgItemDetailsList.Count > 0)
+                        {
+                            var sendEmail = await _emailRepository.SendFGItemCreationMail(fgItemDetailsList, createdBy ?? "");
+                        }
 
-                    //    result = true;
-                    //} 
+                        result = true;
+                    }
                 }
 
                 return result;
@@ -1132,15 +1132,15 @@ namespace ERPAPP.Repository
                     new SqlParameter("@SizeOfTile", model.SizeOfTile ?? ""),
 
                     new SqlParameter("@Collection", model.Collection ?? ""),
-                    new SqlParameter("@SurfaceFinishOrGlaze", model.SurfaceFinishOrGlaze ?? ""),
-                    new SqlParameter("@GlazeEffect", model.GlazeEffect ?? ""),
+                    new SqlParameter("@SurfaceFinishOrGlaze", model.SurfaceFinishOrGlaze == "NOT APPLICABLE" ? "" : model.SurfaceFinishOrGlaze),
+                    new SqlParameter("@GlazeEffect", model.GlazeEffect == "NOT APPLICABLE" ? "" : model.GlazeEffect),
                     new SqlParameter("@DesignColor", model.DesignColor ?? ""),
                     new SqlParameter("@ColourFamily", model.ColourFamily ?? ""),
                     new SqlParameter("@TypeOfTile", model.TypeOfTile ?? ""),
                     new SqlParameter("@Packaging", model.Packaging ?? ""),
 
                     new SqlParameter("@Thickness", model.Thickness ?? ""),
-                    new SqlParameter("@Body", model.Body ?? ""),
+                    new SqlParameter("@Body", model.Body == "NOT APPLICABLE" ? "" : model.Body),
                     new SqlParameter("@PLCollection", model.PLCollection ?? ""),
                     new SqlParameter("@PLColours", model.PLColours ?? ""),
 
