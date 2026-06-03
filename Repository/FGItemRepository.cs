@@ -1,6 +1,7 @@
 ﻿using ERPAPP.Helper;
 using ERPAPP.Interfaces;
 using ERPAPP.Models;
+using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.Data.SqlClient;
 using System.Data;
 using System.Reflection;
@@ -1193,7 +1194,20 @@ namespace ERPAPP.Repository
 
                 if (!string.IsNullOrWhiteSpace(itemNo) && itemNo == "1")
                 {
-                    result = true;
+                    //result = true;
+                    if (model.GradeListDetails != null && model.GradeListDetails.Count > 0)
+                    {
+                        var itemCodeCommaList = string.Join(",", model.GradeListDetails.Select(x => x.GradeItemCode));
+
+                        var fgItemDetailsList = await _emailRepository.GetFGItemsEmailList(itemCodeCommaList);
+
+                        if (fgItemDetailsList != null && fgItemDetailsList.Count > 0)
+                        {
+                            var sendEmail = await _emailRepository.SendFGItemCreationMail(fgItemDetailsList, updatedBy ?? "");
+                        }
+
+                        result = true;
+                    }
                 }
 
                 return result;
