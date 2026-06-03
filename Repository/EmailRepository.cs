@@ -1141,12 +1141,12 @@ namespace ERPAPP.Repository
             return await Task.FromResult(list);
         }
 
-        public async Task<List<ERPEmailConfigurationModel>> GetFGItemMailConfigurationList(string createdUser)
+        public async Task<List<ERPEmailConfigurationModel>> GetFGItemMailConfigurationList(string type, string createdUser)
         {
             SqlParameter[] parameters = new SqlParameter[]
             {
                 new SqlParameter("@ModuleName", "FGItems"),
-                new SqlParameter("@Type", "Domestic"),
+                new SqlParameter("@Type", type),
                 new SqlParameter("@CreatedUser", createdUser)
             };
 
@@ -1209,7 +1209,18 @@ namespace ERPAPP.Repository
                 if (itemList == null || itemList.Count == 0)
                     return false;
 
-                var mailList = await GetFGItemMailConfigurationList(createdUser);
+                var type = "";
+
+                if (createdUser == "swati.nayak" || createdUser == "komal.rajput")
+                {
+                    type = "Domestic";
+                }
+                else if(createdUser == "bela.vyas" || createdUser == "omprakash.pal")
+                {
+                    type = "Export";
+                }
+
+                var mailList = await GetFGItemMailConfigurationList(type, createdUser);
 
                 if (mailList == null || mailList.Count == 0)
                     return false;

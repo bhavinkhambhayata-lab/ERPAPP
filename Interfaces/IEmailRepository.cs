@@ -34,7 +34,7 @@ namespace ERPAPP.Interfaces
 
         Task<ERPEmailConfigurationModel> GetERPEmailConfiguration(string moduleName, string type);
         Task<List<FGItemEmailDetailModel>> GetFGItemsEmailList(string itemCodes);
-        Task<List<ERPEmailConfigurationModel>> GetFGItemMailConfigurationList(string createdUser);
+        Task<List<ERPEmailConfigurationModel>> GetFGItemMailConfigurationList(string type, string createdUser);
         Task<bool> SendFGItemCreationMail(List<FGItemEmailDetailModel> itemList, string createdUser);
     }
 }
