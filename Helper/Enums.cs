@@ -213,10 +213,10 @@ namespace ERPAPP.Helper
         public enum ItemManufacturingPolicy
         {
             [Display(Name = "Make-to-Stock")]
-            MakeToStock = 1,
+            MakeToStock = 0,
 
             [Display(Name = "Make-to-Order")]
-            MakeToOrder = 2
+            MakeToOrder = 1
         }
 
         public enum ItemCostingMethod
