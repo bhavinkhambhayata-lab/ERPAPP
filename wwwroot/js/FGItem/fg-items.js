@@ -754,7 +754,7 @@
 
             isCreatedWIPItem = false;
 
-            $('#ManufacturingPolicy').val('2');
+            $('#ManufacturingPolicy').val('1');
             $('#ReplenishmentSystem').val('0');
             $('#ReorderingPolicy').val('3');
 
@@ -764,7 +764,7 @@
 
             isCreatedWIPItem = true;
 
-            $('#ManufacturingPolicy').val('1');
+            $('#ManufacturingPolicy').val('0');
             $('#ReplenishmentSystem').val('1');
             $('#ReorderingPolicy').val('3');
 
