@@ -108,8 +108,8 @@ namespace ERPAPP.Models
         // ---------------- Tracking ----------------
         public string? ItemTrackingCode { get; set; }
 
-        [Required(ErrorMessage = "Reordering Policy is required")]
-        public string ReorderingPolicy { get; set; } = string.Empty;
+        //[Required(ErrorMessage = "Reordering Policy is required")]
+        public string? ReorderingPolicy { get; set; } = string.Empty;
 
         public List<FGItemGradeListDetails> GradeListDetails { get; set; } = new();
 
@@ -362,8 +362,8 @@ namespace ERPAPP.Models
         // ---------------- Tracking ----------------
         public string? ItemTrackingCode { get; set; }
 
-        [Required(ErrorMessage = "ReorderingPolicy is required")]
-        public string ReorderingPolicy { get; set; } = string.Empty;
+        //[Required(ErrorMessage = "ReorderingPolicy is required")]
+        public string? ReorderingPolicy { get; set; } = string.Empty;
 
         public List<FGItemGradeListDetails> GradeListDetails { get; set; } = new();
 

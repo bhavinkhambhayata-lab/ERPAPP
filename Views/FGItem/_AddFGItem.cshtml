@@ -444,7 +444,7 @@
 
                     <!-- Reordering Policy -->
                     <div class="row mt-2">
-                        <label class="col-12 col-sm-4 col-form-label">Reorderring Policy<span class="required-star">*</span></label>
+                        <label class="col-12 col-sm-4 col-form-label">Reorderring Policy</label>
                         <div class="col-12 col-sm-8">
                             <select asp-for="ReorderingPolicy"
                                     asp-items="@(new SelectList(Model.DropDownData.ReorderingPolicy, "Code", "Name"))"
