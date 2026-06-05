@@ -512,8 +512,8 @@
 
         formData.append("DisplayNo", $("#DisplayNo").text());
 
-        formData.append("Description", $("#Description").val());
-        formData.append("Description2", $("#Description2").val());
+        formData.append("Description", $("#Description").val().trim());
+        formData.append("Description2", $("#Description2").val().trim());
         formData.append("RoundingPrecision", $("#RoundingPrecision").val());
         formData.append("GrossWeight", $("#GrossWeight").val());
         formData.append("NetWeight", $("#NetWeight").val());
@@ -537,7 +537,7 @@
         formData.append("Collection", $("#Collection").val());
         formData.append("SurfaceFinishOrGlaze", $("#SurfaceFinishOrGlaze").val());
         formData.append("GlazeEffect", $("#GlazeEffect").val());
-        formData.append("DesignColor", $("#DesignColor").val() ?? '');
+        formData.append("DesignColor", $("#DesignColor").val().trim() ?? '');
         //formData.append("ColourFamily", $("#ColourFamily").val());
         formData.append("TypeOfTile", $("#TypeOfTile").val());
         formData.append("Packaging", $("#Packaging").val());
