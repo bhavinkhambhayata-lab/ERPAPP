@@ -762,6 +762,7 @@
 
                         var extraClass = i >= 4 ? "extra-grade d-none" : "";
                         bool isSPMGradeEnable = Model.DropDownData.ItemGrades[i].Name == "SPRM";
+                        bool isFirstChoiceGradeEnable = Model.DropDownData.ItemGrades[i].Name == "1ST CHOICE";
 
                         <div class="col-xl-2 col-lg-3 col-md-4 col-sm-6 @extraClass">
 
@@ -784,7 +785,7 @@
                                        value="1"
                                        min="1"
                                        style="width:80px;"
-                                       @(isSPMGradeEnable ? "" : "disabled") />
+                                       @(isSPMGradeEnable || isFirstChoiceGradeEnable ? "" : "disabled") />
                             </label>
 
                         </div>
