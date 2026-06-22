@@ -764,7 +764,7 @@
                         <div class="col-12 col-sm-8">
                             <select asp-for="ApplicationMethod"
                                     asp-items="@(new SelectList(Model.CustomerDropDownModel.ApplicationMethods, "Code", "Name"))"
-                                    class="form-select">
+                                    class="form-select" disabled>
                                 <option value="">-- Select --</option>
                             </select>
                             <span asp-validation-for="ApplicationMethod" class="text-danger"></span>
