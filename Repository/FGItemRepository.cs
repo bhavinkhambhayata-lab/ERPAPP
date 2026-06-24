@@ -400,7 +400,7 @@ namespace ERPAPP.Repository
                 new SqlParameter("@Packaging", packaging)
             };
 
-            DataSet ds = _db.GetDataSet("GetFGItem_GetEditData", param);
+            DataSet ds = _db.GetDataSet("GetFGItem_GetEditData_24062026", param);
 
             GetFGItemEditModel model = new GetFGItemEditModel();
 
@@ -499,7 +499,8 @@ namespace ERPAPP.Repository
                         Brand = row["Brand"]?.ToString(),
                         Grade = row["Grade"]?.ToString(),
                         GradeLinkCode = row["GradeLinkCode"]?.ToString(),
-                        SalesUnitOfMeasure = row["SalesUnitOfMeasure"]?.ToString()
+                        SalesUnitOfMeasure = row["SalesUnitOfMeasure"]?.ToString(),
+                        Description = row["Description"]?.ToString(),
                     });
                 }
             }
@@ -937,6 +938,7 @@ namespace ERPAPP.Repository
                 dtGrade.Columns.Add("Grade");
                 dtGrade.Columns.Add("GradeLinkCode");
                 dtGrade.Columns.Add("SalesUnitOfMeasure");
+                dtGrade.Columns.Add("Description");
 
                 if (model.GradeListDetails != null &&
                     model.GradeListDetails.Count > 0)
@@ -948,7 +950,8 @@ namespace ERPAPP.Repository
                             item.Brand ?? "",
                             item.Grade ?? "",
                             item.GradeLinkCode ?? "",
-                            item.SalesUnitOfMeasure ?? ""
+                            item.SalesUnitOfMeasure ?? "",
+                            item.Description ?? ""
                         );
                     }
                 }
@@ -1031,7 +1034,7 @@ namespace ERPAPP.Repository
                     {
                         ParameterName = "@FGItemGrades",
                         SqlDbType = SqlDbType.Structured,
-                        TypeName = "dbo.FGItemGradeType",
+                        TypeName = "dbo.FGItemGradeType_24062026",
                         Value = dtGrade
                     }
                 };
@@ -1040,7 +1043,7 @@ namespace ERPAPP.Repository
                 // STORE PROCEDURE CALL
                 // ============================================
 
-                var itemNoObj = _db.ExecuteScalar("FGItems_InsertDataWithCompany", param);
+                var itemNoObj = _db.ExecuteScalar("FGItems_InsertDataWithCompany_24062026", param);
 
                 string itemNo = itemNoObj?.ToString();
 
@@ -1087,6 +1090,7 @@ namespace ERPAPP.Repository
                 dtGrade.Columns.Add("Grade");
                 dtGrade.Columns.Add("GradeLinkCode");
                 dtGrade.Columns.Add("SalesUnitOfMeasure");
+                dtGrade.Columns.Add("Description");
 
                 if (model.GradeListDetails != null &&
                     model.GradeListDetails.Count > 0)
@@ -1098,7 +1102,8 @@ namespace ERPAPP.Repository
                             item.Brand ?? "",
                             item.Grade ?? "",
                             item.GradeLinkCode ?? "",
-                            item.SalesUnitOfMeasure ?? ""
+                            item.SalesUnitOfMeasure ?? "",
+                            item.Description ?? ""
                         );
                     }
                 }
@@ -1179,7 +1184,7 @@ namespace ERPAPP.Repository
                     {
                         ParameterName = "@FGItemGrades",
                         SqlDbType = SqlDbType.Structured,
-                        TypeName = "dbo.FGItemGradeType",
+                        TypeName = "dbo.FGItemGradeType_24062026",
                         Value = dtGrade
                     }
                 };
@@ -1188,7 +1193,7 @@ namespace ERPAPP.Repository
                 // STORE PROCEDURE CALL
                 // ============================================
 
-                var itemNoObj = _db.ExecuteScalar("FGItems_UpdateDataWithCompany", param);
+                var itemNoObj = _db.ExecuteScalar("FGItems_UpdateDataWithCompany_24062026", param);
 
                 string itemNo = itemNoObj?.ToString();
 

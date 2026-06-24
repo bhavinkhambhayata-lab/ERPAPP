@@ -216,6 +216,7 @@ namespace ERPAPP.Models
         public string? Grade { get; set; }
         public string? GradeLinkCode { get; set; }
         public string? SalesUnitOfMeasure { get; set; }
+        public string? Description { get; set; }
     }
 
     public class FGItemDropDownEditModel

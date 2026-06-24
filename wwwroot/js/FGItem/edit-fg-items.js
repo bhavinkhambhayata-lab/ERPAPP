@@ -380,6 +380,11 @@
                 </select>
             </td>
 
+             <td>
+                <input type="text"
+                       class="form-control txt-description"
+                       value="${$('#Description').val()}" />
+            </td>
         </tr>`;
 
         }
@@ -426,6 +431,11 @@
                     <option value="">-- Select --</option>
                     ${salesUnitOptions}
                 </select>
+            </td>
+             <td>
+                <input type="text"
+                       class="form-control txt-description"
+                       value="${$('#Description').val()}" />
             </td>
 
         </tr>`;
@@ -499,7 +509,20 @@
             // BRAND
             // =================================
 
-            $(this).find(".txt-brand").val("GRIFINE");
+            let brand = $(this).find(".txt-brand");
+
+            if (
+                grade == "STD" ||
+                grade == "ECO" ||
+                grade == "SMPL"
+            ) {
+                brand.val("NOBRAND");
+                brand.prop("disabled", true);
+            }
+            else {
+                brand.val("GRIFINE");
+                brand.prop("disabled", false);
+            }
 
         });
 
@@ -610,6 +633,9 @@
 
             formData.append(`GradeListDetails[${index}].SalesUnitOfMeasure`,
                 $(this).find(".txt-salesunit").val());
+
+            formData.append(`GradeListDetails[${index}].Description`,
+                $(this).find(".txt-description").val());
 
         });
 

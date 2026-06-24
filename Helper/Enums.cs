@@ -126,10 +126,20 @@ namespace ERPAPP.Helper
         }
         public enum VendorBusinessCategoryEnum
         {
+            [Display(Name = "MSME-Micro")]
             MSMEMicro = 1,
+
+            [Display(Name = "MSME-Small")]
             MSMESmall = 2,
+
+            [Display(Name = "MSME-Medium")]
             MSMEMedium = 3,
-            Large = 4
+
+            [Display(Name = "Large")]
+            Large = 4,
+
+            [Display(Name = "MSME-Trader")]
+            MSMETrader = 5
         }
 
         public enum VendorAggTurnOver

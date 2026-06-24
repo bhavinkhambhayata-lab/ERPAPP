@@ -159,7 +159,7 @@ namespace ERPAPP.Repository
                 .Select(e => new VendorBussinessCategoryModel
                 {
                     Code = ((int)e).ToString(),
-                    Name = e.ToString()
+                    Name = e.GetDisplayName().ToString()
                 }).ToList();
 
             dropDown.VendorAggregateTurnover = Enum.GetValues(typeof(VendorAggTurnOver))
