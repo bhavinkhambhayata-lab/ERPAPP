@@ -400,7 +400,7 @@ namespace ERPAPP.Repository
                 new SqlParameter("@Packaging", packaging)
             };
 
-            DataSet ds = _db.GetDataSet("GetFGItem_GetEditData_24062026", param);
+            DataSet ds = _db.GetDataSet("GetFGItem_GetEditData", param);
 
             GetFGItemEditModel model = new GetFGItemEditModel();
 
@@ -1034,7 +1034,7 @@ namespace ERPAPP.Repository
                     {
                         ParameterName = "@FGItemGrades",
                         SqlDbType = SqlDbType.Structured,
-                        TypeName = "dbo.FGItemGradeType_24062026",
+                        TypeName = "dbo.FGItemGradeType",
                         Value = dtGrade
                     }
                 };
@@ -1043,7 +1043,7 @@ namespace ERPAPP.Repository
                 // STORE PROCEDURE CALL
                 // ============================================
 
-                var itemNoObj = _db.ExecuteScalar("FGItems_InsertDataWithCompany_24062026", param);
+                var itemNoObj = _db.ExecuteScalar("FGItems_InsertDataWithCompany", param);
 
                 string itemNo = itemNoObj?.ToString();
 
@@ -1184,7 +1184,7 @@ namespace ERPAPP.Repository
                     {
                         ParameterName = "@FGItemGrades",
                         SqlDbType = SqlDbType.Structured,
-                        TypeName = "dbo.FGItemGradeType_24062026",
+                        TypeName = "dbo.FGItemGradeType",
                         Value = dtGrade
                     }
                 };
@@ -1193,7 +1193,7 @@ namespace ERPAPP.Repository
                 // STORE PROCEDURE CALL
                 // ============================================
 
-                var itemNoObj = _db.ExecuteScalar("FGItems_UpdateDataWithCompany_24062026", param);
+                var itemNoObj = _db.ExecuteScalar("FGItems_UpdateDataWithCompany", param);
 
                 string itemNo = itemNoObj?.ToString();
 
