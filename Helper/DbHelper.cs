@@ -52,6 +52,7 @@ namespace ERPAPP.Helper
             using (SqlCommand cmd = new SqlCommand(spName, con))
             {
                 cmd.CommandType = CommandType.StoredProcedure;
+                cmd.CommandTimeout = 120;
 
                 if (parameters != null)
                     cmd.Parameters.AddRange(parameters);
