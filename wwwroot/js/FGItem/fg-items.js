@@ -610,7 +610,7 @@
         }
 
         // ===============================
-        // DUPLICATE GRADE + BRAND VALIDATION
+        // DUPLICATE GRADE + BRAND + DESCRIPTION VALIDATION
         // ===============================
 
         let duplicateGradeBrand = {};
@@ -635,10 +635,19 @@
                 .val()
                 ?.trim();
 
+            let description = currentRow
+                .find(".txt-description")
+                .val()
+                ?.trim();
+
             // Remove old error class
             currentRow
                 .find(".txt-brand")
                 .removeClass("brand-error-field");
+
+            currentRow
+                .find(".txt-description")
+                .removeClass("description-error-field");
 
             // Skip WIP Row
             if (
@@ -666,21 +675,39 @@
                 return false;
             }
 
+            // Description Required
+            if (!description) {
+
+                showToast(
+                    `Please enter description for Grade "${grade}".`,
+                    "danger"
+                );
+
+                currentRow
+                    .find(".txt-description")
+                    .addClass("description-error-field")
+                    .focus();
+
+                isValidationFailed = true;
+
+                return false;
+            }
+
             // Create Unique Key
             let uniqueKey =
-                `${grade}_${brand}`;
+                `${grade}_${brand}_${description}`;
 
             // Duplicate Check
             if (duplicateGradeBrand[uniqueKey]) {
 
                 showToast(
-                    `Duplicate Brand "${brand}" is not allowed for Grade "${grade}".`,
+                    `Duplicate record is not allowed for Grade "${grade}", Brand "${brand}" and Description "${description}".`,
                     "danger"
                 );
 
                 currentRow
-                    .find(".txt-brand")
-                    .addClass("brand-error-field")
+                    .find(".txt-description")
+                    .addClass("description-error-field")
                     .focus();
 
                 isValidationFailed = true;

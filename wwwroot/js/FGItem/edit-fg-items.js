@@ -646,7 +646,7 @@
         }
 
         // ===============================
-        // DUPLICATE GRADE + BRAND VALIDATION
+        // DUPLICATE GRADE + BRAND + DESCRIPTION VALIDATION
         // EDIT MODE
         // ===============================
 
@@ -672,10 +672,19 @@
                 .val()
                 ?.trim();
 
+            let description = currentRow
+                .find(".txt-description")
+                .val()
+                ?.trim();
+
             // Remove old error class
             currentRow
                 .find(".txt-brand")
                 .removeClass("brand-error-field");
+
+            currentRow
+                .find(".txt-description")
+                .removeClass("description-error-field");
 
             // ===========================
             // SKIP WIP ROW
@@ -710,10 +719,31 @@
             }
 
             // ===========================
+            // DESCRIPTION REQUIRED
+            // ===========================
+
+            if (!description) {
+
+                showToast(
+                    `Please enter description for Grade "${grade}".`,
+                    "danger"
+                );
+
+                currentRow
+                    .find(".txt-description")
+                    .addClass("description-error-field")
+                    .focus();
+
+                isValidationFailed = true;
+
+                return false;
+            }
+
+            // ===========================
             // UNIQUE KEY
             // ===========================
 
-            let uniqueKey = `${grade}_${brand}`;
+            let uniqueKey = `${grade}_${brand}_${description}`;
 
             // ===========================
             // DUPLICATE CHECK
@@ -722,13 +752,13 @@
             if (duplicateGradeBrand[uniqueKey]) {
 
                 showToast(
-                    `Duplicate Brand "${brand}" is not allowed for Grade "${grade}".`,
+                    `Duplicate record is not allowed for Grade "${grade}", Brand "${brand}" and Description "${description}".`,
                     "danger"
                 );
 
                 currentRow
-                    .find(".txt-brand")
-                    .addClass("brand-error-field")
+                    .find(".txt-description")
+                    .addClass("description-error-field")
                     .focus();
 
                 isValidationFailed = true;
@@ -743,6 +773,11 @@
             duplicateGradeBrand[uniqueKey] = true;
 
         });
+
+        // Stop Save
+        if (isValidationFailed) {
+            return;
+        }
 
         // ===============================
         // STOP SAVE
