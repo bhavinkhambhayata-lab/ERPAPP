@@ -767,6 +767,9 @@
                         var extraClass = i >= 4 ? "extra-grade d-none" : "";
                         bool isSPMGradeEnable = Model.DropDownData.ItemGrades[i].Name == "SPRM";
                         bool isFirstChoiceGradeEnable = Model.DropDownData.ItemGrades[i].Name == "1ST CHOICE";
+                        bool isSTDGradeEnable = Model.DropDownData.ItemGrades[i].Name == "STD";
+                        bool isECOGradeEnable = Model.DropDownData.ItemGrades[i].Name == "ECO";
+                        bool isSMPLGradeEnable = Model.DropDownData.ItemGrades[i].Name == "SMPL";
 
                         <div class="col-xl-2 col-lg-3 col-md-4 col-sm-6 @extraClass">
 
@@ -789,7 +792,7 @@
                                        value="1"
                                        min="1"
                                        style="width:80px;"
-                                       @(isSPMGradeEnable || isFirstChoiceGradeEnable ? "" : "disabled") />
+                                       @(isSPMGradeEnable || isFirstChoiceGradeEnable || isSTDGradeEnable || isECOGradeEnable || isSMPLGradeEnable ? "" : "disabled") />
                             </label>
 
                         </div>

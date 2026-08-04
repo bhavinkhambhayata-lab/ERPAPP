@@ -769,6 +769,10 @@
                         var extraClass = i >= 4 ? "extra-grade d-none" : "";
                         bool isSPMGradeEnable = Model.DropDownData.ItemGrades[i].Name == "SPRM";
                         bool isFirstChoiceGradeEnable = Model.DropDownData.ItemGrades[i].Name == "1ST CHOICE";
+                        bool isSTDGradeEnable = Model.DropDownData.ItemGrades[i].Name == "STD";
+                        bool isECOGradeEnable = Model.DropDownData.ItemGrades[i].Name == "ECO";
+                        bool isSMPLGradeEnable = Model.DropDownData.ItemGrades[i].Name == "SMPL";
+
                         var countGradeWithBrand = Model.GradeListDetails != null ? Math.Max(Model.GradeListDetails.Count(x => x.Grade == Model.DropDownData.ItemGrades[i].Name), 1) : 1;
 
                         // Existing Grade Check
@@ -798,7 +802,7 @@
                                        min="1"
                                        data-oldcount="@countGradeWithBrand"
                                        style="width:80px;"
-                                       @(isSPMGradeEnable || isFirstChoiceGradeEnable ? "" : "disabled") />
+                                       @(isSPMGradeEnable || isFirstChoiceGradeEnable || isSTDGradeEnable || isECOGradeEnable || isSMPLGradeEnable ? "" : "disabled") />
 
                             </label>
 
