@@ -105,9 +105,11 @@
                     //alert(response.message);
                     showToast("Fixed Asset Inserted Successfully.", "success", 4000);
 
-                    $('#fixedAssetForm')[0].reset();
+                    $('#listBtn').click();
 
-                    $('.text-danger').text('');
+                    //$('#fixedAssetForm')[0].reset();
+
+                    //$('.text-danger').text('');
 
                 }
                 else {
