@@ -53,5 +53,9 @@ namespace ERPAPP.Interfaces
 
         Task<bool> EditSalesPersonCode(string customerNo, string salesPersonCode);
 
+        Task<List<CountryModel>> GetCountryList();
+        Task<List<CityModel>> GetCityList();
+        Task<List<PostCodeModel>> GetPostCodeList();
+
     }
 }

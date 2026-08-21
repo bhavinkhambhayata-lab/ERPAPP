@@ -401,6 +401,92 @@ namespace ERPAPP.Controllers
                 ModelState.AddModelError("ShippingGSTRegistrationNo", "Shipping GST Registration No is required.");
             }
 
+            // =========================
+            // ERP Check City/Post Code / Country
+            // =========================
+
+            #region Check ERP City And Post Code And Country Exist 
+            var allCityList = await _customerRepository.GetCityList();
+            var allPostCodeList = await _customerRepository.GetPostCodeList();
+            var allCountryList = await _customerRepository.GetCountryList();
+
+            #region City And Post Code And Country Code
+
+            // =========================
+            // CityCode AND PostCode And CountryCode Check Condition In ERP Exist Name or Code 
+            // =========================
+
+            if (!string.IsNullOrWhiteSpace(model.CityCode))
+            {
+                bool isCityExists = allCityList != null && allCityList.Any(x => x.Code != null && x.Code.ToLower() == model.CityCode.ToLower());
+
+                if (!isCityExists)
+                {
+                    ModelState.AddModelError("CityCode", "Invalid City.");
+                }
+            }
+
+            if (!string.IsNullOrWhiteSpace(model.PostCode))
+            {
+                bool isPostCodeExists = allPostCodeList != null && allPostCodeList.Any(x => x.Code != null && x.Code.ToLower() == model.PostCode.ToLower());
+
+                if (!isPostCodeExists)
+                {
+                    ModelState.AddModelError("PostCode", "Invalid Post Code.");
+                }
+            }
+
+            if (!string.IsNullOrWhiteSpace(model.CountryCode))
+            {
+                bool isCountryExists = allCountryList != null && allCountryList.Any(x => x.Code != null && x.Code.ToLower() == model.CountryCode.ToLower());
+
+                if (!isCountryExists)
+                {
+                    ModelState.AddModelError("CountryCode", "Invalid Country.");
+                }
+            }
+
+            #endregion
+
+            #region Shipping City And Post Code And Country Code
+            // =========================
+            // Shipping CityCode AND PostCode And CountryCode Check Condition In ERP Exist Name or Code 
+            // =========================
+
+            if (!string.IsNullOrWhiteSpace(model.ShippingCity))
+            {
+                bool isShippingCityExists = allCityList != null && allCityList.Any(x => x.Code != null && x.Code.ToLower() == model.ShippingCity.ToLower());
+
+                if (!isShippingCityExists)
+                {
+                    ModelState.AddModelError("ShippingCity", "Invalid City.");
+                }
+            }
+
+            if (!string.IsNullOrWhiteSpace(model.ShippingPostalCode))
+            {
+                bool isShippingPostCodeExists = allPostCodeList != null && allPostCodeList.Any(x => x.Code != null && x.Code.ToLower() == model.ShippingPostalCode.ToLower());
+
+                if (!isShippingPostCodeExists)
+                {
+                    ModelState.AddModelError("ShippingPostalCode", "Invalid Post Code.");
+                }
+            }
+
+            if (!string.IsNullOrWhiteSpace(model.ShippingCountry))
+            {
+                bool isShippingCountryExists = allCountryList != null && allCountryList.Any(x => x.Code != null && x.Code.ToLower() == model.ShippingCountry.ToLower());
+
+                if (!isShippingCountryExists)
+                {
+                    ModelState.AddModelError("ShippingCountry", "Invalid Country.");
+                }
+            }
+
+            #endregion
+
+            #endregion
+
             if (!ModelState.IsValid)
             {
                 return Json(new
@@ -421,7 +507,7 @@ namespace ERPAPP.Controllers
                 var userName = HttpContext.Session.GetString("UserName") ?? "";
 
                 var insertResult = await _customerRepository.InsertCustomer(model, userName);
-
+        
                 if (insertResult)
                 {
                     return Json(new
@@ -981,6 +1067,93 @@ namespace ERPAPP.Controllers
             {
                 ModelState.AddModelError("ShippingGSTRegistrationNo", "Shipping GST Registration No is required.");
             }
+
+            // =========================
+            // ERP Check City/Post Code / Country
+            // =========================
+
+            #region Check ERP City And Post Code And Country Exist 
+
+            var allCityList = await _customerRepository.GetCityList();
+            var allPostCodeList = await _customerRepository.GetPostCodeList();
+            var allCountryList = await _customerRepository.GetCountryList();
+
+            #region City And Post Code And Country Code
+
+            // =========================
+            // CityCode AND PostCode And CountryCode Check Condition In ERP Exist Name or Code 
+            // =========================
+
+            if (!string.IsNullOrWhiteSpace(model.CityCode))
+            {
+                bool isCityExists = allCityList != null && allCityList.Any(x => x.Code != null && x.Code.ToLower() == model.CityCode.ToLower());
+
+                if (!isCityExists)
+                {
+                    ModelState.AddModelError("CityCode", "Invalid City.");
+                }
+            }
+
+            if (!string.IsNullOrWhiteSpace(model.PostCode))
+            {
+                bool isPostCodeExists = allPostCodeList != null && allPostCodeList.Any(x => x.Code != null && x.Code.ToLower() == model.PostCode.ToLower());
+
+                if (!isPostCodeExists)
+                {
+                    ModelState.AddModelError("PostCode", "Invalid Post Code.");
+                }
+            }
+
+            if (!string.IsNullOrWhiteSpace(model.CountryCode))
+            {
+                bool isCountryExists = allCountryList != null && allCountryList.Any(x => x.Code != null && x.Code.ToLower() == model.CountryCode.ToLower());
+
+                if (!isCountryExists)
+                {
+                    ModelState.AddModelError("CountryCode", "Invalid Country.");
+                }
+            }
+
+            #endregion
+
+            #region Shipping City And Post Code And Country Code
+            // =========================
+            // Shipping CityCode AND PostCode And CountryCode Check Condition In ERP Exist Name or Code 
+            // =========================
+
+            if (!string.IsNullOrWhiteSpace(model.ShippingCity))
+            {
+                bool isShippingCityExists = allCityList != null && allCityList.Any(x => x.Code != null && x.Code.ToLower() == model.ShippingCity.ToLower());
+
+                if (!isShippingCityExists)
+                {
+                    ModelState.AddModelError("ShippingCity", "Invalid City.");
+                }
+            }
+
+            if (!string.IsNullOrWhiteSpace(model.ShippingPostalCode))
+            {
+                bool isShippingPostCodeExists = allPostCodeList != null && allPostCodeList.Any(x => x.Code != null && x.Code.ToLower() == model.ShippingPostalCode.ToLower());
+
+                if (!isShippingPostCodeExists)
+                {
+                    ModelState.AddModelError("ShippingPostalCode", "Invalid Post Code.");
+                }
+            }
+
+            if (!string.IsNullOrWhiteSpace(model.ShippingCountry))
+            {
+                bool isShippingCountryExists = allCountryList != null && allCountryList.Any(x => x.Code != null && x.Code.ToLower() == model.ShippingCountry.ToLower());
+
+                if (!isShippingCountryExists)
+                {
+                    ModelState.AddModelError("ShippingCountry", "Invalid Country.");
+                }
+            }
+
+            #endregion
+
+            #endregion
 
             if (!ModelState.IsValid)
             {

@@ -2572,5 +2572,59 @@ namespace ERPAPP.Repository
                 return false;
             }
         }
+
+        public async Task<List<CountryModel>> GetCountryList()
+        {
+            List<CountryModel> countryList = new List<CountryModel>();
+
+            DataTable dt = _db.GetDataTable(@"SELECT Code,Name
+                                                FROM [dbo].[Italia Ceramics Ltd_$Country_Region] ORDER BY Name", null, false);
+
+            for (int i = 0; i < dt.Rows.Count; i++)
+            {
+                countryList.Add(new CountryModel
+                {
+                    Code = Convert.ToString(dt.Rows[i]["Code"]),
+                    Name = Convert.ToString(dt.Rows[i]["Name"])
+                });
+            }
+
+            return countryList;
+        }
+        public async Task<List<CityModel>> GetCityList()
+        {
+            List<CityModel> countryList = new List<CityModel>();
+
+            DataTable dt = _db.GetDataTable(@"SELECT DISTINCT
+                            [City] AS Code,[City] AS Name FROM [dbo].[Italia Ceramics Ltd_$Post Code] ORDER BY [City]", null, false);
+
+            for (int i = 0; i < dt.Rows.Count; i++)
+            {
+                countryList.Add(new CityModel
+                {
+                    Code = Convert.ToString(dt.Rows[i]["Code"]),
+                    Name = Convert.ToString(dt.Rows[i]["Name"])
+                });
+            }
+
+            return countryList;
+        }
+        public async Task<List<PostCodeModel>> GetPostCodeList()
+        {
+            List<PostCodeModel> countryList = new List<PostCodeModel>();
+
+            DataTable dt = _db.GetDataTable(@"SELECT DISTINCT [Code] AS Code,[Code] AS Name FROM [dbo].[Italia Ceramics Ltd_$Post Code] ORDER BY [Code]", null, false);
+
+            for (int i = 0; i < dt.Rows.Count; i++)
+            {
+                countryList.Add(new PostCodeModel
+                {
+                    Code = Convert.ToString(dt.Rows[i]["Code"]),
+                    Name = Convert.ToString(dt.Rows[i]["Name"])
+                });
+            }
+
+            return countryList;
+        }
     }
 }

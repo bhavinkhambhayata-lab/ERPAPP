@@ -193,6 +193,56 @@ namespace ERPAPP.Controllers
                     ModelState.AddModelError("MSMEEffectiveDate", "MSME Effective Date is required");
             }
 
+            // =========================
+            // ERP Check City/Post Code / Country
+            // =========================
+
+            #region Check ERP City And Post Code And Country Exist 
+
+            var allCityList = await _vendorRepository.GetCityList();
+            var allPostCodeList = await _vendorRepository.GetPostCodeList();
+            var allCountryList = await _vendorRepository.GetCountryList();
+
+            #region City And Post Code And Country Code
+
+            // =========================
+            // CityCode AND PostCode And CountryCode Check Condition In ERP Exist Name or Code 
+            // =========================
+
+            if (!string.IsNullOrWhiteSpace(model.CityCode))
+            {
+                bool isCityExists = allCityList != null && allCityList.Any(x => x.Code != null && x.Code.ToLower() == model.CityCode.ToLower());
+
+                if (!isCityExists)
+                {
+                    ModelState.AddModelError("CityCode", "Invalid City.");
+                }
+            }
+
+            if (!string.IsNullOrWhiteSpace(model.PostCode))
+            {
+                bool isPostCodeExists = allPostCodeList != null && allPostCodeList.Any(x => x.Code != null && x.Code.ToLower() == model.PostCode.ToLower());
+
+                if (!isPostCodeExists)
+                {
+                    ModelState.AddModelError("PostCode", "Invalid Post Code.");
+                }
+            }
+
+            if (!string.IsNullOrWhiteSpace(model.CountryCode))
+            {
+                bool isCountryExists = allCountryList != null && allCountryList.Any(x => x.Code != null && x.Code.ToLower() == model.CountryCode.ToLower());
+
+                if (!isCountryExists)
+                {
+                    ModelState.AddModelError("CountryCode", "Invalid Country.");
+                }
+            }
+
+            #endregion
+
+            #endregion
+
             if (!ModelState.IsValid)
             {
                 return Json(new
@@ -213,7 +263,7 @@ namespace ERPAPP.Controllers
                 var userName = HttpContext.Session.GetString("UserName");
 
                 var insertResult = await _vendorRepository.InsertVendor(model, userName ?? "");
-
+               
                 if (insertResult)
                 {
                     return Json(new
@@ -561,6 +611,56 @@ namespace ERPAPP.Controllers
                 if (!model.MSMEEffectiveDate.HasValue)
                     ModelState.AddModelError("MSMEEffectiveDate", "MSME Effective Date is required");
             }
+
+            // =========================
+            // ERP Check City/Post Code / Country
+            // =========================
+
+            #region Check ERP City And Post Code And Country Exist 
+
+            var allCityList = await _vendorRepository.GetCityList();
+            var allPostCodeList = await _vendorRepository.GetPostCodeList();
+            var allCountryList = await _vendorRepository.GetCountryList();
+
+            #region City And Post Code And Country Code
+
+            // =========================
+            // CityCode AND PostCode And CountryCode Check Condition In ERP Exist Name or Code 
+            // =========================
+
+            if (!string.IsNullOrWhiteSpace(model.CityCode))
+            {
+                bool isCityExists = allCityList != null && allCityList.Any(x => x.Code != null && x.Code.ToLower() == model.CityCode.ToLower());
+
+                if (!isCityExists)
+                {
+                    ModelState.AddModelError("CityCode", "Invalid City.");
+                }
+            }
+
+            if (!string.IsNullOrWhiteSpace(model.PostCode))
+            {
+                bool isPostCodeExists = allPostCodeList != null && allPostCodeList.Any(x => x.Code != null && x.Code.ToLower() == model.PostCode.ToLower());
+
+                if (!isPostCodeExists)
+                {
+                    ModelState.AddModelError("PostCode", "Invalid Post Code.");
+                }
+            }
+
+            if (!string.IsNullOrWhiteSpace(model.CountryCode))
+            {
+                bool isCountryExists = allCountryList != null && allCountryList.Any(x => x.Code != null && x.Code.ToLower() == model.CountryCode.ToLower());
+
+                if (!isCountryExists)
+                {
+                    ModelState.AddModelError("CountryCode", "Invalid Country.");
+                }
+            }
+
+            #endregion
+
+            #endregion
 
             if (!ModelState.IsValid)
             {

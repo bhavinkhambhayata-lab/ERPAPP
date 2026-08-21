@@ -39,5 +39,11 @@ namespace ERPAPP.Interfaces
         Task<VendorUnBlockEditDropDownModel> GetVendorUnBlockEditDropDownData();
 
         Task<bool> UpdateVendor(VendorsUnBlockEditModel model, string userName);
+
+        Task<List<CountryModel>> GetCountryList();
+        Task<List<CityModel>> GetCityList();
+        Task<List<PostCodeModel>> GetPostCodeList();
+
+
     }
 }
