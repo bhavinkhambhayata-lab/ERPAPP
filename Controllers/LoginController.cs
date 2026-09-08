@@ -1,6 +1,8 @@
-﻿using ERPAPP.Interfaces;
+﻿using ERPAPP.Helper;
+using ERPAPP.Interfaces;
 using ERPAPP.Models;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json.Linq;
 using System.Text.Json;
 
 namespace ERPAPP.Controllers
@@ -15,7 +17,7 @@ namespace ERPAPP.Controllers
         }
 
         #region Login ERP APP
-        public IActionResult Index()
+        public IActionResult Index(string token)
         {
             if (HttpContext.Session.GetString("ERPSystemSessionExpired") == "1")
             {
@@ -24,11 +26,50 @@ namespace ERPAPP.Controllers
                 HttpContext.Session.Remove("ERPSystemSessionExpired");
             }
 
+            // Token Login
+            if (!string.IsNullOrEmpty(token))
+            {
+                try
+                {
+                    EncryptDecrypt obj = new EncryptDecrypt();
+                    string decryptedText = obj.DecryptNEW(token);
+                    string[] loginDetails = decryptedText.Split('|');
+
+                    if (loginDetails.Length != 2)
+                    {
+                        TempData["ToastMessage"] = "Invalid token.";
+                        TempData["ToastType"] = "danger";
+                        return View();
+                    }
+
+                    LoginViewModel objTS = new LoginViewModel
+                    {
+                        UserName = loginDetails[0],
+                        Password = loginDetails[1]
+                    };
+
+                    // Direct login
+                    return AutoLoginUser(objTS);
+                }
+                catch
+                {
+                    TempData["ToastMessage"] = "Invalid or expired token.";
+                    TempData["ToastType"] = "danger";
+                    return View();
+                }
+            }
+
             return View();
         }
 
         [HttpPost]
-        public IActionResult Login(LoginViewModel model)
+        public IActionResult Login(LoginViewModel objTS)
+        {
+            return AutoLoginUser(objTS);
+        }
+
+        [HttpPost]
+        public IActionResult AutoLoginUser(LoginViewModel model)
         {
             if (!ModelState.IsValid)
                 return View("Index");
