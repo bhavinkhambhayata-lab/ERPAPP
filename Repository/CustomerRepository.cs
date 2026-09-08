@@ -660,12 +660,13 @@ namespace ERPAPP.Repository
 
             return list;
         }
-        public AddressPostCodeDetailModel GetPostCodeDetail(string code)
+        public AddressPostCodeDetailModel GetPostCodeDetail(string code, string city)
         {
             SqlParameter[] parameters =
             {
                 new SqlParameter("@Type","PostCodeDetails"),
-                new SqlParameter("@Code",(object?)code ?? DBNull.Value)
+                new SqlParameter("@Code",(object?)code ?? DBNull.Value),
+                new SqlParameter("@City",(object?)city ?? DBNull.Value)
             };
 
             DataTable dt = _db.GetDataTable("GetCustomer_Address", parameters);

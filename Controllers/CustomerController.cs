@@ -194,9 +194,9 @@ namespace ERPAPP.Controllers
             return Json(result);
         }
 
-        public JsonResult GetPostCodeDetail(string postcode)
+        public JsonResult GetPostCodeDetail(string postcode, string city)
         {
-            var result = _customerRepository.GetPostCodeDetail(postcode);
+            var result = _customerRepository.GetPostCodeDetail(postcode, city);
             return Json(result);
         }
 
@@ -507,7 +507,7 @@ namespace ERPAPP.Controllers
                 var userName = HttpContext.Session.GetString("UserName") ?? "";
 
                 var insertResult = await _customerRepository.InsertCustomer(model, userName);
-        
+
                 if (insertResult)
                 {
                     return Json(new

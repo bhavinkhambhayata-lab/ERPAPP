@@ -16,7 +16,7 @@ namespace ERPAPP.Interfaces
         List<AddressDropdownModel> GetCityList(string city);
         AddressCityDetailModel GetCityDetail(string city);
         List<AddressPostCodeModel> GetPostCodeList(string city);
-        AddressPostCodeDetailModel GetPostCodeDetail(string code);
+        AddressPostCodeDetailModel GetPostCodeDetail(string code,string city);
 
         Task<GetVendorEditData> GetVendorEditData(string companyCode);
 

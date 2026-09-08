@@ -134,7 +134,7 @@
         if (!postcode) return;
 
         $.get(baseURL + "Customer/GetPostCodeDetail",
-            { postcode: postcode },
+            { postcode: postcode, city: $('#CityCode').val() },
             function (data) {
 
                 if (data) {

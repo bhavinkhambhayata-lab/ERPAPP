@@ -12,7 +12,7 @@ namespace ERPAPP.Interfaces
         List<AddressDropdownModel> GetCustomerCityList(string city);
         AddressCityDetailModel GetCityDetail(string city);
         List<AddressPostCodeModel> GetPostCodeList(string city);
-        AddressPostCodeDetailModel GetPostCodeDetail(string code);
+        AddressPostCodeDetailModel GetPostCodeDetail(string code,string city);
         Task<bool> CheckStateGSTMatch(string stateCode, string gstRegistrationNo);
         Task<ModifyPermissionResult> CheckModifyPermission(int userRowId, int entryRowId);
 

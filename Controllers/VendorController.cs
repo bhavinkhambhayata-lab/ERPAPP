@@ -321,9 +321,9 @@ namespace ERPAPP.Controllers
             return Json(result);
         }
 
-        public JsonResult GetPostCodeDetail(string postcode)
+        public JsonResult GetPostCodeDetail(string postcode,string city)
         {
-            var result = _vendorRepository.GetPostCodeDetail(postcode);
+            var result = _vendorRepository.GetPostCodeDetail(postcode, city);
             return Json(result);
         }
 
