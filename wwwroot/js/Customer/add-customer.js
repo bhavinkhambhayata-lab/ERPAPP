@@ -312,7 +312,15 @@
 
                 if (data) {
                     $("#Region").val(data.region || '');
-                    $("#Zone").val(data.zone || '');
+
+                    //29/09/2026 Condition Add harsh sir always not going to set Export for customer.
+                    if (data.zone === 'IMPORT') {
+                        $("#Zone").val('EXPORT');
+                    }
+                    else {
+                        $("#Zone").val(data.zone || '');
+                    }
+     
                 }
 
             });
