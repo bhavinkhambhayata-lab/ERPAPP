@@ -1314,11 +1314,12 @@ namespace ERPAPP.Repository
             body.Append("<th>Description</th>");
             body.Append("<th>Description 2</th>");
             body.Append("<th>Size Of Tile</th>");
+            body.Append("<th>Thickness</th>");
             body.Append("<th>Category</th>");
+            body.Append("<th>Body</th>");
             body.Append("<th>Grade</th>");
             body.Append("<th>Brand</th>");
             body.Append("<th>Packaging</th>");
-            body.Append("<th>Thickness</th>");
             body.Append("<th>Gen Prod Posting Group</th>");
             body.Append("<th>Created By</th>");
             body.Append("</tr>");
@@ -1333,11 +1334,12 @@ namespace ERPAPP.Repository
                 body.Append($"<td>{item.Description}</td>");
                 body.Append($"<td>{item.Description2}</td>");
                 body.Append($"<td>{item.SizeOfTile}</td>");
+                body.Append($"<td>{item.Thickness}</td>");
                 body.Append($"<td>{item.Category}</td>");
+                body.Append($"<td>{item.Body}</td>");
                 body.Append($"<td>{item.Grade}</td>");
                 body.Append($"<td>{item.Brand}</td>");
                 body.Append($"<td>{item.Packaging}</td>");
-                body.Append($"<td>{item.Thickness}</td>");
                 body.Append($"<td>{item.GenProdPostingGroup}</td>");
                 body.Append($"<td>{item.CreatedBy}</td>");
                 body.Append("</tr>");
